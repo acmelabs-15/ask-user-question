@@ -912,6 +912,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The owner's restated goal today — Osmani's process-over-prose, anti-rationalization tables, non-negotiable verification, consistent section structures, identifiable and measurable in bodies AND references — is the direct continuation of that thread, now formalized as three deliverables: the structural-genre taxonomy (analyst dispatched), skill-creator guidance encoding it, and lint-detectable signatures wired toward outcome measurement
 - Also recovered: the handoff-authoring sequence that produced the brief, which explains the commit-count drift the brief carried (the number moved between drafts as commits landed)
 
+## Event 92 — the predecessor conversation read end to end, and one coverage gap recovered
+
+- Timestamp: 2026-08-24 10:20 PDT
+- The full predecessor conversation is now read — every dialogue entry from session start to the handoff authoring, not only the tail. It confirms today's work implements its threads faithfully: the verdict table locked today is the direct descendant of the owner's do-not-prune-what-you-cannot-reach principle and the four-piece redesign sketched there; the recall substrate, the ablation, and the remedy ladder all trace to explicit owner statements in that conversation
+- One open item recovered that no note or queue carries: **sonnet coverage for triggering and outcomes**. The owner's instinct — if it works on sonnet it should work on opus, so test the weaker model — was acknowledged there as a real gap for the pass/fail measurements: the 49/52 trigger sweep predates the question, and measure-outcomes has never run on any model. When queue item 5 (outcomes) runs, it should run on sonnet per that standing instinct; a sonnet trigger sweep is a cheap companion. The disclosure half of the instinct is already implemented (sonnet is the detection instrument)
+- Also confirmed from the full read: measure-outcomes' treatment arm silently collapsed into its control before the grant fix — the operation built to answer "does this skill help" would have answered "no" for every skill ever tested. Fixed at the grant commit; worth re-stating when outcomes finally runs so the first result is read against that history
+
 ## Observations
 
 ### Build decisions
