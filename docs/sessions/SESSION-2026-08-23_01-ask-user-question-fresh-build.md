@@ -987,6 +987,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The reflect sidecar gained two verified entries in one pass: the SendMessage constraint — a teammate's report is real only through the messaging tool, with what is lost being exactly what a disk listing cannot show — and the write-path status-drop edge case at three of three occurrences today, ticket-worthy against the brain tooling rather than a repair habit. The sidecar's Observations now mirror all four findings
 - Also swept into this boundary: the convention-mandated inverse edge on the evidence-rules analysis, and a checklist defect pair found on read — an own-goal relative path one level short, and the struck pointer rule still stated as a checkable standard in the authoring checklist, both routed to the writer currently holding that file
 
+## Event 102 — no external posting, the genre reporters land, and a note corrects itself
+
+- Timestamp: 2026-08-24 08:40 PDT, measured
+- Owner ruling, explicit abandonment with reason rather than deferral: nothing is posted to Anthropic's GitHub — the queued comment on the upstream skills issue is withdrawn as an action. The draft remains a local record at the results directory, and the finding lives in our own notes. The ruling is captured to the reflect sidecar as a HIGH constraint covering all external public repositories
+- The three structural-genre reporters landed in plugin-kit at `924a74f`: ordered-step contiguity, the anti-rationalization table, and the manifest-form split, as an informational section that structurally cannot touch the verdict — suite 1612 passing, pushed. The engineer's back-run of the finished detector over the note's own corpus confirmed two ANALYSIS-005 counts digit for digit and refuted a third: the Genre 1 repository line says 5 of 5 numbered-step spines where the strict signature finds 3 of 5. Dated correction routed to the note's author; two method learnings routed to the reflect sidecar
+- Still in flight: the genre authoring reference with three checklist fixes folded in, the ANALYSIS-005 correction, and the sidecar captures
+
 ## Observations
 
 ### Build decisions
