@@ -59,31 +59,29 @@ The upper bound anyone can hold at a glance is small, and the four-group cap is 
 tighter constraint of the two: the reader has to keep the group set in mind while
 reading the items inside it.
 
-### 5. In a `question`, one marker: `∙`. In a `preview`, markdown lists
+### 5. In a `question`, `∙` then `◦`. In a `preview`, markdown lists
 
-**Check:** every leading marker in an unnumbered question list is `∙`, at one level.
-A numbered list takes `➊` to `➓` instead, and only where rule 10 says a number earns
-its place. A preview uses markdown's own list syntax and no authored marker at all.
-No `•`, no `①` or `❶`, and no emoji anywhere something must line up after it.
+**Check:** an unnumbered question list uses `∙` at the top level and `◦` one level
+in, and stops there. A numbered list takes `➊` to `➓` instead, and only where rule
+10 says a number earns its place. A preview uses markdown's own list syntax and no
+authored marker at all.
 
 The field decides this rather than taste. A question is plain text, so a marker is
 the literal character you typed and its width is yours to get right. A preview runs
 a markdown renderer, so `-` is drawn as a list and nesting is the renderer's problem
 instead of yours.
 
-`∙` rather than `◦` because a filled mark reads as a primary item where a hollow one
-reads as subordinate to something, and at a single level there is nothing for it to
-be subordinate to. Both are safe on width, so the choice between them comes down to
-how they read. The glyph set below has the rest, including why `•` is the one you
-must not reach for.
+Filled then hollow, which is the convention a reader already knows and does not have
+to be told. `∙` reads as a primary item and `◦` reads as subordinate to the one above
+it, so the two levels distinguish themselves without a header doing the work.
 
-**One level is the whole set, and that is a diagnostic rather than a limitation.**
-Wanting a second level of nesting inside a question means the content has outgrown
-the field — rule 4 caps a group at five items and a list at four groups, inside a
-60-column budget. The answer is to move it to a preview, where the renderer gives
-you nesting for nothing. That is the same resolution SKILL.md reaches for when a
-decision will not fit in 25 words, and it is the same signal: the question field is
-full.
+**Two levels, and a third is a diagnostic rather than a limitation.** Wanting a third
+means the content has outgrown the field — rule 4 caps a group at five items and a
+list at four groups, inside a 60-column budget, and three levels of nesting inside
+those caps is a shape nothing real fits. The answer is to move it to a preview, where
+the renderer gives you nesting for nothing. That is the same resolution SKILL.md
+reaches for when a decision will not fit in 25 words, and it is the same signal: the
+question field is full.
 
 ### 6. Indent a continuation to its item's text column
 
@@ -95,6 +93,12 @@ Use a hanging indent of four. The alternative is a description column aligned pe
 group, and it is for the case where every item is a short name followed by an
 explanation; it costs you one width calculation per group, which is why it is not
 the default. Mixing the two inside one string is a defect either way.
+
+Compute the indent for the marker you actually used. This is the reason the glyph
+set matters to layout at all: a continuation aligned under a one-cell marker sits
+wrong under a two-cell one, and a nested `◦` is positioned relative to the `∙` above
+it. Every glyph in the set below is one cell, which is what makes the arithmetic
+something you can do once and trust.
 
 ### 7. Front-load the word that distinguishes the item
 
@@ -175,48 +179,56 @@ promotes whichever option was typed second.
 ## The glyph set
 
 One glyph per job, so that two composers making the same call produce the same
-string. Every glyph in the table is East Asian Neutral, meaning one display cell
-whatever the reader's terminal is configured to do — except the last row, and that
-exception is exactly why its row is restricted to inline use.
+string. The table governs the `question` field only. A preview renders markdown, so
+its lists, its numbering and its emphasis are the renderer's and none of the width
+arithmetic below is yours — reaching for this table while composing a preview means
+you are working harder than the field requires.
 
-**The table governs the `question` field only.** A preview renders markdown, so its
-lists use markdown syntax, its numbering is the renderer's, and no width arithmetic
-is yours. That boundary is the most useful thing here: reaching for this table while
-composing a preview means you are working harder than the field requires.
+| Job | Glyph |
+|---|---|
+| Leading marker, top level | `∙` |
+| Leading marker, nested one level | `◦` |
+| Numbered item | `➊` … `➓` |
+| Passed, satisfied, present | `✔` |
+| Failed, rejected, absent | `✗` |
+| Trap or warning | `⚠` |
+| The item under discussion | `❯` |
+| Leads to, becomes, produces | `➞` |
+| Inline separator | `·` |
 
-| Job | Glyph | Why this one |
-|---|---|---|
-| Leading marker, at the one permitted level | `∙` | Filled reads as primary, and there is no level beneath it |
-| Numbered item, where the number carries information | `➊` … `➓` | One cell, so numbering costs no more than a marker. Running past ten means the list belongs in a preview |
-| Passed, done, satisfied | `✓` | |
-| Failed, rejected, absent | `✗` | Matches `✓` in weight, so a column of them reads evenly |
-| A trap or a warning | `⚠` | Never `⚠️` — see below |
-| The item under discussion | `▸` | |
-| Separator inside a line | `·` | **Ambiguous width.** Safe inline, where nothing after it is aligned; never a leading marker |
+Use them where they help a reader digest something. A column of `✔` and `✗` against
+a list of checks is read at a glance where the words `passed` and `failed` are read
+one at a time, and `➞` carries a sequence in one cell. A glyph that decorates rather
+than distinguishes is noise, and rule 10's test applies to all of them: take it out,
+and if nothing is lost it was decoration.
 
-Four prohibitions, each with its reason, because a rule you understand extends to
-the glyph this table does not happen to list and a rule you memorize does not.
+### The one width rule
 
-**Never `•`.** It is East Asian Ambiguous: one cell on your terminal and two on a
-terminal configured the other way, and that setting is invisible to you. Every
-column after it on its line moves. This is the glyph most people reach for first,
-which is why it is named rather than left to the general rule.
+**Do not mix width classes inside a single aligned column, and compute a hanging
+indent for the marker you actually used.**
 
-**Never the other circled numerals.** `➊` to `➓` are the one family that is Neutral
-and therefore one cell whatever the terminal does. `①` and `❶` and their relatives
-are Ambiguous, and they are the near miss worth naming: they look interchangeable
-with the approved set and behave differently on the reader's screen.
+That is the whole of it. Every glyph in the table is one display cell whatever the
+reader's terminal does with East Asian Ambiguous characters — except `·`, which is
+Ambiguous, and which is why its job is the inline separator: `2 files · 40 lines`
+has nothing aligned after it, so its width cannot cost you anything. Used
+consistently, an ambiguous glyph lines up with itself; the failure is only ever a
+column that mixes classes, or an indent computed for a width the glyph does not
+render at.
 
-**Never `⚠️`, `→`, `…`, `—` or `▲`.** The same failure from the same cause. The
-warning sign is the sharpest case and worth knowing on its own: `⚠` is one cell,
-and `⚠️` is the same character followed by a variation selector and is always two.
-They are indistinguishable in your editor and align differently on the reader's
-screen.
+### Two things that stay prohibited
 
-**Never box-drawing.** Ambiguous width, font-dependent on top of it, and a drawn box
-needs a closing right edge whose padding you compute and then keep correct through
-every future edit to every line inside it. Rule 11 has the cost model. Content that
-wants a box goes in a preview, where the host draws the border and owns the padding.
+Neither is about fonts or taste.
+
+**`⚠️` with the variation selector.** The bare `⚠` is one cell and `⚠️` is the same
+character plus a selector and is always two. They are indistinguishable in your
+editor, they align differently on the reader's screen, and the emoji form has been
+observed degrading to a substitute glyph. Use the bare one.
+
+**Box-drawing for a drawn box.** Not for its width: a box needs a closing right edge
+whose padding you compute and then keep correct through every future edit to every
+line inside it, and one added word breaks the block silently. Rule 11 has the cost
+model. Content that wants a box goes in a preview, where the host draws the border
+and owns the padding.
 
 ## A string that resists, worked
 
@@ -261,9 +273,34 @@ The question carrying it stays short, because the preview is doing the work:
 `Eleven findings, four of them blocking. Fix the blocking two now, or take the
 whole list in one pass?`
 
-**The same content in a question field would look different, and worse.** There you
-would write it with `∙` at one level, and the four group headings would have to
-carry the grouping alone with no nesting available — which is rule 5's diagnostic
-firing. Four groups is already at rule 4's cap. That is the signal that the content
-belongs in a preview, and it is the same signal, read from the other direction, as
-a decision that will not fit in 25 words.
+## A shorter one, in the question field
+
+Not everything needs a preview. Three checks and their outcomes fit in a question,
+and this is what the glyph set is for:
+
+```text
+Pre-push checks:
+
+∙ Types ✔
+∙ Unit tests ✔
+∙ Integration ✗ (two failures in the billing suite)
+  ◦ Both tests call the payment sandbox ➞ the test key expired on Friday.
+  ◦ ⚠ Neither test failed on the last green build.
+
+Push anyway, or fix the key first?
+```
+
+Every glyph is doing work a word would do more slowly. The `✔` and `✗` column is
+read at a glance where `passed` and `failed` are read one at a time. `➞` carries the
+inference in one cell. `⚠` marks the fact that changes what the failure means. `◦`
+puts the detail under the check it belongs to without a header, which is the second
+level earning its place. Nothing is numbered, because nothing refers back by number.
+
+Rule 8 lands differently at each level, and correctly. The three top-level items are
+bare names carrying a status, so none of them takes a verb or a full stop; the two
+nested items are statements, so both do. Each level is consistent with itself, which
+is what the rule asks for.
+
+That is two levels and it stops there. A third would mean the content had outgrown
+the field, and the answer would be the preview above — the same signal, read from
+the other direction, as a decision that will not fit in 25 words.
