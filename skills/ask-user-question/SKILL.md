@@ -1,7 +1,7 @@
 ---
 name: ask-user-question
 license: MIT
-compatibility: "Claude Code, and any runtime that provides the AskUserQuestion tool. No scripts, no network access, no system packages. The register step reads a project vocabulary file where one exists and degrades to the vocabulary already in the conversation where none does."
+compatibility: "Claude Code. The composition guidance applies wherever the tool is offered; the Gotchas marked [terminal] describe the Claude Code terminal dialog, and a host that draws its own dialog owes none of them. No scripts, no network access, no system packages. The register step reads a project vocabulary file where one exists and degrades to the vocabulary already in the conversation where none does."
 allowed-tools: Read Grep Glob
 metadata:
   version: "0.0.1"
@@ -27,6 +27,11 @@ These defy a reasonable guess about how the tool behaves. They are here rather
 than behind a pointer, because you cannot decide to open a file about a trap you
 do not know exists.
 
+The four marked **[terminal]** describe the Claude Code terminal dialog, which is
+one implementation among the hosts that may draw this question. Everything
+unmarked is a property of the tool itself and holds wherever the tool exists. The
+marker appears nowhere else in this skill, so its absence means something.
+
 - **The dialog covers the conversation.** While it is open, the reader cannot see
   what you wrote above it, cannot scroll back, cannot open the file you are
   asking about, and cannot ask you a follow-up question. Context you put in the
@@ -39,7 +44,8 @@ do not know exists.
   own prompt says to make the recommended option first and to end its label with
   `(Recommended)`. That is the whole mechanism, so a recommendation you state in
   the prose around the call never reaches the reader.
-- **A call with one single-select question has no review screen.** It submits on the keystroke that picks an option, so the reader cannot look again
+- **A call with one single-select question has no review screen.** **[terminal]**
+  It submits on the keystroke that picks an option, so the reader cannot look again
   before it lands. Section 5 says what that costs the first option.
 - **Duplicate question text or duplicate labels reject the whole call.** Question
   texts must differ across the call, and labels must differ inside one question.
@@ -69,7 +75,8 @@ do not know exists.
   shortened and not scrolled. They are not displayed. Everything you wrote about
   what an option costs is gone, the dialog still looks finished, and the free-text
   box goes with them. Decide the layout before you write the descriptions.
-- **Each layout takes something away, and it takes it silently.** The tool appends its own escapes, but not everywhere:
+- **Each layout takes something away, and it takes it silently.** **[terminal]**
+  The tool appends its own escapes, but not everywhere:
 
   | Layout | Free-text `Other` | Conversational escape |
   |---|---|---|
@@ -87,7 +94,7 @@ do not know exists.
   validates the combination, so you get a plain checkbox list and lose whatever you
   spent composing them.
 - **Previews are on by default, and the format setting does not gate them.**
-  `CLAUDE_CODE_QUESTION_PREVIEW_FORMAT` resolves to `markdown` in
+  **[terminal]** `CLAUDE_CODE_QUESTION_PREVIEW_FORMAT` resolves to `markdown` in
   an ordinary terminal session, and the renderer never reads it: a single-select
   question carrying a preview gets the preview layout whatever the setting says. It
   decides two other things — whether preview guidance reaches your own prompt, and
@@ -107,7 +114,7 @@ do not know exists.
   a long list does scroll on a short terminal, and what that costs the reader is
   the side-by-side comparison the options were written for.
 - **`header` is cut at 48 display columns, not at the 12 it asks for.**
-  The 12 is advisory and no validator reads it. The real sequence is
+  **[terminal]** The 12 is advisory and no validator reads it. The real sequence is
   a cut at 48 columns and then a second cut by the tab strip, where an over-long
   header eats the space its neighbours needed.
 - **You may not be able to ask at all.** The tool is absent in subagents and in

@@ -36,6 +36,10 @@ those you get this without authoring it. **A preview question has no free-text b
 and there the nearest equivalent is a note attached to a selection, covered below.
 Free text means the reader rejected your option set.
 
+It can be longer than a terminal line suggests. `ctrl+g` opens the box in the
+reader's own editor, so a considered paragraph is a shape you should expect rather
+than treat as unlikely, and it is worth reading in full before you act on it.
+
 Read it as a finding about the call, not as noise to be coerced. The nearest label
 is usually not what they meant, and mapping their text onto it silently discards
 the one piece of information the call produced. Two responses are defensible: act
@@ -51,6 +55,16 @@ label was unclear, which is worth fixing before you ask anything else.
 The reader picked an option and qualified it. The note is a constraint on the pick,
 not a comment on it, and it usually contains the part they were not willing to
 leave implicit.
+
+Notes come from one place only: a single-select question carrying a preview, where
+`n` opens the field. That makes them the escape hatch on the layout that has no
+free-text box, and it is worth saying in the question text that the key exists,
+because a reader who cannot find a way to qualify their answer picks nothing.
+
+**A note without a selection arrives as the literal string `(notes only)`.** That
+is a sentinel meaning no option was chosen, not an answer. Matching it against your
+labels finds nothing, and reading it as free text mistakes a marker for content.
+Treat it as a skip carrying a message: the note is real and the selection is not.
 
 Honour the note. A selection plus `but only for the staging environment` is not
 approval for production, and proceeding as though the bare label was the whole
@@ -70,23 +84,40 @@ stop. Do not read absence as authorisation for anything you could not undo.
 
 ### Chat about this
 
-This control appears on single-select questions only. The reader wants a
-conversation rather than a pick, which means the question arrived before they had
-what they needed to answer it, or the framing was wrong.
+The reader wants a conversation rather than a pick, which means the question
+arrived before they had what they needed to answer it, or the framing was wrong.
 
-Do not re-ask. Answer them in prose, then ask again only if a fork survives the
-conversation.
+This does not abandon the question. It comes back as a denial carrying an
+instruction to reformulate, **with whatever they had already selected and any notes
+they had typed attached**. So you are not guessing at what they wanted: read the
+partial state, and start by asking what they would like to clarify. Answer in
+prose, then ask again only if a fork survives the conversation.
+
+An escape, by contrast, denies with no feedback at all — there is nothing to read
+and nothing to infer from it.
 
 ### Nothing at all
 
-A question can time out. The available windows are 60 seconds, 5 minutes, 10
-minutes, or never.
+A question can time out, but only where the reader has turned that on. It is a
+setting of theirs — 60 seconds, 5 minutes, 10 minutes, or never — and unset means
+no timeout at all, so silence is usually a person rather than a clock. Where it
+does fire, whatever they had already selected survives and is reported.
 
 A timeout carries the same authority as a skip, which is none. It is weaker
 evidence about the question's quality, though, because the reader may simply have
 been elsewhere. Where you have reason to think they never saw it, asking the same
 question again is reasonable; where they saw it and let it lapse, treat it as a
 skip and diagnose.
+
+### An image the reader pasted
+
+Both non-preview layouts accept a pasted image. The answer arrives with
+`(Image attached)` appended, or as that string alone where they pasted without
+typing, and the images themselves travel alongside as content.
+
+Read the suffix as a signal to go and look rather than as part of the label. A
+reader who pasted a screenshot has usually answered the question in it, and the
+text beside it is a caption rather than the reply.
 
 ## The rule that covers all of them
 
