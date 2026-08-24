@@ -735,6 +735,18 @@ _Empty._
 - Changed in all four homes: the recognition table, the prose under it, the section itself, and the eval expectations — which asserted the skip reading and would have gone on enforcing it against the new text. Commit d602879
 - A near-miss caught by diffing rather than by trusting the write: re-serialising the eval JSON without `ensure_ascii=False` escaped every em dash in the file to `\\u2014`. Semantically identical, and it would have rewritten bytes across a file where only six lines were meant to change
 
+## Event 70 — the old plugin retired, and the findings written up where they belong
+
+- Timestamp: 2026-08-24 03:55 PDT
+- Retirement completed. The directory was deleted only after checking what deletion would cost: the local commit 09195199 is present on the remote at refs/heads/main, same SHA, so all committed history survives on GitHub. The only local-only content was a five-line prose rewording of the retired skill's opening paragraph, and porting from that plugin is a standing prohibition, so nothing recoverable was lost
+- Verified after rather than assumed: the marketplace still validates, `claude plugin list` no longer carries it, and the Makefile's OLD_NAMES guard still passes — that guard keys on the plugin NAME, not the path, so deleting the directory does not blind it
+- Deliberately NOT done: uninstalling plugin-kit, which the old queue paired with this step. Its reviewer agents are needed by the extended-optimization item still ahead, so it moves to last rather than being done now
+- The upstream write-up went into plugin-kit's own ANALYSIS-003 "Measurement Fault Classes" rather than a new note. That note already exists to catalogue exactly this — a harness that fails by returning a healthy-looking wrong number — and its Finding 1 already described the zero-pull `prune` table as the signature of a wrong install state
+- Which produced the sharpest finding of the set. The symlink defect reproduced that identical signature from a cause with nothing to do with install state. The state was checked, found correct, and the table was believed anyway. A known signature is not identification, and treating it as one cost a session
+- Six findings added, numbered 11 to 16, five recommendations, fourteen observations under a new sub-heading. The executive summary was corrected from five groups to six and the context line updated, so the note's own header no longer disagrees with its body. Commit e04004b in plugin-kit
+- HANDOFF.md rewritten. It had become the largest concentration of stale claims in the repo: the disclosure measurement described as void, the instrument bug as unfixed with a workaround to apply, the empty install cache as "the one that bites", and a queue with three completed items still on it. The temp-root workaround is now flagged as dead weight to delete rather than as advice to follow. Commit 87109ec
+- A process note worth keeping. One edit script asserted its way to a failure partway through and did not write the file, so an earlier successful replacement in the same script was silently lost. It was caught only by sweeping the file for the stale string afterwards rather than by trusting the run. Multi-edit scripts need the sweep, not the exit code
+
 ## Observations
 
 ### Build decisions
