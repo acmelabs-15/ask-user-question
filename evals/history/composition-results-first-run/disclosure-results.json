@@ -1,0 +1,353 @@
+{
+  "model": "opus",
+  "judgeModel": null,
+  "runsPer": 1,
+  "scenarioCount": 15,
+  "summaries": [
+    {
+      "arm": "disclosed",
+      "attempts": 15,
+      "unparseable": 2,
+      "lintMean": 0.9202380952380952,
+      "cleanCallRate": 0.8333333333333334,
+      "askedWhenItShould": 0.75,
+      "askedDenominator": 8,
+      "abstainedWhenItShould": 1,
+      "abstainedDenominator": 5,
+      "judge": {
+        "decidable_cold": 0,
+        "recognises_mistake": 0,
+        "comparable_options": 0,
+        "honest_recommendation": 0,
+        "evidence_boundary": 0,
+        "right_call_about_asking": 0
+      },
+      "refsPerCall": 1.4,
+      "anyRefRate": 0.6,
+      "refPrecision": 0.8571428571428571,
+      "expectedRefHitRate": 1,
+      "refCounts": {
+        "register-and-budgets.md": 8,
+        "writing-the-question.md": 2,
+        "before-and-after.md": 2,
+        "defects-and-repairs.md": 4,
+        "layouts-and-previews.md": 2,
+        "reading-the-answer.md": 1,
+        "tool-contract.md": 1,
+        "question-sequences.md": 1
+      },
+      "errorsByRule": {
+        "description.no-cost": 3
+      }
+    }
+  ],
+  "results": [
+    {
+      "id": "unit-mismatch",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": true,
+      "asked": false,
+      "declined": false,
+      "lintScore": 0,
+      "refsRead": [
+        "register-and-budgets.md",
+        "writing-the-question.md",
+        "before-and-after.md"
+      ],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 180672
+    },
+    {
+      "id": "config-cache",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": true,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "refsRead": [],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 74971
+    },
+    {
+      "id": "strict-types",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": false,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "refsRead": [],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 66598
+    },
+    {
+      "id": "migration-lock",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": true,
+      "asked": false,
+      "declined": false,
+      "lintScore": 0,
+      "refsRead": [
+        "register-and-budgets.md",
+        "writing-the-question.md",
+        "defects-and-repairs.md"
+      ],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 180392
+    },
+    {
+      "id": "error-wording",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "refsRead": [
+        "register-and-budgets.md",
+        "defects-and-repairs.md"
+      ],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Writes `config.retries: got \"abc\", want a positive integer such as 3`.",
+        "q1.o2  Writes `invalid config: retries must be a positive integer`.",
+        "q1.o3  Writes `invalid config: retries=\"abc\", expected a positive integer`."
+      ],
+      "elapsedMs": 133198
+    },
+    {
+      "id": "six-decisions",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "refsRead": [
+        "register-and-budgets.md",
+        "defects-and-repairs.md"
+      ],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  /notify becomes a thin translation layer over the new handler.",
+        "q1.o2  /notify keeps serving until an announced removal date, then goes.",
+        "q1.o3  /notify disappears the day the new endpoint ships."
+      ],
+      "elapsedMs": 126931
+    },
+    {
+      "id": "confirm-the-fix",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": false,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "refsRead": [],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 37462
+    },
+    {
+      "id": "needs-a-dsn",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": false,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "refsRead": [],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 38780
+    },
+    {
+      "id": "table-layouts",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "refsRead": [
+        "register-and-budgets.md"
+      ],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Desktop admins get 12 rows a screen instead of 40, with actions on hover.",
+        "q1.o2  Desktop admins get 40 rows a screen, with inline actions in the last column.",
+        "q1.o3  Desktop admins get 40 rows a screen, with inline actions in the last column."
+      ],
+      "elapsedMs": 138612
+    },
+    {
+      "id": "widening-approval",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "refsRead": [
+        "register-and-budgets.md"
+      ],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  currencyLegacy.ts and the invoice.ts comment stay as they are.",
+        "q1.o2  currencyLegacy.ts goes, and the invoice.ts comment changes to record the pending migration without naming a deleted file.",
+        "q1.o3  currencyLegacy.ts goes, and the invoice.ts comment goes with the file."
+      ],
+      "elapsedMs": 175576
+    },
+    {
+      "id": "search-permissions",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": true,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "refsRead": [],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 65901
+    },
+    {
+      "id": "which-file-first",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": false,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "refsRead": [],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 52798
+    },
+    {
+      "id": "tree-shape",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "refsRead": [
+        "layouts-and-previews.md",
+        "register-and-budgets.md"
+      ],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Splits into reporting/calendar/ and reporting/fiscal/, each with its own buckets.ts, plus reporting/shared/dates.ts.",
+        "q1.o2  Keeps weekly.ts, monthly.ts, quarterly.ts and annual.ts beside one buckets.ts."
+      ],
+      "elapsedMs": 132912
+    },
+    {
+      "id": "contradicting-note",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": false,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "refsRead": [
+        "reading-the-answer.md"
+      ],
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 37342
+    },
+    {
+      "id": "seven-options",
+      "arm": "disclosed",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 0.5214285714285714,
+      "refsRead": [
+        "layouts-and-previews.md",
+        "register-and-budgets.md",
+        "tool-contract.md",
+        "question-sequences.md",
+        "defects-and-repairs.md",
+        "before-and-after.md"
+      ],
+      "findings": [
+        {
+          "id": "call.multi-question",
+          "severity": "warn",
+          "at": "call",
+          "message": "2 questions in one call. Legal, but host handling is thin and dependent questions cannot share a call"
+        },
+        {
+          "id": "description.no-cost",
+          "severity": "error",
+          "at": "q1.o1",
+          "message": "description carries neither a number nor a named consequence, so it states no cost"
+        },
+        {
+          "id": "description.no-cost",
+          "severity": "error",
+          "at": "q1.o3",
+          "message": "description carries neither a number nor a named consequence, so it states no cost"
+        },
+        {
+          "id": "description.no-cost",
+          "severity": "error",
+          "at": "q1.o4",
+          "message": "description carries neither a number nor a named consequence, so it states no cost"
+        }
+      ],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Sends every alert to the addresses on the service owner list.",
+        "q1.o2  Sends a short alert to the phone numbers you register per rotation.",
+        "q1.o3  Sends the alert to phones that have the app installed and signed in.",
+        "q1.o4  Sends the alert to a feed inside the product, where signed-in users see it on their next page load.",
+        "q2.o1  Sends each alert as a message in a channel you name, where the whole team reads it without anyone getting paged.",
+        "q2.o2  Sends each alert into a PagerDuty service, which escalates through your rotation until a person acknowledges it.",
+        "q2.o3  Sends each alert as a JSON POST to a URL you supply, for anything the other six channels do not cover."
+      ],
+      "elapsedMs": 138673
+    }
+  ]
+}

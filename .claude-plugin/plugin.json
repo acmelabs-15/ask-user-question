@@ -1,0 +1,19 @@
+{
+  "name": "ask-user-question",
+  "description": "PENDING: authored in wave 3",
+  "version": "0.0.1",
+  "author": {
+    "name": "Peter Kloss",
+    "email": "pkloss@gmail.com"
+  },
+  "homepage": "https://github.com/acmelabs-15/ask-user-question",
+  "repository": "https://github.com/acmelabs-15/ask-user-question",
+  "keywords": [
+    "askuserquestion",
+    "interaction-design",
+    "prompting",
+    "claude-code",
+    "progressive-disclosure"
+  ],
+  "license": "MIT"
+}

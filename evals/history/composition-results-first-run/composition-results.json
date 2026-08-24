@@ -1,0 +1,611 @@
+{
+  "model": "opus",
+  "judgeModel": null,
+  "runsPer": 1,
+  "scenarioCount": 12,
+  "summaries": [
+    {
+      "arm": "baseline",
+      "attempts": 12,
+      "unparseable": 0,
+      "lintMean": 0.12666666666666668,
+      "cleanCallRate": 0,
+      "askedWhenItShould": 0.625,
+      "askedDenominator": 8,
+      "abstainedWhenItShould": 1,
+      "abstainedDenominator": 4,
+      "judge": {
+        "decidable_cold": 0,
+        "recognises_mistake": 0,
+        "comparable_options": 0,
+        "honest_recommendation": 0,
+        "evidence_boundary": 0,
+        "right_call_about_asking": 0
+      },
+      "errorsByRule": {
+        "recommend.absent": 5,
+        "description.no-cost": 3,
+        "label.meta": 1
+      }
+    },
+    {
+      "arm": "skill",
+      "attempts": 12,
+      "unparseable": 0,
+      "lintMean": 1,
+      "cleanCallRate": 1,
+      "askedWhenItShould": 0.875,
+      "askedDenominator": 8,
+      "abstainedWhenItShould": 0.75,
+      "abstainedDenominator": 4,
+      "judge": {
+        "decidable_cold": 0,
+        "recognises_mistake": 0,
+        "comparable_options": 0,
+        "honest_recommendation": 0,
+        "evidence_boundary": 0,
+        "right_call_about_asking": 0
+      },
+      "errorsByRule": {}
+    }
+  ],
+  "results": [
+    {
+      "id": "unit-mismatch",
+      "arm": "baseline",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 0,
+      "findings": [
+        {
+          "id": "question.multi-sentence",
+          "severity": "warn",
+          "at": "q1",
+          "message": "question is 3 sentences; background belongs in the prose before the call"
+        },
+        {
+          "id": "question.too-long",
+          "severity": "warn",
+          "at": "q1",
+          "message": "question is 32 words; budget is 25"
+        },
+        {
+          "id": "recommend.absent",
+          "severity": "error",
+          "at": "q1",
+          "message": "no option marked (Recommended); if they are genuinely equivalent, say so in the question text"
+        },
+        {
+          "id": "label.too-short",
+          "severity": "warn",
+          "at": "q1.o1",
+          "message": "label is 2 word(s); 3 to 7 names an outcome"
+        },
+        {
+          "id": "description.bloated",
+          "severity": "warn",
+          "at": "q1.o1",
+          "message": "description is 84 words; over 45 is background belonging in the prose"
+        },
+        {
+          "id": "description.bloated",
+          "severity": "warn",
+          "at": "q1.o2",
+          "message": "description is 60 words; over 45 is background belonging in the prose"
+        },
+        {
+          "id": "description.bloated",
+          "severity": "warn",
+          "at": "q1.o3",
+          "message": "description is 59 words; over 45 is background belonging in the prose"
+        },
+        {
+          "id": "description.long-sentence",
+          "severity": "warn",
+          "at": "q1.o3",
+          "message": "sentence 3 is 36 words; target is 25, this check fires past 35"
+        }
+      ],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Recommended.",
+        "q1.o2  Change token.ts:41 to write seconds.",
+        "q1.o3  Change session.ts:88 to read milliseconds."
+      ],
+      "elapsedMs": 46052
+    },
+    {
+      "id": "config-cache",
+      "arm": "baseline",
+      "run": 0,
+      "expectCall": true,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 29296
+    },
+    {
+      "id": "strict-types",
+      "arm": "baseline",
+      "run": 0,
+      "expectCall": false,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 23227
+    },
+    {
+      "id": "migration-lock",
+      "arm": "baseline",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 0.08333333333333337,
+      "findings": [
+        {
+          "id": "recommend.absent",
+          "severity": "error",
+          "at": "q1",
+          "message": "no option marked (Recommended); if they are genuinely equivalent, say so in the question text"
+        },
+        {
+          "id": "label.too-short",
+          "severity": "warn",
+          "at": "q1.o1",
+          "message": "label is 2 word(s); 3 to 7 names an outcome"
+        },
+        {
+          "id": "description.bloated",
+          "severity": "warn",
+          "at": "q1.o1",
+          "message": "description is 79 words; over 45 is background belonging in the prose"
+        },
+        {
+          "id": "description.long-sentence",
+          "severity": "warn",
+          "at": "q1.o1",
+          "message": "sentence 1 is 50 words; target is 25, this check fires past 35"
+        },
+        {
+          "id": "label.too-short",
+          "severity": "warn",
+          "at": "q1.o2",
+          "message": "label is 2 word(s); 3 to 7 names an outcome"
+        },
+        {
+          "id": "description.bloated",
+          "severity": "warn",
+          "at": "q1.o2",
+          "message": "description is 54 words; over 45 is background belonging in the prose"
+        }
+      ],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Add org_id as nullable (no default) in its own transaction, backfill from sessions in resumable batches with a guard so a failed run can be re-run safely, then add a NOT NULL CHECK as NOT VALID and VALIDATE it \u2014 each step takes only brief locks, no ~40s write outage.",
+        "q1.o2  Run the migration as written, in one transaction: ALTER TABLE + backfill together, atomic and all-or-nothing with no partial state ever visible.",
+        "q1.o3  Don't run it now."
+      ],
+      "elapsedMs": 40103
+    },
+    {
+      "id": "error-wording",
+      "arm": "baseline",
+      "run": 0,
+      "expectCall": true,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 39862
+    },
+    {
+      "id": "six-decisions",
+      "arm": "baseline",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 0,
+      "findings": [
+        {
+          "id": "recommend.absent",
+          "severity": "error",
+          "at": "q1",
+          "message": "no option marked (Recommended); if they are genuinely equivalent, say so in the question text"
+        },
+        {
+          "id": "description.bloated",
+          "severity": "warn",
+          "at": "q1.o2",
+          "message": "description is 46 words; over 45 is background belonging in the prose"
+        },
+        {
+          "id": "description.no-cost",
+          "severity": "error",
+          "at": "q1.o2",
+          "message": "description carries neither a number nor a named consequence, so it states no cost"
+        },
+        {
+          "id": "label.meta",
+          "severity": "error",
+          "at": "q1.o4",
+          "message": "\"Something else\" names the dialog's mechanics, not the consequence"
+        },
+        {
+          "id": "label.too-short",
+          "severity": "warn",
+          "at": "q1.o4",
+          "message": "label is 2 word(s); 3 to 7 names an outcome"
+        },
+        {
+          "id": "description.no-cost",
+          "severity": "error",
+          "at": "q1.o4",
+          "message": "description carries neither a number nor a named consequence, so it states no cost"
+        }
+      ],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Keep `/notify` indefinitely as a thin translation layer over the new endpoint.",
+        "q1.o2  Keep `/notify` working through the refactor, but announce a deprecation date to the enterprise customer and remove it after they cut over.",
+        "q1.o3  Drop `/notify` as part of the refactor and coordinate the customer's cutover now.",
+        "q1.o4  None of these \u2014 tell me the constraint I'm missing (contractual commitment, existing sunset promise, planned customer migration) and I'll work from that."
+      ],
+      "elapsedMs": 44016
+    },
+    {
+      "id": "confirm-the-fix",
+      "arm": "baseline",
+      "run": 0,
+      "expectCall": false,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 9498
+    },
+    {
+      "id": "needs-a-dsn",
+      "arm": "baseline",
+      "run": 0,
+      "expectCall": false,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 21908
+    },
+    {
+      "id": "table-layouts",
+      "arm": "baseline",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 0.55,
+      "findings": [
+        {
+          "id": "recommend.absent",
+          "severity": "error",
+          "at": "q1",
+          "message": "no option marked (Recommended); if they are genuinely equivalent, say so in the question text"
+        },
+        {
+          "id": "description.bloated",
+          "severity": "warn",
+          "at": "q1.o1",
+          "message": "description is 56 words; over 45 is background belonging in the prose"
+        }
+      ],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Switch on viewport: dense grid at \u2265900px, card list below.",
+        "q1.o2  Ship the card list everywhere and delete the grid.",
+        "q1.o3  Ship the grid everywhere and delete the card list."
+      ],
+      "elapsedMs": 21515
+    },
+    {
+      "id": "widening-approval",
+      "arm": "baseline",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 0,
+      "findings": [
+        {
+          "id": "question.too-long",
+          "severity": "warn",
+          "at": "q1",
+          "message": "question is 30 words; budget is 25"
+        },
+        {
+          "id": "header.too-long",
+          "severity": "warn",
+          "at": "q1",
+          "message": "header is 14 chars; renders as a tab chip, budget is 12"
+        },
+        {
+          "id": "recommend.absent",
+          "severity": "error",
+          "at": "q1",
+          "message": "no option marked (Recommended); if they are genuinely equivalent, say so in the question text"
+        },
+        {
+          "id": "label.too-short",
+          "severity": "warn",
+          "at": "q1.o1",
+          "message": "label is 2 word(s); 3 to 7 names an outcome"
+        },
+        {
+          "id": "description.no-cost",
+          "severity": "error",
+          "at": "q1.o3",
+          "message": "description carries neither a number nor a named consequence, so it states no cost"
+        }
+      ],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Leave currencyLegacy.ts and the invoice.ts comment untouched.",
+        "q1.o2  Treat the comment as stale and remove currencyLegacy.ts along with the other two.",
+        "q1.o3  Leave the file, but update the invoice.ts comment to record that no ticket was found and the migration's status is unverified, so the next person doesn't have to re-derive this."
+      ],
+      "elapsedMs": 26651
+    },
+    {
+      "id": "search-permissions",
+      "arm": "baseline",
+      "run": 0,
+      "expectCall": true,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 31114
+    },
+    {
+      "id": "which-file-first",
+      "arm": "baseline",
+      "run": 0,
+      "expectCall": false,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 39016
+    },
+    {
+      "id": "unit-mismatch",
+      "arm": "skill",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Writes seconds and reads any value above 10^11 as milliseconds.",
+        "q1.o2  Writes seconds at `src/auth/token.ts:41` and leaves the reader alone.",
+        "q1.o3  Reads milliseconds at `src/auth/session.ts:88`, a one-line change."
+      ],
+      "elapsedMs": 40078
+    },
+    {
+      "id": "config-cache",
+      "arm": "skill",
+      "run": 0,
+      "expectCall": true,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 36115
+    },
+    {
+      "id": "strict-types",
+      "arm": "skill",
+      "run": 0,
+      "expectCall": false,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 10626
+    },
+    {
+      "id": "migration-lock",
+      "arm": "skill",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Adds the column as nullable, backfills 14 million rows in batches, then validates NOT NULL.",
+        "q1.o2  Runs the file unchanged, in one transaction.",
+        "q1.o3  Runs the same one-transaction file later, once a window is scheduled."
+      ],
+      "elapsedMs": 44693
+    },
+    {
+      "id": "error-wording",
+      "arm": "skill",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Prints `invalid config: retry_limit must be an integer, got \"5s\"` on one line.",
+        "q1.o2  Prints `retry_limit must be an integer, got \"5s\"; set it to a number of seconds, such as 30` on one line.",
+        "q1.o3  Prints the key, the received value and the fix across three lines."
+      ],
+      "elapsedMs": 56781
+    },
+    {
+      "id": "six-decisions",
+      "arm": "skill",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  The 12% of traffic keeps working through one file of mapping code onto the new schema.",
+        "q1.o2  The 12% of traffic keeps working during a stated window, then stops.",
+        "q1.o3  The 12% of traffic starts failing the day this ships."
+      ],
+      "elapsedMs": 47879
+    },
+    {
+      "id": "confirm-the-fix",
+      "arm": "skill",
+      "run": 0,
+      "expectCall": false,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 11952
+    },
+    {
+      "id": "needs-a-dsn",
+      "arm": "skill",
+      "run": 0,
+      "expectCall": false,
+      "asked": false,
+      "declined": true,
+      "lintScore": 0,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [],
+      "elapsedMs": 22964
+    },
+    {
+      "id": "table-layouts",
+      "arm": "skill",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Every viewport gets the card list, including the 30% of sessions below 900px.",
+        "q1.o2  Viewports above 900px get the grid; the 30% below 900px get a layout they cannot use.",
+        "q1.o3  Viewports above 900px get the grid; below 900px get cards."
+      ],
+      "elapsedMs": 64623
+    },
+    {
+      "id": "widening-approval",
+      "arm": "skill",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Deletes `numberLegacy.ts` and `percentLegacy.ts`, which match `dateLegacy.ts` exactly: no importers, no comment naming them.",
+        "q1.o2  Deletes all three files.",
+        "q1.o3  Deletes nothing."
+      ],
+      "elapsedMs": 67481
+    },
+    {
+      "id": "search-permissions",
+      "arm": "skill",
+      "run": 0,
+      "expectCall": true,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  p50 drops from 340ms to about 160ms on every request.",
+        "q1.o2  p50 drops to about 40ms on the roughly 55% of requests that hit, and 160ms on the rest.",
+        "q1.o3  p50 drops to about 40ms on the roughly 80% of requests that hit, and 160ms on the rest."
+      ],
+      "elapsedMs": 52941
+    },
+    {
+      "id": "which-file-first",
+      "arm": "skill",
+      "run": 0,
+      "expectCall": false,
+      "asked": true,
+      "declined": false,
+      "lintScore": 1,
+      "findings": [],
+      "judge": null,
+      "judgeNote": "",
+      "parallelism": [
+        "q1.o1  Moves the date-bucketing helper out of weekly.ts, monthly.ts, quarterly.ts and annual.ts into one module.",
+        "q1.o2  Moves the date-bucketing helper and the exactly repeated load, group and format steps into shared functions across all nine files.",
+        "q1.o3  Replaces the nine aggregation paths with one parameterised pipeline that each report configures."
+      ],
+      "elapsedMs": 55396
+    }
+  ],
+  "note": "First measurement, 2026-08-08. n=1 per cell, judge off, linter and metric as shipped. A signal, not a baseline: do not gate on this. See README.md."
+}

@@ -1,0 +1,22 @@
+{
+ "harness": "skill-creator run-loop.ts (synthetic stub at project scope)",
+ "model": "us.anthropic.claude-opus-4-5-20251101-v1:0",
+ "runs_per_query": 3,
+ "trigger_threshold": 0.5,
+ "holdout": 0.4,
+ "train_score": "8/14",
+ "test_score": "4/8",
+ "union_score": "12/22",
+ "comparable_to_RESULTS_baseline": false,
+ "why_not_comparable": [
+  "RESULTS-baseline.json (22/22) was produced by this plugin's OWN trigger-runner.ts, which measures an INSTALLED skill against its real neighbours by reading which skill the router chose.",
+  "This run used skill-creator's run-loop.ts, which installs a synthetic stub at project scope and asks whether the router picks the stub in an otherwise empty room. Different question, different denominator.",
+  "So 12/22 here is not a regression from 22/22. The two numbers answer different questions and cannot be differenced."
+ ],
+ "what_the_failures_actually_show": [
+  "6 of the 10 should-trigger queries scored 0.00 because the model answered them directly without consulting anything. Probed one directly: 'my dialog labels are Yes / No / Skip, rewrite them' produced a complete correct answer with zero tool calls.",
+  "That is the documented limitation in description-writing.md: Claude only consults a skill for work it cannot easily handle alone, so a query with an obvious one-step answer never reaches skill selection and makes a poor test case in either direction.",
+  "2 should-not-trigger failures are the self-reference problem already recorded for oncall: a request for a cheat sheet or training doc ABOUT this skill makes reading the skill correct research, and the harness scores a Read of the skill path as a trigger."
+ ],
+ "action": "Re-measure with this plugin's own trigger-runner.ts, installed, which is the harness the baseline used and the one the brief names as the acceptance gate. Do not edit the description on the strength of a run from the wrong harness."
+}

@@ -1,0 +1,369 @@
+{
+  "target": "ask-user-question",
+  "model": "opus",
+  "runsPerQuery": 3,
+  "threshold": 0.5,
+  "holdout": 0.4,
+  "seed": 42,
+  "scores": {
+    "train": {
+      "correct": 15,
+      "total": 17,
+      "accuracy": 0.8823529411764706,
+      "precision": 1,
+      "recall": 0.7777777777777778,
+      "f1": 0.8750000000000001,
+      "truePositives": 7,
+      "falseNegatives": 2,
+      "trueNegatives": 8,
+      "falsePositives": 0
+    },
+    "heldOut": {
+      "correct": 6,
+      "total": 9,
+      "accuracy": 0.6666666666666666,
+      "precision": 1,
+      "recall": 0.4,
+      "f1": 0.5714285714285715,
+      "truePositives": 2,
+      "falseNegatives": 3,
+      "trueNegatives": 4,
+      "falsePositives": 0
+    },
+    "overall": {
+      "correct": 21,
+      "total": 26,
+      "accuracy": 0.8076923076923077,
+      "precision": 1,
+      "recall": 0.6428571428571429,
+      "f1": 0.782608695652174,
+      "truePositives": 9,
+      "falseNegatives": 5,
+      "trueNegatives": 12,
+      "falsePositives": 0
+    }
+  },
+  "results": [
+    {
+      "query": "i'm about to ask the user whether we go with per-user caching or a shared cache with post-filtering. can you help me word the options so they actually mean something? last time i sent something like this they just replied 'what?'",
+      "shouldTrigger": true,
+      "triggers": 3,
+      "runs": 3,
+      "rate": 1,
+      "passed": true,
+      "wonBy": {},
+      "meanMs": 40090,
+      "failures": []
+    },
+    {
+      "query": "Here's a question I put to my PM this morning and she couldn't answer it: question was \"How should I handle the retry inconsistency?\", options were \"Option A / refactor\" and \"Option B / leave it\". Rewrite it so it's answerable and tell me what I did wrong.",
+      "shouldTrigger": true,
+      "triggers": 3,
+      "runs": 3,
+      "rate": 1,
+      "passed": true,
+      "wonBy": {},
+      "meanMs": 36556,
+      "failures": []
+    },
+    {
+      "query": "I found a swallowed error in src/queue.ts:11 — the catch is empty with a comment pointing at INC-4471. I want to surface failures but I don't know how loud the user wants it. Compose the AskUserQuestion I should send, with a recommendation.",
+      "shouldTrigger": true,
+      "triggers": 3,
+      "runs": 3,
+      "rate": 1,
+      "passed": true,
+      "wonBy": {},
+      "meanMs": 26581,
+      "failures": []
+    },
+    {
+      "query": "the user answered my question with free text saying 'wait, which migration are you talking about' instead of picking one of my three options. what do i do with that — do i just go with the recommended one?",
+      "shouldTrigger": true,
+      "triggers": 3,
+      "runs": 3,
+      "rate": 1,
+      "passed": true,
+      "wonBy": {},
+      "meanMs": 36749,
+      "failures": []
+    },
+    {
+      "query": "im adding a config flag and honestly not sure if this is even worth interrupting the user over, or if i should just pick the obvious default and mention it. how do i decide whether to ask at all",
+      "shouldTrigger": true,
+      "triggers": 3,
+      "runs": 3,
+      "rate": 1,
+      "passed": true,
+      "wonBy": {},
+      "meanMs": 47265,
+      "failures": []
+    },
+    {
+      "query": "I've got two candidate table layouts for the dashboard and I want the user to pick by looking at them side by side rather than reading descriptions. Is preview the right thing here and what does it cost me?",
+      "shouldTrigger": true,
+      "triggers": 3,
+      "runs": 3,
+      "rate": 1,
+      "passed": true,
+      "wonBy": {},
+      "meanMs": 40027,
+      "failures": []
+    },
+    {
+      "query": "need to ask about 6 different things before i can start on this refactor. schema shape, migration strategy, rollout, feature flag naming, whether to keep the old endpoint, and error handling. how should i split that up across calls",
+      "shouldTrigger": true,
+      "triggers": 3,
+      "runs": 3,
+      "rate": 1,
+      "passed": true,
+      "wonBy": {},
+      "meanMs": 40633,
+      "failures": []
+    },
+    {
+      "query": "my dialog labels are Yes / No / Skip and someone on my team said that's bad practice. is it, and what should they be instead?",
+      "shouldTrigger": true,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": false,
+      "wonBy": {
+        "design:ux-copy": 2,
+        "(answered directly)": 1
+      },
+      "meanMs": 46022,
+      "failures": []
+    },
+    {
+      "query": "about to surface a one-way-door decision to the user — dropping a published API export. how much context does the dialog need to carry given they can't ask me anything while it's open?",
+      "shouldTrigger": true,
+      "triggers": 3,
+      "runs": 3,
+      "rate": 1,
+      "passed": true,
+      "wonBy": {},
+      "meanMs": 28117,
+      "failures": []
+    },
+    {
+      "query": "the user picked an option but also typed a note qualifying it, and the note kind of contradicts what they picked. which one wins and how careful do i need to be here",
+      "shouldTrigger": true,
+      "triggers": 3,
+      "runs": 3,
+      "rate": 1,
+      "passed": true,
+      "wonBy": {},
+      "meanMs": 43601,
+      "failures": []
+    },
+    {
+      "query": "grill me on the requirements for the new billing exporter before i start building it — i want to be interviewed properly, one question at a time, until the spec is airtight",
+      "shouldTrigger": false,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": true,
+      "wonBy": {
+        "grill-me": 3
+      },
+      "meanMs": 36407,
+      "failures": []
+    },
+    {
+      "query": "we're at the decisions phase on PLAN-014 and there are eleven pending D-Ns to lock. walk me through adjudicating them and get the composite ADR authored",
+      "shouldTrigger": false,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": true,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 38043,
+      "failures": []
+    },
+    {
+      "query": "Write me a training doc for the team on how to write good AskUserQuestion calls, with before-and-after examples of weak and strong ones and an exercise at the end for new starters.",
+      "shouldTrigger": false,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": true,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 34194,
+      "failures": []
+    },
+    {
+      "query": "I'm building a TUI host that renders Claude Code's AskUserQuestion dialog over websockets. Need to handle the canUseTool callback, map answers back, and support multiSelect. Where do I start with the integration?",
+      "shouldTrigger": false,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": true,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 37060,
+      "failures": []
+    },
+    {
+      "query": "our AskUserQuestion calls have started failing with a schema validation error and the dialog never renders. it worked last week. help me debug what changed",
+      "shouldTrigger": false,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": true,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 36230,
+      "failures": []
+    },
+    {
+      "query": "Grade these five AskUserQuestion calls from our skill library on a 1-to-5 scale for how answerable they are, then write up the rubric you used so other reviewers can apply it consistently.",
+      "shouldTrigger": false,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": true,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 34697,
+      "failures": []
+    },
+    {
+      "query": "review the diff on my current branch — i want the full adversarial pass with architecture, test coverage and security axes, findings table with file and line evidence",
+      "shouldTrigger": false,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": true,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 37026,
+      "failures": []
+    },
+    {
+      "query": "audit every note under docs/ against the structural thresholds and tell me which ones have outgrown themselves and need splitting",
+      "shouldTrigger": false,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": true,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 34820,
+      "failures": []
+    },
+    {
+      "query": "wrap up the session — commit what's here, run the review gate, push the branch and open the PR with the template filled in",
+      "shouldTrigger": false,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": true,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 35759,
+      "failures": []
+    },
+    {
+      "query": "Our platform team wants a one-page cheat sheet of the house conventions for AskUserQuestion option labels. Draft it and circulate a version for comment before we put it in the handbook.",
+      "shouldTrigger": false,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": true,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 32827,
+      "failures": []
+    },
+    {
+      "query": "i need a survey form built for our internal users — multiple choice, about 20 questions, branching logic depending on their answers. what's the best way to structure the questionnaire",
+      "shouldTrigger": false,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": true,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 34912,
+      "failures": []
+    },
+    {
+      "query": "spec out the work for the notification service from the accepted ADRs — REQ notes in EARS format, design notes, then atomic tasks with DoD checklists",
+      "shouldTrigger": false,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": true,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 37069,
+      "failures": []
+    },
+    {
+      "query": "i need to ask the user about four separate things before this migration can start. can they all go in one AskUserQuestion call or do i have to split them, and in what order?",
+      "shouldTrigger": true,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": false,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 35261,
+      "failures": []
+    },
+    {
+      "query": "i've asked this person six questions in a row now over the last twenty minutes and i can tell they're losing the thread. how should i be structuring a run of questions like this so each one lands?",
+      "shouldTrigger": true,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": false,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 36451,
+      "failures": []
+    },
+    {
+      "query": "i'm going back and forth with the user in plain prose, question, answer, question, answer, to pin down what they want. how do i keep each question answerable and know when to stop?",
+      "shouldTrigger": true,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": false,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 35416,
+      "failures": []
+    },
+    {
+      "query": "should these two go in the same dialog as separate tabs or as two calls? one is which cache backend and the other is whether we cache at all",
+      "shouldTrigger": true,
+      "triggers": 0,
+      "runs": 3,
+      "rate": 0,
+      "passed": false,
+      "wonBy": {
+        "(answered directly)": 3
+      },
+      "meanMs": 27306,
+      "failures": []
+    }
+  ]
+}

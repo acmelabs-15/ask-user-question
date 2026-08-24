@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ask-user-question — two disclosure harnesses compared</title>
+<style>
+  .viz-root{
+    color-scheme: light;
+    --surface-1:#fcfcfb; --surface-2:#f4f3f0; --line:#dedcd6;
+    --text-primary:#0b0b0b; --text-secondary:#52514e; --text-muted:#7a7873;
+    --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+    --good:#0ca30c; --warning:#fab219; --critical:#d03b3b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:where(:not([data-theme="light"])) .viz-root{
+      color-scheme: dark;
+      --surface-1:#1a1a19; --surface-2:#232322; --line:#3a3a37;
+      --text-primary:#ffffff; --text-secondary:#c3c2b7; --text-muted:#95948b;
+      --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+    }
+  }
+  :root[data-theme="dark"] .viz-root{
+    color-scheme: dark;
+    --surface-1:#1a1a19; --surface-2:#232322; --line:#3a3a37;
+    --text-primary:#ffffff; --text-secondary:#c3c2b7; --text-muted:#95948b;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--surface-1);}
+  .viz-root{
+    background:var(--surface-1); color:var(--text-primary);
+    font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    max-width:1000px; margin:0 auto; padding:40px 24px 72px;
+  }
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:-.01em}
+  h2{font-size:18px;margin:40px 0 6px;letter-spacing:-.01em}
+  h3{font-size:14px;margin:26px 0 6px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-secondary)}
+  p{margin:8px 0;color:var(--text-secondary);max-width:74ch}
+  .sub{color:var(--text-muted);font-size:13px;margin-bottom:4px}
+  strong{color:var(--text-primary)}
+  code{font:12.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:13.5px}
+  th{text-align:left;font-weight:600;color:var(--text-secondary);padding:7px 10px;border-bottom:1px solid var(--line);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--text-primary);vertical-align:middle}
+  td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:16px 0 4px}
+  .tile{background:var(--surface-2);border-radius:8px;padding:14px 16px}
+  .tile .v{font-size:26px;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .tile .k{font-size:12px;color:var(--text-secondary);margin-top:2px}
+  .tile .c{font-size:11.5px;color:var(--text-muted);margin-top:5px}
+  .bar{display:inline-block;height:9px;border-radius:0 4px 4px 0;vertical-align:middle;min-width:2px}
+  .track{display:inline-block;width:110px;height:9px;background:var(--surface-2);border-radius:4px;vertical-align:middle;margin-right:8px;position:relative}
+  .track .bar{position:absolute;left:0;top:0}
+  .pill{display:inline-block;font-size:11px;font-weight:650;padding:2px 8px;border-radius:999px;letter-spacing:.02em}
+  .pill.inline{background:color-mix(in srgb,var(--warning) 22%,transparent);color:var(--text-primary);box-shadow:inset 0 0 0 1px var(--warning)}
+  .pill.prune{background:color-mix(in srgb,var(--critical) 18%,transparent);color:var(--text-primary);box-shadow:inset 0 0 0 1px var(--critical)}
+  .pill.keep{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--text-primary);box-shadow:inset 0 0 0 1px var(--good)}
+  .note{background:var(--surface-2);border-left:3px solid var(--s2);padding:12px 16px;border-radius:0 6px 6px 0;margin:18px 0}
+  .note p{margin:4px 0}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:720px){.two{grid-template-columns:1fr}}
+  .card{background:var(--surface-2);border-radius:8px;padding:16px 18px}
+  .card h4{margin:0 0 8px;font-size:14px}
+  .card ul{margin:6px 0 0;padding-left:18px}
+  .card li{color:var(--text-secondary);margin:4px 0;font-size:13.5px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--text-secondary);margin:10px 0 2px}
+  .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--text-muted);font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="viz-root">
+
+<div class="sub">ask-user-question · measured 2026-08-08</div>
+<h1>Two disclosure harnesses, and what each one is for</h1>
+<p>They are <strong>not equivalent and not redundant</strong>. They ask different questions, they
+disagree on this skill, and the disagreement is explainable. Everything below is a single run at
+small n — read direction, not decimals.</p>
+
+<h2>Which one answers what</h2>
+<div class="two">
+  <div class="card">
+    <h4 style="color:var(--s1)">skill-creator <code>optimize-disclosure.ts</code></h4>
+    <p style="margin:0 0 6px"><em>“Is this layout cheap, and does it still work?”</em></p>
+    <ul>
+      <li>Measures <strong>context tokens per run</strong> — real cost</li>
+      <li>Per-file <strong>pull rate</strong> → verdict: inline / prune / signpost / keep</li>
+      <li>Distinguishes <strong>prune from signpost</strong>: unread-and-pointed-at vs unread-and-unnamed</li>
+      <li>Proposes and measures <strong>restructured layouts</strong></li>
+      <li>Held-out split; <strong>pass-rate guardrail</strong> blocks cheaper-but-broken</li>
+      <li>Knows load modes: a <code>scripts/</code> file <em>should</em> pull 0%</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4 style="color:var(--s2)">this repo, <code>composition-runner.ts --arm disclosed</code></h4>
+    <p style="margin:0 0 6px"><em>“Does the right file open at the right moment?”</em></p>
+    <ul>
+      <li><strong>Per-scenario</strong> expected references → recall and precision</li>
+      <li>Measures <strong>abstention</strong>: did it correctly decline to ask?</li>
+      <li>Runs a <strong>deterministic linter</strong> on the produced call</li>
+      <li>Three arms: no skill / injected / on-disk</li>
+      <li><strong>No cost metric at all</strong> — the real gap</li>
+    </ul>
+  </div>
+</div>
+
+<div class="note">
+  <p><strong>Use theirs to decide the layout. Use this one to check the behaviour.</strong> Pull rate
+  cannot tell you whether the <em>right</em> file opened for a <em>given</em> situation, and
+  per-scenario recall cannot tell you what a run cost. Neither subsumes the other.</p>
+</div>
+
+<h2>skill-creator baseline — what it found</h2>
+<p class="sub">6 scenarios, 2 runs each · train split 4 scenarios / 8 runs · tiktoken cl100k_base, not estimated</p>
+<div class="tiles">
+  <div class="tile"><div class="v">4,657</div><div class="k">body tokens</div><div class="c">the bill every invocation pays</div></div>
+  <div class="tile"><div class="v">206k</div><div class="k">context tokens / run</div><div class="c">held-out mean; 720k on train</div></div>
+  <div class="tile"><div class="v">100%</div><div class="k">held-out pass rate</div><div class="c">73% on train</div></div>
+  <div class="tile"><div class="v">3 / 2</div><div class="k">inline / prune verdicts</div><div class="c">out of 8 reference files</div></div>
+</div>
+
+<p class="sub" style="margin-top:18px">Their unit is the <strong>file</strong>: how often was each one pulled,
+across every run. Every run here loads the skill and does the work, because the prompt names the
+skill outright.</p>
+<table>
+<thead><tr>
+  <th>reference file</th><th class="n">tokens</th>
+  <th>pull rate over 8 runs</th><th class="n">rate</th><th>verdict</th>
+</tr></thead>
+<tbody>
+  <tr><td><code>register-and-budgets</code></td><td class="n">5,051</td>
+      <td><span class="track"><span class="bar" style="width:110px;background:var(--s1)"></span></span></td><td class="n">100%</td>
+      <td><span class="pill inline">inline</span></td></tr>
+  <tr><td><code>defects-and-repairs</code></td><td class="n">4,413</td>
+      <td><span class="track"><span class="bar" style="width:110px;background:var(--s1)"></span></span></td><td class="n">100%</td>
+      <td><span class="pill inline">inline</span></td></tr>
+  <tr><td><code>writing-the-question</code></td><td class="n">1,374</td>
+      <td><span class="track"><span class="bar" style="width:110px;background:var(--s1)"></span></span></td><td class="n">100%</td>
+      <td><span class="pill inline">inline</span></td></tr>
+  <tr><td><code>layouts-and-previews</code></td><td class="n">4,349</td>
+      <td><span class="track"><span class="bar" style="width:55px;background:var(--s1)"></span></span></td><td class="n">50%</td>
+      <td><span class="pill keep">keep</span></td></tr>
+  <tr><td><code>tool-contract</code></td><td class="n">6,054</td>
+      <td><span class="track"><span class="bar" style="width:55px;background:var(--s1)"></span></span></td><td class="n">50%</td>
+      <td><span class="pill keep">keep</span></td></tr>
+  <tr><td><code>question-sequences</code></td><td class="n">2,446</td>
+      <td><span class="track"><span class="bar" style="width:28px;background:var(--s1)"></span></span></td><td class="n">25%</td>
+      <td><span class="pill keep">keep</span></td></tr>
+  <tr><td><code>before-and-after</code></td><td class="n">4,027</td>
+      <td><span class="track"></span></td><td class="n">0%</td>
+      <td><span class="pill prune">prune</span></td></tr>
+  <tr><td><code>reading-the-answer</code></td><td class="n">2,149</td>
+      <td><span class="track"></span></td><td class="n">0%</td>
+      <td><span class="pill prune">prune</span></td></tr>
+</tbody>
+</table>
+
+<div class="note">
+  <p><strong>The inline verdicts collide with the size budget, and that tension is the real finding.</strong></p>
+  <p>Those three files are <strong>10,838 tokens</strong>. Inlining them into a 4,657-token body gives
+  ~15,500 — three times the specification's 5,000 recommendation. When a 5k-token file is pulled every
+  single time, the honest reading is not “move it into the body.” It is <strong>this skill needs 15k of
+  content and no layout makes that cheap</strong>. The fix is shrinking what is there, not relocating it.</p>
+</div>
+
+<h2>This repo — what it found</h2>
+<p class="sub">15 scenarios, 1 run each · the agent is told the skill exists and decides for itself
+whether to open anything</p>
+<p><strong>Its unit is the scenario, not the file.</strong> It does not ask “how often was this file
+pulled?” — it asks “for <em>this</em> situation, did the file that situation needed get opened, and was
+anything opened that was not needed?” Those are recall and precision, and they have no per-file
+equivalent, which is why this table looks nothing like the one above.</p>
+
+<p class="sub">Ceilings are computed from the per-scenario labels, not measured.</p>
+<table>
+<thead><tr><th>metric</th><th class="n">measured</th><th class="n">ceiling</th><th>is it a target?</th></tr></thead>
+<tbody>
+  <tr><td><strong>recall</strong> — a needed reference was opened</td><td class="n">100%</td><td class="n">100%</td><td>yes, and it is there</td></tr>
+  <tr><td><strong>precision</strong> — opens that were needed</td><td class="n">86% / 57%</td><td class="n">100%</td><td>yes, lenient / strict</td></tr>
+  <tr><td>calls opening any reference</td><td class="n">60%</td><td class="n">73%</td><td>no — derived from the two above</td></tr>
+  <tr><td>references opened per call</td><td class="n">1.40</td><td class="n">1.27</td><td>no — derived</td></tr>
+  <tr><td>abstained when it should have</td><td class="n">100%</td><td class="n">100%</td><td>yes, fixed this session</td></tr>
+  <tr><td>lint score on the produced call</td><td class="n">0.92</td><td class="n">1.00</td><td>yes</td></tr>
+  <tr><td>trigger set (26 queries, 3 runs)</td><td class="n">21/26</td><td class="n">26/26</td><td>yes — recall 64%, precision 100%</td></tr>
+</tbody>
+</table>
+<p>The last four disclosure rows are <strong>two numbers, not four</strong>: at recall 100% and precision
+100%, any-reference lands on 73% and references-per-call on 1.27 by arithmetic.</p>
+
+<h3>Why the two sections do not line up</h3>
+<p><strong>They are measured through different doors, on purpose.</strong> skill-creator names the
+skill in the prompt, so every run definitely loads it and does the work — that is what makes its
+numbers about layout rather than routing. This repo lets the agent decide, so a third of its runs
+are scenarios where declining to ask and reading nothing is the <em>correct</em> answer.</p>
+<p><strong>And the units differ.</strong> A pull rate is per file across all runs. Recall and precision
+are per scenario against a labelled expectation. There is no arithmetic that converts one into the
+other, so a file showing 100% in the first table and 13% in this repo's runs is not a contradiction:
+the first counts runs that all did the work, the second counts runs that mostly should not have.</p>
+<p>An earlier draft of this page put both as adjacent bars in one table. That was wrong — side-by-side
+bars are an instruction to compare, and it manufactured a discrepancy the data does not contain.</p>
+
+<h2>What to run</h2>
+<table>
+<thead><tr><th>you want to know</th><th>run</th><th class="n">time</th></tr></thead>
+<tbody>
+  <tr><td>which files to inline, prune, or keep</td><td><code>optimize-disclosure.ts --max-iterations 1 --num-workers 8</code></td><td class="n">~4 min</td></tr>
+  <tr><td>the same, plus a proposed restructure</td><td>drop <code>--max-iterations 1</code></td><td class="n">~45 min</td></tr>
+  <tr><td>does the right file open per situation</td><td><code>composition-runner.ts --arm disclosed --runs 3</code></td><td class="n">~30 min</td></tr>
+  <tr><td>is the produced call well-formed</td><td><code>checks.ts &lt;call.json&gt;</code> · <code>checks.test.ts</code></td><td class="n">instant</td></tr>
+  <tr><td>does the router reach for the skill</td><td><code>trigger-runner.ts --runs 3</code></td><td class="n">~35 min</td></tr>
+</tbody>
+</table>
+<p><code>--num-workers</code> defaults to 4 and is the free speedup — it costs nothing in what is measured.
+Past about 10 concurrent runs the connection saturates and every run fails at once.</p>
+
+<footer>
+Single runs at small n throughout. skill-creator baseline: 6 scenarios x 2 runs, train split of 4,
+killed after the baseline sweep when the extraction-proposal call stalled. This repo: 15 scenarios
+x 1 run. Repeat runs of identical code have varied by plus or minus 10 points on these rates, so
+treat any single figure as indicative of direction only. Verdict colours are the status palette
+(warning / critical / good). Every bar carries its number, because the light steps used here sit
+below 3:1 against this surface. The two sections are deliberately not plotted together: their
+units differ and adjacency would imply a comparison the data does not support.
+</footer>
+
+</div>
+</body>
+</html>
