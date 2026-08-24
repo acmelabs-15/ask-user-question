@@ -839,6 +839,25 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The stripped copy at `/tmp/auq-ablation/ask-user-question` verified before reuse: built 05:57 against the shipped SKILL.md whose last commit is `1f83f92` at 03:47, zero mentions of `references/` or `examples.md`, and pointer clauses removed by rewording sentences rather than deleting lines, which is the Event 82 design. Shipped skill tree clean, 27 evals confirmed in the scenario set
 - Relaunched per the Event 82 design, unchanged: both arms concurrent at 10 workers each on sonnet, 2 runs per scenario, `acceptEdits`, results to fresh `ablation-control` and `ablation-stripped` directories
 
+## Event 84 — correction: the first pair was complete, and Event 83's diagnosis was wrong
+
+- Timestamp: 2026-08-24 06:45 PDT
+- Verified from per-run logs rather than headlines: all 54 runs in BOTH quarantined arms carry full grading, summing to 262 assertions each. Nothing was ungraded. Event 83's claim that "at least three assertions were never graded" is withdrawn
+- The real mechanism: the counting narrowed at plugin-kit commit `792e17c` excludes runs whose body loaded via file Read rather than the skill system. The quarantined stripped arm had one such run (3 assertions, 262−3=259); the fresh stripped arm has two (262−6=256); every one is the `sentry-dsn-not-in-repo` scenario. The headline `assertions_total` is a counted-runs figure, and `results.json` already named the cause in `runs_loaded_via_file` — the field was present and unread
+- The quarantined pair therefore appears complete rather than interrupted: the detached processes outlived the driving session and wrote full results at 06:07-06:08. The rerun stands on the owner's ruling. Whether the quarantined pair may now serve as extra samples is surfaced to the owner as a decision, not taken here
+- Copies swept per the stale-claim rule: the same wrong diagnosis went into the plugin-kit ledger event and both commit messages. The plugin-kit ledger gets its own dated correction; the commits stand as history with this event as the correction of record
+- The citing rule collects another instance, now from inside this session: a denominator mismatch was read as an interruption signature without opening the per-run logs that disproved it
+
+## Event 85 — stage-1 ablation result: the references earn their existence
+
+- Timestamp: 2026-08-24 06:45 PDT
+- Both arms 54/54 runs, all graded, exit 0, install state absent. On skill-delivered runs: control 217/262 = 82.8%, stripped 185/256 = 72.3%. Removing the six bundled files and their pointers costs about ten points of assertion pass rate on sonnet
+- Sixteen scenarios dropped more than 5 points against the two-sample control mean (fresh control plus the stored sonnet sweep, per the Event 82 design). The strong set, quarantined pair agreeing in direction: notes-only-sentinel −40, prepush-checks-in-question −38, multiselect-empty-and-parsing −25, third-call-of-an-open-run −25, measure-a-draft-against-a-good-one −20, two-release-notes-rendered −20, three-words-one-concept −20, timeout-with-partial-selection −15, reader-says-options-are-the-same −15
+- One drop excluded as unstable rather than real: reader-says-it-depends reads −25 but its control samples span 0.00 to 0.70 across three sweeps, so its control mean is not a baseline
+- The needs-nothing set: approval-widened-past-its-words, clean-answer-opened-a-fork, free-text-names-a-fifth-option, just-show-me-a-finished-call, sentry-dsn-not-in-repo, which-of-the-three-shapes — flat at or near 1.00 with and without references. The negatives are validated by outcome, no judgement involved, which was stage 1's purpose
+- Anomaly worth carrying: first-call-in-a-new-vocabulary scores 20 points HIGHER without references (0.70 to 0.90). Consistent with Event 79 — sonnet never reads wording.md on that scenario, so the file cannot be helping sonnet there; what the drop map measures is content need, not pointer health
+- Stripped-arm quirk, harmless but real: sentry-dsn-not-in-repo loaded the body via file Read in 3 of 4 stripped runs across both pairs and never in control; all such runs passed 3/3
+
 ## Observations
 
 ### Build decisions
