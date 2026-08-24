@@ -463,6 +463,23 @@ _Empty._
 - Recommended and accepted in principle: narrow the compatibility field to drop the any-runtime clause, mark exactly four Gotchas as terminal facts with a marker used nowhere else, leave the rest unmarked, and restate the headless clause as conditional
 - Measured: the description is 1002 characters against a 200-character cap on the web surface, so that route would require rewriting the field the skill can least afford to compress
 
+## Event 42 — glyph set ruled on, and the preview trap identified as a session-long own goal
+
+- Timestamp: 2026-08-24 00:50
+- Measured with the host's own width function, both ambiguity settings: the approved markers `◦` and `∙` are one cell under both, as are the pointer and status glyphs and the dingbat circled numerals. The plain bullet is ambiguous at one or two cells, and the warning sign with a variation selector is always two — which is the mechanism behind the degraded glyph seen in an earlier render
+- Decision: the owner rules `◦` and `∙` as the marker set and waives font coverage as a concern for their own machine. Width facts are kept because they are what breaks alignment; coverage caveats are dropped
+- Found: adding a preview to any option on a single-select question switches the whole question to the preview layout, which renders pointer, index and label and **drops every option description**. Every dialog put in front of the user this session carried carefully written descriptions stating costs and tradeoffs, and none of them were displayed
+- Consequence: the reasoning meant to make those dialogs answerable was being written into a field the layout discarded, which is a sufficient explanation for several of the rejections on its own
+
+## Event 43 — the authoring dispatch, and the baseline it must be measured against
+
+- Timestamp: 2026-08-24 00:52
+- Snapshot taken before any edit, per the method's rule that the arrived-with version is the baseline and is gone once editing starts in place: 366 lines, 20,027 bytes, description 1002 characters at sha `107a6cea`
+- Dispatched: one authoring pass over four ordered commits — corrections first because they are the only category actively misleading a reader, then the layout standard, then nineteen gaps, then six unused capabilities with the surface marking
+- Briefed to load the authoring skill formally and read the disclosure doctrine before deciding any placement, rather than improvising the method
+- Instructed: if a group would breach the 500-line or 5,000-token budget, stop and report rather than compressing prose, because the doctrine's answer at a size limit is more hierarchy and not tighter writing
+- Still open and unowned: the trustworthiness document carries an uncommitted diff with two claims that have since become false — that the composition lint module holds zero rules, and that the absence guard is a hard prerequisite of the composition target
+
 ## Observations
 
 ### Build decisions
