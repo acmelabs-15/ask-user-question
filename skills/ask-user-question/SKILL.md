@@ -36,6 +36,9 @@ do not know exists.
   own prompt says to make the recommended option first and to end its label with
   `(Recommended)`. That is the whole mechanism, so a recommendation you state in
   the prose around the call never reaches the reader.
+- **A call with one single-select question has no review screen.** It submits on
+  the keystroke that picks an option, so the reader cannot look again before it
+  lands. Section 5 says what that costs the first option.
 - **Duplicate question text or duplicate labels reject the whole call.** Question
   texts must differ across the call, and labels must differ inside one question.
   The schema enforces this, so the reader never sees the dialog. Two options that
@@ -50,15 +53,15 @@ do not know exists.
   | Layout | Free-text `Other` | Conversational escape |
   |---|---|---|
   | plain list | yes | yes, `Chat about this` |
-  | `multiSelect` | yes | **none** |
-  | `preview` | **none** | a footer row that abandons the question |
+  | `multiSelect` | yes | yes, `Chat about this` |
+  | `preview` | **none** | a footer row |
 
-  So a preview question has no `Other` at all. The reader's only way to say
-  something is a note on an option they may not want to pick. Check this before you
-  reach for a preview, because the tool's own prompt promises the model that
-  `Other` is always there and a preview question breaks that promise without
-  saying so. Option lists also never scroll, which is why four is a structural cap
-  rather than a stylistic one.
+  A preview question has no `Other` at all, so the reader's only way to say
+  something is a note on an option they may not want to pick. The tool's own prompt
+  promises the model that `Other` is always there, and a preview question breaks
+  that promise without saying so. A screen reader moves both columns: `Chat about
+  this` becomes an option in the list, disappears from `multiSelect`, and the
+  preview layout is disabled outright, so a preview reader gets a plain list.
 - **Never author an `Other`, `None` or `Skip` option** on the two layouts that
   append their own. On those, yours competes with the real one and spends a slot.
   On a preview question, authoring one does not give you back what the layout
@@ -66,15 +69,16 @@ do not know exists.
 - **A `multiSelect` question throws your previews away without a word.** Nothing
   validates the combination, so you get a plain checkbox list and lose whatever you
   spent composing them.
-- **Previews do not exist unless the host opted in.** They resolve from
-  `CLAUDE_CODE_QUESTION_PREVIEW_FORMAT` or the SDK's
-  `toolConfig.askUserQuestion.previewFormat`, as `markdown` or `html`. Where
-  neither resolves, leave the field alone — the host may not render it. Under
-  `html` a preview must contain at least one tag, so plain text is a hard error
-  rather than a passthrough, and the validator also turns away `<script>`,
-  `<style>` and whole documents. A short terminal hides the overflow behind a
-  `lines hidden` count, which argues for previews that compare rather than
-  previews that document.
+- **Previews are on by default, and the format setting does not gate them.**
+  `CLAUDE_CODE_QUESTION_PREVIEW_FORMAT` resolves to `markdown` in an ordinary
+  terminal session, and the renderer never reads it: a single-select question
+  carrying a preview gets the preview layout whatever the setting says. The setting
+  decides two other things — whether preview guidance reaches your own prompt, and
+  whether HTML shape validation runs. Under `html` a preview must contain at least
+  one tag, so plain text is a hard error there rather than a passthrough, and a
+  terminal prints the tags literally in any case. A short terminal hides the
+  overflow behind a `lines hidden` count, which argues for previews that compare
+  rather than previews that document.
 - **Multi-select answers come back as one comma-separated string**, not an array.
   Split on the comma before you match a label.
 - **A skip is not consent.** It records that the reader declined to choose. It does
@@ -82,13 +86,19 @@ do not know exists.
 - **`1` to `4` questions per call and `2` to `4` options per question are hard
   schema limits.** The tool refuses anything past them, even when the reader asks
   for more. `header` belongs to the question; `label` and `description` are
-  required on every option.
-- **`header` is a chip of about 12 characters, and nothing enforces it.** The tool
-  accepts a long header and then overflows its chip in the interface.
-- **You may not be able to ask at all.** The tool is absent in subagents, headless
-  runs, scheduled runs and chat-channel sessions, a host can omit it from the
-  toolset, and `dontAsk` permission mode denies the call. None of these degrade
-  gracefully. Section 1 says what to do instead.
+  required on every option. The cap belongs to the schema and not to the screen —
+  a long list does scroll on a short terminal, and what that costs the reader is
+  the side-by-side comparison the options were written for.
+- **`header` is cut at 48 display columns, not at the 12 it asks for.** The 12 is
+  advisory and no validator reads it. The real sequence is a cut at 48 columns and
+  then a second cut by the tab strip, where an over-long header eats the space its
+  neighbours needed.
+- **You may not be able to ask at all.** The tool is absent in subagents and in
+  chat-channel sessions, a host can omit it from the toolset, and `dontAsk`
+  permission mode denies the call. In a non-interactive run — `-p`, `--print`, no
+  TTY, and a scheduled run for the same reason — it exists only where the host
+  configures a permission-prompt tool. None of these degrade gracefully. Section 1
+  says what to do instead.
 
 ## 1. Decide whether to ask at all
 
@@ -201,12 +211,14 @@ inconsistent rather than merely discouraged, since only one option can be first.
 Nothing stops you writing two, so this is a rule you check rather than a limit the
 tool enforces.
 
-**First position is also the cheapest to choose by accident.** A call with one
-single-select question skips the review screen and submits on the keystroke that
-picks an option, with no confirmation. So never put a destructive or one-way option
-first, even when you would otherwise recommend it. Where the option you recommend
-is the irreversible one, add a second question that confirms it, or leave the
-recommendation unmarked and say in the question text why you are not steering.
+**First position is also the cheapest to choose by accident.** The first option is
+the default, and a default is taken more often than the same option placed
+anywhere else. That holds whatever draws the dialog, and in the terminal it is
+sharper still, because a single-question call submits on one keystroke. So never
+put a destructive or one-way option first, even when you would otherwise recommend
+it. Where the option you recommend is the irreversible one, add a second question
+that confirms it, or leave the recommendation unmarked and say in the question text
+why you are not steering.
 
 The justification has to cite a fact from the situation, not a virtue. `Your
 lockfile already pins version 3, so this needs no dependency change` is a
@@ -236,19 +248,18 @@ reader to skim caveats.
 ## 7. Choose the layout
 
 Single-select is the default. Reach past it deliberately, and read the layout table
-in the Gotchas first, because each alternative removes an escape the reader may
+in the Gotchas first, because the preview layout removes escapes the reader may
 need:
 
 - **`multiSelect: true`** when the choices genuinely combine, such as which of
   four checks to run. The 2-to-4 option cap still applies, so group or split when
-  you have more. This layout has no conversational escape, so a reader who wants to
-  say something has only the free-text box.
+  you have more. It keeps both escapes, so a reader who wants to say something can.
 - **`preview`** when the reader is comparing rendered things, such as two variants
-  of a message or two diffs, and only where the host has opted into a preview
-  format. This is the layout with no free-text box at all, so do not choose it for a
-  question the reader might need to push back on. Keep previews short enough to
-  survive a small terminal, and make them differ visibly — a preview that documents
-  rather than compares wastes the one thing the layout buys.
+  of a message or two diffs. This is the layout with no free-text box at all, so
+  do not choose it for a question the reader might need to push back on. Keep
+  previews short enough to survive a small terminal, and make them differ visibly —
+  a preview that documents rather than compares wastes the one thing the layout
+  buys.
 
 ## Register
 
