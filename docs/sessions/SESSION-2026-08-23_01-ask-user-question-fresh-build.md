@@ -864,6 +864,31 @@ _Empty._
 - The defensible constraint is DEPTH, not count. Anthropic's actual rule is that references stay one level deep from SKILL.md, because a nested reference gets partially read via head -100 and yields incomplete information. That matches the independently measured collapse from 0.91 to 0.64 when a second level is introduced. Fan-out is unbounded; depth is capped at one
 - Third time this session I relayed a claim without opening the source. The pattern is consistent enough to belong in the guidance itself: a number in authoring advice needs its DEFINITION checked, not merely its citation
 
+## Event 81 — the destination is plugin-kit's mainline, and the exposure is larger than the brief said
+
+- Timestamp: 2026-08-24 05:56 PDT, taken from the machine clock. Worth flagging rather than reconciling silently: Events 73-80 carry timestamps running about two and a half hours ahead of file mtimes on this box, and the filesystem is the side with corroborating artifacts, since the sonnet sweep Event 75 describes wrote its results directory at 05:06
+- Owner ruling: every change this work produces lands in the real plugin-kit codebase, not on a side branch and not in a scratch copy. `restructure-shared-layer` is a staging area rather than a destination, so merging it is part of the work rather than an optional tidy-up
+- Measured rather than quoted, and both figures in the cold-start brief were low. 14 commits sit ahead of `origin/restructure-shared-layer`, against the brief's 16, counted from the remote the branch was published to at Event 03. And 57 commits sit on the branch that are not on `main`, which is the number that matters for this ruling
+- The landing is cheap: `restructure-shared-layer..main` is 0, so `main` holds nothing the branch lacks and the merge is a fast-forward. It stays queued behind the guidance rewrite rather than done now, because more plugin-kit commits are still coming
+- Baseline comparability checked before reusing anything. The sonnet sweep results at `~/auq-results/sonnet-sweep` were written at 05:06, after `792e17c` narrowed counting to injected runs at 04:53 and before `8d79a13` added the scenario field at 05:14, which touches parsing and docs and no scoring path. The stored baseline is therefore comparable with the current code
+
+## Event 82 — the stage-1 ablation, and the design fork the owner settled
+
+- Timestamp: 2026-08-24 05:56 PDT
+- Design fork raised before running, because it changes what the null arm means. Removing the six bundled files leaves six pointers in SKILL.md aimed at nothing, and a model that attempts a read and gets an error is in a different condition from one never offered the content. Owner took the recommendation: strip the files AND their pointers, on a copy, so the shipped artifact is never touched
+- A confound cleared before the run rather than after. No expectation in the 27 scenarios names a bundled file, checked across all 262, so stripping references cannot fail a scenario for the trivial reason that an assertion asked for a file that is no longer there. The arm measures whether the content was needed
+- Both arms run concurrently at 10 workers each rather than sequentially at 20, so the same API conditions reach both. Sequential arms would have let drift land on one of them, which is the error the placement A/B at Event 79 was designed around
+- The stored 05:06 sonnet sweep is kept as a third sample on the control arm. It costs nothing and it is the only way to estimate the control's own run-to-run variance, which is what decides whether a scenario has genuinely dropped rather than moved within noise
+
+## Event 83 — the first ablation run ruled interrupted, quarantined, and relaunched
+
+- Timestamp: 2026-08-24 06:20 PDT
+- Session resumed from the cold-start brief. Rehydration surfaced two things the brief did not carry: Events 81-82 existed uncommitted on disk, and result directories for the stage-1 ablation existed at `~/auq-results/ablation-control` and `ablation-stripped`, written 06:07-06:08
+- Owner ruling on resume: that run had not completed properly — if started and interrupted, it is rerun. The artifact corroborates the ruling rather than contradicting it: the two arms report different assertion denominators, 262 control against 259 stripped, over the identical 27-scenario twice-run set. Same scenarios must grade the same total, so at least three assertions were never graded — the partial-run signature that returns a confident number instead of an error, the exact fault shape the measurement-fault-classes analysis catalogues
+- Both result directories and logs quarantined under `-interrupted` suffixes rather than deleted, so the partial data stays available for forensics and cannot be mistaken for a measurement
+- The stripped copy at `/tmp/auq-ablation/ask-user-question` verified before reuse: built 05:57 against the shipped SKILL.md whose last commit is `1f83f92` at 03:47, zero mentions of `references/` or `examples.md`, and pointer clauses removed by rewording sentences rather than deleting lines, which is the Event 82 design. Shipped skill tree clean, 27 evals confirmed in the scenario set
+- Relaunched per the Event 82 design, unchanged: both arms concurrent at 10 workers each on sonnet, 2 runs per scenario, `acceptEdits`, results to fresh `ablation-control` and `ablation-stripped` directories
+
 ## Observations
 
 ### Build decisions
