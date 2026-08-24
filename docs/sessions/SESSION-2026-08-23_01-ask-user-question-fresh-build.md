@@ -875,6 +875,16 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - 15 scenario-variant pairs, 30 runs, six arms concurrent at 3 workers each — 18 children, inside the measured-good zone. Results to `~/auq-results/ablation2-minus-*`
 - Operational note: the launch wrapper's wait failed on unsplit pids under zsh and exited early; the nohup'd arms were unaffected and a watcher now covers both completion and death of any arm
 
+## Event 88 — stage 2 lands: ten causal attributions, three refuted candidates, the corpus annotated
+
+- Timestamp: 2026-08-24 07:40 PDT
+- Gate PASS on all six arms: 30 of 30 runs, every one skill-delivered, zero file-loads, install absent. The completeness check is now the cross-arm one the interrupted-pair episode taught
+- Nine scenario-candidate pairs REPRODUCE: removing the candidate file alone lands the score at or near the all-stripped floor. layout-choice-migration-steps to layout, description-will-not-shorten and defend-rewrite-to-its-author to wording, reader-says-it-depends to failed-question, multiselect-empty-and-parsing and notes-only-sentinel to reading-answers, reask-after-the-options-moved and third-call-of-an-open-run to asking-again, measure-a-draft-against-a-good-one to examples. The two-candidate design paid off once: reader-says-it-depends reproduces under minus-failed-question at 0.10 and shows nothing under minus-reading-answers at 0.60, a clean single-file attribution
+- prepush-checks-in-question is partial: minus-layout lands 0.42 between control 0.67 and stripped 0.25, minus-examples refuted at 0.83. The largest stage-1 drop (−42) is more than one file's worth; layout is causally implicated and declared, the residue stays open
+- Three candidates refuted outright: three-words-one-concept under minus-wording (0.40, exactly control — consistent with Event 79, where sonnet never reads wording.md on it, so removing what is never read changes nothing), reader-says-options-are-the-same under minus-failed-question (0.80, above control), timeout-with-partial-selection under minus-reading-answers (1.00, perfect without the file). All three stay undetermined rather than guessed
+- Corpus populated at `evals/composition/disclosure-evals.json`: 16 rows annotated — ten derived attributions plus six negatives — and 11 left absent, which the schema distinguishes from empty by design. Validated through plugin-kit's scenario-set schema, zero findings. Caveat carried: the six negatives are measured-flat at or near ceiling, so a pull there reads as over-fetch by the outcome definition even where the scenario was designed around a reference; the body alone suffices on sonnet for those
+- n=2 per stage-2 cell is thin; the reproductions are believed because nine of ten agree with the folded stage-1 direction, not because any single cell is powered
+
 ## Observations
 
 ### Build decisions
