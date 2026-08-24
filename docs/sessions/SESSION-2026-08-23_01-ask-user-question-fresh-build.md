@@ -1294,6 +1294,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Class sweep localizes the drift: the other four creator bodies are clean on all markers. Fix dispatched to the modernization agent under the standing fence plus one hard constraint — this body sits deliberately at 4,999 of 5,000 tokens and MUST NOT grow, so every edit is token-neutral or negative, verified by the validator before and after
 - The day's doctrine-propagation map now spans four layers: reviewer agents, the frontmatter reference, the shared portability reference, and a skill body — each found by a different route (owner suspicion, owner suspicion, agent flag, live invocation), which is itself the strongest argument yet for the strike-sweep-the-class rule the sidecar carries
 
+## Event 139 — the subset runner verified, and two follow-ups close its scope
+
+- Timestamp: 2026-08-24 11:47 PDT, measured
+- The subset build verified against the tree: suite 1,666 from 1,612 with zero failures (captured output this time, per the builder's own intermittency warning), typecheck clean, engine and both optimizers untouched by numstat, the smoke run exercising group resolution end to end on one row. The stamp design's strongest part: subset runs are MECHANICALLY incomparable, not just labeled — the eval-set hash is computed over the rows that ran, so compareRuns refuses subset-versus-full and subset-versus-subset deltas by construction
+- The builder corrected the dispatch brief's file name (the tier-study pattern lives in measure-disclosure.ts, not disclosure-measure.ts — near-anagram names, engine versus CLI), the fourth agent-corrects-brief instance today. It also flagged pre-existing suite intermittency it could not capture (two red runs across seven, both slow, test names lost by tailing rather than capturing) — plugin-kit backlog candidate, with capture-full-output-in-shared-trees as its own lesson
+- Two follow-ups dispatched to close the scope: the dashboard listing has ZERO not-of-record awareness (verified by grep — neither subset nor the pre-existing tier-study class), so run rows gain a badge for both; and the owner's directive that the feature be reflected in the skill references — both operator guides gain an iterating-on-a-slice subsection with the stamp semantics and the never-record rule
+- Optimizer wiring deliberately parked with the builder's analysis on record: the holdout-split interaction (a small subset makes selection rest on single attempts) and the apply fence (a slice must never auto-edit a shipped artifact) are decisions, not plumbing
+- Also on disk, report pending: the modernize agent's skill-creator body fix — commits separately once verified
+
 ## Observations
 
 ### Build decisions
