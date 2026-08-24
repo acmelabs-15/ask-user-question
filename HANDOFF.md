@@ -1,15 +1,25 @@
 # Cold-start prompt — ask-user-question, and the disclosure investigation
 
-You are picking up a long session that started as "finish a skill" and turned into
-"the tool measuring the skill was measuring the wrong thing." Both halves are live.
-Read §8 before you trust any disclosure number, and §12 for what to do next.
+**This is your brief. Work from it.** You are picking up a long session that started as
+"finish a skill" and turned into "the tool measuring the skill was measuring the wrong
+thing." Both halves are live.
 
-Start in `/Users/peter.kloss/Dev/ACMElabs/ask-user-question`. Much of the outstanding
-work lands in `plugin-kit`.
+**Do §0 before you answer.** Do not reply with a plan, a summary of this brief, or a
+question about what to do first until you have run the initialisation and read at least
+the first two notes it names. A plan written from this brief alone will be wrong in ways
+you cannot see from here — several findings are compressed to a sentence and mislead at
+that resolution, §8 and §9 especially.
 
-## 0. First — rehydrate. This file is not sufficient on its own.
+When §0 is done, say briefly what you found in the notes that this brief does not carry,
+then propose the next step from §12. If anything in the repos contradicts this brief, the
+repos and the notes win — say so rather than reconciling silently.
 
-**Do this before any work, including anything that looks like a one-liner.** This prompt
+Work in `/Users/peter.kloss/Dev/ACMElabs/ask-user-question`. Much of the outstanding work
+lands in `plugin-kit`.
+
+## 0. First — rehydrate. This brief is not sufficient on its own.
+
+**Do this before any work, including anything that looks like a one-liner.** This brief
 is a summary; the notes below are the record. Several findings here are compressed to a
 sentence and will mislead you at that resolution — §8 and §9 especially.
 
@@ -35,7 +45,7 @@ explicitly on every call or you will read the wrong graph.
 The session note is ~90KB. `read_note` will persist it to a local file and hand you the
 path — that file is ordinary scratch, so `grep` it freely rather than pulling it whole
 into context. Reading only its final events is a reasonable start; reading only this
-prompt is not.
+brief is not.
 
 **Then, before writing anything:** the auto-memories under `~/.claude/memory/` are
 tier-1 and blocking, `~/KNOWLEDGE-GRAPH-CONVENTIONS.md` is auto-imported, and
@@ -361,6 +371,6 @@ research. Always pass `project`.
 **Session notes** are the temporal record and the two in §0 are the only live ones. The
 ask-user-question ledger is a pointer ledger: inline `[[wikilinks]]`, `file.ts:line`, and
 commit shas, not prose summaries. If a fact appears both here and there, **the ledger wins** —
-this file is a summary and summaries drift.
+this brief is a summary and summaries drift.
 
 Keep the ledger current — one event per state change, committed in the same turn.
