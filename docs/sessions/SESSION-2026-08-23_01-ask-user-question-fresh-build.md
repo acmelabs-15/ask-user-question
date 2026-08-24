@@ -1399,6 +1399,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Also stated as scoped negatives: Addy Osmani publishes nothing on model tiers (his convergent idea is the two-surface split in other words), and skills have no forced-invocation analogue — ANALYSIS-004's central mechanism gap recurring at the triggering surface
 - The description work's gate condition is met; the go/no-go goes to the owner with the research's bearing attached
 
+## Event 152 — the gate opens both ways: the ship-gate sweep launches, and the standards integration begins
+
+- Timestamp: 2026-08-24 13:17 PDT, measured
+- Owner ruled in two parts. Option one proceeds: the combined description — the measured old text plus the review-my-draft clause — built from the preserved 998-char bytes (insertion at the deliverable clause, 1,021 chars, one line, sha 30126307, roundtrip verified) and launched on the full 54-row set on sonnet at the same parameters as both prior sweeps; the result returns to the owner before anything ships
+- And the larger directive, verbatim core: the analysis "should become part of our skill standards that we very clearly define so that our ability to evaluate and identify problems is very strong and accurate as well as our ability to create skills first or second try... ideally just first shot." The identification findings become evaluation criteria; the remedy findings become authoring doctrine
+- The integration dispatched to the modernization agent, which holds the reference-file registers and the evidence-label discipline: the two-surface split and no-portable-phrasing-rule into description-writing; capability-graded reading of nulls and the cross-tier detection doctrine into both optimization guides; compositional load into progressive-disclosure as external-measured consistent-with; sibling-overlap and installed-set-size evaluation items into the authoring checklist; the skill-creator body only on a token-neutral hook. Fenced: principles inlined with external sources named, never Brain-entity citations; labels survive integration; validator rules held as named candidates, not built
+- In flight: the ship-gate sweep, the standards integration, and the isolation audit
+
 ## Observations
 
 ### Build decisions
