@@ -1325,6 +1325,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Two brief items confirmed missing and returned: the tier-study chip (the brief said BOTH not-of-record classes; the builder built the pattern and wired only subsets, disclosing the gap honestly) and the operator-docs subsections (item 2 of the follow-up, absent from the diff — git over shared/references/ is empty). The feature commits as one when both land
 - Held facts for the eventual commit: the CLI smoke's gap-register 0/1 row is a smoke, not a measurement — stamped as such by the tool itself
 
+## Event 143 — the subset feature lands whole at plugin-kit 1600348
+
+- Timestamp: 2026-08-24 12:05 PDT, measured
+- All follow-ups closed and verified (suite 1,688 from the 1,612 baseline, zero failures, captured; no skill body in the diff; both docs subsections present), committed as one feature commit and pushed. Sixteen files: the subset vocabulary module, both measurement CLIs, the progress/status layer, three report surfaces, two operator references, six test files
+- What the owner asked for, delivered end to end: run a select group instead of all measures (per-index, per-scenario-id, and group-via-sidecar selection), the CLI showing only the filtered rows with subset denominators, and subset-ness visible in the reports and the dashboard at a glance. Beyond the ask, by the brief's both-classes rule: tier-study runs — previously unmarked in the listing — now chip alongside subsets, and a run carrying both shows both
+- The builder's final round corrected the dispatch brief's third wrong premise (the dashboard reads heartbeated status files, not results.json — a results-driven badge would never have fired for the trigger tool and would have missed the during-run visibility the owner asked for), caught its own invented-example defect before shipping (scenario ids that no shipped set uses), and matched each doc's own wrap convention with the lint delta measured rather than assumed
+- Parked with rationale on the ledger: optimizer wiring (holdout floor, apply fence), the plugin-creator token breach, the reviewer description lengths, the suite intermittency
+- The board after this: nothing in flight; open — the next-sweep decision; queued — the retrospective with the three-defect-class Brain bug report
+
 ## Observations
 
 ### Build decisions
