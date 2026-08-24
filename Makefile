@@ -56,16 +56,24 @@ MODEL       ?= opus
 RUNS        ?= 3
 
 # Every measurement target mints its own directory at recipe time and writes both results
-# and logs inside it. Two independent reasons, and the second is the one that bites:
+# and logs inside it. Three reasons, none of them tidiness:
 #
-#  - Bun opens an output file without O_TRUNC, so re-running into a populated directory
-#    leaves the tail of the previous, longer record spliced onto the new, shorter one. It
-#    is far more dangerous in a `.log` than in a `.json`, because nothing parses a log and
-#    a stale warning reads as a current one.
+#  - measure-disclosure.ts writes `results.json` straight into --results-dir with no
+#    timestamped subdirectory of its own, unlike the two optimizers. A second run into the
+#    same directory therefore replaces the first run's results outright.
 #  - Results written inside the skill directory become bundled files, which the next
-#    disclosure run then measures as part of the artifact. `--apply` compounds it: its
-#    default target is `<results-dir>/best-layout` and it is `rm -rf`ed before the layout
-#    is copied in, so a results directory inside the skill would delete the skill.
+#    disclosure run then measures as part of the artifact.
+#  - optimize-disclosure.ts's --apply defaults to `<results-dir>/best-layout` and `rm -rf`s
+#    that path before copying the layout in, so a results directory placed inside the skill
+#    would delete the skill.
+#
+# What is NOT a reason, having been measured rather than assumed: the O_TRUNC splice, where
+# re-writing a path leaves the tail of the previous longer record attached to the new
+# shorter one. That is real, but it is specific to `Bun.file(path).writer()`, and every
+# write in plugin-kit's shared/ goes through `Bun.write`, which truncates. Verified on Bun
+# 1.3.14: two `Bun.write` calls leave only the second string; the FileSink writer leaves
+# `"BBB\n"` followed by the tail of the first. `tee` truncates too.
+stamped      = $(OUT)/$(1)-$$(date +%H%M%S)
 stamped      = $(OUT)/$(1)-$$(date +%H%M%S)
 
 # Worker counts. DELIBERATELY NOT RAISED above each script's own default -- 10 for the
