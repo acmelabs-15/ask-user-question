@@ -1270,6 +1270,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Pre-publish secret sweep run over the tracked tree: the broad pattern pass hit only prose vocabulary; the high-signal credential pass (provider key prefixes, bearer shapes, JWT shapes) returned zero. Nothing redacted, nothing to redact
 - Standing behavior from here: AUQ commits push to origin main like plugin-kit's — ledger commits included, starting with this one
 
+## Event 136 — HANDOFF.md out of the published repo, and a pathspec trap caught
+
+- Timestamp: 2026-08-24 11:34 PDT, measured
+- Owner: the published repo should not include HANDOFF.md. Executed at 81085ee: untracked and ignored, pushed; the file stays on disk as the local cold-start brief. Verified: zero in ls-files, ignored, present locally
+- The first attempt (5ce7133) silently failed to carry the deletion: committing with an explicit pathspec commits the WORKING-TREE state of those paths, which re-added the file over the staged git rm --cached. The house commit-by-pathspec habit — adopted against the shared-index sweep hazard — inverts for index-only deletions; the fix is a pathspec-free commit with only the deletion staged, verified by status before committing
+- [reflect-capture] MED, edge case: git commit with a pathspec re-adds a working file over a staged index-only deletion (git rm --cached), so untracking commits must be pathspec-free with the staged state verified first — the pathspec habit is for content edits, not for tracking changes. Capture to the sidecar rides the next batch rather than a dedicated dispatch
+- History note, stated not acted: HANDOFF.md remains in the pushed history prior to 81085ee (it carries no secrets, swept). Scrubbing history would need a force push to main, which the house rules forbid — that only changes on an explicit owner ruling
+
 ## Observations
 
 ### Build decisions
