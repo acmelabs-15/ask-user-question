@@ -14,7 +14,7 @@ tags:
 # SESSION-2026-08-23_01: Ask User Question Fresh Build
 
 **Scope**: Build a new ACMElabs plugin `ask-user-question` authored fresh against plugin-kit standards, optimize its description and progressive-disclosure layout with plugin-kit tooling, evaluate it, and retire the `asking-users-questions` plugin entirely.
-**State**: Skill authored and measured; description frozen at 1002 characters (49/52, recall 95.5%, false triggers 6.7%); body at its ceiling, 5,795 of 5,800 tokens. The disclosure investigation is complete: the instrument was broken four ways in plugin-kit and once in Claude Code — the Skill tool's permission ask is terminal in headless runs, triggered by our own `allowed-tools` frontmatter, since removed — all fixed with regression tests. Recall replaced raw pull rate as the number to read; the two model tiers fail in opposite directions, so sonnet is the detection instrument. The placement hypothesis was refuted at n=40 and the reference-count cap was a category error in its source. The retired plugin is gone. In flight: the stage-1 ablation rerun (Event 83), which produces the ground-truth reference map. Open: D-8, which coverage gaps to close — its token budget is stale now the body is at ceiling. Queued: populate `expects_references` and teach the tooling recall, rewrite plugin-kit's authoring guidance, outcome measurement, merge plugin-kit's staging branch to main.
+**State** (through Event 103, 2026-08-24): the skill is PROVEN — outcomes measured by design at +16.1 assertion points on sonnet (69.5% with against 53.4% without, Event 93), version 0.1.1 shipped with the locked table-of-contents standard in all six references as pure additions. The ground-truth map is derived by two-stage ablation and lives in the eval corpus as `expects_references` (16 rows, 6 negatives); every one of the six references is causally needed by at least one scenario, with the examples.md attribution refined to the file-plus-prose bundle after a 0-of-42-reads null killed the pointer lever on that route. The three-layer rewrite landed in plugin-kit (verdicts key on recall; doctrine and operator guide evidence-labeled), the structural-genre thread is complete (taxonomy, authoring reference, informational detectors), plugin-kit merged to a published main and its habit flags are removed. The reflect protocol replaced auto-memory writing; the sidecar SKILL-001 holds ten findings. Nothing posts to external GitHub, by owner ruling. Ledger timestamps are measured clock from Event 101. Open: D-8 (coverage gaps, budget stale), T-13 (install detection), the prepush residue, the examples.md content-boundary lever, and the owner's pending call on retiring the uninstall-plugin-kit item.
 **Prior art**: this build follows the shared-layer restructure work carried out in the separate `plugin-kit` Brain project. Two notes there are load-bearing context and are named as plain text rather than wikilinks, because Brain wikilinks cannot resolve across projects: SESSION-2026-08-09_01 "Plugin Kit Shared Layer Restructure", and ADR-001 "Skill Creator Merge Conflict Resolutions".
 
 ## Tasks
@@ -44,16 +44,16 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 |:--|:--|:--|:--|:--|:--|:--|:--|
 | T-10 | Wave 4 | Close the coverage gaps the user selects | — | `skills/ask-user-question/**` | M | D-8 undecided | Event 34 |
 | T-11 | Wave 4 | Spend the held 18 characters on the review-a-draft hook | — | `SKILL.md` frontmatter | XS | sequenced after T-10, which may need description coverage | Event 29 |
-| T-12 | Wave 5 | Run the outcome measurement | — | `evals/` | L | T-06, T-07 | Event 31 |
 | T-13 | — | Fix plugin-kit's install detection so it distinguishes "no competing copy" from "not reachable" | — | plugin-kit `shared/envelope.ts` | M | out of repo; needs its own task | Event 30 |
 
 ### Archive (completed + deleted)
 
 <details>
-<summary>6 archived tasks</summary>
+<summary>7 archived tasks</summary>
 
 | T-ID | Status | Group | Subject | Agent | Files | Effort | Created | Resolved |
 |:--|:--|:--|:--|:--|:--|:--|:--|:--|
+| T-12 | completed | Wave 5 | Run the outcome measurement | — | `evals/` | L | Event 31 | Event 93 |
 | T-08 | completed | Wave 6 | Retire `asking-users-questions` and sweep its stray copies | — | external | M | Event 03 | Event 70 |
 | T-01 | completed | Wave 1 | Create the `ACMElabs/ask-user-question` repo | W1a-repo | `<repo root>/**` | S | Event 10 | Event 15 |
 | T-02 | completed | Wave 1 | Environment dedup plus copy inventory of the prior WIP | W1b-hygiene | prior WIP tree | S | Event 10 | Event 15 |
