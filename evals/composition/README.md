@@ -7,7 +7,7 @@ trigger harnesses, applied one level up.
 
 | Harness | Question |
 |---|---|
-| `../trigger-runner.ts` | does the **router** pick this skill over its neighbours? |
+| `../history/trigger-runner.ts` | does the **router** pick this skill over its neighbours? Retired; `make measure-trigger` does this now. |
 | `composition-runner.ts` | do the **calls** improve once the skill is read? |
 
 A skill can pass one and fail the other, and the repairs are different. A routing failure is
@@ -18,11 +18,11 @@ skill ends up with a well-tuned description in front of advice nobody measured.
 
 | File | What it is |
 |---|---|
-| `scenario-set.json` | 12 situations. 8 where a dialog is the right move, 4 where deciding is. |
+| `scenario-set.json` | 15 situations. 10 where a dialog is the right move, 5 where deciding is. |
 | `checks.ts` | deterministic linter. Also runs standalone on a single call. |
 | `judge-rubric.md` | the six criteria a regex cannot settle, sent verbatim to the judge |
 | `composition-runner.ts` | the harness. Three arms, three scoring layers, reported separately. |
-| `results-first-run/` | the 2026-08-08 runs. n=1 per cell, kept as a signal, not a baseline. |
+| `../history/composition-results-first-run/` | the 2026-08-08 runs. n=1 per cell, kept as a signal, not a baseline. |
 
 ## Two layers, never averaged
 
@@ -70,7 +70,7 @@ asked the question directly.
 | `scenario-set.json` | `composition-runner.ts` | long narratives with `expect_call` and `expect_refs` labels; measures recall, precision and abstention |
 | `disclosure-evals.json` | skill-creator's `optimize-disclosure.ts` | short self-contained tasks with per-scenario `expectations`; measures pull rate and cost |
 
-`evals.json` was a first attempt at the second and it measured nothing: **all eight
+`evals.json` (now archived at `../history/evals.json`) was a first attempt at the second and it measured nothing: **all eight
 references came back at 0 pulls across 18 runs.** It was `scenario-set.json` converted
 mechanically, and it inherited three properties that made it useless in that harness.
 
@@ -128,7 +128,7 @@ archaeology. That belongs in the repository, not in `references/`.
 The one-question test: **is there a fact in this file that changes the answer, and does
 SKILL.md already contain it?**
 
-## Running it## Running it
+## Running it
 
 ```bash
 bun composition-runner.ts --runs 3 --out ./results

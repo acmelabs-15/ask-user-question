@@ -25,9 +25,12 @@ between two different experiments.
 | `RESULTS-run-loop-crosscheck.json` | A crosscheck run through skill-creator's `run-loop.ts`, confirming the local runner and the imported one agreed. |
 | `trigger-results-dedup/` | Per-query trigger output from the deduplicated eval set. |
 | `trigger-results-postextraction/` | Per-query trigger output for the post-extraction run. |
+| `trigger-2026-08-08_172001/` | Trigger run of 2026-08-08, report plus per-query results, from the retired local harness. |
+| `composition-2026-08-08_172320/` | Composition run of 2026-08-08, report plus three-arm results, scored against the fork's rule set. |
 | `disclosure-comparison.html` | Rendered side-by-side of which references got read per scenario, and what each run cost. |
 | `composition-results-first-run/` | The first composition run: three arms scored by the deterministic linter and the LLM judge, plus its disclosure results. Lived at `evals/composition/results-first-run/` in the fork. |
 | `trigger-runner.ts` | The retired 0.2.0-generation trigger harness. **Nothing invokes it.** |
+| `evals.json` | The failed first disclosure scenario set. **Nothing reads it**; `composition/disclosure-evals.json` replaced it and is what the Makefile points at. Kept as the only specimen of the set-shape fault described below. |
 
 ## `trigger-runner.ts`
 
@@ -56,6 +59,22 @@ designed to; `evals/lib/progress.ts` itself stays where it is, because the live
 `skill-creator` checkout, overridable with `SKILL_CREATOR_DIR` — deliberately, per its own
 comment, so that a missing split fails loudly instead of being reimplemented into silent
 incomparability.
+
+## `evals.json`
+
+Archived from `evals/composition/` on 2026-08-23. It was the first attempt at a disclosure
+scenario set and it **measured nothing**: all eight references came back at 0 pulls across 18
+runs. Three properties caused that, and it is kept because each one is easier to recognise
+against a specimen than a description. It named a codebase the fresh temp root did not have,
+so 17 of 30 runs spent about four Bash calls each discovering there was no repo. Its
+expectations were boilerplate, the same five assertions pasted across all ten asking
+scenarios, and generic expectations are satisfiable from `SKILL.md` alone, so no reference was
+ever decisive. And it passed no `--permission-mode`, so half the runs had a Write denied and
+fell back to inline text.
+
+`composition/disclosure-evals.json` replaced it and is what both disclosure targets read. The
+full diagnosis is in `../composition/README.md`, and the fault class it belongs to is F5 in
+`../TRUSTWORTHINESS.md`. **Do not point a disclosure run at this file.**
 
 The Makefile writes new results to `$(OUT)` — outside the repo by default — so a fresh run
 cannot land here and quietly join the record.

@@ -27,7 +27,7 @@ added when the description was widened and have never been run.
 |---|---|
 | `trigger-eval-set.json` | 26 queries, each `{query, should_trigger}`. **Do not regenerate.** Authored input. |
 | `RESULTS-baseline.json` | the 22/22 run, against the description as it was before sequencing was claimed |
-| `trigger-runner.ts` | probes one query per `claude -p` and reports which skill the router reached for |
+| `history/trigger-runner.ts` | probes one query per `claude -p` and reports which skill the router reached for. **Retired** — `make measure-trigger` does this now. |
 
 ## Baseline
 
@@ -100,12 +100,12 @@ queries, so it is the same failure mode.
 
 This bit cost a wrong conclusion, so it is written down.
 
-`trigger-runner.ts` in this directory and `run-loop.ts` in skill-creator both report "N of 22"
+`history/trigger-runner.ts`, retired, and `run-loop.ts` in skill-creator both report "N of 22"
 and they are not comparable:
 
 | Harness | Question it answers |
 |---|---|
-| `trigger-runner.ts` (this one) | does the **installed** skill beat its **real neighbours**? |
+| `history/trigger-runner.ts` (retired) | does the **installed** skill beat its **real neighbours**? |
 | skill-creator `run-loop.ts` | does a **synthetic stub** attract these queries in an otherwise empty room? |
 
 `run-loop.ts` installs a stub at project scope with `--setting-sources project`, which
@@ -138,13 +138,18 @@ research.
 ## Running it
 
 ```bash
-bun trigger-runner.ts --target ask-user-question:ask-user-question
+make measure-trigger    # per-query rates, full-N, comparable across runs
+make trigger            # optimize the description against the same set (~35 min)
 ```
 
-`--target` is the plugin-qualified skill name to count as a hit, and it defaults to the
-name this plugin ships under. It exists because the name changed when this skill moved out
-of its old monorepo, and a stale value does not error: every comparison misses and the run
-reports 0 percent, which reads as a broken description rather than a broken constant.
+Both read `trigger-eval-set.json` and run plugin-kit operations, which isolate their own
+measurement. Run `measure-trigger` first: it reports what the description does as authored
+and proposes nothing, which is usually the number you wanted.
+
+The retired `history/trigger-runner.ts` took a `--target` instead — the plugin-qualified
+skill name to count as a hit, defaulting to the name this plugin ships under. The lesson in
+that flag outlived the runner: a stale value does not error. Every comparison misses and the
+run reports 0 percent, which reads as a broken description rather than a broken constant.
 
 ## The known risk, which no wording can fix
 
