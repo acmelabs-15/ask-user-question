@@ -23,14 +23,15 @@ not against the prose.
 | Multi-select | `Types, Unit tests, Integration` — one string, comma-joined |
 | Free text | `can we do the third thing instead` — their words, no label |
 | Note on a selection | the label, with the note carried alongside it |
-| Note with no selection | `(notes only)` — a sentinel, not an answer |
+| Note with no selection | `(notes only)` — an answer whose option did not send |
 | Pasted image | `Looks wrong to me (Image attached)`, or `(Image attached)` alone |
 | Skip, or a timeout | nothing arrives to match |
 
 Two of those rows are the ones that bite. `(notes only)` matches no label you wrote
 and is not free text either — the result reports it as no option selected, with the
-note beside it. And `(Image attached)` is a suffix on the answer rather than part of
-it, so trimming it off to match a label is right and ignoring the image is not.
+note beside it. Read it as an answer that lost its option on the way, not as a
+refusal to answer. And `(Image attached)` is a suffix on the answer rather than part
+of it, so trimming it off to match a label is right and ignoring the image is not.
 
 ## The shapes, and what each one licenses
 
@@ -82,13 +83,32 @@ A note can only have come from a single-select question carrying a preview, whic
 the layout with no free-text box. So a note is the whole of what that reader could
 say, and it is worth reading as such.
 
-**A note without a selection arrives as the literal string `(notes only)`.** That
-is a sentinel meaning no option was chosen, not an answer. Matching it against your
-labels finds nothing, and reading it as free text mistakes a marker for content.
-Treat it as a skip carrying a message: the note is real and the selection is not.
+**A note without a selection arrives as the literal string `(notes only)`.** The
+result reports no option chosen, so matching it against your labels finds nothing
+and reading it as free text mistakes a marker for content.
 
-Honour the note. A selection plus `but only for the staging environment` is not
-approval for production, and proceeding as though the bare label was the whole
+**It is not a skip.** Read it as a reader who meant to choose AND to qualify the
+choice, and whose choice did not send. That is what the dialog invites: notes exist
+only in the preview layout, where the digit keys move the highlight without
+selecting, so a reader can move to an option, press `n`, type the qualification that
+mattered to them, and submit — believing they have done both. They engaged more than
+someone who picked a label. Treating that as a refusal throws away the more
+considered answer of the two.
+
+What did not arrive is which option. The note is attached to the question, not to a
+row, so the selection has to be **recovered rather than assumed**:
+
+- **The note usually names it.** `only for staging, prod needs a change window` is a
+  qualified yes on a deploy question. Take it.
+- **Where it does not, ask once and cheaply.** Put the options back with the note
+  quoted, so the reader confirms rather than retypes. A four-word question here costs
+  far less than acting on the wrong row.
+- **Never match the note to the nearest label by similarity.** A note is a
+  constraint, not a restatement, and the closest-looking option is a guess wearing
+  the shape of an inference.
+
+Then honour the note as binding. A pick plus `but only for the staging environment`
+is not approval for production, and proceeding as though the bare label was the whole
 answer is the failure this shape exists to prevent.
 
 ### A skip
