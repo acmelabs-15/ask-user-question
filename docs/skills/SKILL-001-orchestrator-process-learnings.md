@@ -34,7 +34,7 @@ Inline reflect capture for the active session note SESSION-2026-08-23_01: Ask Us
   - Source: the `--num-workers` corrections and the subsequent `--model` / `--permission-mode` removal (commit d01cdd9), same session.
 
 - [MED] When a task hands you a detection signature from an analysis note, run the finished detector back over the corpus the note counted. It turns a plausible implementation into a checkable claim, and today it confirmed two counts and refuted a third.
-  - Source: the genre-detector run finding ANALYSIS-005's Genre 1 repo count at 3 of 5 against a recorded 5 of 5, 2026-08-24.
+  - Source: the genre-detector run finding the plugin-kit project's structural-genres analysis (its ANALYSIS-005 — not this project's, whose ANALYSIS-005 is the monospace layout note) at a Genre 1 repo count at 3 of 5 against a recorded 5 of 5, 2026-08-24.
 
 - [MED] A detection signature that cannot be implemented as written — such as same-sentence matching over tokens containing sentence terminators — gets the nearest unit that cannot mis-split, stated at the call site with the direction the error runs.
   - Source: the line-unit decision in the manifest-form detector, same report.
