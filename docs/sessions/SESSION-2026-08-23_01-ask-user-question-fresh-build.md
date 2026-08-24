@@ -1144,6 +1144,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Both pending owner rulings from the handoff brief are now resolved: T-09 gated (Event 119), the ticket deferred here. The pending-decisions section stays empty
 - In flight: the sonnet trigger sweep, and the fifth reflect capture
 
+## Event 121 — the sonnet trigger readout: half the positives never fire, and every negative is clean
+
+- Timestamp: 2026-08-24 10:52 PDT, measured
+- The Event 92 coverage companion lands: make measure-trigger on sonnet, the candidate eval set (now 54 rows: 39 positive, 15 negative), 3 runs per query, against the shipped 0.1.3 description. Results in the stamped measure-trigger directory under the 102813 run
+- Headline: recall 20 of 39 = 51.3 percent; false triggers 0 of 15. The under-reach is one-sided — sonnet never fires where it should not, and misses half of where it should. The tier split the disclosure work established (opus over-reaches, sonnet under-reaches) reproduces at the triggering layer
+- Per-group: all four negative groups clean (15/15). author-eleven — the owner's own phrasings — 3 of 11. generated-positive 3 of 7. The gap-* groups built to probe capabilities without a description hook fail on sonnet where they passed on the record model: gap-cost 1/3, gap-comparability 2/3, gap-evidence 2/3, gap-rejection 2/3. The failing queries share a shape: symptom-phrased ("my three choices dont line up", "i want them to see what theyre giving up") or file-referenced, without composition vocabulary
+- Comparability stated honestly, from the sidecar's own SUPERSEDED markers: the 49/52 record was measured against an earlier description (998 chars at ddfdbd9, then 965 at 746889b — both superseded by the frozen 1,002-char description) and a 52-row set. Today's sweep is therefore the FIRST trigger measurement of the shipped description on any model, and the sonnet-versus-record delta confounds model, description bytes and two added rows. The absolute sonnet floor stands regardless: 19 of 39 positives at zero or one-third rate
+- Disposition goes to the owner: description-recall work would re-open the frozen description (sha rebind, T-11 interaction, baseline reset), and that is not this session's call to make
+
 ## Observations
 
 ### Build decisions
