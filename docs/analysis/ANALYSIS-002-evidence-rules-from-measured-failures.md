@@ -106,3 +106,4 @@ This is the rule most likely to be broken while feeling rigorous, because citing
 - pairs_with [[ANALYSIS-003: Coverage Check Against the Retired Asking Users Questions Skill]]
 - required_by [[ANALYSIS-005: Monospace Decision Dialog Layout Rules]]
 - required_by [[ANALYSIS-004: AskUserQuestion Tool Capability Audit at Build 2.1.241]]
+- pairs_with [[ANALYSIS-007: Reference Ablation Ground Truth]]

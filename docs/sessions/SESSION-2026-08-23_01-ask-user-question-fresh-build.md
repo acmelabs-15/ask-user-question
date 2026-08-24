@@ -937,3 +937,4 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - leads_to [[ANALYSIS-006: Surface Portability of the Ask User Question Skill's Claims]]
 
 <!-- The two-relation minimum is met as of the evidence-rules analysis landing in this project. The two prior-art notes this session rests on live in the plugin-kit project and cannot be wikilinked across projects; they are named as plain text in the Prior art header line, in Event 11, and in the Observations above. -->
+- leads_to [[ANALYSIS-007: Reference Ablation Ground Truth]]

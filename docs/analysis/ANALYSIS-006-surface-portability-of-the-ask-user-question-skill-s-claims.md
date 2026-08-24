@@ -193,3 +193,4 @@ Concretely:
 - part_of [[ANALYSIS-001: Plugin Kit Authoring Standards for the Ask User Question Plugin]]
 - depends_on [[ANALYSIS-004: AskUserQuestion Tool Capability Audit at Build 2.1.241]]
 - pairs_with [[ANALYSIS-003: Coverage Check Against the Retired Asking Users Questions Skill]]
+- relates_to [[ANALYSIS-007: Reference Ablation Ground Truth]]
