@@ -951,6 +951,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The finding with the most information is the non-mover: examples.md stays at 0/2 — its proven consumer (measure-a-draft-against-a-good-one, ablation-attributed) still never opens it. Whatever blocks that route, it is not partial-read completeness. examples.md is now the sharpest single remedy target on the board, and the remedy ladder says the next levers are the pointer and the content boundary, not the map
 - The null-that-was-not: a result this shape reported without the pre-registration would have read as a win. Registered first, it reads as what it is — a trend worth one more sample if the number ever needs to be load-bearing, and a dead spot worth acting on now
 
+## Event 97 — pre-registration: the examples.md dead-route experiment
+
+- Timestamp: 2026-08-24 13:15 PDT
+- Target: the sharpest remedy candidate on the board — examples.md at 0/2 recall in both sweeps, unmoved by the ToC intervention, with an ablation-proven consumer (measure-a-draft-against-a-good-one, removal drops 0.80 to 0.60). The remedy under test is the only intervention shape with a positive external measurement: an explicit ordered instruction in the workflow the run actually traverses (invocation 44 to 95 percent in the external evaluation), against the shipped trailing descriptive-conditional, which is the form that measured dead
+- Arms: A = shipped skill; B = a copy where the draft-judging condition MOVES into the head of the pre-flight loop as an imperative ("First read examples.md and set the draft beside the specimen of its shape, then run this list against it") and the trailing section loses that clause. Twenty runs per arm of the single measure-a-draft scenario, arms concurrent at 10 workers each per the sanctioned A/B pattern, sonnet
+- Confounds disclosed before the result: B carries 3 body mentions of the file against A's 2 (an imperative cannot avoid naming its file), and about 28 extra body tokens — B tests the Vercel intervention as a bundle of form, location and surface area, not form alone. If B moves, decomposition is a later experiment; if B does not move, the bundle's failure covers all three components at once
+- Decision rule, registered now: B minus A of at least 6 reads out of 20 is acting evidence (roughly the Fisher-exact threshold at these n); below that the result is directional-only and is reported as underpowered, not as a finding. A B-arm null on a bundle this strong would be the third refutation of intuitive pointer advice and would sharpen the know-versus-do reading — the model may know and still not act, in which any prose fix is aimed at the wrong stage
+- Launch HOLDS until the flag-removal task lands in measure-disclosure, because the experiment runs through the tool being edited and bun executes working-tree code
+
 ## Observations
 
 ### Build decisions
