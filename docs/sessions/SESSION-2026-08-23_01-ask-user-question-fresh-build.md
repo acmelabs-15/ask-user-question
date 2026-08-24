@@ -798,6 +798,27 @@ _Empty._
 - Consequence for the standing decision: the references still earn their place, and now on evidence rather than on an instrument that could not see reads at all. The rejection of deleting them is confirmed a second time, on a different and correct measurement
 - A gap of mine closed on the owner's prompting, commit 792e17c. The load-path distinction was recorded and then ignored: both `computeFileStats` and `scoreRuns` filtered on `skillLoaded`, which is true whether the body was injected or fetched, so contaminated runs were detected, warned about, and counted anyway. That is inconsistent with the same argument already applied to unloaded runs. Only injected runs now count, which costs nothing today and makes a future breakage collapse `countedRuns` loudly instead of quietly describing a rummaging model as layout quality
 
+## Event 75 — the disclosure does not work on Sonnet, and the tool cannot say so
+
+- Timestamp: 2026-08-24 07:40 PDT
+- Same 27 scenarios twice, sonnet against the opus baseline. Every reference falls: layout.md 53.7 to 24.1, examples.md 48.1 to 11.1, wording.md 40.7 to 5.6, failed-question.md 27.8 to 5.6, reading-answers.md 27.8 to 11.1, asking-again.md 20.4 to 14.8. Two references are reached in 3 runs of 54
+- It shows in the output, not just the reads. Pass rate falls 0.927 to 0.832. References are not reached, so answers get worse — a coherent chain rather than noise
+- Every file is still verdicted `keep`, because `keep` is simply "not zero". A file reached 29 times of 54 and one reached 3 times of 54 get the identical verdict, so the tool can neither flag this nor optimize against it. That is the inadequacy the owner identified, now measured
+- Sonnet also ran in 285s against 488s, so the harder test is 1.7x cheaper
+- An inconvenient finding that killed the obvious explanation. Four references carry textbook conditional pointers of the form "Read X when Y"; two — layout.md and examples.md — carry no conditional pointer at all, only descriptive mentions. The two with NO pointer are reached MOST. The best-written pointer is reached least. Pointer quality does not predict the rate here, which means the documented guidance is not sufficient and possibly not the operative variable
+- The confound that cannot be resolved from this data: layout.md is named three times in the body and examples.md twice, while every loser is named once. Surface area tracks the rates better than phrasing does. But so does topic centrality, and a raw pull rate cannot separate "the pointer failed" from "only three scenarios needed it"
+- plugin-kit already documents the ambiguity and does not act on it. Its progressive-disclosure reference states that a pointer without a firing condition "is the single most common reason a well-written reference is never read, and it LOOKS IDENTICAL IN THE DATA to a reference nobody needs" — and `decideFileVerdict` then resolves exactly that ambiguity toward `prune`
+
+## Event 76 — the objective changes: reachability becomes something the loop protects and repairs
+
+- Timestamp: 2026-08-24 07:55 PDT
+- Owner ruling, and it reframes what the tool is for: do not prune content the model cannot reach, work out how to reach it. The optimizer should improve the skill until progressive disclosure fires when it should, on a model like sonnet, and report when it does not — the way the description loop already works for triggering
+- A correction I owed on the way there. I had described the tool as pruning on low pull rates; `decideFileVerdict` only prunes at EXACTLY zero and only when the body already names the file. Any non-zero rate is `keep`, and zero-with-no-pointer is `signpost`, which is already the owner's principle. My argument against sonnet rested on the wrong reading of the rule
+- The design fork, resolved. Making recall the objective outright is self-defeating: the surest way to guarantee a reference is read is to inline it into the body, so a loop told to maximize reaching would delete every reference and paste it into SKILL.md. The token budget stays the objective and stays enforced — that is what progressive disclosure IS — with reachability added as a second thing the loop must not break, plus a propose step that repairs a pointer rather than deleting the file behind it
+- Ground truth landed as scenario field `expects_references`, commit 8d79a13. Absent means the set declares nothing; an EMPTY array is the negative case, a scenario that should reach nothing. Without negatives a layout pulling every file on every run would score perfectly, which is the failure the body budget exists to prevent
+- The repo caught the change properly: a test asserts the recognized key set matches the format document, so the field could not be added without documenting it
+- Standing constraint from the owner on the research: plugin-kit is Claude-first. Cross-vendor findings are evidence about the problem and techniques adoptable within Claude conventions; where anything conflicts, the Claude standard wins. Notably we could not adopt another mechanism even if we wanted to — Claude Code skills load references by the model choosing to read them, so auto-attachment elsewhere tells us the difficulty rather than offering us an escape
+
 ## Observations
 
 ### Build decisions
