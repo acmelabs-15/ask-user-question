@@ -284,8 +284,9 @@ anywhere else. That holds whatever draws the dialog, and in the terminal it is
 sharper still, because a single-question call submits on one keystroke. So never
 put a destructive or one-way option first, even when you would otherwise recommend
 it. Where the option you recommend is the irreversible one, add a second question
-that confirms it, or leave the recommendation unmarked and say in the question text
-why you are not steering.
+that confirms it. Where a second round trip costs more than the steer is worth,
+leave the recommendation unmarked instead and say in the question text why you are
+not steering.
 
 The justification has to cite a fact from the situation, not a virtue. `Your
 lockfile already pins version 3, so this needs no dependency change` is a

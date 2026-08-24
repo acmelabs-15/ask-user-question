@@ -42,9 +42,9 @@ than treat as unlikely, and it is worth reading in full before you act on it.
 
 Read it as a finding about the call, not as noise to be coerced. The nearest label
 is usually not what they meant, and mapping their text onto it silently discards
-the one piece of information the call produced. Two responses are defensible: act
-on what they wrote if it is unambiguous, or ask a corrected question whose options
-now cover the space they named.
+the one piece of information the call produced. Act on what they wrote where it is
+unambiguous; where it is not, ask a corrected question whose options now cover the
+space they named.
 
 Free text that names a fifth option means your options missed the space. Free text
 that restates one of your options in different words usually means that option's
@@ -75,9 +75,10 @@ answer is the failure this shape exists to prevent.
 The reader declined to choose. This authorises **nothing**.
 
 A skip is not consent, not agreement with your recommendation, and not permission
-to take the option you would have picked. Two paths are open: take the
-decide-it-yourself path in SKILL.md, or work out why the question was unanswerable
-and repair it, for which `re-pitch.md` has the failure modes.
+to take the option you would have picked. Work out why the question was
+unanswerable and repair it, for which `re-pitch.md` has the failure modes. Where
+the decision turns out not to have been a real fork, take the decide-it-yourself
+path in SKILL.md instead.
 
 Where the decision is destructive, outward-facing, or hard to reverse, a skip is a
 stop. Do not read absence as authorisation for anything you could not undo.

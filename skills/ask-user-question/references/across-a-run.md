@@ -25,31 +25,54 @@ flowchart TD
   J -->|No| L[Re-ask, saying it is a re-ask and what changed]
 ```
 
-## Say how long this goes on, once, at the start
+## Tell the reader whether this is bounded
 
-A reader on the fourth dialog of an unannounced series cannot tell whether to
-invest thought here or save it for something later. They do not know whether there
-are five more or fifty, and the dialog is the one place they cannot ask.
+A reader on the fourth dialog of an unannounced series cannot tell whether to invest
+thought here or save it for something later. That is the real problem, and it is not
+ignorance of a total — it is not knowing whether the run ends. A reader who knows
+the run is bounded stops rationing.
 
-Say the shape of the run once, early, in prose before the first call: how many
-decisions you expect, and what they are about. An unbounded series becomes a known
-one for the cost of a sentence.
+So the obligation is this: **never assert a total you cannot stand behind, and never
+leave the reader unable to tell whether the run is bounded.** A count is one way to
+satisfy it, not the requirement itself.
 
-Then carry the position inside each question, in one clause: `Finding 3 of 11, two
-fixed so far.` It costs a few words and it is the difference between a reader
-budgeting their attention and a reader rationing it.
+A wrong count is worse than no count, because a count is a promise. Say `3 of 5` and
+then ask twelve, and the reader has not merely disbelieved that one clause — they
+have learned your counts are noise and they stop reading them. This is the same
+failure as a `(Recommended)` marker on a coin flip: a signal that proves unreliable
+does not fail once, it trains the reader to ignore the signal.
 
-## Decide the run's budget before the second call, not during the fifth
+Often the total is genuinely unknowable in advance, because each answer opens or
+closes branches. Say the shape at whatever precision is honest:
 
-Work out how many calls this piece of work is worth, and hold to it. A run that
-grows one question at a time is the shape that exhausts a reader, because no single
-call ever looks like the one too many.
+| What you actually know | What to say |
+|---|---|
+| A known set | `Finding 3 of 11, two fixed so far.` |
+| A shape but no number | `Third of several on the migration.` |
+| A bounded guess | `One of two or three more, depending on this answer.` |
+| **The run is ending** | `This is the last one I have.` |
+| Genuinely open | `I do not know how many more — this answer may open others.` |
 
-Where the work needs more decisions than the budget, that is a finding about the
-work rather than a licence to keep asking. Take the remaining decisions yourself on
-the terms Section 1 of SKILL.md sets out — decide, state the evidence, say what
-would change your mind — and put them in prose where the reader can overrule them
-cheaply.
+The terminal signal is the most valuable of the five and the cheapest to give. A
+reader who knows a run has ended spends freely on the last question instead of
+holding something back for a next one that never comes.
+
+## Say what kind of run this is, and update it when that changes
+
+Before the second call, say what shape the work has: a fixed set of decisions, an
+open branch where each answer may open others, or a single question you expect to
+be the only one. That is answerable even where a count is not, and it is what lets
+the reader calibrate.
+
+Then say so when it changes. An estimate you quietly exceed does the same damage as
+a wrong count, and for the same reason — the reader stops trusting the framing
+rather than just that one estimate. `I said two or three; this answer opened a
+fourth` costs a clause and keeps the signal worth reading.
+
+Where the work needs more decisions than it is worth asking about, that is a finding
+about the work rather than a licence to keep asking. Take the rest yourself on the
+terms Section 1 of SKILL.md sets out — decide, state the evidence, say what would
+change your mind — and put them in prose, where the reader can overrule you cheaply.
 
 ## An approval covers what the option said, and nothing more
 

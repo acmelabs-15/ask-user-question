@@ -11,8 +11,9 @@ hold a shape are `question`, which keeps line breaks and renders no markup, and
 those two carries the structure is the first decision, and SKILL.md's Gotchas carry
 what a preview costs you.
 
+## The twelve rules
 
-Twelve rules, each with the check that decides whether a string passes. They apply
+Each carries the check that decides whether a string passes. They apply
 inside `question` and `preview`, which are the only fields that keep a line break.
 
 The recommendation rules — one marker, first position, the justification and the
@@ -58,21 +59,37 @@ The upper bound anyone can hold at a glance is small, and the four-group cap is 
 tighter constraint of the two: the reader has to keep the group set in mind while
 reading the items inside it.
 
-### 5. The marker set is `◦` and `∙`
+### 5. In a `question`, one marker: `∙`. In a `preview`, markdown lists
 
-**Check:** every leading marker is `◦` or `∙`. No `•`. No circled numeral. No emoji
-in any position where something must line up after it.
+**Check:** every leading marker in a question is `∙`, at one level. A preview uses
+markdown's own list syntax and no authored marker at all. No `•`, no circled
+numeral, and no emoji anywhere something must line up after it.
 
-Width is what breaks alignment, and it is invisible to you. `◦` and `∙` measure one
-display cell whatever the reader's terminal does with East Asian Ambiguous
-characters. `•` is Ambiguous: one cell on your terminal and two on a terminal
-configured the other way, which shifts every column after it on that line only. An
-emoji carrying a variation selector is always two cells, which is why a warning sign
+The field decides this rather than taste. A question is plain text, so a marker is
+the literal character you typed and its width is yours to get right. A preview runs
+a markdown renderer, so `-` is drawn as a list and nesting is the renderer's problem
+instead of yours.
+
+`∙` rather than `◦` because a filled mark reads as a primary item where a hollow one
+reads as subordinate to something, and at a single level there is nothing for it to
+be subordinate to. Both survive on width — one display cell whatever the reader's
+terminal does with East Asian Ambiguous characters — which is why the choice between
+them comes down to how they read. `•`, the one you would reach for first, is
+Ambiguous at one cell or two and shifts every column after it on its line. An emoji
+carrying a variation selector is always two cells, which is why a warning sign
 arrives wider than the space budgeted for it.
 
 Inline, an ambiguous glyph costs nothing — `2 files · 40 lines` has nothing aligned
-after it. The rule is about leading markers in a column and about anything inside a
+after it. The rule is about leading markers in a column, and about anything inside a
 padded block.
+
+**One level is the whole set, and that is a diagnostic rather than a limitation.**
+Wanting a second level of nesting inside a question means the content has outgrown
+the field — rule 4 caps a group at five items and a list at four groups, inside a
+60-column budget. The answer is to move it to a preview, where the renderer gives
+you nesting for nothing. That is the same resolution SKILL.md reaches for when a
+decision will not fit in 25 words, and it is the same signal: the question field is
+full.
 
 ### 6. Indent a continuation to its item's text column
 
@@ -80,8 +97,10 @@ padded block.
 continues, never at column 0, and the wrap is a real newline you wrote rather than a
 hope about the host.
 
-Either a hanging indent of four, or a description column aligned per group. Both are
-well-formed. Mixing them inside one string is not.
+Use a hanging indent of four. The alternative is a description column aligned per
+group, and it is for the case where every item is a short name followed by an
+explanation; it costs you one width calculation per group, which is why it is not
+the default. Mixing the two inside one string is a defect either way.
 
 ### 7. Front-load the word that distinguishes the item
 
@@ -93,14 +112,17 @@ A reader scanning a list sees about two words of each item. An item beginning
 `Introducing`, or `Update the`, has spent its whole visible budget before it says
 anything.
 
-### 8. Every item has a verb, a capital and a full stop — or none of them do
+### 8. Every item is a sentence: a verb, a capital and a full stop
 
-**Check:** read the group. Either every item contains a finite verb and ends in a
-period, or no item does either. Mixed is the defect. Sentence case throughout.
+**Check:** read the group. Every item contains a finite verb and ends in a period.
+Sentence case throughout. The one exception is a group whose items are all bare
+names — a filename, a flag, a command — where none of them takes a verb or a period.
+Mixed is the defect in either direction.
 
 The verb is what makes the check mechanical. `Faster` gives the reader nothing to
-act on; `Rebuilds the index on the next deploy.` does. Consistency inside one group
-matters more than which of the two shapes you pick.
+act on; `Rebuilds the index on the next deploy.` does. The rule defaults to the
+sentence because most groups have something to say about each item, and a group
+that genuinely does not is the narrow case the exception covers.
 
 ### 9. Parallel items take parallel structure
 
@@ -136,8 +158,10 @@ slightly ragged rather than visibly broken.
 
 ### 12. Order the options after the first one, for a reason you could state
 
-**Check:** the options after the recommended one are in an order with a reason —
-cost, risk, or degree. Not the order you happened to type them in.
+**Check:** the options after the recommended one are in an order you could state
+the reason for: by cost where they differ mainly in what they spend, by risk where
+they differ in what they endanger, and by degree where they are one action at
+different strengths. Not the order you happened to type them in.
 
 With two to four options the dialog sits squarely in the range where the first
 things read carry the most weight. The tool already puts the recommendation first,
@@ -151,36 +175,45 @@ self-containment rule and the 25-word question fight each other. The resolution 
 the `preview` field: the question states the decision in one sentence, and the
 structure goes in the preview, which is the one field that can hold it.
 
-Eleven findings across four groups, in a preview:
+Eleven findings across four groups. Because this is a preview, the list is markdown
+and the renderer draws it (rule 5):
 
-```text
-Blocking:
+```markdown
+**Blocking**
 
-∙ Auth token logged in plain text at api/session.ts:88.
-∙ The migration drops rows where tenant_id is null.
+- Auth token logged in plain text at api/session.ts:88.
+- The migration drops rows where tenant_id is null.
 
-Should fix:
+**Should Fix**
 
-∙ Retry backoff is fixed at 100 ms, so a slow dependency stampedes.
-∙ Two callers construct the same URL by hand.
-∙ The cache key omits the locale.
+- Retry backoff is fixed at 100 ms, so a slow dependency stampedes.
+- Two callers construct the same URL by hand.
+- The cache key omits the locale.
 
-Worth knowing:
+**Worth Knowing**
 
-∙ Four tests assert on log text rather than on behaviour.
-∙ The fixture loader reads from disk on every case.
+- Four tests assert on log text rather than on behaviour.
+- The fixture loader reads from disk on every case.
 
-Cosmetic:
+**Cosmetic**
 
-∙ Three files mix tabs and spaces.
+- Three files mix tabs and spaces.
 ```
 
-Every rule above is visible in that block. One blank line between groups and none
-inside. Title Case headers with a colon, because there are four groups. No group
-over five items. One marker, one cell wide. Every item is a sentence with a verb and
-a full stop. No item is numbered, because nothing refers back to one by number. No
-box, because nothing here would pad it. The longest line is well inside 60 columns.
+Every rule is visible in that block. One blank line between groups and none inside.
+Title Case headers, because there are four groups. No group over five items. Every
+item is a sentence with a verb and a full stop, and they are parallel — each names
+the thing and then what is wrong with it. Nothing is numbered, because nothing
+refers back to an item by number. No drawn box. The longest line is well inside 60
+columns.
 
-The question that carries it stays short, because the preview is doing the work:
+The question carrying it stays short, because the preview is doing the work:
 `Eleven findings, four of them blocking. Fix the blocking two now, or take the
 whole list in one pass?`
+
+**The same content in a question field would look different, and worse.** There you
+would write it with `∙` at one level, and the four group headings would have to
+carry the grouping alone with no nesting available — which is rule 5's diagnostic
+firing. Four groups is already at rule 4's cap. That is the signal that the content
+belongs in a preview, and it is the same signal, read from the other direction, as
+a decision that will not fit in 25 words.
