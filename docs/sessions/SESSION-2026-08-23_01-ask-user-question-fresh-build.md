@@ -1062,6 +1062,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The coverage note received its dated erratum: ten gaps closed by post-authoring revisions with the evidence map, gap 11's landing, the stale token budget, the stale reference count, the pre-collector-fix zero-pulls measurement, and the re-pitch rename — verified in place before this event
 - D-8 is closed end to end: locked at Event 108, premise corrected at Event 109, disposition ruled and landed here. The oldest open decision on the board is done
 
+## Event 111 — the third capture lands, and corrects its own brief
+
+- Timestamp: 2026-08-24 09:30 PDT, measured
+- The stale-inventory capture landed and verified against the artifact: the MED preference in place, the mirrored observation added, and the Observations section restructured into three H3 sub-groups (governance 8, verification 5, affordance 2) with all fourteen pre-existing bullets byte-identical
+- The capture agent corrected the dispatch brief's premise before executing: Observations held fourteen bullets, not the fifteen the brief asserted, so the restructure was permitted rather than required at this count; it was performed anyway to avoid a second pass one bullet later. The wrong fifteen came from the second capture agent's read-back tally — a stated count that did not come from the counting command, which is the sidecar's own counting rule firing on the sidecar's own maintenance chain
+- Sidecar committed in this boundary alongside this event
+
 ## Observations
 
 ### Build decisions

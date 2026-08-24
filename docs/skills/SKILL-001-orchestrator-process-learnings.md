@@ -51,6 +51,9 @@ Inline reflect capture for the active session note SESSION-2026-08-23_01: Ask Us
 - [MED] A reported error is a sample, not the population. When one defect of a class is reported, sweep the class before closing; the sweep found two more count errors in adjacent lines that the report did not name.
   - Source: the same correction pass, which grew from one fix to three.
 
+- [MED] A gap inventory authored before a revision pass is not evidence of a gap — it is a snapshot of the artifact as it stood. Before implementing from any inventory, re-verify every entry against the artifact as of now; the re-verification costs a few greps and can change the task's size class. The instance: the coverage note's eleven-gap inventory (authored 2026-08-23) drove a locked fold decision, and re-verification found ten of the eleven already closed by body revisions that landed after the inventory — the fold shrank from eleven edits to one judgment call, and each of the ten would otherwise have been a duplicate edit against content that already said the same thing.
+  - Source: the d8-fold-draft verification table, ten of eleven already-covered with file-and-line evidence, 2026-08-24.
+
 ## Edge Cases (MED confidence)
 
 - [MED] `write_note` silently drops the `status` frontmatter field even when `metadata` is populated on the call — three of three occurrences today, so reproducible rather than flake and ticket-worthy against the brain tooling. Until it is fixed, every write is followed by a read-back and a `find_replace` repair with `expected_replacements: 1`; the note is otherwise indexed and queryable, which is why the drop is easy to miss.
@@ -65,23 +68,29 @@ Inline reflect capture for the active session note SESSION-2026-08-23_01: Ask Us
 
 ## Observations
 
+### Governance constraints
+
 - [constraint] Durable feedback memories have exactly one writer — the skillbook agent at retrospective synthesis; inline capture produces a sidecar note and a session-Event pointer and nothing else #reflect-protocol #memory-governance
 - [decision] Dispatch briefs to delegated agents carry the auto-memory prohibition explicitly, because the rule is invisible from a subagent's context #delegation #dispatch-briefs
-- [insight] A warning attached to a generic knob did not change operator behaviour; removing the knob and naming a purpose-built escape hatch did #affordance-design #measured
-- [technique] Reflect capture is two artifacts and never one — the confidence-bucketed sidecar plus the dated Event pointer that makes the sidecar findable from the session ledger #capture-mechanics #traceability
-
 - [constraint] A teammate's final report is real only when sent through the messaging tool — plain text at end of turn is invisible to the team, and what is lost is exactly what a disk listing cannot show: what was checked, what broke, and what was done outside scope #delegation #reporting
 - [problem] The brain write path silently drops the frontmatter status field even with metadata populated, three of three occurrences on 2026-08-24, while leaving the note indexed and queryable — which is why every write is followed by a read-back and a targeted repair #brain-tooling #write-path
-
 - [constraint] Nothing is posted to external public repositories regardless of queue history — prior approval expires, and drafts for upstream stay local unless the owner explicitly orders a post #external-posting #consent
 - [constraint] An AskUserQuestion call carries its whole decision context inside the call — question text and option descriptions — never in chat prose above the dialog; re-read every call as a cold reader who sees only the call text, and if any option or referenced item is not decidable from it, the call is not ready #ask-user-question #context-in-call
 - [constraint] AskUserQuestion calls in this project's own sessions are composed by formally loading this project's ask-user-question skill and following its rules for question text, labels, option descriptions and layout — never improvised, never one large block of question text — because live use here is also the test surface for the artifact being built #ask-user-question #dogfooding #skill-invocation
+- [insight] The report-through-the-tool rule needs its flat form because the miss has a second cause: an agent can explicitly reason that its automatic final return suffices — a wrong channel inference a reminder would never catch #delegation #reporting
+
+### Verification techniques
+
 - [technique] A detection signature handed from an analysis note gets its finished detector run back over the corpus the note counted, turning a plausible implementation into a checkable claim — confirming two counts and refuting a third in one run #verification #detectors
 - [technique] A signature that cannot be implemented as written gets the nearest unit that cannot mis-split, stated at the call site with the direction the error runs #detectors #honest-error
-
-- [insight] The report-through-the-tool rule needs its flat form because the miss has a second cause: an agent can explicitly reason that its automatic final return suffices — a wrong channel inference a reminder would never catch #delegation #reporting
 - [technique] A stated count and the examples supporting it come out of the same command; written separately they drift, and a sentence naming three while asserting five reads plausibly enough to survive two reviews #counting #drift
 - [technique] A reported error is a sample, not the population — sweep the class before closing, which here turned one count fix into three #verification #class-sweep
+- [technique] A gap inventory authored before a revision pass is a snapshot of the artifact as it stood, not evidence of a gap — re-verify every entry against the artifact as of now before implementing from it, which here found ten of the eleven gaps already closed and shrank the task from eleven edits to one judgment call #verification #stale-inventory
+
+### Affordance and capture mechanics
+
+- [insight] A warning attached to a generic knob did not change operator behaviour; removing the knob and naming a purpose-built escape hatch did #affordance-design #measured
+- [technique] Reflect capture is two artifacts and never one — the confidence-bucketed sidecar plus the dated Event pointer that makes the sidecar findable from the session ledger #capture-mechanics #traceability
 
 ## Relations
 - caused_by [[SESSION-2026-08-23_01: Ask User Question Fresh Build]]
