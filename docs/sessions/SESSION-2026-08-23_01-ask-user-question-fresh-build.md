@@ -1184,6 +1184,22 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Scope note held onto: command-frontmatter `allowed-tools` and MCP grant strings are different mechanisms and are NOT covered by the Event 72 measurement; any fix there needs its own verification, not a blanket strip
 - Disposition to the owner: strip the field from the five (the precedent this project set), or keep it documented as interactive-only. The Event 72 record is the evidence either way
 
+## Event 126 — LOCKED: the field stays a capability; the reference teaches the trap beside it
+
+- Timestamp: 2026-08-24 11:08 PDT, measured
+- Owner ruled on the allowed-tools question in two parts, verbatim core: "we can't just not let skills define that property in their front matter." The strip option is rejected — banning the field would restrict every future skill authored through skill-creator, which is not acceptable. The five creator skills keep their field. And "I don't mind stripping it for the headless optimization" — permission for a harness-side strip, not a mandate; NOT built, because the spawn-site grant (SKILL_EXECUTION_GRANT, verified at disclosure-measure.ts:248 and measure-outcomes.ts:931) already makes measurement work whatever the frontmatter carries, and a copy-time strip would measure bytes that differ from what ships, the wrong-regime fault class
+- Correction issued to my own earlier framing in the same exchange: the first ask overstated the exposure ("invisible to every scripted, CI, or eval run") — plugin-kit's own harness measures the five skills fine; the exposure is only headless consumers outside the harness who pass no grant
+- Executed: the running reviewer-modernization agent's scope extended by message to include skill-frontmatter.md — keep the field and its interactive rationale, add the measured headless caveat with the upstream issue numbers and the Execute-versus-Launching diagnostic, fenced explicitly against any ban or deprecation
+- Still running: the modernization (now five files), the trigger-miss diagnosis, and the stop-stale-run reflect capture
+
+## Event 127 — owner asked whether the grant works; verified on three lines
+
+- Timestamp: 2026-08-24 11:09 PDT, measured
+- Live: all 60 of today's content-boundary runs report skillLoaded true with loadedVia skill in their observation blocks — every run skill-system-delivered through the granted spawn site, zero file fallbacks, zero refusals. First extraction attempt guessed wrong key names and read as 60 not-loaded; corrected from the real run-file schema before any conclusion, the second wrong-key instance today
+- With the field present: Event 71's measured cell stands — 4 of 4 loads under the grant while the skill still carried allowed-tools, before the Event 72 strip
+- Instrument: skillLoaded is set from the tool result (the Launching-skill payload) per the 02248f3 collector fix, so a refused load cannot read as loaded
+- Verdict: the grant works correctly, measured not argued
+
 ## Observations
 
 ### Build decisions
