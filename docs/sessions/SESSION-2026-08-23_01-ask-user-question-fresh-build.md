@@ -1122,6 +1122,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - ANALYSIS-007 carries the dated erratum (attribution withdrawn on the current base, row negative by ruling, stage-2 counts read as-of-stage-2, the stronger-tier caveat as the deletion guard); plugin-kit's ANALYSIS-004 Finding 18 gains the fifth design detail — re-derive ground truth after base drift, stamp attributions with their base version — committed and pushed at plugin-kit 173cea7
 - Brain edit_note timeouts that mask completed writes are now three of three under sweep-adjacent load this session; every ledger and note write this window was disk-verified before commit
 
+## Event 118 — the session continues, and the sonnet trigger sweep launches
+
+- Timestamp: 2026-08-24 10:27 PDT, measured
+- Owner correction on framing: the session is NOT closing — the retrospective is the queue's last item, not the next one. The open board stands: this sweep, then the plugin-kit engineering (T-13 plus the improvement candidates, held while runs go through the tooling), the genre experiments, and the two pending rulings
+- Launched the sonnet trigger sweep, the Event 92 coverage companion: make measure-trigger, MODEL=sonnet, the 52-row candidate eval set to mirror the sweep of record (49/52 on the default model), 3 runs per query, results to a stamped measure-trigger directory. Detached; the skill tree and plugin-kit are both edit-frozen until it lands
+- Sequencing note: the sweep runs through plugin-kit's measure-triggering, so T-13 and the improvement-candidate work queue behind it per the tool-edits-versus-runs rule
+
 ## Observations
 
 ### Build decisions
