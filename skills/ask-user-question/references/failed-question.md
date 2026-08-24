@@ -105,9 +105,9 @@ two decisions.
 
 ## Mode 6: it was never a fork
 
-The reader is irritated rather than confused, because you asked for a
-confirmation, reported progress, requested a value only they can type, or asked how
-before anyone settled whether.
+The reader is irritated rather than confused, because the question was one of the
+non-decisions Section 1 lists. Check it against that list rather than against a copy
+of it here: a copy drifts, and this one already had.
 
 **Repair:** withdraw the question and decide it yourself, then continue, saying the
 three things SKILL.md asks for on that path.

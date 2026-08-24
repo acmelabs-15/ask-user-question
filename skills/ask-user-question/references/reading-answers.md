@@ -21,8 +21,9 @@ already made.
 
 ### A comma-separated string, on a multiSelect question
 
-Multi-select answers arrive as **one string with the selections joined by commas**,
-not as an array. Split on the comma and trim before matching each part.
+The body's Gotchas carry the fact that these arrive comma-joined rather than as an
+array. What belongs here is what to do with it: trim each part before matching,
+because the join is `", "` and a leading space fails an exact comparison.
 
 Two edge cases worth handling rather than assuming away. An empty result means the
 reader selected nothing, which is a decline rather than a selection of none — treat
@@ -56,10 +57,9 @@ The reader picked an option and qualified it. The note is a constraint on the pi
 not a comment on it, and it usually contains the part they were not willing to
 leave implicit.
 
-Notes come from one place only: a single-select question carrying a preview, where
-`n` opens the field. That makes them the escape hatch on the layout that has no
-free-text box, and it is worth saying in the question text that the key exists,
-because a reader who cannot find a way to qualify their answer picks nothing.
+A note can only have come from a single-select question carrying a preview, which is
+the layout with no free-text box. So a note is the whole of what that reader could
+say, and it is worth reading as such.
 
 **A note without a selection arrives as the literal string `(notes only)`.** That
 is a sentinel meaning no option was chosen, not an answer. Matching it against your
@@ -104,11 +104,16 @@ setting of theirs — 60 seconds, 5 minutes, 10 minutes, or never — and unset 
 no timeout at all, so silence is usually a person rather than a clock. Where it
 does fire, whatever they had already selected survives and is reported.
 
-A timeout carries the same authority as a skip, which is none. It is weaker
-evidence about the question's quality, though, because the reader may simply have
-been elsewhere. Where you have reason to think they never saw it, asking the same
-question again is reasonable; where they saw it and let it lapse, treat it as a
-skip and diagnose.
+A timeout carries the same authority as a skip, which is none. It is weaker evidence
+about the question's quality, though, because the reader may simply have been
+elsewhere.
+
+One observable tells the two apart. A timeout reports whatever had already been
+selected, so a partial selection coming back with it means they saw the dialog and
+engaged with it, and it should be read as a skip and diagnosed. Nothing at all
+alongside the timeout is consistent with their never having seen it, and re-sending
+the same question is reasonable. That is the only evidence available, so where it is
+absent, take the reading that authorises less.
 
 ### An image the reader pasted
 

@@ -21,10 +21,11 @@ cost in the recommended option's own description — are in SKILL.md and are not
 repeated here. What belongs to layout is the order of everything *after* the first
 option, which is rule 12.
 
-### 1. Budget 60 display columns, and produce the wrap yourself
+### 1. Budget 60 display columns in a `question`, and wrap it yourself
 
-**Check:** no physical line exceeds 60 display columns, measured in display cells
-rather than characters.
+**Check:** no physical line of a question exceeds 60 display columns, measured in
+display cells rather than characters. A preview needs none of this: the renderer
+wraps its own lines to the pane.
 
 You cannot detect the terminal width and the pane is narrower than the terminal, so
 budget blind and clamp low. Well-behaved command-line tools clamp their help output
@@ -85,20 +86,23 @@ the renderer gives you nesting for nothing. That is the same resolution SKILL.md
 reaches for when a decision will not fit in 25 words, and it is the same signal: the
 question field is full.
 
-### 6. Indent a continuation to its item's text column
+### 6. Indent a continuation to its item's text column (`question` only)
 
 **Check:** every continuation line begins at the text column of the item it
 continues, never at column 0, and the wrap is a real newline you wrote rather than a
-hope about the host.
+hope about the host. A preview is exempt, because its renderer wraps and indents
+lists itself — writing your own indent there fights it.
 
-Use a hanging indent of four. The alternative is a description column aligned per
-group, and it is for the case where every item is a short name followed by an
-explanation; it costs you one width calculation per group, which is why it is not
-the default. Mixing the two inside one string is a defect either way.
+**Two columns per level.** A top-level `•` sits at column 0 with its text at column
+2, so a continuation of that item aligns at column 2. A nested `◦` sits at column 2
+with its text at column 4. Keep it the same the whole way down. The alternative is a
+description column aligned per group, for the case where every item is a short name
+followed by an explanation; it costs a width calculation per group, which is why it
+is not the default, and mixing the two inside one string is a defect either way.
 
-Compute the indent for the marker you actually used, and keep it consistent down the
-list. This is the reason the glyph set matters to layout at all: a continuation
-aligned under a one-cell marker sits wrong under a two-cell one.
+Compute the indent for the marker you actually used. This is the reason the glyph
+set matters to layout at all: a continuation aligned under a one-cell marker sits
+wrong under a two-cell one.
 
 ### 7. Put the word that tells items apart first
 
@@ -207,24 +211,18 @@ and if nothing is lost it was decoration.
 **Do not mix width classes inside a single aligned column, and compute a hanging
 indent for the marker you actually used.**
 
-That is the whole of it. One glyph in the table varies: the top-level marker `•`,
-measured at one cell or two depending on a terminal setting you cannot see.
-Everything else is one cell, measured with the host's own width function under both
-of its settings.
+That is the whole of it. Two glyphs in the table are East Asian Ambiguous and render
+at one cell or two depending on a terminal setting you cannot see: the top-level
+marker `•` and the inline separator `·`. Everything else is Neutral and is one cell
+everywhere.
 
-That does not disqualify `•`, because a marker used consistently down a list lines
-up with itself at either width. The failure needs a mix: two width classes in one
-aligned column, or an indent hand-counted from a width the glyph does not render at.
-So do not start one item with `•` and its neighbour with `➊`, and let the rule 6
-indent be the same all the way down.
-
-The inline separator `·` is worth one sentence of its own, because two authorities
-disagree about it. Unicode's width data classes it Ambiguous; the host's width
-function returns one cell whatever its ambiguity setting is. So the layout
-arithmetic and a terminal following the Unicode tables could draw it differently.
-That disagreement is bounded to nothing, which is why it is the inline separator:
-`2 files · 40 lines` has nothing aligned after it, so a cell either way costs you
-nothing.
+Ambiguity matters less than it sounds, which is why it does not disqualify either of
+them. A marker used consistently down a list lines up with itself at either width,
+and the separator has nothing aligned after it — `2 files · 40 lines` cannot cost you
+anything. The failure needs a mix: two width classes in one aligned column, or an
+indent computed for a width the glyph does not render at. So do not start one item
+with `•` and its neighbour with `➊`, and do not hand-count columns from a marker
+whose width is not yours to know.
 
 ### Two things that stay prohibited
 
@@ -259,7 +257,7 @@ and the renderer draws it (rule 5):
 
 **Should Fix**
 
-- Retry backoff is fixed at 100 ms, so a slow dependency stampedes.
+- Retry backoff is fixed at 100 ms, so slow calls stampede.
 - Two callers construct the same URL by hand.
 - The cache key omits the locale.
 
@@ -277,8 +275,7 @@ Every rule is visible in that block. One blank line between groups and none insi
 Title Case headers, because there are four groups. No group over five items. Every
 item is a sentence with a verb and a full stop, and they are parallel — each names
 the thing and then what is wrong with it. Nothing is numbered, because nothing
-refers back to an item by number. No drawn box. The longest line is well inside 60
-columns.
+refers back to an item by number. No drawn box.
 
 The question carrying it stays short, because the preview is doing the work:
 `Eleven findings, four of them blocking. Fix the blocking two now, or take the
@@ -295,7 +292,7 @@ Pre-push checks:
 • Types ✔
 • Unit tests ✔
 • Integration ✗ (two failures in the billing suite)
-  ◦ Both tests call the payment sandbox ➞ the test key expired on Friday.
+  ◦ Both call the payment sandbox ➞ its key expired.
   ◦ ⚠ Neither test failed on the last green build.
 
 Push anyway, or fix the key first?

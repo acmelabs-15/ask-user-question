@@ -30,7 +30,7 @@ do not know exists.
 The four marked **[terminal]** describe the Claude Code terminal dialog, which is
 one implementation among the hosts that may draw this question. Everything
 unmarked is a property of the tool itself and holds wherever the tool exists. The
-marker appears nowhere else in this skill, so its absence means something.
+marker appears nowhere else in this block, so its absence here means something.
 
 - **The dialog covers the conversation.** While it is open, the reader cannot see
   what you wrote above it, cannot scroll back, cannot open the file you are
@@ -305,8 +305,9 @@ missing step. Two markers is the one shape that is always wrong.
 
 ## 6. State what you have not checked
 
-Where a gap in your own evidence could change which option is right, name it in
-the question text or in the description it bears on. `I have not run the test
+Where a gap in your own evidence could change which option is right, name it in the
+description it bears on. Put it in the question text instead when it bears on every
+option equally, since that is what the question is for. `I have not run the test
 suite against the second option` costs one clause and moves a risk from hidden to
 shared.
 
@@ -326,8 +327,11 @@ need:
   message, two diffs — or when the decision carries more structure than a question
   can hold, per Section 3. Pay the price the Gotchas name: with the descriptions
   gone, whatever distinguishes the options has to be in the labels, in the
-  question, or visible in the preview itself. It is a large-terminal feature, the
-  pane being the terminal's width less 34 columns and its height less 26 rows. Make
+  question, or visible in the preview itself. The only thing a reader can still say
+  is a note on an option, opened with `n`, so say in the question text that the key
+  exists — someone who cannot find a way to qualify their answer picks nothing. It is
+  a large-terminal feature, the pane being the terminal's width less 34 columns and
+  its height less 26 rows. Make
   the previews differ visibly: one that documents rather than compares wastes the
   one thing the layout buys.
 
@@ -345,11 +349,13 @@ the name they use. Where it carries none, take them from the conversation you ar
 in. Do not import a synonym from your own vocabulary for a thing the project has
 already named.
 
-Read `references/wording.md` when a string will not come down to one clause, or
-when you have to justify a rewrite to whoever wrote the original. It carries each of
-those rules by its number in the specification, with worked rewrites and the test
-for whether you have actually taken the reader's nouns. Skipping it costs you a
-question that reads fluently and still cannot be answered cold.
+Read `references/wording.md` when a string will not come down to one clause, when
+you have to justify a rewrite to whoever wrote the original, and — however short
+your strings already are — before the first call in a codebase whose vocabulary you
+have not used before. It carries each of those rules by its number in the
+specification, with worked rewrites, and the read-aloud test for whether the nouns
+you picked are the reader's. Skipping it costs you a question that reads fluently
+and still cannot be answered cold.
 
 Read `references/layout.md` **before** you compose anything with parts — a list,
 groups, anything past a single line. It carries twelve rules with the check that

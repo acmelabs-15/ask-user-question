@@ -13,11 +13,11 @@ rules and the pre-flight loop that checks them.
       "options": [
         {
           "label": "Rebuild now (Recommended)",
-          "description": "Runs the rebuild inside this migration. Your index is 40 MB, so this adds about two minutes of downtime, and the deploy window you booked is thirty."
+          "description": "Runs the rebuild inside this migration. Your index is 40 MB, so this adds about two minutes of downtime. The deploy window you booked is thirty."
         },
         {
           "label": "Ship without it",
-          "description": "Deploys immediately with no downtime. Search returns no results until someone rebuilds by hand, and nothing in the deploy reminds them."
+          "description": "Deploys immediately with no downtime. Search returns no results until someone rebuilds the index by hand. Nothing in the deploy reminds them."
         }
       ]
     }

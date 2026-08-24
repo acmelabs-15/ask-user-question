@@ -15,7 +15,8 @@ flowchart TD
   A[About to ask again] --> B{What happened to the last call?}
   B -->|Answered cleanly| C{Does the new fork come from that answer?}
   B -->|Answered, then the scope grew| D[Ask again — the approval covered the option's words]
-  B -->|Skipped, or nothing came back| E[Do not re-send. Diagnose first, in failed-question.md]
+  B -->|Skipped| E[Do not re-send. Diagnose first, in failed-question.md]
+  B -->|Nothing came back| M[Read the reply shape first, in reading-answers.md]
   B -->|Chat about this| F[Answer in prose. Ask only if a fork survives it]
   C -->|Yes, a new decision| G[Ask, and say what the first answer settled]
   C -->|No, the same decision| H[Do not re-confirm. Proceed]
@@ -52,6 +53,10 @@ closes branches. Say the shape at whatever precision is honest:
 | A bounded guess | `One of two or three more, depending on this answer.` |
 | **The run is ending** | `This is the last one I have.` |
 | Genuinely open | `I do not know how many more — this answer may open others.` |
+
+All five go in the **question text**. The dialog covers the conversation, so a
+position stated in the message above the call is a position the reader never sees —
+which is the body's first Gotcha, and the reason this is worth saying twice.
 
 The terminal signal is the most valuable of the five and the cheapest to give. A
 reader who knows a run has ended spends freely on the last question instead of
