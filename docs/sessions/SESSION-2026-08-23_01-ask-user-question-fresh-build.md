@@ -895,6 +895,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Consequence for the queue: items 2 and 3 are one change — recall reporting (in flight with the engineer agent), verdict logic made recall-aware within the Event 76 rulings (budget stays the objective, reachability protected and repaired, never prune the unreachable), and both reference documents rewritten in the same pass, with the continuation document's disclosure guidance updated or marked superseded
 - Ledger hygiene from the recovered report: T-08 (retire the old plugin) completed at Event 70 but still sat in the unblocked backlog; moved to the archive in this edit
 
+## Event 90 — the first recall-carrying sweep of record, and the two instruments already disagree
+
+- Timestamp: 2026-08-24 08:55 PDT
+- The shipped skill, 27 scenarios twice on sonnet, through plugin-kit's new reporting at commit `1b3ff64`, against the ablation-derived ground truth committed at `fce4f2a`. Gate clean: 54/54 delivered, zero file-loads, install absent, pass rate 83.2%. Results at the recall-sweep directory; the results file carries the new `ground_truth` block — 16 annotated scenarios, 6 negatives, 32 annotated runs
+- Per-file, quoted with denominators because they are small: reading-answers 4/4 and failed-question 2/2 at 100%; layout 3/4; asking-again 2/4 and wording 2/4 at 50%; **examples.md 0/2** — the scenario the ablation proved needs it (measure-a-draft, removal drops 0.80 to 0.60) never opened it in either run this sweep. That is the needed-and-missed signature the whole investigation exists to expose, now legible in a single results file instead of requiring a cross-sweep derivation
+- The same file shows why the verdict layer redesign is necessary rather than cosmetic: examples.md is verdicted `keep` on 8 raw pulls of 54 while its recall is 0 of 2. The raw instrument says healthy, the recall instrument says its one proven consumer misses it, and `decideFileVerdict` can only see the first. The motivating example for the pending change, produced by the tool itself on its first recall run
+- Over-fetch reads 50% — 6 of 12 negative runs opened a reference — against the old hand-annotation era's 0 of 8. Not a regression: the derived negative set includes ceiling-bound scenarios designed around references, so a model correctly following a pointer there scores as over-fetch under the outcome definition, exactly the ceiling caveat the ablation analysis carries. The figure means "reads that did not improve score", not "reads that made no sense", and the guidance rewrite should say so where over-fetch is documented
+- Queue item 2 is complete end to end: schema field, populated corpus, reporting, and a live sweep proving the chain
+
 ## Observations
 
 ### Build decisions
