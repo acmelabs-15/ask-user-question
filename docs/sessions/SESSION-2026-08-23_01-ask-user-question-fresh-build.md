@@ -591,6 +591,25 @@ _Empty._
 - Two payoffs, and the second is the one a composer misses: varying statuses make the column informative row by row, while uniform ones mark that whole group against the others, which survives a reader whose eye lands mid-list rather than on the header
 - **The second rule made an existing rule false** — the marker rule said a list uses one glyph then another "and stops there" — and the author agent caught it and fixed both in the same change. A file that argues with itself teaches whichever half a reader opens first
 
+## Event 57 — the disclosure measurement, and it is the answer nobody wanted
+
+- Timestamp: 2026-08-24 02:55
+- Ran against a rebuilt scenario set of 27 scenarios and 131 expectations, each reference given four or five scenarios designed to create its stated firing condition, plus four no-fire controls. Install state probed absent before launch, so a same-named installed copy could not floor the rates
+- Result over 54 runs: the skill loaded 53 of 53, expectations passed 219 of 257 at 85.2 percent, context averaged 312,068 tokens, and **not one of the six references was opened in any run**
+- The decisive detail came from the per-run logs rather than the summary: the model used the read tool **154 times across 42 of the 53 runs**. It had the tool, reached for it freely, and never once pointed it at a bundled file. So this is not an absence of reads; it is reads landing everywhere except the skill's own files
+- Three independent fixes had gone into that failure the same day — an explicit firing condition on every pointer, plain-language filenames, and a split from three files to six so each carries one recognisable trigger. **No effect on pull rate**
+- Honest form of the claim, and the one to quote: zero observed by an instrument with a known blind spot. The shell ran in all 53 runs across 173 calls, and a file opened that way is invisible to this measurement. That does not overturn 154 explicit reads landing elsewhere, but the caveat travels with the number
+- Consequence: the question is no longer how to lay the references out. It is whether roughly nine hundred lines across six files earn their existence when the artifact works without them and nothing opens them. The optimizer tests deletion as a hypothesis rather than assuming it, and it runs next
+
+## Event 58 — the citing rule extends, and the author agent found the extension in itself
+
+- Timestamp: 2026-08-24 03:00
+- Before applying its staged change set, the author agent compared its own item count against the apply script's anchor count — thirteen against twelve — and found two edits it had measured, reported with confidence, and **never staged**
+- Landing on its own report rather than on the artifact would have shipped an empty commit while claiming the rebuilt specimen was in
+- The generalisation, which is broader than the rule we had been using: **a measurement is not evidence that the thing measured exists in the artifact.** Every earlier instance today was one party checking another's claim about a measured thing. This was a party's own claim about something genuinely measured and never built, and it passed its own review because the measurement was real and only the deliverable was missing
+- Landed as `048339e` and `80ea10d`: the layout standard's internal contradictions resolved, its three undefined nouns defined, a check that cited two different measures reconciled, per-rule examples added where a shape shows what a sentence cannot, a recognition table replacing prose that described strings, and both specimens rebuilt
+- Verified against the artifact rather than the report: the eleven-finding repair renders at 22 lines, widest 58 display cells, nothing over 60, four groups at the cap, with the status glyph taking the marker slot in the group where every item carries one
+
 ## Observations
 
 ### Build decisions
