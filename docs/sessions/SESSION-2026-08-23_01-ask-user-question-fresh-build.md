@@ -1026,6 +1026,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - [reflect-capture] HIGH, constraint: an AskUserQuestion call carries its whole decision context inside the call — question text and option descriptions — never in chat prose above it; the D-8 ask named eleven gaps whose definitions sat outside the dialog and was rejected on exactly that. The rule already existed in the skill's own first Gotcha and in the handoff brief, and was violated by this project's own orchestrator in live use. Capture dispatched in the background to the reflect sidecar SKILL-001: Orchestrator Process Learnings, named here as plain text; the typed edge to the sidecar already stands in this note's Relations
 - Next: D-8 re-asked with all eleven gaps defined inside the call
 
+## Event 107 — the D-8 ask composed by the skill's own rules, and the specimen that already solved it
+
+- Timestamp: 2026-08-24 09:07 PDT, measured
+- Owner correction on the re-asked D-8: use the ask-user-question skill we ship — load it formally and format the call per its rules, not one large block of question text. The skill's do-not-use clause for a wider job pausing to ask is overridden by owner ruling for this project's own session questions: live use here is also a test surface
+- [reflect-capture] HIGH, constraint: AskUserQuestion calls in this project's sessions are composed by formally loading the project's own skill and following its layout rules; loading is not following — the call is checked against the skill's pre-flight before sending. Capture dispatched in the background to the reflect sidecar SKILL-001: Orchestrator Process Learnings, named as plain text; the typed edge stands in Relations
+- The skill was loaded and followed end to end: body, then layout reference (its eleven-items shape), then the examples file — whose final section, one-that-failed-five-times, is this exact D-8 decision from the authoring session, with the diagnosis (findings are not options; cut points are not approaches; the real decision is how to integrate) and a finished repair call. The repair is adopted verbatim plus one fact that changed since authoring: the body at 5,794 of 5,800 means funded trims, added to the orient line and the option costs, plus a fourth leave-open option to cover the do-nothing path
+- Defect found while measuring the draft against the specimen: the repair section's closing measured line quotes 14 lines and two groups, which are the checkout specimen's numbers, not the repair call's own four groups — a count-and-examples drift instance inside shipped content. Work item: fix with the next content release; it is the same defect class the sidecar's counting rule names
+- Live-use disclosure note: on this strong-tier route the skill's pointers fired — layout.md and examples.md were both followed from the body. Consistent with the tier split the ablation established; recorded as an observation, not a measurement
+
 ## Observations
 
 ### Build decisions
