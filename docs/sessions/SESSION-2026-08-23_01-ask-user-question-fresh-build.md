@@ -1312,6 +1312,12 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - plugin-creator's body at 5,012 tokens (12 over ceiling) re-confirmed by the agent's own instrument — already on the plugin-kit backlog from Event 131
 - Batch reflect capture dispatched for the three queued findings: the pathspec-recommit trap, the loaded-skill snapshot with its re-invocation dedupe, and deletions-before-additions on a hard-budget artifact
 
+## Event 141 — the second batch lands: twenty-four observations, and the read-back rule extends to success payloads
+
+- Timestamp: 2026-08-24 11:51 PDT, measured
+- The batch-2 capture verified against the artifact and committed in this boundary: the pathspec-recommit trap and the loaded-skill snapshot as edge cases, the deletions-before-additions ceiling technique as a preference, all three mirrored — the sidecar holds twenty-four observations across its three sub-groups, none near the cap
+- New Brain-tooling instance for the deferred bug report: a SUCCESS payload carried phantom doubled tallies (HIGH 10, MED 34 against a true 5 and 16) on a write that was in fact correct and single — the capture agent read back instead of "fixing" the phantom duplication, extending the read-back-before-reacting rule from error payloads to bogus success payloads. The Event 116 tally noise is now independently confirmed by a second observer
+
 ## Observations
 
 ### Build decisions
