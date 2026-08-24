@@ -1376,6 +1376,12 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Comparability note: the opus record (49/52) was measured on the OLD description, so restoring that wording also restores strict comparability with the record; the shipped 1,002-char wording has no opus measurement of its own
 - Disposition to the owner next; nothing edited
 
+## Event 149 — the description direction set, execution gated on the research
+
+- Timestamp: 2026-08-24 13:00 PDT, measured
+- Owner on the separating result, verbatim: "I think option one makes sense, but I don't want to do it until we get the results of our research back. Which should give us something to think about." Direction: restore the proven old description text and add the review-my-draft wording. Gate: the weak-model routing research report, whose findings may shape the final text before anything ships. No edit until then; the description stays frozen at the shipped bytes
+- Pending stack after this: the tooling escalation (next), then nothing until the research or the gated description work returns
+
 ## Observations
 
 ### Build decisions
