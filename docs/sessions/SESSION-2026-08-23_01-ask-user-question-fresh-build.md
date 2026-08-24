@@ -1137,6 +1137,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Board reconciled in the same pass: T-10 archived as completed (the D-8 closure at Event 110 was its resolution; archive count 7 to 8), T-11 moved to Unblocked with its real scope noted (description is sha-frozen, so spending the 18 characters means a rebind plus trigger re-measure), T-13 moved to Unblocked (its blocker was never a dependency, just out-of-repo scoping)
 - [reflect-capture] MED, preference: a to-do that looks overtaken by events may instead be gated on an end condition only the owner knows — recommendation premises come from owner intent, not from current-state inference, and the fix is writing the gate on the task row. Capture dispatched in the background to the reflect sidecar SKILL-001: Orchestrator Process Learnings
 
+## Event 120 — the brain-tooling ticket deferred to the retrospective, by ruling
+
+- Timestamp: 2026-08-24 10:49 PDT, measured
+- Owner chose, verbatim: "Defer to session end" — the bug report against the Brain write path (write_note status-drop at 3 of 3; edit_note timeout-masking-completed-writes at 6 of 6 today) is written by the retrospective as part of its synthesis, when every instance sits in one place. Not dropped: the deferral is the disposition, and the retrospective's brief carries it as a deliverable
+- Both pending owner rulings from the handoff brief are now resolved: T-09 gated (Event 119), the ticket deferred here. The pending-decisions section stays empty
+- In flight: the sonnet trigger sweep, and the fifth reflect capture
+
 ## Observations
 
 ### Build decisions
