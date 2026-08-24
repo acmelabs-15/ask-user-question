@@ -8,7 +8,7 @@ Paste this whole file into a fresh conversation. Written to be read cold, by som
 
 Build a Claude Code plugin, `ask-user-question`, at `/Users/peter.kloss/Dev/ACMElabs/ask-user-question`. Its single skill teaches an agent to compose an `AskUserQuestion` call — the question text, the options, the recommendation, the layout, and how to read the reply.
 
-It **replaces** `/Users/peter.kloss/Dev/ACMElabs/asking-users-questions`, which is retired and awaiting deletion. **Nothing was ported.** The old plugin was used once as a coverage reference and is not a content source. Do not copy from it.
+It **replaced** `asking-users-questions`, now fully retired: uninstalled, dropped from the marketplace, and its directory deleted 2026-08-24 (its history survives on `github.com/acmelabs-15/asking-users-questions`). **Nothing was ported.** The old plugin was used once as a coverage reference and is not a content source. Do not copy from it.
 
 The owner's standing requirement: **no gaps in triggering.** The skill should fire in every scenario where it should fire.
 
@@ -19,7 +19,6 @@ The owner's standing requirement: **no gaps in triggering.** The skill should fi
 | This plugin | `/Users/peter.kloss/Dev/ACMElabs/ask-user-question` |
 | The skill | `skills/ask-user-question/` |
 | plugin-kit (authoring toolkit) | `/Users/peter.kloss/Dev/ACMElabs/plugin-kit` |
-| Retired plugin | `/Users/peter.kloss/Dev/ACMElabs/asking-users-questions` |
 | Marketplace | `/Users/peter.kloss/Dev/ACMElabs/.claude-plugin/marketplace.json` |
 | Results | `~/auq-results/` |
 
@@ -100,54 +99,86 @@ The four specimens: a simple call; a preview call; a long-context call; and a be
 |---|---|
 | Trigger | **49 / 52** queries, recall 95.5%, false triggers 6.7%, ±2 queries of run-to-run noise |
 | Gap tests | 15 of 15 rows fired, 45 of 45 attempts, six groups |
-| Disclosure | **void** — see §8 |
-| Outcomes | never run |
+| Disclosure | all six files **`keep`**, pull rates 28-69% — see §8 for the denominator |
+| Outcomes | never run formally; §8 carries an accidental one |
 | Lint | 27 rules, each citing its `SKILL.md` line, probe fails at 0.00 as designed |
 
 The ±2 noise figure is real and was measured by scoring identical bytes twice — 45/52 and 47/52. Quote attempt-level recall rather than pass counts when comparing.
 
+**Disclosure, measured 2026-08-24.** examples.md 69.4%, wording.md 69.4%, layout.md 50.0%, failed-question.md 41.7%, asking-again.md 36.1%, reading-answers.md 27.8%. Every file earns its place, and two are pulled in seven of every ten runs that receive the skill.
+
+**Those rates are over 36 runs, not 54.** Eighteen of the 54 never received the skill at all (§8). Any disclosure figure taken before 2026-08-24 used the 54 denominator and is understated by roughly half again.
+
 **Four trigger collisions** exist against installed neighbours (`pptx`, `pdf`, `capture`, `docx`), each flagged for universal-quantifier phrasing in the *neighbour's* description. plugin-kit's own measurement says rewriting ours does not recover them. Not fixable here.
 
-## 8. The instrument bug — read before trusting any disclosure number
+## 8. The instrument bug — fixed 2026-08-24, and what it cost
 
-**plugin-kit's disclosure collector cannot see reads on macOS.**
+All three defects are fixed in plugin-kit on `restructure-shared-layer`, with tests that
+fail on their parent commits. **The `TMPDIR` workaround is now dead weight — delete it
+from any script that still carries it**, because `statusDir()` is keyed to `tmpdir()` and
+a moved temp root hides the run from the dashboard for no benefit.
 
-`shared/operations/disclosure.ts`, `createRunCollector`, line 1287 and 1297-1302. The skill directory comes from `os.tmpdir()` and is normalised with `resolve()`, which does not canonicalise symlinks. `/var` is a symlink to `private/var`, so the collector holds `/var/…` while the model uses `/private/var/…`, and every genuine in-skill read is classified outside.
+| Defect | What it did | Fix |
+|---|---|---|
+| Symlink | `resolve()` left symlinks intact, so a skill under `/var/…` matched no read reported through `/private/var/…`. Every file: 0 pulls, `prune` | `4710db8` |
+| Load on request | `skillLoaded` was set on seeing the `Skill` tool-use and never read the result | `02248f3` |
+| Scored the unreached | pass rate and context cost were taken over runs the layout never reached | `e0be400` |
+| Report never advertised | `measure-disclosure` wrote `report.html` and never set `detail.reportPath`, so dashboard links dead-ended on a status page | `e70b881` |
 
-**Consequence: every bundled file reports zero pulls and a verdict of `prune`, and `optimize-disclosure`'s entire candidate set becomes deletion proposals. The pass-rate guardrail does not catch it, because the content still reaches the model.**
+The third is the one to understand. An unloaded run is cheap — 226k tokens against 350k —
+so counting it meant a candidate that broke loading reported a *lower* context cost and
+cleared the objective more easily. **The loop was being paid to break the skill.** And the
+pass rate became a mix of 0.949 loaded against 0.667 unloaded, moving 6.9 points across
+three sweeps of identical bytes, against a tolerance of 0.05 calibrated to about one
+assertion of noise. What counting unloaded runs protected was real, so it is now a named
+`loadRate` guard rather than a distortion folded into two other figures.
 
-**A second defect compounds it.** `skillLoaded` (lines 1310-1314) is set on seeing the *request* and never checks the result. One probe called the skill twice, both errored, the model improvised the entire answer with nothing from the body or references in its reply — and that run would record as loaded.
+**What is NOT fixed, and bounds every number here.** Eighteen of 54 runs never receive the
+skill. The `Skill` tool returns `is_error` with content `Execute skill: <alias>` and no
+body; the model then says so in its own answer. Not the permission mode (`acceptEdits`
+loads fine in isolation), not path scoping (`--add-dir` changes nothing). That is Claude
+Code, not plugin-kit. **A disclosure sweep measures about two thirds of the runs it pays
+for, and which two thirds varies.**
 
-**Workaround:** `TMPDIR=$HOME/auq-tmp`. Not `/tmp`, which is itself symlinked.
+**An accidental outcome measurement.** Those 18 runs are a natural control arm: same
+scenarios, same grader, without the skill. They scored **0.667 against 0.949** — the skill
+is worth about 28 points. Unplanned sample, so treat it as indicative, but it is the
+sharpest evidence yet that the skill helps.
 
-Finding this took five dead hypotheses — prune the references, broken instrument, unresolvable pointers, denied reads, pointer-form difference. What forced the reopening was transcripts reproducing text present only in a reference and absent from the body, across all six files and 28 of 54 runs, including a phrase committed minutes before the sweep.
-
-**A fix is authorised**: branch, plugin-kit's own tests before and after, minimal and legible, then re-measure with `TMPDIR` back to default and confirm the patch and the workaround agree. An upstream write-up is drafted in the ledger — both defects with file, line, reproduction, blast radius, workaround, and the sentence that makes it matter: *a measurement that cannot detect the thing it measures returns a confident answer, and its guardrail confirms it.*
+Finding the first defect took five dead hypotheses — prune the references, broken
+instrument, unresolvable pointers, denied reads, pointer-form difference. What forced the
+reopening was transcripts reproducing text present only in a reference. The sentence worth
+keeping: *a measurement that cannot detect the thing it measures returns a confident
+answer, and its guardrail confirms it.* All six findings are written up in plugin-kit's
+`ANALYSIS-003: Measurement Fault Classes`.
 
 ## 9. Rejected, with reasons — do not re-propose
 
 - **Adopting the description loop's winner.** It scored better on paper and deleted the five named exclusions, so a "grill me on requirements" query fired 3/3 on held-out — a different skill's query. Three of its phrasings were harvested by hand instead.
 - **Moving the pre-flight checklist behind a pointer.** The doctrine names the validation loop as one of two things that stay in the body regardless of size.
 - **Cutting the Gotchas to reach 5,000 tokens.** They are roughly a quarter of the body because a source audit found fifteen traps a composer cannot discover otherwise.
-- **Deleting the references.** The evidence for it was the void measurement.
-- **Editing plugin-kit mid-investigation** — superseded, the owner has now authorised a proper fix.
+- **Deleting the references.** The evidence for it was the void measurement, and the corrected sweep refutes it outright: every file is pulled in 28-69% of runs that receive the skill.
+- **Editing plugin-kit mid-investigation** — superseded twice: authorised, then done.
 
 ## 10. In flight
 
-`DL1-disclosure` is running `measure-disclosure`, pid 67886, against SHA `50a6690`, `TMPDIR=$HOME/auq-tmp`, `--permission-mode acceptEdits`, twelve workers, results to `~/auq-results/measure2`. Temp root verified canonical on a live worker root.
-
-It deliberately omits `--grader-bare` (which the Makefile target passes) to hold the grader's auth path identical to the first sweep, so the pull-rate comparison is a comparison.
-
-**That table is what everything waits on:** whether six references with rewritten pointers, plain names and one trigger each actually get opened.
+Nothing. No background runs, no unfinished edits, no agents.
 
 ## 11. Queued, in order
 
-1. **The plugin-kit collector fix**, then a third measurement confirming it agrees with the workaround.
-2. **Plugin fixes.** The one that bites: **the install cache holds no skill** — `~/.claude/plugins/cache/ACMElabs/ask-user-question/0.0.1/skills/ask-user-question/` contains a zero-byte `.gitkeep` and nothing else, because `version` never moved off `0.0.1` and the cache is version-keyed. Bump the version and delete the stale cache. Also remove the retired `asking-users-questions` entry from the marketplace, and resolve `homepage`/`repository` naming a GitHub repo that does not exist.
-3. **`optimize-disclosure`** — only once the collector is trustworthy.
-4. **`measure-outcomes`** — never wired. Does the skill actually help? One probe showed a run where the skill never loaded and the improvised answer was creditable, which makes this the sharpest open question.
-5. **Extended optimization** on description and disclosure, per the owner's plan: read plugin-kit in full with no sampling, then its reviewer agents, then iterate.
-6. **Retire the old plugin**, then uninstall plugin-kit.
+1. **`optimize-disclosure`** — unblocked for the first time. Its guardrail and objective
+   are now clean, so it is finally comparing layouts rather than load-failure noise. Note
+   it proposes edits against a body already at its ceiling (§6), so its candidates may not
+   be applyable without the restructure-or-raise conversation.
+2. **`measure-outcomes`** — never wired. §8 answers it accidentally and indicatively; a
+   designed run would answer it properly.
+3. **Extended optimization** on description and disclosure, per the owner's plan: read
+   plugin-kit in full with no sampling, then its reviewer agents, then iterate.
+4. **Uninstall plugin-kit** — last, because item 3 needs its reviewer agents. Its *repo*
+   stays; this is only the installed plugin.
+
+**Not queued, but open:** plugin-kit's fixes sit unpushed on `restructure-shared-layer`
+and are not on `main`. Whoever merges that line must carry them across.
 
 ## 12. Commands
 
