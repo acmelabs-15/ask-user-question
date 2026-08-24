@@ -1001,6 +1001,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The genre writer's own miss produced the sharpest process finding of the closing round: its final report was withheld not by forgetting but by an explicit wrong inference that the automatic return channel suffices — which is why the sidecar rule carries the flat form rather than a reminder form. Its two unrequested edits to the genre reference, both chasing the struck-rule inconsistency into lines that would have licensed enforcing it, were verified as landed improvements
 - The final reflect batch is with the capture agent: the channel-inference edge case and the two counting preferences. With it, the day's capture work closes at ten findings
 
+## Event 104 — session close: notes current, the handoff rewritten complete
+
+- Timestamp: 2026-08-24 08:50 PDT, measured
+- Both session notes brought fully current for close: this note's State rewritten through Event 103 with T-12 archived as completed at the outcomes measurement; the plugin-kit note's State rewritten to the published-main close with its five hardening tasks archived as landed-and-verified
+- HANDOFF.md overwritten with the next conversation's cold-start brief, built against the last brief's failure mode: every thread now lives in a durable note and the brief's inventory maps all of them, so no future session needs a raw transcript. It carries the settled results with their numbers, the owner rulings including the reflect protocol and the no-external-posting constraint, the refuted list with receipts, the working rules distilled from the sidecar, the open items in recommended order with D-8's stale budget flagged, the updated command surface with the removed flags, and both identifier collisions named
+- The session pauses here rather than closes: status stays IN_PROGRESS, the retrospective over the ledger and the ten sidecar captures is queued as the next session's protocol step
+
 ## Observations
 
 ### Build decisions
