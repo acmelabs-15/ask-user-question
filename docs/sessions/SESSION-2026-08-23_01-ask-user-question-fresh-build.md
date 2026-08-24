@@ -1490,6 +1490,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Three technical-writer agents dispatched in parallel, one per note, each brief carrying: the full-read mandate on source and references, the distilled style doctrine (one word per concept with a CONTEXT.md-pattern Language section, STE sentence rules, parallel groups, front-loading, co-location, positive phrasing), the preservation contract (every finding, figure, evidence label, dated correction, limit and recommendation survives — readability from rewording and layout, never omission), the sibling identity with pairs_with edges and the no-inverse-on-originals exception commented, all four measured write-path defects, and a section-by-section PARITY GATE against the original before reporting
 - The A5 brief additionally binds the three dated corrections as record; the A6 brief names the passive-context explanation that confused the owner today as a required plain-language fix
 
+## Event 163 — the readable-editions batch completes: three siblings, three parity walks, three catches
+
+- Timestamp: 2026-08-24 16:08 PDT, measured
+- All three readable editions landed in plugin-kit (de57467, b22bbf5, 5c27f27, its ledger event at f9ce4ce) — ANALYSIS-007, 008, 009 beside their untouched notes of record, each opening with a Language glossary, each holding one uniform shape for repeating content, each passing a mechanical parity gate over findings, quotes, figures, entities, labels and dated corrections
+- The parity gates paid beyond style, once per writer: 008's walk found a FOURTH dated correction the commissioning brief did not know about plus two unswept contradiction sites still inside ANALYSIS-005 (routed to the researcher, in flight); 007's writer caught and restored a sentence its own first draft dropped; 009's writer separated capability-graded from model-dependent — a distinction the original leaves implicit and null-reading depends on
+- All four measured write-path defects fired across the batch exactly as briefed and were handled by read-back every time: the masked-write timeout twice, the status drop three of three, phantom tallies at 2x and one uncategorized-note artifact from ToC bullets colliding with the observation parser (fixed by numbering the ToC — a new parser edge case for the bug dossier)
+- Convention enforcement: the five-tag cap applied consistently (the third writer's six-tag set trimmed to match its siblings before commit), the no-inverse-on-originals exception commented in every sibling, symmetric relates_to edges closed on the plugin-kit session note
+- Open from the batch: the two ANALYSIS-005 residue corrections with the researcher; then the board returns to the mechanism items and the retrospective
+
 ## Observations
 
 ### Build decisions
