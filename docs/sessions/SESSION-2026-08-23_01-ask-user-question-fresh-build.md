@@ -1008,6 +1008,16 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - HANDOFF.md overwritten with the next conversation's cold-start brief, built against the last brief's failure mode: every thread now lives in a durable note and the brief's inventory maps all of them, so no future session needs a raw transcript. It carries the settled results with their numbers, the owner rulings including the reflect protocol and the no-external-posting constraint, the refuted list with receipts, the working rules distilled from the sidecar, the open items in recommended order with D-8's stale budget flagged, the updated command surface with the removed flags, and both identifier collisions named
 - The session pauses here rather than closes: status stays IN_PROGRESS, the retrospective over the ledger and the ten sidecar captures is queued as the next session's protocol step
 
+## Event 105 — session resumed; D-8 grounded against the current body
+
+- Timestamp: 2026-08-24 08:56 PDT, measured
+- Resumed from the handoff brief per its Section 0: memory skill loaded, bootstrap on ask-user-question, both repos verified on `main`, required notes read — this ledger (State, Tasks, pending decisions, Events 83-104 in full), the reflect sidecar whole, the ablation ground truth whole, the plugin-kit session record whole, the reference research's ablation-method finding with its four design caveats and open list, the genre taxonomy's lineage, and the coverage-gap analysis whole
+- No conflict found between the brief and the notes or repos on any settled result
+- D-8's premise re-measured before asking: the body reads ~5,794 tokens against the 5,800 fail gate, so the coverage note's ~600-spare assumption is confirmed stale. The seven body-shaped gaps (~300-340 tokens) cannot land without funded trims, and the three wrong-guidance gaps (~101 tokens by the note's own costs) are body-rule edits by nature — a wrong rule in the body cannot be corrected from a reference the reader may not open
+- Also stale in the coverage note, to be errata'd when D-8 closes: "three references" (now six) and the zero-pulls-across-24-runs disclosure claim, which predates the collector fixes; post-ToC recall is 16/20 aggregate with per-file figures, which weakens that note's case against reference placement
+- Environment check on the shipped skill reports 4 trigger-collision errors, all attributed to over-claiming neighbours (pptx, pdf, docx, capture); the validator's stated fix is on the neighbours — recorded, not acted on
+- Next: D-8 to the owner as grouped closure packages, per the pending-decisions entry
+
 ## Observations
 
 ### Build decisions
