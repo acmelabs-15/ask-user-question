@@ -1018,6 +1018,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Environment check on the shipped skill reports 4 trigger-collision errors, all attributed to over-claiming neighbours (pptx, pdf, docx, capture); the validator's stated fix is on the neighbours — recorded, not acted on
 - Next: D-8 to the owner as grouped closure packages, per the pending-decisions entry
 
+## Event 106 — the license removed on owner ruling, and the D-8 ask rejected for missing context
+
+- Timestamp: 2026-08-24 09:02 PDT, measured
+- Owner rulings on the rejected D-8 ask, two in one: the gap descriptions must live inside the question itself, and the plugin carries no license
+- License removal executed at commit bd5aaba: LICENSE file deleted, the plugin.json license field and the SKILL.md frontmatter license line removed — the wait-what acknowledgement stays, since it records the source's license rather than ours. Version 0.1.2 across the three bound sites, frontmatter test and make checks pass, installed cache refreshed 0.1.1 to 0.1.2. The skill frontmatter now carries four standard fields, so the handoff brief's "five standard fields" line is superseded by the tree
+- [reflect-capture] HIGH, constraint: an AskUserQuestion call carries its whole decision context inside the call — question text and option descriptions — never in chat prose above it; the D-8 ask named eleven gaps whose definitions sat outside the dialog and was rejected on exactly that. The rule already existed in the skill's own first Gotcha and in the handoff brief, and was violated by this project's own orchestrator in live use. Capture dispatched in the background to the reflect sidecar SKILL-001: Orchestrator Process Learnings, named here as plain text; the typed edge to the sidecar already stands in this note's Relations
+- Next: D-8 re-asked with all eleven gaps defined inside the call
+
 ## Observations
 
 ### Build decisions
