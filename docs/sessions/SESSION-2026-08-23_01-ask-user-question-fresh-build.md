@@ -1217,6 +1217,16 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The agent's three process learnings batch-dispatched to the reflect sidecar: a doctrine strike colonises output templates and severity schemes beyond prose; a struck rule can bundle a claim that survives it, so re-grounding reads the block sentence by sentence; a measured finding lands in more than one document and the scoped file is not always the load-bearing one — grep the shared pool before calling the edit complete
 - Still in flight: the resumed trigger-miss diagnosis, the clean skill review, the portability fix, and the batch capture
 
+## Event 130 — the miss diagnosis lands: mostly tier, one clean gap, one suspect clause
+
+- Timestamp: 2026-08-24 11:13 PDT, measured
+- The resumed diagnosis delivered in full and its headline verified against both results files by independent join: of the 19 sonnet misses, 15 PASSED on the prior opus sweep against byte-identical hook text, 3 failed on both tiers, 1 was never measured on opus. The sweep is primarily a model-tier measurement confounded with a description edit (opus/998-char versus sonnet/1,002-char), quantified beyond Event 121's caution. Eight rows carry near-literal hook vocabulary and still miss on sonnet — the hook lever is measured-weak there, and more text is fitting to a variable the text does not control
+- The one word-level suspect: the register clause edit ("the plain wording of a question nobody could answer" became "wording a cold reader could not act on") is the single change that could have hurt, confounded with the tier; its clean separation costs one sweep — the preserved 998-char bytes on sonnet against the same 54-row set
+- The one clean uncontested gap: row 53, review-a-draft named by path, 0/3 with no hook while the pasted form fires 3/3 — the evidence T-11's held 18 characters were waiting for, by the eval set's own design criterion
+- Two candidate descriptions delivered with full accounting: (a) minimal-edit at 1,020 chars — the axes deepening, the draft-review hook, the register revert, the render-contradiction removal, funded by negative-clause compression, with named precision risks (the plain/house-style negative, the axes clause's measured opus false positive); (b) restructured at 1,011 chars, six of seven clusters, materially higher risk to passing rows. The diagnosis recommends (a), and before (a), the separating sweep
+- Also delivered: the prompt-noun observation (eight misses use "prompt" as their artifact noun; the description carries it only inside a load-bearing negative) and the file-path hypothesis for the author-eleven rows (mutation-before-trigger detection; counter-evidenced by three passing path rows; testable by stripping paths) — both recorded as hypotheses, not findings
+- Disposition to the owner next; nothing edited
+
 ## Observations
 
 ### Build decisions
