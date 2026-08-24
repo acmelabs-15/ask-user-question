@@ -710,6 +710,31 @@ _Empty._
 - These are on `restructure-shared-layer` and NOT on `main`, which is a separate line at b0d1c9b. Whoever merges that line will need these carried across
 - Consequence worth stating: the temp-root workaround is now unnecessary. A measurement run from this checkout classifies in-skill reads correctly at the default temp root, reports a load only when one succeeded, and links from the dashboard to its own results
 
+## Event 68 — the loop was scoring the layout on runs the layout never reached
+
+- Timestamp: 2026-08-24 03:20 PDT
+- Owner ruling: fix it properly rather than quickly, and leave nothing parked
+- The defect. computeFileStats counted pulls over runs where the body loaded; scoreRuns counted the pass rate and the context cost over every error-free run, loaded or not. Two halves of one measurement disagreeing about what a valid run is
+- It broke both numbers in opposite directions. The objective: an unloaded run is cheap, 226k tokens against 350k measured, so a candidate that made loading fail more often reported a LOWER context cost and cleared the check more easily — the loop was rewarded for breaking the skill. The guardrail: pass rate became a mix of 0.949 loaded against 0.667 unloaded, so it tracked the load-failure rate rather than the layout
+- The number that decided it. DEFAULT_PASS_RATE_TOLERANCE is 0.05, documented as absorbing about one assertion of sampling noise. Load-failure variation alone moved the pass rate 6.9 points across three sweeps of identical bytes. The environmental noise was larger than the entire tolerance the guardrail had to work with
+- Chesterton's Fence, and the fence had a sign. RunTally.unloaded was documented "In the pass rate, out of every pull rate" — deliberate, not an oversight. What it protected is real: a layout that stops the skill loading has broken the work. So that protection is now `loadRate`, guarded by name in trainGate and selectCandidate and checked BEFORE the cost check, rather than folded into two figures that mean something else
+- The load tolerance is deliberately wide at 0.25 and documents why: whether the body loads is mostly the environment's decision, so the check catches a layout that breaks loading outright and admits it cannot catch drift. Only one of the three load rates behind that number was measured directly; the others are inferred from the mix model, and the constant says so
+- The envelope follows the schema rather than habit. `scored` is defined as units that reached the numbers, so unloaded runs left it; `excluded` is units deliberately left out of the denominators, so they joined it; `failed` stays what the harness could not complete and no longer coincides with excluded, which the schema explicitly permits
+- A bug I introduced and caught in the same pass: widening `excluded` silently widened `failed`, which was assigned from it. A run that answered without the skill completed perfectly well and is not a failure
+- Commit e0be400. Seven new tests, two of which fail on the parent commit reporting 0.5 where the pass rate should be 1 and 600 where the context mean should be 1000. That 600 is the perverse incentive in a single number. 1513 pass, 0 fail, typecheck clean
+- Root cause of the load failures themselves is NOT plugin-kit's and is not fixed. Reproduced directly: the Skill tool returns is_error with content "Execute skill: <alias>" and no body, and the model then says so in its own answer. Not the permission mode — acceptEdits loads fine in isolation — and not path scoping, since --add-dir changes nothing. It belongs in the upstream report as a Claude Code finding
+
+## Event 69 — a notes-only reply is an answer that lost its option
+
+- Timestamp: 2026-08-24 03:35 PDT
+- Owner ruling: the notes mechanism misleads readers. They type a note and press enter believing they have both chosen and annotated. So a note without a selection should be read as an intended selection plus a note specific to it, not as a skip
+- The old guidance called it a sentinel and a skip, and a skip authorises nothing. That gave the reader who engaged MORE — moved to an option, opened the notes field, typed the qualification that actually mattered — strictly less than the reader who tapped a label
+- The mechanism supports the ruling. Notes exist only in the preview layout, and in that layout the digit keys move the highlight WITHOUT selecting, so believing you have done both is the natural reading of the interface rather than a mistake
+- Where the ruling had to be qualified against the tool audit: the note is attached to the question, not to a row, and the result builder reports no option selected. The intent is recoverable; the identity of the option is not carried. So the guidance recovers rather than assumes — take it from the note where the note settles it, ask once with the note quoted back where it does not, and never match it to the nearest label by similarity
+- The note stays binding either way. A pick plus "only for staging" is still not approval for production
+- Changed in all four homes: the recognition table, the prose under it, the section itself, and the eval expectations — which asserted the skip reading and would have gone on enforcing it against the new text. Commit d602879
+- A near-miss caught by diffing rather than by trusting the write: re-serialising the eval JSON without `ensure_ascii=False` escaped every em dash in the file to `\\u2014`. Semantically identical, and it would have rewritten bytes across a file where only six lines were meant to change
+
 ## Observations
 
 ### Build decisions
