@@ -1,7 +1,7 @@
 {
   "name": "ask-user-question",
   "description": "Composes AskUserQuestion calls a human can answer on sight, and reads the replies that come back.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": {
     "name": "Peter Kloss",
     "email": "pkloss@gmail.com"
