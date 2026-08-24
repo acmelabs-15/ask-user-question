@@ -32,7 +32,9 @@ not against the prose.
 | Note on a selection | the label, with the note carried alongside it |
 | Note with no selection | `(notes only)` — an answer whose option did not send |
 | Pasted image | `Looks wrong to me (Image attached)`, or `(Image attached)` alone |
-| Skip, or a timeout | nothing arrives to match |
+| Chat about this | a denial carrying an instruction to reformulate, with any selection and notes attached |
+| Skip, or a timeout with nothing selected | nothing arrives to match |
+| Timeout with a partial selection | what was selected, reported alongside the timeout |
 
 Two of those rows are the ones that bite. `(notes only)` matches no label you wrote
 and is not free text either — the result reports it as no option selected, with the
@@ -46,7 +48,9 @@ of it, so trimming it off to match a label is right and ignoring the image is no
 
 The reader chose. Proceed with that option and do not re-confirm it. A second
 dialog asking whether they meant it spends their attention on a decision they
-already made.
+already made. The stated exception is the confirming question Section 5 of
+SKILL.md requires when the option they picked is the destructive or one-way one;
+that call is the rule being followed, not a re-confirmation of it.
 
 ### A comma-separated string, on a multiSelect question
 

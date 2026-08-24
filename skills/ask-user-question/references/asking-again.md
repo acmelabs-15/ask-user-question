@@ -115,7 +115,10 @@ withholding it means guessing at something the reader would have settled in one
 keystroke.
 
 The test: could you have asked this before their answer? If yes, you are
-re-confirming. If no, it is a new fork and it is yours to raise.
+re-confirming. If no, it is a new fork and it is yours to raise. The stated
+exception is the confirming question Section 5 of SKILL.md requires on a
+destructive or one-way pick — you could have asked it before, and you ask it
+anyway.
 
 ## Re-asking the same decision
 

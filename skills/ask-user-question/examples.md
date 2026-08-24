@@ -182,7 +182,7 @@ taking every option description down with it.
 ```
 
 The decision sentence is 10 words and sits at the end, where it reads as the
-question the context has been building to. The field around it is 14 lines. Both of
+question the context has been building to. The field around it is 12 lines. Both of
 those are correct at once, which is the thing Section 3 exists to say.
 
 **Why each line is there, which is the only justification that counts.** The rate
@@ -337,5 +337,5 @@ The options are approaches now, so each one is a position somebody could hold an
 argue against, and the descriptions carry their costs and are displayed, because
 nothing here needs rendering and no preview is in the way.
 
-Measured: 14 lines, widest 59 display cells, two groups against rule 4's four, and a
+Measured: 22 lines, widest 58 display cells, four groups at rule 4's ceiling, and a
 five-word decision sentence at the end where rule 13 puts it.

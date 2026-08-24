@@ -2,7 +2,7 @@
 name: ask-user-question
 compatibility: "Claude Code. The composition guidance applies wherever the tool is offered; the Gotchas marked [terminal] describe the Claude Code terminal dialog, and a host that draws its own dialog owes none of them. No scripts, no network access, no system packages. The wording step reads a project vocabulary file where one exists and degrades to the vocabulary already in the conversation where none does."
 metadata:
-  version: "0.1.3"
+  version: "0.1.4"
   component-type: "skill"
   acknowledgement: "The re-pitch trigger and the controlled-register idea come from the wait-what skill by Matt Pocock, MIT licensed. No text was carried across."
 # description must stay on ONE physical line. A blank line or a wrap inside it
