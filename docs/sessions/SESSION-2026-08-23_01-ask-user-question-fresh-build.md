@@ -1153,6 +1153,22 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Comparability stated honestly, from the sidecar's own SUPERSEDED markers: the 49/52 record was measured against an earlier description (998 chars at ddfdbd9, then 965 at 746889b — both superseded by the frozen 1,002-char description) and a 52-row set. Today's sweep is therefore the FIRST trigger measurement of the shipped description on any model, and the sonnet-versus-record delta confounds model, description bytes and two added rows. The absolute sonnet floor stands regardless: 19 of 39 positives at zero or one-third rate
 - Disposition goes to the owner: description-recall work would re-open the frozen description (sha rebind, T-11 interaction, baseline reset), and that is not this session's call to make
 
+## Event 122 — no lock on the description; the diagnosis-and-review wave dispatched instead
+
+- Timestamp: 2026-08-24 10:56 PDT, measured
+- The owner answered the pickup-gap ask with free text rather than an option: show the intended description changes and more on why the misses miss, before any decision. The description stays frozen; nothing is edited
+- Owner also asked whether we run the latest plugin-kit and use all of it. Answered by check: installed plugin-kit is 0.4.0 matching the repo, and the ACMElabs marketplace is file-source, so the installed surfaces read the working tree carrying today's pushes. The honest usage gaps found: the skill-reviewer agent has never run against the finished artifact, and the genre catalog has not been applied to this skill as an authoring lens
+- Two dispatches, parallel, background: plugin-kit's skill-reviewer over the shipped 0.1.3 tree (read-only findings report, briefed with the measured context so it separates defect from measured-and-deliberate); and an analyst on the 19 sonnet trigger misses — per-miss diagnosis, hook clusters, and two candidate one-line descriptions at or under 1,024 chars with funding trims and risk checks against the 20 currently-passing rows, grounded in plugin-kit's current evidence-labeled doctrine
+- Synthesis of both reports comes back to the owner as the informed version of the pickup-gap decision
+
+## Event 123 — the owner's sync suspicion verified: four reviewer agents carry struck doctrine
+
+- Timestamp: 2026-08-24 10:58 PDT, measured
+- Owner flagged that the create-skill skill was updated but the skill-reviewer agent was not. Verified and widened by class sweep: skill-, agent-, command- and mcp-reviewer all embed the struck pointer-condition rule inline (each teaching "a pointer should carry the condition that makes the reader open it" as the Minor-finding fix), all last committed 2026-08-09 — before the recall reframing, the ToC standard, the genre catalog and the strike list. plugin-reviewer is clean on the swept markers. The plugin-kit session note's open candidate about the two creator skills using the refuted in-step pointer form now extends to the reviewer class
+- Precision that shapes the fix: current doctrine KEEPS pointer repair as remedy lever one; what was struck is the mandated pointer FORM (file plus firing condition plus cost of skipping, measured 33-75 percent recall despite full conformance). The reviewers are re-grounded in the rewritten disclosure-optimization language, not stripped of signposting
+- Consequence for the review in flight: auq-skill-review spawned on the stale definition; its structural findings stand, its pointer-form findings get triaged against current doctrine before any reach the owner
+- Reviewer-modernization dispatch queued behind this event; the running review instance is unaffected by definition edits, which load at spawn
+
 ## Observations
 
 ### Build decisions
