@@ -1252,6 +1252,16 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The review's remaining findings stay recorded, not acted: H1 (the symptom-noun description proposal) is an input to the open next-sweep decision; L1-L5 hold — L2 explicitly because the outcome assertion set may target the sentence it would cut
 - Pending stack unchanged: (1) the next-sweep decision, now with three candidate descriptions; (2) this fix's diff approval when the draft returns
 
+## Event 134 — 0.1.4 lands: the three review defects corrected
+
+- Timestamp: 2026-08-24 11:28 PDT, measured
+- Owner approved the drafted diff at the gate, verbatim "Land 0.1.4 (Recommended)"; committed at 21f40ae, installed cache refreshed 0.1.3 to 0.1.4
+- What shipped: the examples file's two self-measurement corrections (the checkout field at 12 lines; the repair's closing line at 22 lines, widest 58 display cells by the host's own width function, four groups at rule 4's ceiling — the Event 107 catch now fixed); the reading-answers recognition table honouring its own match-against-me contract with the chat-escape row and the timeout row split into with- and without-selection cases; and the destructive-confirmation exception clause in both references, each naming Section 5 as the rule being followed
+- The width dispute resolved by measurement with a diagnosis: the review's 58 was display cells, my 62 was UTF-8 bytes in disguise (the marker glyphs are three bytes each) — five metrics tabulated in the fix report, the host's function is the authority
+- Gates: make checks PASS, frontmatter test binds 0.1.4 across the sites, frozen description hash byte-identical before and after, SKILL.md diff exactly the version line
+- Comparability note extends: recall baselines now trail the 0.1.1 references by the ToC additions (pure), the 0.1.4 reference content changes (rows and clauses), while the body trails 0.1.1 by the 0.1.3 trims and hedge — the next disclosure sweep of record re-baselines everything
+- Still running: the subset-runner build with the report-badge requirements. Still open: the next-sweep decision, three candidate descriptions waiting
+
 ## Observations
 
 ### Build decisions
