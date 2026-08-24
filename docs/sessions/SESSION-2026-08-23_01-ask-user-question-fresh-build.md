@@ -1424,6 +1424,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The plain restore stands fully measured and clean: 26 of 39, 15 of 15 silent, strictly comparable with the opus record it was measured under. Disposition to the owner: ship the restore alone, iterate the review clause on subsets, or hold
 - Per-row movements between old-alone and combined arms (five lost, three gained at n=3 per row) are within run noise and are not individually quoted
 
+## Event 155 — 0.1.5 ships: the description returns to its measured form
+
+- Timestamp: 2026-08-24 13:27 PDT, measured
+- Owner chose at the ship gate, verbatim "Ship the plain restore (Recommended)". Executed at 5e6948d, pushed, cache refreshed 0.1.4 to 0.1.5: the 998-char description (sha 0aefd25e) is the shipped bytes again — 26 of 39 on sonnet, 15 of 15 silent, strictly comparable with the 49-of-52 opus record measured on the same text. make checks and the frontmatter test pass; the description freeze re-binds to sha 0aefd25e
+- The trigger-description saga closes with a clean causal story: the post-record rewrite cost the weak tier ten phrases (measured by the separating run), the restore recovers them, and the one purpose-built addition failed its own gate three ways — so the day ends with the description exactly where the evidence says it should be, and every step of the path measured rather than argued
+- Still open on the board, now as a mechanism-level item rather than a wording one: the review-a-draft-by-path phrase (the model plausibly opens the named file and works, never triggering — the file-reference hypothesis, testable by stripping paths), alongside the training-prior audit of the should-fire set before further quoting
+- In flight: the standards integration (with corrections), the ANALYSIS-005 dated correction, and the isolation audit
+
 ## Observations
 
 ### Build decisions
