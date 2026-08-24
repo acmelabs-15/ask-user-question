@@ -11,6 +11,27 @@ file. The operational consequence belongs here: keep the bare name separately wh
 you need it for a later message, rather than deriving it by trimming the reply.
 Trimming works until the day the label you trim is the one the reader chose.
 
+## What each shape looks like
+
+Recognition is this file's whole job, so here is every shape as the value that
+arrives, before the sections that say what each one licenses. Match against these,
+not against the prose.
+
+| Shape | What arrives |
+|---|---|
+| One label | `Rebuild now (Recommended)` — the whole label, marker included |
+| Multi-select | `Types, Unit tests, Integration` — one string, comma-joined |
+| Free text | `can we do the third thing instead` — their words, no label |
+| Note on a selection | the label, with the note carried alongside it |
+| Note with no selection | `(notes only)` — a sentinel, not an answer |
+| Pasted image | `Looks wrong to me (Image attached)`, or `(Image attached)` alone |
+| Skip, or a timeout | nothing arrives to match |
+
+Two of those rows are the ones that bite. `(notes only)` matches no label you wrote
+and is not free text either — the result reports it as no option selected, with the
+note beside it. And `(Image attached)` is a suffix on the answer rather than part of
+it, so trimming it off to match a label is right and ignoring the image is not.
+
 ## The shapes, and what each one licenses
 
 ### One label, on a single-select question

@@ -40,12 +40,39 @@ is the one that visibly overflows a narrow terminal.
 
 ### 2. One blank line between groups, none inside a group, never two anywhere
 
-**Check:** every run of blank lines has length exactly 1, and no blank line sits
-between two items of the same group.
+**Check:** every run of blank lines has length exactly 1, no blank line sits between
+two items of the same group, and **no blank line sits under a group header**.
+
+The header belongs to the group it introduces. A blank on both sides of it leaves it
+floating between two groups, and a reader has to work out from the words alone which
+one it labels. Measured, the convention is unanimous: `gh`, `cargo` and `kubectl` all
+put a header's items on the line immediately beneath it, and none of the 430
+blank-line runs sampled sat between a header and its own contents.
 
 A group reads as a group when the gap between groups exceeds the gap within it. One
 blank line already gives that. A second one buys no separation and spends a third of
 a pane that does not scroll.
+
+Three spacings are wrong for three different reasons, and the shape shows it faster
+than the sentence does:
+
+```text
+Blocking:                         Blocking:
+                                  • The cache key omits the locale.
+• The cache key omits the         • Two callers build the same URL.
+  locale.
+                                  Should Fix:
+• Two callers build the same      • Retry backoff is fixed at 100 ms.
+  URL.
+
+
+Should Fix:
+• Retry backoff is fixed at
+  100 ms.
+```
+
+On the left, a blank under the header leaves it floating, blanks between items break
+one group into three, and a doubled blank spends two lines to say what one says.
 
 ### 3. A group header only where there are two or more groups
 
@@ -53,25 +80,86 @@ a pane that does not scroll.
 Two or more means every group has one, flush left, in Title Case with a trailing
 colon, and no header sits above a group of one item.
 
+The one-group case is the one worth seeing, because a header there looks like tidiness
+and is noise:
+
+```text
+Findings:                         • The cache key omits the locale.
+• The cache key omits the         • Two callers build the same URL.
+  locale.
+• Two callers build the same
+  URL.
+```
+
+The header on the left partitions nothing. The question already said what these are.
+
 Never all capitals. Reading speed drops measurably in all caps, and the mechanism is
 that mixed case gives each word a distinctive silhouette while capitals make every
 word the same rectangle.
 
 ### 4. Five items to a group, four groups to a list
 
+Three words, nested. An **item** is one marked line. A **group** is a header plus
+the items under it. The **list** is every group in one field — not one bulleted
+block, so a question with two separate blocks still gets four groups in total.
+`examples.md`'s eleven-finding call is the shape: one field, four groups, about
+three items each.
+
 **Check:** no group over five items, no list over four groups. A breach means the
 question is too big, not that the layout is wrong.
 
-The upper bound anyone can hold at a glance is small, and the four-group cap is the
-tighter constraint of the two: the reader has to keep the group set in mind while
-reading the items inside it.
+**The ceiling is larger than it sounds.** Four groups of five is twenty items in one
+question. If a question feels cramped by this rule, count before rewriting it —
+almost nothing real reaches twenty.
 
-### 5. In a `question`, `•` then `◦`. In a `preview`, markdown lists
+**The two caps are not equally evidenced, and it is worth knowing which is which.**
+The five-item cap sits inside a measured distribution of the same quantity: thirty
+command groups across four well-regarded tools, median four items, sixty percent at
+five or fewer. The four-group cap has no such distribution behind it. It is
+transferred from a working-memory limit of about four chunks — and that limit
+measures what someone holds in mind without looking, where a written list can be
+looked at again.
+
+The transfer is defensible but it is a transfer. What carries it is that the group
+*set* really is held rather than re-read: a reader carries the partition while
+reading inside one group, and does not go back to the headers each time. What argues
+against it is that the same survey behind the five-item cap found tools using six
+groups and nine in a single screen. Those are scrollable reference documents read
+with a specific lookup in mind, not a pane read once cold, which is why the number
+was not simply copied from them.
+
+Four is kept because the specimen sits at exactly four and is readable, which is the
+only direct evidence anyone has for this dialog. Treat it as the softer of the two
+caps: a group of six is a defect, and a fifth group is a signal to look again at
+whether this is one question.
+
+### 5. In a `question`, `•` then `◦` — unless the group carries a status
 
 **Check:** an unnumbered question list uses `•` at the top level and `◦` one level
 in, and stops there. A numbered list takes `➊` to `➓` instead, and only where rule
 10 says a number earns its place. A preview uses markdown's own list syntax and no
 authored marker at all.
+
+**Where every item in a group carries a status, the status glyph replaces the
+marker.** `✔ Types` rather than `• Types ✔`. This is rule 7 applied to status: a
+column of identical bullets carries nothing and makes the reader hunt to the end of
+each line for the verdict, where a column of `✔` and `✗` puts the answer first and
+gives two columns back to the budget.
+
+The payoff differs with the statuses, and both are worth reaching for. Where they
+vary — `✔ ✔ ✗` — the column is informative row by row, and a reader finds the failure
+by scanning one column instead of reading to the end of every line. Where they are
+uniform — three `⚠` — the column says nothing row to row and instead marks that whole
+group against its neighbours, so the severity survives a reader whose eye lands
+mid-list rather than on the header. The uniform case is the easier one to miss, and
+it is where reaching for the rule is least obvious.
+
+The condition is evaluated per group, not per list, so one group can take status
+markers while its neighbour keeps `•` — that is the condition applying twice rather
+than an inconsistency. A group where only some items carry a status keeps `•`,
+because a ragged left edge reads as an error and the scannable column does not exist
+unless every row has one. Nested items keep `◦` whatever they carry: a nested line is
+subordinate to the one above it, and that is what its marker encodes.
 
 The field decides this rather than taste. A question is plain text, so a marker is
 the literal character you typed and its width is yours to get right. A preview runs
@@ -112,13 +200,30 @@ wrong under a two-cell one.
 
 ### 7. Put the word that tells items apart first
 
+The rule is that items must differ early, because a reader scanning a list does not
+read to the end of each line before moving on. The check below is a mechanical proxy
+for it, not a second rule.
+
 **Check:** truncate every item in a group to its first 11 characters. If the items
 are still distinguishable and each still says what it is, the group passes. If
 several truncate to the same prefix, rewrite them.
 
-A reader scanning a list sees about two words of each item. An item beginning
-`Introducing`, or `Update the`, has spent its whole visible budget before it says
-anything.
+Eleven is the truncation a study of **link text** used — 80 participants over 20
+links — where a third of the links left readers unable to say where they led. It is
+a transfer from link scanning to dialog items, so treat the number as a usable proxy
+rather than a measured threshold for this medium.
+
+That study also reported that eleven characters is about two words. The two framings
+agree until a first word is long, and where they disagree the character count is the
+one to trust: `Introducing` is eleven characters and one word, and it was the worst
+performer in that study for exactly that reason. A long first word spends the whole
+visible budget on itself.
+
+**When the distinguishing word genuinely cannot come first**, hoist the shared part
+into the group header rather than repeating it down the column. `Retry the upload`
+and `Retry the manifest` become a `Retry:` header over `upload` and `manifest`. That
+is what rule 3's headers are for, and it is the escape that keeps this check
+followable — a check with no way out gets ignored rather than obeyed.
 
 ### 8. Every item is a sentence: a verb, a capital and a full stop
 
@@ -149,6 +254,15 @@ Numbering is justified when the reader refers back to an item by number, when th
 order is procedural, or when the count itself is the point. A number carrying none
 of those is noise regardless of what it costs.
 
+The numeral takes the marker's place rather than following it:
+
+```text
+• ➊ The cache key omits the       ➊ The cache key omits the locale.
+  locale.                         ➋ Two callers build the same URL.
+• ➋ Two callers build the
+  same URL.
+```
+
 Where it is justified, number with `➊` to `➓`. They are one display cell each, the
 same as a marker, so numbering is not the width trade it looks like: `1.` and `10.`
 spend two and three columns of a 60-column budget and these spend one.
@@ -173,6 +287,20 @@ model settles it even where the rendering holds: an N-line box is N padding
 computations that must stay correct through every future edit, and one added word
 breaks the block silently. Indentation costs nothing per line and degrades to
 slightly ragged rather than visibly broken.
+
+That last part is what prose cannot show. A drawn box does not fail loudly; it fails
+one line at a time as the content moves under it:
+
+```text
+┌────────────────────────────┐   ┌────────────────────────────┐
+│ The cache key omits it.  │   │ The cache key omits the  │
+│ Two callers build a URL. │   │ locale entirely.       │
+└────────────────────────────┘   │ Two callers build a URL. │
+                              └────────────────────────────┘
+```
+
+Three words were added on the right. One line's padding went with them, and the line
+nobody recomputed is the one the reader sees.
 
 ### 12. Order the options after the first one, for a reason you could state
 
@@ -217,8 +345,8 @@ you are working harder than the field requires.
 
 | Job | Glyph |
 |---|---|
-| Leading marker, top level | `•` |
-| Leading marker, nested one level | `◦` |
+| Leading marker, top level | `•` — or the status glyph, per rule 5 |
+| Leading marker, nested one level | `◦`, always |
 | Numbered item | `➊` … `➓` |
 | Passed, satisfied, present | `✔` |
 | Failed, rejected, absent | `✗` |
@@ -316,9 +444,9 @@ and this is what the glyph set is for:
 ```text
 Pre-push checks:
 
-• Types ✔
-• Unit tests ✔
-• Integration ✗ (two failures in the billing suite)
+✔ Types
+✔ Unit tests
+✗ Integration (two failures in the billing suite)
   ◦ Both call the payment sandbox ➞ its key expired.
   ◦ ⚠ Neither test failed on the last green build.
 
