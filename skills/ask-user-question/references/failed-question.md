@@ -13,6 +13,18 @@ Do not re-send the same question with an explanation around it. The reader canno
 see your explanation while the dialog is open, so the second attempt fails for
 exactly the reason the first one did.
 
+## Table of Contents
+
+- [Diagnosing which mode you hit](#diagnosing-which-mode-you-hit)
+- [Mode 1: the premise is buried](#mode-1-the-premise-is-buried)
+- [Mode 2: the options are not comparable](#mode-2-the-options-are-not-comparable)
+- [Mode 3: the consequences are missing](#mode-3-the-consequences-are-missing)
+- [Mode 4: the recommendation is arbitrary, or missing](#mode-4-the-recommendation-is-arbitrary-or-missing)
+- [Mode 5: the question is compound](#mode-5-the-question-is-compound)
+- [Mode 6: it was never a fork](#mode-6-it-was-never-a-fork)
+- [Mode 7: the options are not the decision](#mode-7-the-options-are-not-the-decision)
+- [After the rewrite](#after-the-rewrite)
+
 ## Diagnosing which mode you hit
 
 The reader's own words usually name the mode.

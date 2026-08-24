@@ -9,6 +9,15 @@ They run in order of how much the decision carries: one that fits in a sentence,
 that needs rendering, and one that needs context but not rendering. The last table
 chooses between them.
 
+## Table of Contents
+
+- [One decision that fits in a question](#one-decision-that-fits-in-a-question)
+- [One decision that does not](#one-decision-that-does-not)
+- [What the reader actually sees](#what-the-reader-actually-sees)
+- [One decision that fits, but only just](#one-decision-that-fits-but-only-just)
+- [Choosing between the three](#choosing-between-the-three)
+- [One that failed, five times](#one-that-failed-five-times)
+
 ## One decision that fits in a question
 
 ```json

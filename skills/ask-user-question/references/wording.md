@@ -17,6 +17,13 @@ shifted between issues of the specification. The numbers below are the ones
 commonly cited, and the constraint matters more than the number. Cite the rule by
 what it requires, and name the issue if precision matters.
 
+## Table of Contents
+
+- [The rules, and what each one buys a cold reader](#the-rules-and-what-each-one-buys-a-cold-reader)
+- [What this file does not adopt, and why](#what-this-file-does-not-adopt-and-why)
+- [Worked rewrites](#worked-rewrites)
+- [Checking you used the reader's words](#checking-you-used-the-readers-words)
+
 ## The rules, and what each one buys a cold reader
 
 **Words: use one word for one concept (Part 1).** The specification's own form is

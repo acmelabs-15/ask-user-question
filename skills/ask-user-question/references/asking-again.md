@@ -26,6 +26,15 @@ flowchart TD
   J -->|No| L[Re-ask, saying it is a re-ask and what changed]
 ```
 
+## Table of Contents
+
+- [Tell the reader whether this is bounded](#tell-the-reader-whether-this-is-bounded)
+- [Say what kind of run this is, and update it when that changes](#say-what-kind-of-run-this-is-and-update-it-when-that-changes)
+- [An approval covers what the option said, and nothing more](#an-approval-covers-what-the-option-said-and-nothing-more)
+- [A clean answer can earn a follow-up](#a-clean-answer-can-earn-a-follow-up)
+- [Re-asking the same decision](#re-asking-the-same-decision)
+- [The reader's picture drifts, and yours does not](#the-readers-picture-drifts-and-yours-does-not)
+
 ## Tell the reader whether this is bounded
 
 A reader on the fourth dialog of an unannounced series cannot tell whether to invest

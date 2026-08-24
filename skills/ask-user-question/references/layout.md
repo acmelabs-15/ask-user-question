@@ -11,6 +11,13 @@ hold a shape are `question`, which keeps line breaks and renders no markup, and
 those two carries the structure is the first decision, and SKILL.md's Gotchas carry
 what a preview costs you.
 
+## Table of Contents
+
+- [The thirteen rules](#the-thirteen-rules)
+- [The glyph set](#the-glyph-set)
+- [Eleven findings, in a preview](#eleven-findings-in-a-preview)
+- [Three checks, in a question](#three-checks-in-a-question)
+
 ## The thirteen rules
 
 Each carries the check that decides whether a string passes. They apply

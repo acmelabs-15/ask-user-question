@@ -3,6 +3,13 @@
 Open this when the reply is not exactly one of your labels. Each shape below
 authorises something different, and two of them authorise nothing at all.
 
+## Table of Contents
+
+- [The matching mechanic](#the-matching-mechanic)
+- [What each shape looks like](#what-each-shape-looks-like)
+- [The shapes, and what each one licenses](#the-shapes-and-what-each-one-licenses)
+- [The rule that covers all of them](#the-rule-that-covers-all-of-them)
+
 ## The matching mechanic
 
 SKILL.md's Gotchas carry the fact that an option's returned value is its whole
