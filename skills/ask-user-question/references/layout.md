@@ -61,9 +61,10 @@ reading the items inside it.
 
 ### 5. In a `question`, one marker: `∙`. In a `preview`, markdown lists
 
-**Check:** every leading marker in a question is `∙`, at one level. A preview uses
-markdown's own list syntax and no authored marker at all. No `•`, no circled
-numeral, and no emoji anywhere something must line up after it.
+**Check:** every leading marker in an unnumbered question list is `∙`, at one level.
+A numbered list takes `➊` to `➓` instead, and only where rule 10 says a number earns
+its place. A preview uses markdown's own list syntax and no authored marker at all.
+No `•`, no `①` or `❶`, and no emoji anywhere something must line up after it.
 
 The field decides this rather than taste. A question is plain text, so a marker is
 the literal character you typed and its width is yours to get right. A preview runs
@@ -72,16 +73,9 @@ instead of yours.
 
 `∙` rather than `◦` because a filled mark reads as a primary item where a hollow one
 reads as subordinate to something, and at a single level there is nothing for it to
-be subordinate to. Both survive on width — one display cell whatever the reader's
-terminal does with East Asian Ambiguous characters — which is why the choice between
-them comes down to how they read. `•`, the one you would reach for first, is
-Ambiguous at one cell or two and shifts every column after it on its line. An emoji
-carrying a variation selector is always two cells, which is why a warning sign
-arrives wider than the space budgeted for it.
-
-Inline, an ambiguous glyph costs nothing — `2 files · 40 lines` has nothing aligned
-after it. The rule is about leading markers in a column, and about anything inside a
-padded block.
+be subordinate to. Both are safe on width, so the choice between them comes down to
+how they read. The glyph set below has the rest, including why `•` is the one you
+must not reach for.
 
 **One level is the whole set, and that is a diagnostic rather than a limitation.**
 Wanting a second level of nesting inside a question means the content has outgrown
@@ -137,9 +131,19 @@ difference.
 
 **Check:** remove the numbers. If nothing is lost, they were decoration.
 
-Numbering is justified when the reader must refer back to an item by number, when
-the order is procedural, or when the count is the point. It costs two or three
-columns against one for a marker, which is a real fraction of a 60-column budget.
+Numbering is justified when the reader refers back to an item by number, when the
+order is procedural, or when the count itself is the point. A number carrying none
+of those is noise regardless of what it costs.
+
+Where it is justified, number with `➊` to `➓`. They are one display cell each, the
+same as a marker, so numbering is not the width trade it looks like: `1.` and `10.`
+spend two and three columns of a 60-column budget and these spend one.
+
+The set runs to ten, and running out is a signal rather than an inconvenience. Rule
+4 caps a group at five items and a list at four groups, so a list reaching for an
+eleventh number has already outgrown a question field. The answer is the one rule 5
+gives: move it to a preview, where markdown numbers the list for you and the cap
+stops applying.
 
 ### 11. Draw a box only where the host owns the padding
 
@@ -167,6 +171,52 @@ With two to four options the dialog sits squarely in the range where the first
 things read carry the most weight. The tool already puts the recommendation first,
 so what is left to decide is everything below it, and an arbitrary order quietly
 promotes whichever option was typed second.
+
+## The glyph set
+
+One glyph per job, so that two composers making the same call produce the same
+string. Every glyph in the table is East Asian Neutral, meaning one display cell
+whatever the reader's terminal is configured to do — except the last row, and that
+exception is exactly why its row is restricted to inline use.
+
+**The table governs the `question` field only.** A preview renders markdown, so its
+lists use markdown syntax, its numbering is the renderer's, and no width arithmetic
+is yours. That boundary is the most useful thing here: reaching for this table while
+composing a preview means you are working harder than the field requires.
+
+| Job | Glyph | Why this one |
+|---|---|---|
+| Leading marker, at the one permitted level | `∙` | Filled reads as primary, and there is no level beneath it |
+| Numbered item, where the number carries information | `➊` … `➓` | One cell, so numbering costs no more than a marker. Running past ten means the list belongs in a preview |
+| Passed, done, satisfied | `✓` | |
+| Failed, rejected, absent | `✗` | Matches `✓` in weight, so a column of them reads evenly |
+| A trap or a warning | `⚠` | Never `⚠️` — see below |
+| The item under discussion | `▸` | |
+| Separator inside a line | `·` | **Ambiguous width.** Safe inline, where nothing after it is aligned; never a leading marker |
+
+Four prohibitions, each with its reason, because a rule you understand extends to
+the glyph this table does not happen to list and a rule you memorize does not.
+
+**Never `•`.** It is East Asian Ambiguous: one cell on your terminal and two on a
+terminal configured the other way, and that setting is invisible to you. Every
+column after it on its line moves. This is the glyph most people reach for first,
+which is why it is named rather than left to the general rule.
+
+**Never the other circled numerals.** `➊` to `➓` are the one family that is Neutral
+and therefore one cell whatever the terminal does. `①` and `❶` and their relatives
+are Ambiguous, and they are the near miss worth naming: they look interchangeable
+with the approved set and behave differently on the reader's screen.
+
+**Never `⚠️`, `→`, `…`, `—` or `▲`.** The same failure from the same cause. The
+warning sign is the sharpest case and worth knowing on its own: `⚠` is one cell,
+and `⚠️` is the same character followed by a variation selector and is always two.
+They are indistinguishable in your editor and align differently on the reader's
+screen.
+
+**Never box-drawing.** Ambiguous width, font-dependent on top of it, and a drawn box
+needs a closing right edge whose padding you compute and then keep correct through
+every future edit to every line inside it. Rule 11 has the cost model. Content that
+wants a box goes in a preview, where the host draws the border and owns the padding.
 
 ## A string that resists, worked
 
