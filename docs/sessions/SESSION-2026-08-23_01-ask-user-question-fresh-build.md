@@ -943,6 +943,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - What the experiment can and cannot say, stated before the result: denominators are 2-4 runs per file, so single-file movements are hints; the honest read is the direction of the whole table plus whether the two dead spots (examples at 0/2, wording at 2/4) move at all. A null is a finding — the ToC rule's mechanism is partial-read completeness, not pointer-following, so recall may well not move, and saying so would keep the ToC standard honest about what it buys
 - Completeness gate on landing: 54/54 delivered, zero file-loads, denominators matching the baseline sweep
 
+## Event 96 — the ToC intervention readout: direction up, not established, and one dead spot untouched
+
+- Timestamp: 2026-08-24 12:55 PDT
+- Both sweeps gate clean and identical in parameters: 54/54 delivered, zero file-loads, install absent. Aggregate should-reach recall moved 13/20 to 16/20 — three files each gained one run (layout 3/4 to 4/4, asking-again 2/4 to 3/4, wording 2/4 to 3/4), three held, none fell. Pass rate 83.2% to 85.9%; over-fetch 6/12 to 7/12, flat within one run; context per run up ~12k tokens, consistent with the ToC bytes plus the extra reads
+- The pre-registered read holds and is the record: at these denominators each movement is one run flipping, and 16/20 against 13/20 is p≈0.3 — **directionally encouraging, not established**. The claim "tables of contents raise recall" is NOT licensed by this table and does not enter guidance; the ToC standard's justification remains the published partial-read mechanism, which this result is consistent with and does not prove
+- The finding with the most information is the non-mover: examples.md stays at 0/2 — its proven consumer (measure-a-draft-against-a-good-one, ablation-attributed) still never opens it. Whatever blocks that route, it is not partial-read completeness. examples.md is now the sharpest single remedy target on the board, and the remedy ladder says the next levers are the pointer and the content boundary, not the map
+- The null-that-was-not: a result this shape reported without the pre-registration would have read as a win. Registered first, it reads as what it is — a trend worth one more sample if the number ever needs to be load-bearing, and a dead spot worth acting on now
+
 ## Observations
 
 ### Build decisions
