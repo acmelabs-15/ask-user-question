@@ -72,7 +72,7 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 
 ### Pending User Decisions (surface on resume)
 
-- **D-8, open**: which of the 11 coverage gaps to close. Seven are body-shaped and total roughly 300-340 tokens against about 600 spare, so they fit together. Three of them are wrong guidance rather than silence and are therefore not optional in the same way as the rest: the ask-or-decide test has lost its reversibility tiebreaker, the meta-label ban is absent so `Yes` and `No` pass every rule, and the independence test positively licenses pairing a decision with a sequencing question. To be put to the user as grouped choices rather than eleven separate ones.
+- None currently. D-8 locked at Event 108 (fold into owning sections); the fold draft is in flight with the gap inventory under re-verification.
 
 
 ## Event 01 — Session started
@@ -1034,6 +1034,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The skill was loaded and followed end to end: body, then layout reference (its eleven-items shape), then the examples file — whose final section, one-that-failed-five-times, is this exact D-8 decision from the authoring session, with the diagnosis (findings are not options; cut points are not approaches; the real decision is how to integrate) and a finished repair call. The repair is adopted verbatim plus one fact that changed since authoring: the body at 5,794 of 5,800 means funded trims, added to the orient line and the option costs, plus a fourth leave-open option to cover the do-nothing path
 - Defect found while measuring the draft against the specimen: the repair section's closing measured line quotes 14 lines and two groups, which are the checkout specimen's numbers, not the repair call's own four groups — a count-and-examples drift instance inside shipped content. Work item: fix with the next content release; it is the same defect class the sidecar's counting rule names
 - Live-use disclosure note: on this strong-tier route the skill's pointers fired — layout.md and examples.md were both followed from the body. Consistent with the tier split the ablation established; recorded as an observation, not a measurement
+
+## Event 108 — D-8 LOCKED: fold into owning sections, and the inventory found stale
+
+- Timestamp: 2026-08-24 09:14 PDT, measured
+- Owner chose, verbatim: "we should go with option 1" — fold each coverage gap into the section that already owns its topic, next to the rule it corrects; the three wrong-guidance rules rewritten in place; body changes funded by trims; the diff shown before anything lands. The oldest open decision closes as decided; the pending-decisions entry clears on this edit
+- The ask that landed was the skill's own repair specimen from its examples file, adapted with the current body budget and a fourth leave-open option; it was answered on first presentation after five recorded rejections of the cut-point form in the authoring session
+- Owner note on the reply asked for clarification of the plan-mode gap; answered in prose. Verifying the answer surfaced that the shipped body ALREADY carries the plan-mode rule at SKILL.md line 37 — the coverage note measured zero hits on 2026-08-23 and the body was revised after, so gap 10 is already closed and the eleven-gap inventory is stale. Consequence: the fold pass re-verifies every gap against the current tree before drafting, and already-covered gaps become dated erratum candidates for the coverage note rather than edits
+- Dispatched d8-fold-draft (implementer, background): re-verify all eleven by grep, then draft the fold as a diff in a copy under the results directory — shipped tree untouched, description frozen, body at or under 5,800 post-edit, trims itemized and barred from Gotchas and ablation-attributed content, references keep their ToC accurate, gap 11 flagged as a judgment point. Brief carries the reflect-protocol line and the report-via-SendMessage rule
 
 ## Observations
 
