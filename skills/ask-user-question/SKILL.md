@@ -2,7 +2,6 @@
 name: ask-user-question
 license: MIT
 compatibility: "Claude Code. The composition guidance applies wherever the tool is offered; the Gotchas marked [terminal] describe the Claude Code terminal dialog, and a host that draws its own dialog owes none of them. No scripts, no network access, no system packages. The wording step reads a project vocabulary file where one exists and degrades to the vocabulary already in the conversation where none does."
-allowed-tools: Read Grep Glob
 metadata:
   version: "0.1.0"
   component-type: "skill"
