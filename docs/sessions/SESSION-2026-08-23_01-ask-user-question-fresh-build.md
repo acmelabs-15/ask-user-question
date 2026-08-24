@@ -1262,6 +1262,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Comparability note extends: recall baselines now trail the 0.1.1 references by the ToC additions (pure), the 0.1.4 reference content changes (rows and clauses), while the body trails 0.1.1 by the 0.1.3 trims and hedge — the next disclosure sweep of record re-baselines everything
 - Still running: the subset-runner build with the report-badge requirements. Still open: the next-sweep decision, three candidate descriptions waiting
 
+## Event 135 — published: the repo goes to GitHub, and the no-push convention is superseded
+
+- Timestamp: 2026-08-24 11:33 PDT, measured
+- Owner ruling: "To be turned into a git repo and pushed" with the URL — the AUQ-does-not-push convention from the handoff brief is superseded by explicit instruction. This is the owner's own org, so the no-external-posting constraint (which governs OTHER parties' repositories, Anthropic's included) is untouched
+- Executed: the local repo was already a git repo on main; the GitHub side did not exist. Created public at github.com/acmelabs-15/ask-user-question, mirroring the sibling plugin-kit's visibility; origin added; main pushed with full history through b9f960d and set to track
+- Pre-publish secret sweep run over the tracked tree: the broad pattern pass hit only prose vocabulary; the high-signal credential pass (provider key prefixes, bearer shapes, JWT shapes) returned zero. Nothing redacted, nothing to redact
+- Standing behavior from here: AUQ commits push to origin main like plugin-kit's — ledger commits included, starting with this one
+
 ## Observations
 
 ### Build decisions
