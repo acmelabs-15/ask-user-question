@@ -960,6 +960,20 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Decision rule, registered now: B minus A of at least 6 reads out of 20 is acting evidence (roughly the Fisher-exact threshold at these n); below that the result is directional-only and is reported as underpowered, not as a finding. A B-arm null on a bundle this strong would be the third refutation of intuitive pointer advice and would sharpen the know-versus-do reading — the model may know and still not act, in which any prose fix is aimed at the wrong stage
 - Launch HOLDS until the flag-removal task lands in measure-disclosure, because the experiment runs through the tool being edited and bun executes working-tree code
 
+## Event 98 — reflect capture: the auto-memory prohibition
+
+- Timestamp: 2026-08-24 13:40 PDT
+- Captured to the reflect sidecar SKILL-001: Orchestrator Process Learnings — named here as plain text because a wikilink inside a prose bullet is parsed as a typed relation in this project; the typed edge to the sidecar is recorded in this note's Relations section instead
+- [reflect-capture] HIGH, constraint: auto-memories are never created directly, because every learning flows through the reflect chain — inline capture, then end-of-session retrospective synthesis, then the skillbook agent as the only writer of durable feedback memories — and delegated agents must carry the same prohibition in their dispatch briefs, since the rule is invisible from a subagent's context. MED, preference: a warning on a generic knob was measured ineffective against operator habit this session, so the remedy for habitual misuse is removing the knob and giving deliberate uses a purpose-named escape hatch rather than a louder warning.
+
+## Event 99 — the pre-registered null lands at full strength, and the ablation attribution refines
+
+- Timestamp: 2026-08-24 13:55 PDT
+- The examples.md A/B completed, gates clean on both arms: 20/20 delivered each, zero file-loads, tier-study marker correctly absent. Arm A (shipped trailing conditional): examples.md read 0/20, pass 74.0%. Arm B (imperative at the head of the pre-flight loop, plus one mention): 0/20, pass 73.0%. B minus A is zero against the registered acting threshold of six
+- The dead route is confirmed at real n — 0 of 42 cumulative reads across every sonnet sweep — and the strongest intervention shape available did nothing. Third refutation of intuitive pointer advice this session, and the sharpest support yet for the know-versus-do reading: on this route, prose is the wrong stage
+- The null exposed an attribution confound in the ablation. The stage-2 minus-examples variant removed the file AND its pointer-section prose, and that section carries teaching content of its own — the dropped-cost-half lesson. A file never read on sonnet cannot have supplied the content whose removal dropped the scenario, so the 0.80-to-0.60 attribution belongs to the file-plus-prose bundle, with the body prose as the plausible carrier on this tier; the file's proven consumer remains the stronger tier, where its recall is 100%. Dated corrections issued to the reference-ablation analysis here and to the method finding in the plugin-kit research note
+- Remedy-ladder consequence, recorded: the reachability lever is measured-exhausted for this route on sonnet. If this scenario's sonnet score ever needs raising, the candidate lever is the content boundary — the teaching prose, not the file — and any such change re-derives its ground truth by ablation with the prose-versus-file split held apart
+
 ## Observations
 
 ### Build decisions
@@ -1003,3 +1017,4 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 
 <!-- The two-relation minimum is met as of the evidence-rules analysis landing in this project. The two prior-art notes this session rests on live in the plugin-kit project and cannot be wikilinked across projects; they are named as plain text in the Prior art header line, in Event 11, and in the Observations above. -->
 - leads_to [[ANALYSIS-007: Reference Ablation Ground Truth]]
+- leads_to [[SKILL-001: Orchestrator Process Learnings]]

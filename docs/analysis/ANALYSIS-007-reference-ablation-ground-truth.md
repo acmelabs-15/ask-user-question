@@ -84,6 +84,8 @@ The two-candidate design paid off once, and it is the cleanest single result in 
 
 One attribution is flagged as weak in the table rather than presented alongside the others. defend-rewrite-to-its-author moves from 0.20 to 0.10, which is a reproduction in direction but on a control that is already close to the floor; there is very little room between the arms for the effect to live in.
 
+**Refined 2026-08-24, later the same day: the examples.md attribution is a bundle, not the file.** A follow-up A/B on the measure-a-draft route found examples.md read on 0 of 20 shipped-form runs and 0 of 20 under an imperative in-workflow pointer — 0 of 42 cumulative across every sonnet sweep. A file that is never read cannot have supplied the content whose removal dropped this scenario. The minus-examples variant removed the file AND the pointer-section prose around it, and that section carries teaching content of its own, so the attribution belongs to the file-plus-prose bundle, with the body prose as the plausible carrier on sonnet. The table row stands as the bundle's attribution; the file-alone reading is withdrawn for this scenario on this tier. The file's demonstrated consumer remains the stronger tier, where its recall is 100%.
+
 ### Finding 4: One attribution is partial, and its residue stays open
 
 prepush-checks-in-question does not resolve to a single file. Its minus-layout arm lands at 0.42, between a control of 0.67 and an all-stripped floor of 0.25, while its other candidate was refuted — the minus-examples arm scored 0.83, above control. The layout reference is causally implicated and is declared; the residue is not explained by it.
