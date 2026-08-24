@@ -47,8 +47,23 @@ interface Scenario {
   readonly id: string;
   readonly situation: string;
   readonly expect_call: boolean;
+  /**
+   * Concept tags for what the scenario probes. NOTHING READS THIS.
+   *
+   * Declared and unused, which is fine as intent and dangerous as data: one entry used to name
+   * a retired reference file, so the day someone wires this up they would inherit a name that
+   * does not exist. Kept and kept correct rather than deleted.
+   */
   readonly probes: readonly string[];
-  /** Which references this situation should pull, if disclosure works. */
+  /**
+   * Which references this situation should pull, if disclosure works. Feeds recall at
+   * `expectedRefHitRate` and precision at `refPrecision`.
+   *
+   * An entry naming a file that does not exist can never be hit, so it floors recall while
+   * printing a populated column. Every value must be a real basename under `references/`, and
+   * the correct value is an empty list wherever the deciding content is in SKILL.md itself --
+   * the body is injected, so it produces no `Read`.
+   */
   readonly expect_refs?: readonly string[];
   /** Additionally permitted without counting against precision. Not required. */
   readonly allow_refs?: readonly string[];
@@ -427,10 +442,24 @@ function summarise(arm: Arm) {
     // rewards opening everything, and the first eight runs were read as "more is better"
     // when refs-per-call had already passed the ceiling. A skill that opens two references
     // where one was needed is wasting a tool call and the tokens behind it.
-    refPrecision: (() => {
+    // `null` when nothing was opened, NOT 1. Precision over an empty set is undefined, and
+    // reporting it as perfect inverted the metric: an arm that opened no reference at all
+    // scored 100% while an arm that correctly opened one scored less. It rewarded the exact
+    // behaviour the docblock above says the metric was added to catch.
+    //
+    // This is not hypothetical. The frozen 2026-08-08 report shows precision at 100% for both
+    // the baseline and skill arms, and both opened 0.00 references per call -- the inversion
+    // has already printed as perfection in a real report.
+    //
+    // Changing a scoring formula is normally off the table because it makes new figures
+    // incomparable with old ones. It is allowed here on a ground that does not generalise:
+    // composition has never run against the current artifact, so there is no baseline to stay
+    // comparable with. The only consumer renders `n/a` rather than coercing -- see the
+    // precision row below, and do not let a later edit multiply this by 100.
+    refPrecision: ((): number | null => {
       const opened = rows.flatMap((r) => r.refsRead.map((f) => ({
         f, want: [...(r.scenario.expect_refs ?? []), ...(r.scenario.allow_refs ?? [])] })));
-      if (!opened.length) return 1;
+      if (!opened.length) return null;
       return opened.filter((o) => o.want.includes(o.f)).length / opened.length;
     })(),
     expectedRefHitRate: (() => {
@@ -470,7 +499,11 @@ if (arms.includes("disclosed")) {
   row("references opened per call", (s) => s.refsPerCall.toFixed(2));
   row("calls opening any reference", (s) => `${(100 * s.anyRefRate).toFixed(0)}%`);
   row("**recall**: scenarios where a needed reference was opened", (s) => `${(100 * s.expectedRefHitRate).toFixed(0)}%`);
-  row("**precision**: opens that were on the needed list", (s) => `${(100 * s.refPrecision).toFixed(0)}%`);
+  // `n/a`, not 0%, when the arm opened nothing. There is no precision to report over an empty
+  // set, and both wrong answers mislead in opposite directions: 100% reads as perfect and 0%
+  // reads as broken, where the truth is that the question does not apply.
+  row("**precision**: opens that were on the needed list",
+    (s) => (s.refPrecision === null ? "n/a (nothing opened)" : `${(100 * s.refPrecision).toFixed(0)}%`));
 }
 console.log();
 console.log(`The two rate rows exclude unparseable attempts from their denominators, which is why \`n\` is shown.\n`);

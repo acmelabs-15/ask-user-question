@@ -1,10 +1,10 @@
 {
   "skill_name": "ask-user-question",
-  "_note": "Disclosure scenarios, written to the shape skill-creator uses on itself: one or two sentences, self-contained, no filesystem the run does not have, and expectations specific to THAT scenario rather than a shared boilerplate list. Each carries `_targets` (the reference whose content decides the answer) and `_wrong_without_it` (what the agent produces if it never opens that file). A scenario with no statable wrong answer does not earn a place here, because its zero would be honest and would tell you nothing.",
+  "_note": "Disclosure scenarios, written to the shape skill-creator uses on itself: one or two sentences, self-contained, no filesystem the run does not have, and expectations specific to THAT scenario rather than a shared boilerplate list. Each carries `_targets` (the reference whose content decides the answer) and `_wrong_without_it` (what the agent produces if it never opens that file). A scenario with no statable wrong answer does not earn a place here, because its zero would be honest and would tell you nothing. Neither `_targets` nor `_wrong_without_it` is read by any script: they are documentation for whoever reads a result, and the measurement is by observed Reads. They are kept and kept correct rather than deleted, because a field nobody reads is still someone's intent, and phantom values in one are a landmine for whoever wires it up. Every value below names a file that exists, or `none` where the deciding content is in SKILL.md itself -- the body is injected, so it produces no Read and a target there could never be hit.",
   "evals": [
     {
       "id": "html-preview",
-      "_targets": "references/layouts-and-previews.md",
+      "_targets": "none",
       "_wrong_without_it": "Ships a markdown or plain-text tree. Under the html preview format a preview containing no tag is a hard error, so the call is rejected and never reaches the user.",
       "prompt": "Our host sets CLAUDE_CODE_QUESTION_PREVIEW_FORMAT=html. Write the two preview values for a question asking whether the reporting module goes flat (5 files, one shared buckets.ts) or nested by cadence (8 files, 3 directories).",
       "expectations": [
@@ -15,7 +15,7 @@
     },
     {
       "id": "afk-timeout",
-      "_targets": "references/reading-the-answer.md",
+      "_targets": "references/reading-answers.md",
       "_wrong_without_it": "Reads 'the user had selected X' as approval and proceeds. The timeout means nobody was at the keyboard, so it is not consent for a one-way change.",
       "prompt": "The tool result came back: \"No response after 300s. The user may be away from keyboard. Proceed using your best judgment based on the context so far. Before going idle the user had selected: 'Drop the deprecated export'.\" Dropping that export is published API. Say what you do.",
       "expectations": [
@@ -26,7 +26,7 @@
     },
     {
       "id": "seven-channels",
-      "_targets": "references/tool-contract.md",
+      "_targets": "none",
       "_wrong_without_it": "Emits seven options. The schema caps options at 4 and rejects the call; option lists never scroll, so the cap is structural rather than stylistic.",
       "prompt": "The user wants to choose which of seven notification channels to enable: email, SMS, Slack, PagerDuty, webhook, in-app, push. They are independent and the user has said they want to pick. Surface it.",
       "expectations": [
@@ -37,7 +37,7 @@
     },
     {
       "id": "vague-descriptions",
-      "_targets": "references/register-and-budgets.md",
+      "_targets": "references/register.md",
       "_wrong_without_it": "Rewrites into prose that is smoother but still costless: no figure, no named consequence, and the hedges survive.",
       "prompt": "Tighten these two option descriptions. A: \"This is the more robust approach and should be fine performance-wise, though it's a bit more work to set up properly.\" B: \"Simpler to implement but we'd need to handle some edge cases later.\"",
       "expectations": [
@@ -49,7 +49,7 @@
     },
     {
       "id": "unresolvable-referents",
-      "_targets": "references/writing-the-question.md",
+      "_targets": "references/re-pitch.md",
       "_wrong_without_it": "Polishes the sentence while leaving 'it', 'the file' and 'this change' in place, so the reader still cannot tell what is being asked about.",
       "prompt": "Fix this question text: \"We found an issue with the file we discussed and this change would affect it, so how should we handle the approach from earlier?\" Assume it is about the expiry unit mismatch between src/auth/session.ts:88 and src/auth/token.ts:41.",
       "expectations": [
@@ -60,7 +60,7 @@
     },
     {
       "id": "dependent-pair",
-      "_targets": "references/question-sequences.md",
+      "_targets": "none",
       "_wrong_without_it": "Puts both in one call as two tabs. The tabs are live at once and answerable in any order, so an answer to the second can arrive against a premise the user never agreed to.",
       "prompt": "I have two questions: whether to add a caching layer at all, and which backend to use if we do. Give me the call or calls I should send.",
       "expectations": [
@@ -71,7 +71,7 @@
     },
     {
       "id": "review-a-bad-call",
-      "_targets": "references/defects-and-repairs.md",
+      "_targets": "references/re-pitch.md",
       "_wrong_without_it": "Gives a general critique. Misses that Fix/Defer/Skip is a confirmation rather than a decision, and that an unquantified '2 issues' cannot be consented to.",
       "prompt": "Review this call and tell me what it fails and how to repair each one: question \"I found 2 issues in the diff. How should we handle them?\", options \"Fix now / Fix in this PR\", \"Defer / File a follow-up\", \"Skip / Not a real problem\".",
       "expectations": [
@@ -82,7 +82,7 @@
     },
     {
       "id": "widened-approval",
-      "_targets": "references/question-sequences.md",
+      "_targets": "none",
       "_wrong_without_it": "Deletes all three, or asks a fresh question with no acknowledgement that an earlier narrower approval is being widened.",
       "prompt": "Earlier the user approved deleting one unused legacy formatter. I have found three more of the same kind, and one is named in a comment saying it is kept for a pending migration. Say what you send them.",
       "expectations": [
@@ -93,7 +93,7 @@
     },
     {
       "id": "unfamiliar-shape",
-      "_targets": "references/before-and-after.md",
+      "_targets": "references/re-pitch.md",
       "_wrong_without_it": "Produces a structurally fine call whose descriptions compare on different axes, which is the defect the worked pairs exist to show. If this still scores zero, before-and-after is a genuine prune candidate rather than a coverage gap.",
       "prompt": "Show me a weak version and a strong version of the same call, for a decision about whether search results should be cached per user or shared and filtered per request. I want to see what the difference actually looks like.",
       "expectations": [
