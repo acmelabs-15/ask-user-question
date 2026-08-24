@@ -556,6 +556,41 @@ _Empty._
 - Correction to plugin-kit, proven with a control plugin rather than read: under `--strict`, a manifest-stage warning short-circuits the run before component checks happen at all. Its own reference says the validator walks the component directories, which holds only once the manifest passes
 - Deferred deliberately: none of the fixes land while disclosure measurements are in flight, because mutating installed state mid-measurement produces a figure nobody can reproduce
 
+## Event 53 — two independent plugin reviews, and the second found what the first called clean
+
+- Timestamp: 2026-08-24 02:20
+- Ran plugin-kit's plugin-creator skill as one pass and its plugin-reviewer agent as a second, deliberately independent, with the first asked to predict what the second would catch
+- The second escalated two findings the first classified as hygiene, corrected one figure by a factor of 2.5, and found two the first missed — one of them a loading failure rather than hygiene
+- **The installed plugin has no skill in it.** Its cache directory holds a zero-byte placeholder where the skill should be, frozen at a timestamp before the skill was authored. The version has never moved off its initial value and the cache is version-keyed, so it has never been invalidated. It loads on this machine only because a file-source marketplace serves the live directory instead
+- The sharper half: the first pass read three-way version agreement as a clean result. Agreement is not the property that matters — the version never moving is what broke the cache, so a frozen number that matches everywhere is the defect rather than the reassurance
+- Also found: no install path exists for anyone else. The plugin has no git remote, its parent directory is not a repository, and the manifest advertises a GitHub URL that does not resolve
+- Correction to my own relayed claim: the install payload is 396K rather than the megabyte I reported, and against its neighbours in the same cache this is the leanest plugin there by an order of magnitude. I had measured the repository rather than what installs
+
+## Event 54 — a false claim with three homes, and the fix that ends the class
+
+- Timestamp: 2026-08-24 02:30
+- The claim that the composition linter holds zero rules and scores a clean figure on any input was corrected in the trustworthiness document earlier today, and declared fixed
+- It had two more homes: the README, found by an outside reviewer, and the pending-rules note, found by the author agent. All three had drifted independently
+- Rule taken from it: when a stale claim is found, sweep for its copies before calling it fixed. A claim worth stating once is usually worth stating twice by someone, and the copies drift apart
+- Fix adopted is stronger than correcting three copies: the number is now stated in no prose anywhere, and the README points at the command that computes it and verifies each rule fires on a broken call and stays quiet on a correct one. A fourth copy cannot drift because there is no fourth copy to write
+
+## Event 55 — the diagnosis that explains four errors in one sentence
+
+- Timestamp: 2026-08-24 02:35
+- Four rulings today held as reasoning and failed as citation: the token divisor, the middle-dot width class, which file carried the isolation flags, and a header convention with its line arithmetic
+- **The failure mode is not reasoning, it is citing.** Reasoning gets checked by argument, which happens naturally in a conversation. A citation only gets checked when someone opens the thing, and four times nobody did until it mattered
+- Why it stayed invisible: every one of those claims sat inside an argument that was sound, so the argument passed review and carried the unexamined citation through with it
+- Turned into a test rather than a story: any sentence of the form "X was measured as Y" where nobody has opened X. The author agent applied it to its own staged work and opened all four of its own such claims
+
+## Event 56 — two layout rules the owner's use surfaced, and a contradiction one of them created
+
+- Timestamp: 2026-08-24 02:45
+- A group header takes no blank line after it. The blank separates groups, so one on both sides makes a header ambiguous about which group it labels. Verified against three command-line tools' help output rather than asserted — every header, items immediately beneath
+- Where every item in a group carries a status, the status glyph replaces the leading marker, so the verdicts form a column and the answer is first on the line rather than last. This is the front-loading rule applied to status
+- The condition is per group rather than per list; a mixed group keeps the ordinary marker; a nested item keeps its own regardless
+- Two payoffs, and the second is the one a composer misses: varying statuses make the column informative row by row, while uniform ones mark that whole group against the others, which survives a reader whose eye lands mid-list rather than on the header
+- **The second rule made an existing rule false** — the marker rule said a list uses one glyph then another "and stops there" — and the author agent caught it and fixed both in the same change. A file that argues with itself teaches whichever half a reader opens first
+
 ## Observations
 
 ### Build decisions
