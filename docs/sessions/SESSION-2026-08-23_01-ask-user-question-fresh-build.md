@@ -904,6 +904,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Over-fetch reads 50% — 6 of 12 negative runs opened a reference — against the old hand-annotation era's 0 of 8. Not a regression: the derived negative set includes ceiling-bound scenarios designed around references, so a model correctly following a pointer there scores as over-fetch under the outcome definition, exactly the ceiling caveat the ablation analysis carries. The figure means "reads that did not improve score", not "reads that made no sense", and the guidance rewrite should say so where over-fetch is documented
 - Queue item 2 is complete end to end: schema field, populated corpus, reporting, and a live sweep proving the chain
 
+## Event 91 — the predecessor conversation found in full, and the standardization thread inherits its lineage
+
+- Timestamp: 2026-08-24 09:50 PDT
+- The conversation the owner meant all along ran in the HOME directory — which is why neither project's transcript folder held it — and its tail (the last ~550 entries) is now read completely, no sampling. It is the session that ran Events 40-80, authored the cold-start brief, and held the structural-standardization discussion the owner restated today
+- What it adds: when the owner first proposed standardizing skill sections and flow, a six-rule standard shape was drafted with evidence labels — and two of its rules were refuted by measurement within the same session: pointer-in-step placement (the n=40 A/B halved reach) and the three-reference cap (the category error). Four rules survive as candidates: numbered workflow as the spine, depth one, gotchas and validation staying in the body, and tables of contents past 100 lines. The lineage is relayed to the structure-genres survey now running in the plugin-kit project, so the taxonomy carries the refutations and cannot resurrect the dead rules
+- The owner's restated goal today — Osmani's process-over-prose, anti-rationalization tables, non-negotiable verification, consistent section structures, identifiable and measurable in bodies AND references — is the direct continuation of that thread, now formalized as three deliverables: the structural-genre taxonomy (analyst dispatched), skill-creator guidance encoding it, and lint-detectable signatures wired toward outcome measurement
+- Also recovered: the handoff-authoring sequence that produced the brief, which explains the commit-count drift the brief carried (the number moved between drafts as commits landed)
+
 ## Observations
 
 ### Build decisions
