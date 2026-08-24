@@ -15,9 +15,10 @@
  *
  * Design decisions worth knowing before you read a result:
  *
- * SKILL CONTENT IS INJECTED, NOT ROUTED TO. The skill arm prepends SKILL.md and
- * references/register-and-budgets.md to the prompt rather than relying on the router to
- * load them. That deliberately removes routing from the measurement, because routing is
+ * SKILL CONTENT IS INJECTED, NOT ROUTED TO. The skill arm prepends SKILL.md and EVERY file
+ * in `references/`, globbed at the point of use rather than listed, to the prompt rather
+ * than relying on the router to load them. That deliberately removes routing from the
+ * measurement, because routing is
  * already measured next door and leaving it in makes every composition number a product
  * of two effects. The cost is that this measures the skill's ceiling: what it does when
  * it is definitely read.
@@ -493,9 +494,16 @@ if (arms.includes("disclosed")) {
     console.log(`| reference | times opened |`);
     console.log(`|---|--:|`);
     for (const [f, n] of counts) console.log(`| \`${f}\` | ${n} |`);
-    const never = ["register-and-budgets.md", "question-sequences.md", "layouts-and-previews.md",
-      "reading-the-answer.md", "defects-and-repairs.md", "before-and-after.md", "tool-contract.md"]
-      .filter((f) => !(f in (d?.refCounts ?? {})));
+    // Derived from the same glob the skill arm injects from, rather than a list. The list that
+    // was here named the retired fork's seven references and none of them exist, so this line
+    // was wrong in both directions at once: it reported seven phantom files as never-opened
+    // every run, and the three real references could never appear in it even when genuinely
+    // unopened. A populated "Never opened:" line reads as evidence the check ran.
+    //
+    // `refPaths` is the glob at the top of this file, whose entries are basenames -- the same
+    // shape as `refCounts` keys, which come from `refsRead` after `.split("/").pop()`. Verified
+    // against the installed skill: the glob yields re-pitch.md, reading-answers.md, register.md.
+    const never = refPaths.filter((f) => !(f in (d?.refCounts ?? {})));
     console.log();
     if (never.length) console.log(`**Never opened:** ${never.map((f) => `\`${f}\``).join(", ")}\n`);
   }
