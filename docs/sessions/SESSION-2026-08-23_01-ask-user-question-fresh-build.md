@@ -1227,6 +1227,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Also delivered: the prompt-noun observation (eight misses use "prompt" as their artifact noun; the description carries it only inside a load-bearing negative) and the file-path hypothesis for the author-eleven rows (mutation-before-trigger detection; counter-evidenced by three passing path rows; testable by stripping paths) — both recorded as hypotheses, not findings
 - Disposition to the owner next; nothing edited
 
+## Event 131 — portability landed and pushed, the batch capture committed, and the subset-runner feature opens
+
+- Timestamp: 2026-08-24 11:16 PDT, measured
+- The portability.md follow-on verified and landed at plugin-kit 61befe4, pushed: the add-freely imperative qualified in the same breath it is stated, the classification affirmed before the exception (the agent's own framing — Chesterton's Fence applied to prose), the diagnostic pointed at rather than duplicated. Its report also flagged, recorded not acted: two bare-filename cross-references in shared/references that do not resolve as paths, plugin-creator's body 12 tokens over the 5,000 target, and portability.md now six lines from the ToC threshold
+- The three-finding batch capture verified against the sidecar and committed at 5add0b2 — the sidecar holds twenty-one observations and fourteen MED-or-higher process findings. The capture agent corrected the dispatch brief's observation count again (18 to 21, not 17 to 20): the second stated-count-drift instance in the sidecar's own maintenance chain, both now on record
+- Owner feature request, driving the next engineering dispatch: the iterative optimization measures should run a SELECT GROUP of measures rather than the full set every time — focus on one group or one query while making small changes, full runs only to confirm. Direct fit to the description-iteration loop the diagnosis opened
+- The next-sweep decision (separating test versus minimal edit versus hold) was interrupted by this request and remains OPEN on the pending stack, to re-surface when the owner returns to it
+
 ## Observations
 
 ### Build decisions
