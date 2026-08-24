@@ -296,9 +296,7 @@
         "It says whether the two descriptions compare on the same axes in the same order.",
         "It produces a repaired version of the call rather than only a critique."
       ],
-      "expects_references": [
-        "examples.md"
-      ]
+      "expects_references": []
     },
     {
       "id": "which-of-the-three-shapes",

@@ -136,6 +136,15 @@ The other limits worth carrying forward: the six negatives sit at ceiling in bot
 5. Re-derive any negative on a harder variant or a stronger tier before relying on it. A ceiling-bound flat result is consistent with "the body suffices here" and with "this design cannot see the effect", and the six negatives do not distinguish those (Finding 2).
 6. Prefer ablation over annotation for any future ground-truth question of this shape. It costs a sweep and returns an answer that needs no adjudication, and stage 2 refuting three of its own assigned candidates is the evidence that the judgement it replaces was worth replacing (Context, Approach).
 
+## Erratum (2026-08-24)
+
+Dated correction, recorded beside the record. The pre-registered content-boundary experiment (session Events 112-116) ran the split the Finding 3 refinement called for, on the 0.1.3 base at n=10 per arm: A shipped 0.700, B teaching-prose-removed 0.740, C file-and-pointers-removed 0.720, completeness gates clean on all three arms.
+
+- **The measure-a-draft examples attribution is withdrawn on the current base.** Neither the teaching prose nor the file carries the scenario: all three arms lie within 4 points, against the registered 15-point threshold. The stage-2 cell (0.80 to 0.60 at n=2, pre-ToC base) is outweighed at five times the sample; whether it was noise or the base drift (ToC blocks, trims) dissolved the need cannot be separated from this data. Finding 8's warning that no stage-2 cell stands alone is vindicated on its own note.
+- **The corpus row is now an outcome-derived negative by owner ruling** (2026-08-24, "Needs no file"): `expects_references: []` on measure-a-draft-against-a-good-one, validated through the scenario-set schema. The live map is nine attributions and seven negatives; Finding 6's examples row and Finding 7's ten-plus-six counts read as of stage 2.
+- **The tier caveat stands and is the guard**: the file's demonstrated consumer remains the stronger tier, where its recall is 100%. A sonnet-only sweep reading examples.md as unread-and-undeclared must not license deletion.
+- The dead route also extends: 0 reads on this scenario in 20 further runs across the arms carrying the file.
+
 ## Observations
 
 - [technique] Ablation derives reference need from outcome rather than judgement: a scenario needs file X if removing X drops its assertion score, which sidesteps both the pull-rate ambiguity and the annotation bottleneck #ablation #method
