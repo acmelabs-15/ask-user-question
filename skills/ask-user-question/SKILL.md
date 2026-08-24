@@ -187,8 +187,18 @@ of its own, later.
 
 ## 3. Write the question text
 
-State the decision, in one sentence, ending in a question mark. Around 25 words
-is the working ceiling.
+State the decision in one sentence, ending in a question mark. Around 25 words is
+the working ceiling **for that sentence**, not for the field around it, which may
+carry context lines too — `references/layout.md` exists because a question can be
+long and structured.
+
+Where brevity and completeness pull against each other, **completeness wins.**
+Everything needed to decide going inside the call is the requirement; brevity is
+what you spend the room that is left on. A short question that leaves the reader
+unable to choose has failed in the way that costs something, and a long one that is
+long because the decision carries that much has not. Cutting context to hit a length
+is how a call comes back as `what are you asking me?` — a whole round trip against
+the few words the fact would have cost.
 
 The question carries what all the options share, so the options do not repeat it.
 Name the thing being decided, the consequence that makes it matter, and what the
@@ -197,13 +207,16 @@ belongs here, not in the message above. A call doing a second job at the same ti
 — checking a layout, reporting progress — leaves the reader unable to tell which
 of the two they are answering.
 
-**Where the decision carries more than a sentence can hold, the preview is the
-resolution.** Everything needed to decide goes inside the call, and a question runs
-to about 25 words. On a decision carrying eleven items those two rules cannot both
-hold in the question field, and the answer is not to break one of them. `preview`
-holds structure and renders markdown, so the question states the decision in a
-sentence and the preview carries the items. Price it first, per the Gotchas — it
-costs you every option description — and shape it with `references/layout.md`.
+**Three shapes, and the decision picks which.** It fits in a sentence, so it is a
+sentence. Or it needs several things weighed but nothing that has to be *rendered*,
+so those stay in the question field and `references/layout.md` says how to lay them
+out — headers, markers, one blank line between groups, 60 columns. Or it needs
+rendering, a diff or a table or styled text, so it goes in `preview`, the only field
+that renders markdown; price that first, per the Gotchas, because it costs you every
+option description.
+
+Past all three it is not one question. Split it, or decide the parts you can and ask
+about the one you cannot. `examples.md` has a finished call of each shape.
 
 - Weak: `How should we handle this?`
 - Weak: `Which approach do you prefer for the migration?`
@@ -427,11 +440,11 @@ the words the reader agreed to.
 
 ## The shape of a finished call
 
-`examples.md` holds two complete calls. The first is the ordinary shape, with what
-each half of each description is doing. The second is a decision too big for a
-question, resolved the way Section 3 describes — and it shows what that costs the
-descriptions, which is the trap. Open it when you want the finished artifact rather
-than the rules, or to measure a draft against calls that pass all of them.
+`examples.md` holds one finished call of each shape in Section 3: a decision that
+fits in a sentence, one that needs rendering and goes to a preview, and one that
+needs context but not rendering and keeps it in the question. It ends with the table
+that chooses between them. Open it when you want the finished artifact rather than
+the rules, or to measure a draft against calls that pass all of them.
 
 The step most often dropped is the second half of an option description: the
 cost. A call whose options list only their benefits looks finished and leaves the

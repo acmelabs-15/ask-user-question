@@ -1,11 +1,13 @@
-# Two finished calls
+# Three finished calls
 
-Two complete AskUserQuestion calls, as the shapes to imitate. Read them when you
-want the finished artifact rather than the rules that produce it; SKILL.md carries
-the rules and the pre-flight loop that checks them.
+One complete AskUserQuestion call for each of the three shapes Section 3 names, as
+the artifacts to imitate. Read them when you want the finished thing rather than the
+rules that produce it; SKILL.md carries the rules and the pre-flight loop that checks
+them.
 
-The first is the ordinary case: the whole decision fits in a question. The second is
-the one composers get wrong, where it does not.
+They run in order of how much the decision carries: one that fits in a sentence, one
+that needs rendering, and one that needs context but not rendering. The last table
+chooses between them.
 
 ## One decision that fits in a question
 
@@ -141,3 +143,72 @@ behind a `lines hidden` rule. That is what `references/layout.md` means by calli
 previews a large-terminal feature, and it is worth knowing before the descriptions
 are gone rather than after.
 
+
+## One decision that fits, but only just
+
+The commonest real case, and the one the 25-word ceiling gets misread on. Several
+things a reader must weigh, none of which needs *rendering* — so the structure stays
+in the question field, where it costs nothing, rather than going to a preview and
+taking every option description down with it.
+
+```json
+{
+  "questions": [
+    {
+      "question": "Checkout has been failing for 6% of sessions since 14:20.\n\nWhat We Know:\n\n• All failures are card payments through the EU gateway.\n• The gateway's own status page reports no incident.\n• Our error rate tracks their p99 latency exactly.\n\nAlready Tried:\n\n• Retrying the failed calls: same failure, same rate.\n• Failing over to the US gateway: blocked by PCI routing.\n\nRoll back the 14:15 deploy, or hold it and rate-limit?",
+      "header": "Checkout",
+      "options": [
+        {
+          "label": "Roll back the deploy (Recommended)",
+          "description": "Reverts to the 13:40 build, which ran clean for four hours. The pricing fix that shipped at 14:15 goes with it, and that fix has its own open ticket."
+        },
+        {
+          "label": "Hold and rate-limit",
+          "description": "Keeps the pricing fix and caps checkout at 40 per minute. The failing 6% keep failing, and the cap slows down everyone who was fine."
+        }
+      ]
+    }
+  ]
+}
+```
+
+The decision sentence is 10 words and sits at the end, where it reads as the
+question the context has been building to. The field around it is 14 lines. Both of
+those are correct at once, which is the thing Section 3 exists to say.
+
+**Why each line is there, which is the only justification that counts.** The rate
+and the timestamp, because 6% since 14:20 is a different decision from 90% since
+last week. The EU gateway and the status page, because they are what rules out our
+own code and rules out waiting for the vendor. The p99 correlation, because it is
+the whole reason to believe the diagnosis. And the two things already tried, because
+without them the reader's first instinct — retry it, fail over — is a suggestion
+that has already failed, and they would have to spend a round trip to find that out.
+
+Nothing else about the incident is in there. Anything that could not be justified in
+that form came out, and being able to say why each line survived is what separates a
+long question from a padded one.
+
+**Where the line is.** One more group and this needs rule 4's cap taken seriously:
+four groups is the ceiling, and past it the reader is holding the group set in mind
+while reading inside it. Anything needing a diff, a table, or styled text is not this
+shape at all — that is the preview above, and it is a different trade. And if the
+context here were genuinely twice this long, the honest read is that it is not one
+question: split it, or decide the parts you can and ask about the one you cannot.
+
+## Choosing between the three
+
+| The decision | Where it goes | What it costs |
+|---|---|---|
+| Fits in a sentence | The question, one sentence | Nothing |
+| Needs things weighed, no rendering | The question, laid out | Nothing but the layout rules |
+| Needs rendering | A `preview` per option | Every option description |
+| Exceeds all three | Not one question | A round trip, or your own judgement |
+
+The middle row is the one composers skip, and skipping it is expensive in both
+directions: reach for a preview and the costs you wrote get discarded, or cut the
+context to keep the question short and the reader cannot decide at all.
+
+Note what the descriptions do in this third call, against what they do in the second
+one. Here they are displayed, so they carry the costs and do the work Section 4 asks
+of them. There they are discarded, so they carry nothing. Same field, opposite
+instructions, and the layout is what decides which you are writing.
