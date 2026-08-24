@@ -1069,6 +1069,17 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The capture agent corrected the dispatch brief's premise before executing: Observations held fourteen bullets, not the fifteen the brief asserted, so the restructure was permitted rather than required at this count; it was performed anyway to avoid a second pass one bullet later. The wrong fifteen came from the second capture agent's read-back tally — a stated count that did not come from the counting command, which is the sidecar's own counting rule firing on the sidecar's own maintenance chain
 - Sidecar committed in this boundary alongside this event
 
+## Event 112 — pre-registration: the examples content-boundary experiment
+
+- Timestamp: 2026-08-24 09:31 PDT, measured
+- Hypothesis: on sonnet, the teaching prose around the examples pointer — the shape-of-a-finished-call section, including the dropped-cost-half lesson — is the carrier of the measure-a-draft attribution, not the file, which reads 0 of 62 cumulative on this tier. This is the split the research note's fourth design caveat prescribes: prose and file removed separately
+- Arms, all built from the 0.1.3 tree so the trims and the hedge are common to every arm: A = shipped, the control. B = prose-reduced — the pointer to the examples file stays, the section's teaching content is reworded out, per the reword-not-line-delete principle. C = file-removed — the file and its pointers removed, the stage-2 minus-examples form rebuilt on the current base
+- Scenarios: measure-a-draft-against-a-good-one is the registered subject (ablation-attributed, control 0.80, bundle-removal floor 0.60). prepush-checks-in-question rides along exploratory only — its minus-examples arm was refuted at 0.83, so no prediction is registered for it and nothing about its residue is claimed in advance
+- n and decision rule, registered now: 10 runs per arm per scenario, 60 runs total. Acting evidence for prose-carried: B's measure-a-draft mean at least 15 points under A's, with C within 5 points of B. C materially under B would contradict the zero-read record and forces a re-examination before any conclusion. Anything smaller than the 15-point threshold is directional only and is reported as underpowered, not as a finding. Sized against the 0.20 attributed gap; per-run scores are coarse (about five assertions), so the threshold sits under the attributed effect but well over one assertion's noise
+- Confounds disclosed before the result: B shortens the body with no compensating addition, so arm B tests prose-removal plus a smaller body as a bundle; C differs from B in file presence and pointer presence together. A clean 2x2 is not run because the file-present-pointer-removed cell is the error-condition arm the stage-1 design ruling excluded
+- Workers: three arms concurrent so drift lands on all equally, 7 workers each — 21 children against the machine's derived 20 budget, the sanctioned explicit-workers pattern for concurrent arms. Results to examples-boundary-a, -b, -c under the results home. Completeness gate: per-run grading compared across arms, never the headline assertions figure
+- Launch HOLDS until the owner rules on the launch gate; the registration stands regardless of the ruling
+
 ## Observations
 
 ### Build decisions
