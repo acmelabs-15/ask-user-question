@@ -9,6 +9,12 @@
  * says the measurement was void. That fault voided this project's previous disclosure
  * numbers once already.
  *
+ * `make composition` gates on this too, for its `disclosed` arm. That arm counts the same
+ * Read calls to decide whether progressive disclosure works, so a visible copy floors its
+ * reference recall and precision by the same mechanism -- the injection its `skill` arm
+ * relies on does not cover it. Its `baseline` arm is the no-guidance control, which a
+ * visible copy contaminates in the opposite direction.
+ *
  * plugin-kit's `optimize-disclosure.ts` detects this and writes it into its envelope as an
  * install conflict. `measure-disclosure.ts` builds no envelope and calls no detector, so it
  * reports nothing at all. This script is the missing pre-flight for that path, and it runs
@@ -165,11 +171,12 @@ async function main(): Promise<void> {
     );
     for (const path of result.sightings) console.error(`       ${path}`);
     console.error(
-      "\n  A disclosure run measures which bundled files get READ. Content served through\n" +
-        "  the skill system produces no Read, so such a run scores every file at a pull rate\n" +
-        "  of zero and reports `prune` on all of them. Remove or rename the copies above\n" +
-        "  before measuring disclosure. `make purge-old` reports copies under this skill's\n" +
-        "  previous names.",
+      "\n  A disclosure run measures which bundled files get READ, and so does composition's\n" +
+        "  `disclosed` arm. Content served through the skill system produces no Read, so such\n" +
+        "  a run scores every file at a pull rate of zero and reports `prune` on all of them.\n" +
+        "  Remove or rename the copies above before measuring disclosure or running\n" +
+        "  `make composition`. `make purge-old` reports copies under this skill's previous\n" +
+        "  names.",
     );
     process.exit(EXIT.installed);
   }

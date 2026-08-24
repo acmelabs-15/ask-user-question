@@ -138,9 +138,10 @@ FIND_OLD     = find $(CLAUDE_DIR)/skills $(CLAUDE_DIR)/plugins -maxdepth 3 \
                  $(foreach n,$(OLD_NAMES),-name '$(n)' -o) -false \
                  2>/dev/null
 
-# Pre-flight for the disclosure targets. Sweeps the same four roots the loader reads from
-# and refuses the run if anything answers to this skill's name. See the comment on
-# `measure-disclosure` for why this is a hard gate rather than advice.
+# Pre-flight for the disclosure targets AND `composition`. Sweeps the same four roots the
+# loader reads from and refuses the run if anything answers to this skill's name. See the
+# comment on `measure-disclosure` for why this is a hard gate rather than advice, and the
+# comment on `absent-check` for why composition needs it too.
 ABSENT_GUARD := $(EVALS)/assert-skill-absent.ts
 
 .PHONY: help doctor require-kit absent-check checks measure-disclosure disclosure composition trigger measure-trigger all purge-old clean
@@ -176,10 +177,25 @@ doctor: ## check the environment before spending 35 minutes
 	@$(MAKE) --no-print-directory --silent absent-check GUARD_FATAL=0
 	@printf '  $(G)ok$(X)   results -> $(D)$(OUT)$(X)\n\n'
 
-# The current-name install check, as a target so `doctor` and the two disclosure recipes
-# share one implementation. GUARD_FATAL=0 makes it advisory, which is what `doctor` wants:
-# `checks`, `composition` and the two triggering targets are unaffected by an installed copy
-# and must not be blocked by one.
+# The current-name install check, as a target so `doctor`, the two disclosure recipes and
+# `composition` share one implementation. GUARD_FATAL=0 makes it advisory, which is what
+# `doctor` wants: `checks` and the two triggering targets are genuinely unaffected by an
+# installed copy and must not be blocked by one.
+#
+# `composition` USED TO BE ON THAT LIST, on the grounds that it injects skill content rather
+# than routing to it. That is true of the `skill` arm and false of the `disclosed` arm, which
+# is the one `make composition` also runs. That arm measures disclosure the same way the
+# disclosure targets do -- by counting `Read` tool calls against reference paths
+# (`composition-runner.ts:159-162`) -- and it spawns `claude` with no `--setting-sources` and
+# no `--strict-mcp-config`, so the machine's installed skills are in scope. Content that
+# arrives through the skill system produces no `Read`, so a visible copy floors `refsRead`,
+# reference recall, precision and `refCounts` together, and the arm reports that disclosure
+# does not work when what failed was the measurement. Same void signature as disclosure,
+# reached by the same mechanism; the injection argument never covered this arm.
+#
+# The `baseline` arm has a separate and narrower exposure that this gate also closes: it is
+# the no-guidance control, and a copy the loader can see puts this skill in front of the very
+# runs that define zero.
 #
 # Exit codes from the script: 0 absent, 1 installed, 2 absence could not be confirmed.
 GUARD_FATAL ?= 1
@@ -187,11 +203,11 @@ absent-check:
 	@bun "$(ABSENT_GUARD)" "$(SKILL)"; status=$$?; \
 	  if [ "$$status" = 0 ]; then exit 0; fi; \
 	  if [ "$(GUARD_FATAL)" = 1 ]; then \
-	    printf '\n  $(R)no$(X)   refusing to start a disclosure run under this condition.\n\n'; \
+	    printf '\n  $(R)no$(X)   refusing to start a measurement that would be void under this condition.\n\n'; \
 	    exit $$status; \
 	  fi; \
-	  printf '\n       $(D)advisory here. the disclosure targets refuse on this; the$(X)\n'; \
-	  printf '       $(D)triggering targets are unaffected by it.$(X)\n\n'; \
+	  printf '\n       $(D)advisory here. the disclosure targets and $(X)$(C)composition$(X)$(D) refuse$(X)\n'; \
+	  printf '       $(D)on this; the triggering targets are unaffected by it.$(X)\n\n'; \
 	  exit 0
 
 # Hard gate for every target that runs a plugin-kit operation, and -- with KIT_FATAL=0 --
@@ -328,7 +344,10 @@ disclosure: doctor require-kit absent-check ## measure, then propose a cheaper l
 	  printf '  $(D)%s$(X)\n' "$$run"; \
 	  exit 0
 
-composition: doctor ## three arms, judge on (~45 min)
+# `absent-check` is a hard prerequisite for the `disclosed` arm's sake, not the `skill` arm's.
+# See the comment on `absent-check` for which arm breaks and how. No `require-kit`: this target
+# runs its own runner and calls no plugin-kit operation.
+composition: doctor absent-check ## three arms, judge on (~45 min)
 	@printf '\n  $(B)composition$(X) $(D)3 arms · judge on · ~45 min$(X)\n'
 	@run="$(call stamped,composition)"; mkdir -p "$$run"; \
 	  bun "$(EVALS)/composition/composition-runner.ts" \
