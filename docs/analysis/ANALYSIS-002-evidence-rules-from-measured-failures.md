@@ -104,3 +104,4 @@ This is the rule most likely to be broken while feeling rigorous, because citing
 - caused_by [[SESSION-2026-08-23_01: Ask User Question Fresh Build]]
 - pairs_with [[ANALYSIS-001: Plugin Kit Authoring Standards for the Ask User Question Plugin]]
 - pairs_with [[ANALYSIS-003: Coverage Check Against the Retired Asking Users Questions Skill]]
+- required_by [[ANALYSIS-005: Monospace Decision Dialog Layout Rules]]

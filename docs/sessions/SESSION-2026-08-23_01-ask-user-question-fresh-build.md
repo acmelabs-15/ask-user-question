@@ -420,6 +420,27 @@ _Empty._
 - Both briefed to author their findings as Brain analysis notes directly rather than reporting prose, and to separate measured evidence from convention from judgement
 - Held until the research lands: the placement plan for the eleven retired-skill gaps and the nine findings above
 
+## Event 38 — a follow-up gap found, and it is another rule pointing the wrong way
+
+- Timestamp: 2026-08-24 00:20
+- Raised by: the user, asking whether the skill covers when an answer should prompt a follow-up
+- Verified: three narrow cases are covered — a sequence planned in advance when one answer changes another's options, a confirming second question when the recommendation is irreversible, and asking again after a question failed
+- Gap: nothing covers a clean answer that opens a new fork, and the nearest rule discourages it. `reading-answers.md` says of a matched label "Proceed with that option and do not re-confirm it", which is right for re-confirming and reads as blanket discouragement of a second dialog
+- Structural consequence: six findings are the same topic — series position, run budget, approval scope widening after a clean answer, re-ask hygiene, follow-ups after a successful answer, and the reader's picture of the work drifting across calls. The earlier plan scattered them across three destinations; they belong in one reference that owns the run, with the firing condition "you are about to ask a second time"
+- Also assessed: plugin-kit's diagram doctrine. Most sections fail its test, since a diagram that restates a table or a linear checklist costs tokens on every invocation for less clarity. The run reference is the one candidate that passes, because its branches want opposite fixes
+
+## Event 39 — monospace layout rules landed as an analysis note
+
+- Timestamp: 2026-08-24 00:22
+- Created: ANALYSIS-005, thirteen layout rules each with a mechanical check and a confidence class
+- Overturned, with evidence, two glyph choices this session had adopted: the dingbat circled numerals are present in 1 of 7 monospace faces surveyed and absent from both the macOS and Windows terminal defaults, while the middle dot is present in all 7 but is East Asian Ambiguous, so its width depends on an invisible terminal setting. The intersection of universally present and unambiguous is the hyphen, asterisk, greater-than and bullet-operator
+- Corrected: box-drawing failure was structural rather than arithmetic. The whole block is Ambiguous width, and one surveyed face carries the box characters in its Regular weight and none in its Bold
+- Rule derived: decoration is worth it exactly when the host owns the padding, which makes the preview pane the positive case and hand-drawn boxes the negative one
+- Corrected: uppercase group headers cost 10 to 20 percent reading speed against Title Case, measured 1955 and replicated 2019
+- Honest negative: no controlled study was found either supporting or refuting that lowercase fragments read worse than complete sentences. The sentence-hood claim was replaced with a checkable substitute rather than dressed as measured
+- Measured against the real case: eleven items across four groups is 2.75 per group and inside every threshold found, so the risk is the group count rather than the item count
+- Left open and flagged rather than guessed: whether the pane soft-wraps and where a continuation starts, whether width is measured by display cells or code units, and the pane's actual column width
+
 ## Observations
 
 ### Build decisions
@@ -457,5 +478,6 @@ _Empty._
 - relates_to [[ANALYSIS-001: Plugin Kit Authoring Standards for the Ask User Question Plugin]]
 - leads_to [[ANALYSIS-002: Evidence Rules From Measured Failures]]
 - leads_to [[ANALYSIS-003: Coverage Check Against the Retired Asking Users Questions Skill]]
+- leads_to [[ANALYSIS-005: Monospace Decision Dialog Layout Rules]]
 
 <!-- The two-relation minimum is met as of the evidence-rules analysis landing in this project. The two prior-art notes this session rests on live in the plugin-kit project and cannot be wikilinked across projects; they are named as plain text in the Prior art header line, in Event 11, and in the Observations above. -->
