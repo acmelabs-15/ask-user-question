@@ -7,6 +7,46 @@ Read §8 before you trust any disclosure number, and §12 for what to do next.
 Start in `/Users/peter.kloss/Dev/ACMElabs/ask-user-question`. Much of the outstanding
 work lands in `plugin-kit`.
 
+## 0. First — rehydrate. This file is not sufficient on its own.
+
+**Do this before any work, including anything that looks like a one-liner.** This prompt
+is a summary; the notes below are the record. Several findings here are compressed to a
+sentence and will mislead you at that resolution — §8 and §9 especially.
+
+**Blocking initialisation**, in this order:
+
+```text
+1. Skill(skill="brain:memory")
+2. mcp__plugin_brain_brain__bootstrap_context   project: "ask-user-question"
+3. git -C /Users/peter.kloss/Dev/ACMElabs/ask-user-question branch --show-current
+4. git -C /Users/peter.kloss/Dev/ACMElabs/plugin-kit branch --show-current   # expect restructure-shared-layer
+```
+
+**Required reading, by exact Brain identifier.** Both projects are active; pass `project`
+explicitly on every call or you will read the wrong graph.
+
+| Order | `mcp__plugin_brain_brain__read_note` identifier | project | Why |
+| --- | --- | --- | --- |
+| 1 | `sessions/session-2026-08-23-01-ask-user-question-fresh-build` | `ask-user-question` | **80 events**, every decision and correction in order. Events 57-80 are the disclosure investigation. This is the primary record. |
+| 2 | `analysis/analysis-004-what-makes-a-bundled-reference-get-read` | `plugin-kit` | The research. Our measurements, published work, and open questions kept separable. Read before touching any authoring guidance. |
+| 3 | `analysis/analysis-003-measurement-fault-classes` | `plugin-kit` | Sixteen ways this harness returns a confidently wrong number. ANALYSIS-004 is its sequel. |
+| 4 | `sessions/session-2026-08-23-01-plugin-kit-measurement-tooling-hardening` | `plugin-kit` | The same 2026-08-24 work from the tool's side, with every commit sha. |
+
+The session note is ~90KB. `read_note` will persist it to a local file and hand you the
+path — that file is ordinary scratch, so `grep` it freely rather than pulling it whole
+into context. Reading only its final events is a reasonable start; reading only this
+prompt is not.
+
+**Then, before writing anything:** the auto-memories under `~/.claude/memory/` are
+tier-1 and blocking, `~/KNOWLEDGE-GRAPH-CONVENTIONS.md` is auto-imported, and
+`~/KNOWLEDGE-GRAPH-STRUCTURES.md` plus `~/NOTE-TEMPLATES.md` load on demand when
+authoring a note of a given type.
+
+**If you read nothing else here, read §8.** Every disclosure number produced before
+2026-08-24 was measured through a broken instrument, and the corrected number is a
+different *kind* of number. A reader who takes "all six references keep" at face value
+will draw the wrong conclusion from it.
+
 ## 1. The goal
 
 Two goals now, and they are entangled.
@@ -294,12 +334,33 @@ cd /Users/peter.kloss/Dev/ACMElabs/plugin-kit && bun shared/operations/measure-d
 Commit on `main` by **explicit pathspec** — several agents share this tree and a bare
 `git add .` sweeps their work. **Do not push.** No AI attribution in commit messages.
 
-## 14. Reading order
+## 14. The full note inventory
 
-1. `docs/sessions/SESSION-2026-08-23_01-*` in **ask-user-question** — 80 events, every decision and correction in order. Events 57-80 are the disclosure investigation.
-2. `ANALYSIS-004: What Makes a Bundled Reference Get Read` in **plugin-kit** — the research, with our measurements separable from published work and from open questions.
-3. `ANALYSIS-003: Measurement Fault Classes` in **plugin-kit** — sixteen ways this harness returns a confidently wrong number. ANALYSIS-004 is its sequel.
-4. `docs/sessions/SESSION-2026-08-23_01-plugin-kit-*` in **plugin-kit** — the same work from the tool's side.
-5. In ask-user-question: `ANALYSIS-003` (coverage against the retired skill), `ANALYSIS-004` (tool capabilities read from the shipped binary), `ANALYSIS-005` (monospace layout), `ANALYSIS-006` (surface portability). All via Brain MCP.
+§0 lists the four notes that are required reading. These are the rest, worth knowing
+exist so you do not re-derive what is already written down. All via Brain MCP with an
+explicit `project`.
+
+**In `ask-user-question`:**
+
+| Identifier | What it holds |
+| --- | --- |
+| `analysis/analysis-001-plugin-kit-authoring-standards-for-the-ask-user-question-plugin` | plugin-kit's authoring standards as they applied here, cited `path:line` |
+| `analysis/analysis-002-evidence-rules-from-measured-failures` | Evidence rules, each derived from a specific failure rather than from theory |
+| `analysis/analysis-003-coverage-check-against-the-retired-asking-users-questions-skill` | The 11 real gaps found against the retired skill |
+| `analysis/analysis-004-askuserquestion-tool-capability-audit-at-build-2-1-241` | **Tool behaviour read from the shipped binary** — per-field rendering, the `(notes only)` sentinel, preview geometry, what `Chat about this` returns. Load before any claim about what the tool does |
+| `analysis/analysis-005-monospace-decision-dialog-layout-rules` | Thirteen layout rules with confidence classes |
+| `analysis/analysis-006-surface-portability-of-the-ask-user-question-skill-s-claims` | Which of the skill's flat assertions hold on every surface |
+
+Note the collision: **`ANALYSIS-004` exists in both projects and they are different notes.**
+In `ask-user-question` it is the tool-capability audit; in `plugin-kit` it is the reference
+research. Always pass `project`.
+
+**In `plugin-kit`:** `analysis/analysis-001-python-to-bun-port-fidelity`,
+`analysis/analysis-002-inert-parameter-and-flag-survey`, plus the two named in §0.
+
+**Session notes** are the temporal record and the two in §0 are the only live ones. The
+ask-user-question ledger is a pointer ledger: inline `[[wikilinks]]`, `file.ts:line`, and
+commit shas, not prose summaries. If a fact appears both here and there, **the ledger wins** —
+this file is a summary and summaries drift.
 
 Keep the ledger current — one event per state change, committed in the same turn.
