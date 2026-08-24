@@ -1334,6 +1334,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Parked with rationale on the ledger: optimizer wiring (holdout floor, apply fence), the plugin-creator token breach, the reviewer description lengths, the suite intermittency
 - The board after this: nothing in flight; open — the next-sweep decision; queued — the retrospective with the three-defect-class Brain bug report
 
+## Event 144 — LOCKED: the disclosure envelope builds, and T-13 rides with it
+
+- Timestamp: 2026-08-24 12:09 PDT, measured
+- Owner asked whether measure-disclosure should write an envelope; the source check found it is the ONLY measurement tool without one — the hardening pass patched the install-state hole the missing envelope caused, not the envelope itself. The costs are on this ledger already: disclosure subset runs are label-only where trigger runs are hash-refused, the interrupted-pair misdiagnosis was a by-hand denominator comparison the envelope layer mechanizes, and the counted-versus-all totals candidate is envelope-shaped provenance
+- Owner chose, verbatim: "Build it, with T-13 (Recommended)" — one dispatch takes the envelope (set hash over rows that ran, model, install state, subset and tier-study caps, counted-versus-all totals with exclusion causes, compareRuns working across disclosure arms) and T-13's install-detection split (absent versus not-reachable, the absent-is-not-unknown principle, every consumer updated so a void measurement cannot read clean)
+- Dispatched to the Bun engineer, background, tree clean and to itself; diff before commit; the smoke is stamped not-a-measurement by design
+- T-13 leaves the Unblocked backlog into active work on this dispatch
+
 ## Observations
 
 ### Build decisions
