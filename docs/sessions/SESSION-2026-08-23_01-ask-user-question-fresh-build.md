@@ -665,6 +665,17 @@ _Empty._
 - Each fix carries a regression test that fails on its parent commit. The symlink test is the only case in that file touching the disk, because a symlink cannot be faked with a synthetic path. After both: 1502 pass, 0 fail, typecheck clean. Nothing pushed
 - A third sweep is running against the fix-1-only commit with the temp root back to default, deliberately holding fix two out so the comparison isolates one change
 
+## Event 64 — the patch agrees with the workaround, and the outlier was the middle run
+
+- Timestamp: 2026-08-24 02:15 PDT
+- Third sweep complete against commit 4710db8, temp root back to default, fix two deliberately held out so the comparison moved one variable
+- Verdicts agree on all six files, `keep` against `keep`. The patch reproduces the workaround's conclusion without the workaround
+- Per-file pulls move in both directions and total 106 against 96: examples.md 32 to 23, layout.md 21 to 23, wording.md 24 to 21, asking-again.md 11 to 11, failed-question.md 12 to 9, reading-answers.md 6 to 9. Nothing collapses to zero and no verdict flips, so the movement is the model not reading identically run to run
+- The third point settles two figures Event 62 refused to interpret. Pass rate across three sweeps of identical bytes: 0.8473, 0.9008, 0.8321. Context per run: 317,145, 412,953, 299,156. The workaround sweep was the outlier on both, so the pass-rate rise was noise and the context rise was noise. Neither entered the record as a finding, which is the only reason there is nothing to retract
+- Noise band for pass rate on this scenario set is therefore about seven points across three runs, wider than the two-query band measured for triggering. Quote it when comparing sweeps
+- `runs_without_skill: 0` on all three sweeps is NOT evidence of anything. All three predate the second fix, so the field was true whenever a load was merely attempted; it cannot distinguish no failures from invisible failures
+- A fourth sweep is running against commit 02248f3 with both fixes to close that, and to show whether the guardrail in optimize-disclosure now has anything to fire on
+
 ## Observations
 
 ### Build decisions
