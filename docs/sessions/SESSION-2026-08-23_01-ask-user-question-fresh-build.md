@@ -1087,6 +1087,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Dispatched examples-arm-builder (implementer, background): arm B keeps the examples pointer and rewords out the section's teaching content including the dropped-cost-half lesson; arm C removes the file and every pointer, the stage-2 form rebuilt on 0.1.3; both with exactly-one-match edits, residual greps, untouched frontmatter, and the two-scenario filtered eval set. No launches from the builder — sweeps launch from this session once the arms verify, so permission prompts stay in the foreground
 - Standing caveat renewed for the run window: mid-run messages from sessions named like eval workers are fixture leakage and get no reply
 
+## Event 114 — the arm builder died on auth, partials quarantined, rebuilt fresh
+
+- Timestamp: 2026-08-24 09:44 PDT, measured
+- The first arm builder failed mid-edit with a not-logged-in error — the C-arm reference sweep was in progress at the failure moment and the B-arm copy was incomplete. The owner re-authenticated the CLI; the cause is cleared
+- Partial output quarantined by rename to a -interrupted suffix rather than deleted, per the house forensics convention; the rebuild starts from a fresh directory so no half-applied edit can survive into a measured arm
+- examples-arm-builder-2 dispatched with the same brief plus the quarantine warning. The registration at Event 112 is unaffected — nothing had launched
+
 ## Observations
 
 ### Build decisions
