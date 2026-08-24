@@ -62,6 +62,39 @@ OPS         := $(PLUGIN_KIT)/shared/operations
 MODEL       ?= opus
 RUNS        ?= 3
 
+# The eval set both triggering targets measure against. THERE IS A CHOICE HERE, and the
+# default is deliberate rather than the only option.
+#
+#   trigger-eval-set.json            26 rows, 14 positive.  THE DEFAULT.
+#   trigger-eval-set-candidate.json  52 rows, 37 positive, with a .groups.json sidecar.
+#
+# The default stays on the 26-row set because it is authored input marked "do not
+# regenerate", and TRUSTWORTHINESS.md's gate on queries not being derived from the
+# description under test cites that marking as its evidence. Swapping the default would
+# silently change what a documented target measures, which is the same failure this
+# variable exists to prevent.
+#
+# Its known weakness, so nobody re-derives it: six of the fourteen positives have obvious
+# one-step answers. A skill is only consulted for work the model cannot easily do alone, so
+# those never reach skill selection and measure the query rather than the description. The
+# fix belongs in the queries, not in the description.
+#
+# The candidate set is the 52-row rewrite addressing that. It carries fourteen groups scored
+# separately, six of them `gap-*` groups testing description capabilities that may have no
+# clause hooking them at all -- register, vocabulary, rejection, cost, evidence and
+# comparability. Point at it explicitly when that is what you want:
+#
+#   make measure-trigger EVAL_SET=$(EVALS)/trigger-eval-set-candidate.json
+#
+# Rates from the two sets are NOT comparable: different rows, different denominators, and
+# the candidate's are scored per group. Do not difference them.
+EVAL_SET    ?= $(EVALS)/trigger-eval-set.json
+
+# Same treatment as PLUGIN_KIT and OUT, for the same reason and with the same `override`:
+# this is a path a user will override on the command line, so `EVAL_SET=~/my-set.json`
+# otherwise arrives with a literal ~ and fails on a file they can see with ls.
+override EVAL_SET := $(call tilde,$(EVAL_SET))
+
 # Every measurement target mints its own directory at recipe time and writes both results
 # and logs inside it. Three reasons, none of them tidiness:
 #
@@ -155,7 +188,9 @@ help: ## show this
 	@printf '        WORKERS=$(D)$(if $(WORKERS),$(WORKERS),unset — optimize-description.ts decides)$(X)\n'
 	@printf '        DISC_WORKERS=$(D)$(if $(DISC_WORKERS),$(DISC_WORKERS),unset — the disclosure scripts decide)$(X)\n'
 	@printf '        COMP_WORKERS=$(D)$(COMP_WORKERS)$(X) $(D)(composition)$(X)\n'
-	@printf '        PLUGIN_KIT=$(D)$(PLUGIN_KIT)$(X)\n\n'
+	@printf '        PLUGIN_KIT=$(D)$(PLUGIN_KIT)$(X)\n'
+	@printf '        EVAL_SET=$(D)$(notdir $(EVAL_SET))$(X) $(D)(triggering targets;'
+	@printf ' trigger-eval-set-candidate.json is the 52-row alternative)$(X)\n\n'
 	@printf '  $(D)Nothing here installs the skill: every plugin-kit operation copies it into$(X)\n'
 	@printf '  $(D)a throwaway project root of its own. The long runs draw a percentage on$(X)\n'
 	@printf '  $(D)stderr, so the report on stdout stays clean and you can watch either.$(X)\n\n'
@@ -380,7 +415,7 @@ measure-trigger: doctor require-kit ## per-query trigger rates for the descripti
 	@printf '\n  $(B)measure-trigger$(X) $(D)measure only · full-N rates$(X)\n'
 	@run="$(call stamped,measure-trigger)"; mkdir -p "$$run"; \
 	  bun "$(OPS)/measure-triggering.ts" \
-	    --eval-set "$(EVALS)/trigger-eval-set.json" \
+	    --eval-set "$(EVAL_SET)" \
 	    --target-path "$(SKILL)" --target-type skill \
 	    --model $(MODEL) --runs-per-query $(RUNS) \
 	    --no-early-stop --verbose \
@@ -401,7 +436,7 @@ trigger: doctor require-kit ## optimize the description against the eval set (~3
 	@printf '\n  $(B)trigger$(X) $(D)nothing installed · ~35 min$(X)\n'
 	@run="$(call stamped,trigger)"; mkdir -p "$$run"; \
 	  bun "$(OPS)/optimize-description.ts" \
-	    --eval-set "$(EVALS)/trigger-eval-set.json" \
+	    --eval-set "$(EVAL_SET)" \
 	    --target-path "$(SKILL)" --target-type skill \
 	    --model $(MODEL) --runs-per-query $(RUNS) \
 	    $(if $(WORKERS),--num-workers $(WORKERS),) \

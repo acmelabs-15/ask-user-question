@@ -48,6 +48,11 @@ Point at a plugin-kit checkout with an absolute path:
 make trigger PLUGIN_KIT=/Users/you/Dev/ACMElabs/plugin-kit
 ```
 
+The two triggering targets measure against `EVAL_SET`, which defaults to the 26-query
+`evals/trigger-eval-set.json`. A 52-query candidate set exists alongside it, scored per
+group; the comment above `EVAL_SET` in the Makefile says when to prefer it. Rates from the
+two are not comparable.
+
 ## Layout
 
 ```
