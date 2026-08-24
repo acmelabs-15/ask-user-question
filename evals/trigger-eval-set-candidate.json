@@ -206,5 +206,13 @@
   {
     "query": "the dialog just never appears — no error, nothing in the logs, the call returns and the run carries on. this is a normal claude code session, not an sdk thing, so i think its something im doing in the call itself. heres what im sending",
     "should_trigger": true
+  },
+  {
+    "query": "before i send this can you check it over — question is \"Which region should we cut over first?\", header \"Region\", options are \"eu-west (recommended)\", \"us-east\" and \"both at once\", each with a line of description. anything wrong with it?",
+    "should_trigger": true
+  },
+  {
+    "query": "check this call over before i send it — its the one in scripts/cutover-prompt.ts. i think its fine but id rather someone looked at it first",
+    "should_trigger": true
   }
 ]
