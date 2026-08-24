@@ -1,17 +1,23 @@
 # ask-user-question — measurement targets.
 #
-# Order matters and the targets encode it. `trigger` measures the INSTALLED skill against
-# its real neighbours, so it installs first. `disclosure` and `composition` ask whether an
-# agent CHOOSES to read files from a path; an installed copy arrives through the skill
-# system instead, so no Read ever happens and every file scores a meaningless zero. Those
-# two park the installed copy and restore it.
+# Every model-calling target runs an operation out of plugin-kit. Those operations isolate
+# their own measurement: each run copies the artifact under a unique alias into a throwaway
+# project root and spawns with `--setting-sources project --strict-mcp-config`, so the
+# machine's own skills, settings and MCP servers stay out of the result.
+#
+# Nothing here installs the skill, and nothing here writes into the Claude config
+# directory. That is a correctness requirement, not hygiene: a machine-visible copy of this
+# skill is served to the model through the skill system, which never produces a `Read`, so
+# every bundled file scores a pull rate of zero. The disclosure report then reads as a
+# clean table of `prune` verdicts on files that are in fact load-bearing.
 #
 # Serial by design: two of these at once saturates the connection and every call fails.
 #
-#   make            list targets
-#   make doctor     check the environment before spending 35 minutes
-#   make checks     free, seconds
-#   make trigger    routing, ~35 min
+#   make                     list targets
+#   make doctor              check the environment before spending 35 minutes
+#   make checks              free, seconds
+#   make measure-disclosure  what the skill costs as authored, nothing changed
+#   make trigger             routing, ~35 min
 #
 # Override anything:  make composition RUNS=1 OUT=/tmp/x
 
@@ -21,84 +27,77 @@ SHELL       := /bin/bash
 ROOT        := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 SKILL       := $(ROOT)/skills/ask-user-question
 EVALS       := $(ROOT)/evals
-INSTALLED   := $(HOME)/.claude/skills/ask-user-question
+CLAUDE_DIR  := $(HOME)/.claude
 STAMP       := $(shell date +%Y-%m-%d_%H%M%S)
 OUT         ?= $(HOME)/auq-results/$(STAMP)
 
 # zsh -- the macOS default -- does not tilde-expand after `=` in a command argument,
-# where bash does. So `make trigger SKILL_CREATOR_DIR=~/Downloads/skill-creator`,
-# which is the line this Makefile prints as the fix, arrives with a literal ~ and
-# every test against the path fails on a directory the user can see with ls.
-# Expanding it here is the only place that can tell the two shells apart.
+# where bash does. So `make trigger PLUGIN_KIT=~/Dev/ACMElabs/plugin-kit`, which is the
+# line this Makefile prints as the fix, arrives with a literal ~ and every test against
+# the path fails on a directory the user can see with ls. Expanding it here is the only
+# place that can tell the two shells apart.
 tilde        = $(patsubst ~/%,$(HOME)/%,$(patsubst ~,$(HOME),$(1)))
 
-# skill-creator is imported rather than vendored. `trigger` reuses its seeded
-# train/holdout split -- reimplementing that locally would silently change which
-# queries land in the holdout and make every number in RESULTS-baseline.json
-# incomparable without anything reporting it. `disclosure` runs its optimizer.
-#
-# A downloaded zip unpacks under whatever name the zip carried (skillcreator2,
-# skill-creator_1, ...), so the folder is probed rather than assumed: the usual
-# spots first, then one and two levels down in Downloads, looking for the file
-# the trigger runner actually imports. Override to skip the probe entirely.
-SC_PROBE    := skills/skill-creator/scripts/run-loop.ts
-SC_LOOK     := $(HOME)/Downloads/skill-creator $(HOME)/Dev/ACMElabs/skill-creator \
-               $(wildcard $(HOME)/Downloads/*/) $(wildcard $(HOME)/Downloads/*/*/)
-SKILL_CREATOR_DIR ?= $(patsubst %/,%,$(firstword \
-                       $(foreach d,$(SC_LOOK),$(if $(wildcard $(d)/$(SC_PROBE)),$(d))) \
-                       $(HOME)/Downloads/skill-creator))
+# plugin-kit carries the measurement operations. There is no unified entry point and no
+# `bin`: each operation is a script invoked directly, so the targets below name the script
+# they run rather than a subcommand.
+PLUGIN_KIT  ?= $(HOME)/Dev/ACMElabs/plugin-kit
 
 # `override` is required, not decoration: a variable set on the command line beats an
 # ordinary assignment in the makefile, so without it the expansion above would be
 # discarded for exactly the case it exists to fix.
-override SKILL_CREATOR_DIR := $(call tilde,$(SKILL_CREATOR_DIR))
+override PLUGIN_KIT := $(call tilde,$(PLUGIN_KIT))
 override OUT := $(call tilde,$(OUT))
 
-OPT         := $(SKILL_CREATOR_DIR)/skills/skill-creator/scripts/optimize-disclosure.ts
-export SKILL_CREATOR_DIR
+KIT_PROBE   := shared/operations/measure-triggering.ts
+OPS         := $(PLUGIN_KIT)/shared/operations
 
 MODEL       ?= opus
 RUNS        ?= 3
 
-# Three worker counts, because the three kinds of call are not the same size, and one of
-# them is not ours to choose.
+# Every measurement target mints its own directory at recipe time and writes both results
+# and logs inside it. Two independent reasons, and the second is the one that bites:
 #
-# The shared hazard, in skill-creator's words: rate limiting is "the one failure that
-# corrupts rather than merely slows a measurement, since a rate-limited run is recorded
-# as a failed run." Contention does not surface as an error. It surfaces as a worse
-# skill -- recall down, precision up, nothing red on screen. Watch the `!` and `?`
-# tallies on the progress bar; at these counts they should read zero.
-#
-# WORKERS      trigger. One turn, dies at the first tool call. skill-creator's
-#              equivalent sweep (run-eval.ts) uses 10; these probes are shorter, so 8 is
-#              conservative rather than tuned. Raising it toward 12 is defensible.
-# COMP_WORKERS composition. Each attempt is a full engagement plus a judge call, so 4 is
-#              already about 8 concurrent streams. It is also what every figure in
-#              composition/results-first-run was measured at.
-# DISC_WORKERS disclosure. EMPTY ON PURPOSE -- see below.
-WORKERS      ?= 12
-COMP_WORKERS ?= 8
+#  - Bun opens an output file without O_TRUNC, so re-running into a populated directory
+#    leaves the tail of the previous, longer record spliced onto the new, shorter one. It
+#    is far more dangerous in a `.log` than in a `.json`, because nothing parses a log and
+#    a stale warning reads as a current one.
+#  - Results written inside the skill directory become bundled files, which the next
+#    disclosure run then measures as part of the artifact. `--apply` compounds it: its
+#    default target is `<results-dir>/best-layout` and it is `rm -rf`ed before the layout
+#    is copied in, so a results directory inside the skill would delete the skill.
+stamped      = $(OUT)/$(1)-$$(date +%H%M%S)
 
-# Left unset so `optimize-disclosure.ts` uses its own default, currently 12, arrived at
-# from measurements this repo did not make: that a worker there is blocked on the API for
-# nearly its whole slot, so the limit is account concurrency rather than cores. This
-# Makefile used to pass 8, which quietly overrode a tuned decision with an arbitrary
-# number and made the run slower than designed. Pinning 12 here would be the same mistake
-# with a better number -- it would stick at 12 after they retune.
+# Worker counts. DELIBERATELY NOT RAISED above each script's own default -- 10 for the
+# description loop, 12 for both disclosure operations, 4 for the local composition runner.
 #
-# The skill itself settles it. skills/skill-creator/SKILL.md prescribes exactly one
-# invocation and it carries no worker flag at all:
+# Rate limiting is the one failure that corrupts rather than merely slows a measurement: a
+# rate-limited run is recorded as a clean DECLINE rather than as an error, so throttling
+# silently reports LOWER trigger rates and a worse-looking skill with nothing red on
+# screen. Watch the `!` and `?` tallies on the progress bar; they should read zero.
 #
-#     bun scripts/optimize-disclosure.ts --skill-path <skill-dir> --scenarios evals/evals.json
-#
-# SKILL.md does not mention workers or concurrency anywhere. Omitting the flag IS the
-# documented invocation, so passing 8 was not a tuning choice, it was a contradiction.
-#
-# The 5 and 6 elsewhere in that repo are from evals/drivers/run-measurement.ts, which is
-# outside skills/skill-creator/ and does not ship with the skill: it is how the repo
-# measures ITSELF across every skill back to back, where a shared denominator beats wall
-# clock. Precedent if failures cluster, not instruction.
+# WORKERS and DISC_WORKERS are empty on purpose so each script applies its own default,
+# which was arrived at from measurements this repo did not make. Pinning a number here,
+# even the right one today, makes this Makefile override a tuned decision after they
+# retune it.
+WORKERS      ?=
 DISC_WORKERS ?=
+COMP_WORKERS ?= 4
+
+# --no-early-stop is not passed by any target below, and that is a finding rather than an
+# omission. The flag exists only on the two scripts built from SHARED_EVAL_FLAGS
+# (measure-triggering.ts, optimize-description.ts).
+#
+#  - `trigger` runs optimize-description.ts, which is an OPTIMIZER: it ranks iterations on
+#    pass COUNTS, which early stopping cannot change. Omitted deliberately.
+#  - `disclosure` runs optimize-disclosure.ts, also an optimizer, and the flag does not
+#    exist there at all.
+#  - `measure-disclosure` is the one target whose headline output is a RATE. Its script has
+#    no early-stop mechanism to disable: every scenario runs --runs-per-scenario times, so
+#    its rates are full-N by construction.
+#
+# A future `measure-trigger` target reading per-query trigger rates off
+# measure-triggering.ts directly is where this flag would belong.
 
 B := \033[1m
 D := \033[2m
@@ -110,32 +109,38 @@ X := \033[0m
 
 # Names this skill has shipped under. A copy under any of them competes for the same
 # queries and wins some, which reads as a broken description rather than a duplicate.
+# plugin-kit's own install sweep cannot catch these: it looks for the artifact's CURRENT
+# name, so a copy called `asking-users-questions` is invisible to it and visible to the
+# router.
 OLD_NAMES   := asking-users-questions surface-decisions user-choices
-FIND_OLD     = find $(HOME)/.claude/skills $(HOME)/.claude/plugins -maxdepth 3 \
+FIND_OLD     = find $(CLAUDE_DIR)/skills $(CLAUDE_DIR)/plugins -maxdepth 3 \
                  $(foreach n,$(OLD_NAMES),-name '$(n)' -o) -false \
-                 2>/dev/null | grep -v '^$(INSTALLED)$$'
+                 2>/dev/null
 
-.PHONY: help doctor require-sc checks disclosure composition trigger all install uninstall purge-old park unpark clean
+.PHONY: help doctor require-kit checks measure-disclosure disclosure composition trigger all purge-old clean
 
 help: ## show this
 	@printf '\n  $(B)ask-user-question$(X)  $(D)measurement targets$(X)\n\n'
 	@grep -hE '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) \
-	  | awk 'BEGIN{FS=":.*?## "}{printf "  $(C)%-13s$(X) %s\n", $$1, $$2}'
+	  | awk 'BEGIN{FS=":.*?## "}{printf "  $(C)%-18s$(X) %s\n", $$1, $$2}'
 	@printf '\n  $(B)vars$(X)  OUT=$(D)%s$(X)\n' '$(OUT)'
 	@printf '        MODEL=$(D)$(MODEL)$(X)  RUNS=$(D)$(RUNS)$(X)\n'
-	@printf '        WORKERS=$(D)$(WORKERS)$(X) $(D)(trigger)$(X)  COMP_WORKERS=$(D)$(COMP_WORKERS)$(X) $(D)(composition)$(X)\n'
-	@printf '        DISC_WORKERS=$(D)$(if $(DISC_WORKERS),$(DISC_WORKERS),unset — optimize-disclosure.ts decides)$(X)\n'
-	@printf '        SKILL_CREATOR_DIR=$(D)$(SKILL_CREATOR_DIR)$(X)\n\n'
-	@printf '  $(D)trigger needs the skill installed; disclosure and composition need it$(X)\n'
-	@printf '  $(D)absent. Both are handled for you. The long runs draw a percentage on$(X)\n'
+	@printf '        WORKERS=$(D)$(if $(WORKERS),$(WORKERS),unset — optimize-description.ts decides)$(X)\n'
+	@printf '        DISC_WORKERS=$(D)$(if $(DISC_WORKERS),$(DISC_WORKERS),unset — the disclosure scripts decide)$(X)\n'
+	@printf '        COMP_WORKERS=$(D)$(COMP_WORKERS)$(X) $(D)(composition)$(X)\n'
+	@printf '        PLUGIN_KIT=$(D)$(PLUGIN_KIT)$(X)\n\n'
+	@printf '  $(D)Nothing here installs the skill: every plugin-kit operation copies it into$(X)\n'
+	@printf '  $(D)a throwaway project root of its own. The long runs draw a percentage on$(X)\n'
 	@printf '  $(D)stderr, so the report on stdout stays clean and you can watch either.$(X)\n\n'
 
 doctor: ## check the environment before spending 35 minutes
 	@printf '\n  $(B)doctor$(X)\n'
 	@command -v bun    >/dev/null && printf '  $(G)ok$(X)   bun\n'    || { printf '  $(R)no$(X)   bun not on PATH\n'; exit 1; }
 	@command -v claude >/dev/null && printf '  $(G)ok$(X)   claude\n' || { printf '  $(R)no$(X)   claude not on PATH\n'; exit 1; }
-	@test -f "$(SKILL)/SKILL.md" && printf '  $(G)ok$(X)   skill\n'   || { printf '  $(R)no$(X)   no SKILL.md at $(SKILL)\n'; exit 1; }
-	@$(MAKE) --no-print-directory require-sc SC_FATAL=0
+	@$(MAKE) --no-print-directory require-kit KIT_FATAL=0
+	@if test -f "$(SKILL)/SKILL.md"; then printf '  $(G)ok$(X)   skill $(D)$(SKILL)$(X)\n'; \
+	 else printf '  $(D)--   no SKILL.md at $(SKILL) yet$(X)\n'; \
+	      printf '       $(D)informational: the measurement targets need one, doctor does not.$(X)\n'; fi
 	@old=$$($(FIND_OLD)); \
 	  if [ -n "$$old" ]; then \
 	    printf '  $(R)no$(X)   an older copy is installed and will win some queries:\n'; \
@@ -144,62 +149,50 @@ doctor: ## check the environment before spending 35 minutes
 	  else printf '  $(G)ok$(X)   no older copy installed\n'; fi
 	@printf '  $(G)ok$(X)   results -> $(D)$(OUT)$(X)\n\n'
 
-# Hard gate for the two targets that import skill-creator, and -- with SC_FATAL=0 --
+# Hard gate for every target that runs a plugin-kit operation, and -- with KIT_FATAL=0 --
 # the line `doctor` prints. One recipe rather than two, so the warning and the refusal
-# cannot drift apart the way the old pair did, where doctor tested for
-# optimize-disclosure.ts while trigger actually imports run-loop.ts.
+# cannot drift apart the way the old pair did, where doctor tested for one file and the
+# runner imported another.
 #
-# `checks` and `composition` are self-contained and must still run without it, which is
-# why doctor warns instead of failing. But starting a 35-minute trigger run that cannot
-# import its split is worse than not starting.
-SC_FATAL    ?= 1
-require-sc:
-	@if test -f "$(SKILL_CREATOR_DIR)/$(SC_PROBE)"; then \
-	   [ "$(SC_FATAL)" = 1 ] || printf '  $(G)ok$(X)   skill-creator $(D)$(SKILL_CREATOR_DIR)$(X)\n'; \
+# `checks` and `composition` are self-contained and must still run without plugin-kit,
+# which is why doctor warns instead of failing. But starting a 35-minute run against a
+# script that is not there is worse than not starting.
+KIT_FATAL   ?= 1
+require-kit:
+	@if test -f "$(PLUGIN_KIT)/$(KIT_PROBE)"; then \
+	   [ "$(KIT_FATAL)" = 1 ] || printf '  $(G)ok$(X)   plugin-kit $(D)$(PLUGIN_KIT)$(X)\n'; \
 	   exit 0; \
 	 fi; \
-	 if [ "$(SC_FATAL)" = 1 ]; then printf '\n  $(R)no$(X)   '; else printf '  $(Y)!$(X)    '; fi; \
-	 if ! test -d "$(SKILL_CREATOR_DIR)"; then \
-	   printf 'skill-creator: no such directory\n'; \
-	   printf '       $(D)%s$(X)\n' '$(SKILL_CREATOR_DIR)'; \
+	 if [ "$(KIT_FATAL)" = 1 ]; then printf '\n  $(R)no$(X)   '; else printf '  $(Y)!$(X)    '; fi; \
+	 printf 'plugin-kit: cannot find $(D)$(KIT_PROBE)$(X)\n'; \
+	 printf '       $(D)looked for$(X) $(D)%s$(X)\n' '$(PLUGIN_KIT)/$(KIT_PROBE)'; \
+	 if ! test -d "$(PLUGIN_KIT)"; then \
+	   printf '       $(D)that directory does not exist$(X)\n'; \
 	 else \
-	   printf 'skill-creator is there, but its scripts are not\n'; \
-	   printf '       $(D)%s$(X)\n' '$(SKILL_CREATOR_DIR)'; \
-	   printf '       $(D)contains no$(X) $(D)$(SC_PROBE)$(X)$(D), only:$(X)\n'; \
-	   ls "$(SKILL_CREATOR_DIR)" 2>/dev/null | head -8 | tr '\n' ' ' | sed 's/^/         /'; printf '\n'; \
+	   printf '       $(D)the directory exists but does not carry that file, only:$(X)\n'; \
+	   ls "$(PLUGIN_KIT)" 2>/dev/null | head -8 | tr '\n' ' ' | sed 's/^/         /'; printf '\n'; \
 	 fi; \
-	 case '$(SKILL_CREATOR_DIR)' in /*) ;; *) \
+	 case '$(PLUGIN_KIT)' in /*) ;; *) \
 	   printf '       $(Y)that is not an absolute path.$(X) $(D)make expands $$ in a command-line$(X)\n'; \
 	   printf '       $(D)value, so a quoted $$HOME becomes OME. Paste the path itself.$(X)\n' ;; \
 	 esac; \
-	 printf '       $(D)point at the folder that contains$(X) skills/$(D):$(X)\n'; \
-	 printf '       $(C)make trigger SKILL_CREATOR_DIR=$(HOME)/Downloads/skill-creator$(X)\n'; \
-	 if [ "$(SC_FATAL)" = 1 ]; then printf '\n'; exit 1; fi
+	 printf '       $(D)override with$(X) $(C)PLUGIN_KIT$(X)$(D), pointing at the checkout root:$(X)\n'; \
+	 printf '       $(C)make trigger PLUGIN_KIT=$(HOME)/Dev/ACMElabs/plugin-kit$(X)\n'; \
+	 if [ "$(KIT_FATAL)" = 1 ]; then printf '\n'; exit 1; fi
 
 checks: ## frontmatter + linter, no model calls, seconds
 	@printf '\n  $(B)checks$(X) $(D)no model calls$(X)\n'
-	@mkdir -p "$(OUT)"
-	@bun "$(EVALS)/frontmatter.test.ts"        | tee "$(OUT)/frontmatter.txt" | tail -2
-	@bun "$(EVALS)/composition/checks.test.ts" | tee "$(OUT)/checks.txt"      | tail -1
-	@printf '\n'
-
-park:
-	@test -d "$(INSTALLED)" && mv "$(INSTALLED)" "$(INSTALLED).parked" \
-	  && printf '  $(D)installed copy parked$(X)\n' || true
-
-unpark:
-	@test -d "$(INSTALLED).parked" && mv "$(INSTALLED).parked" "$(INSTALLED)" || true
-
-install: ## copy the skill into ~/.claude/skills
-	@rm -rf "$(INSTALLED)" && cp -r "$(SKILL)" "$(HOME)/.claude/skills/" \
-	  && printf '  $(G)ok$(X)   installed $(D)$(INSTALLED)$(X)\n'
+	@run="$(call stamped,checks)"; mkdir -p "$$run"; \
+	  bun "$(EVALS)/frontmatter.test.ts"        | tee "$$run/frontmatter.txt" | tail -2; \
+	  bun "$(EVALS)/composition/checks.test.ts" | tee "$$run/checks.txt"      | tail -1; \
+	  printf '  $(D)%s$(X)\n\n' "$$run"
 
 purge-old: ## remove copies installed under this skill's previous names
 	@old=$$($(FIND_OLD)); \
 	  if [ -z "$$old" ]; then printf '  $(G)ok$(X)   nothing to remove\n'; exit 0; fi; \
 	  for p in $$old; do \
 	    case "$$p" in \
-	      $(HOME)/.claude/plugins/*) \
+	      $(CLAUDE_DIR)/plugins/*) \
 	        printf '  $(Y)!$(X)    $(D)%s$(X)\n' "$$p"; \
 	        printf '       $(D)left alone: deleting a plugin directory can take unrelated$(X)\n'; \
 	        printf '       $(D)skills with it. Remove that plugin through your plugin manager.$(X)\n' ;; \
@@ -207,48 +200,64 @@ purge-old: ## remove copies installed under this skill's previous names
 	    esac; \
 	  done
 
-uninstall: ## remove it again
-	@rm -rf "$(INSTALLED)" "$(INSTALLED).parked" && printf '  $(G)ok$(X)   removed\n'
-
-disclosure: doctor require-sc ## which references get read, and what a run costs (~5 min)
-	@printf '\n  $(B)disclosure$(X) $(D)skill parked · ~5 min$(X)\n'
-	@mkdir -p "$(OUT)"
-	@$(MAKE) --no-print-directory park
-	@bun "$(OPT)" \
+measure-disclosure: doctor require-kit ## what the skill costs as authored, nothing restructured
+	@printf '\n  $(B)measure-disclosure$(X) $(D)measure only · run this first$(X)\n'
+	@run="$(call stamped,measure-disclosure)"; mkdir -p "$$run"; \
+	  bun "$(OPS)/measure-disclosure.ts" \
 	    --skill-path "$(SKILL)" \
 	    --scenarios "$(EVALS)/composition/disclosure-evals.json" \
-	    --model $(MODEL) --max-iterations 1 --holdout 0 \
+	    --model $(MODEL) --grader-bare \
 	    $(if $(DISC_WORKERS),--num-workers $(DISC_WORKERS),) \
 	    --permission-mode acceptEdits \
-	    --results-dir "$(OUT)/disclosure" 2>&1 | tee "$(OUT)/disclosure.txt" \
+	    --results-dir "$$run" 2>&1 | tee "$$run/measure-disclosure.log" \
 	    | awk '{ if (length($$0) < 200) { print; fflush() } }'; \
-	  $(MAKE) --no-print-directory unpark; \
 	  printf '\n  $(B)summary$(X)\n'; \
-	  grep -E '"verdict"|"pullRate"|body_tokens|context_tokens|Report:' "$(OUT)/disclosure.txt" || true; \
+	  grep -aE '"verdict"|"pull_rate"|body_tokens|context_tokens|pass_rate' "$$run/measure-disclosure.log" || true; \
+	  printf '  $(D)%s$(X)\n' "$$run"; \
+	  exit 0
+
+disclosure: doctor require-kit ## measure, then propose a cheaper layout and re-measure
+	@printf '\n  $(B)disclosure$(X) $(D)measure + propose · several sweeps$(X)\n'
+	@run="$(call stamped,disclosure)"; mkdir -p "$$run"; \
+	  bun "$(OPS)/optimize-disclosure.ts" \
+	    --skill-path "$(SKILL)" \
+	    --scenarios "$(EVALS)/composition/disclosure-evals.json" \
+	    --model $(MODEL) --grader-bare \
+	    $(if $(DISC_WORKERS),--num-workers $(DISC_WORKERS),) \
+	    --permission-mode acceptEdits \
+	    --results-dir "$$run" 2>&1 | tee "$$run/disclosure.log" \
+	    | awk '{ if (length($$0) < 200) { print; fflush() } }'; \
+	  printf '\n  $(B)summary$(X)\n'; \
+	  grep -aE '"verdict"|"pull_rate"|body_tokens|context_tokens|Report:' "$$run/disclosure.log" || true; \
+	  printf '  $(D)%s$(X)\n' "$$run"; \
 	  exit 0
 
 composition: doctor ## three arms, judge on (~45 min)
 	@printf '\n  $(B)composition$(X) $(D)3 arms · judge on · ~45 min$(X)\n'
-	@mkdir -p "$(OUT)/composition"
-	@$(MAKE) --no-print-directory park
-	@bun "$(EVALS)/composition/composition-runner.ts" \
+	@run="$(call stamped,composition)"; mkdir -p "$$run"; \
+	  bun "$(EVALS)/composition/composition-runner.ts" \
 	    --arm baseline,skill,disclosed --runs $(RUNS) --workers $(COMP_WORKERS) \
-	    --out "$(OUT)/composition" > "$(OUT)/composition/report.md"; \
-	  $(MAKE) --no-print-directory unpark; \
-	  sed -n '/^## Headline/,/^$$/p' "$(OUT)/composition/report.md" | head -22
+	    --out "$$run" > "$$run/report.md"; \
+	  sed -n '/^## Headline/,/^$$/p' "$$run/report.md" | head -22; \
+	  printf '  $(D)%s$(X)\n' "$$run"
 
-trigger: doctor require-sc install ## does the router reach for the skill (~35 min)
-	@printf '\n  $(B)trigger$(X) $(D)skill installed · ~35 min$(X)\n'
-	@mkdir -p "$(OUT)/trigger"
-	@bun "$(EVALS)/trigger-runner.ts" \
+trigger: doctor require-kit ## does the router reach for the skill (~35 min)
+	@printf '\n  $(B)trigger$(X) $(D)nothing installed · ~35 min$(X)\n'
+	@run="$(call stamped,trigger)"; mkdir -p "$$run"; \
+	  bun "$(OPS)/optimize-description.ts" \
 	    --eval-set "$(EVALS)/trigger-eval-set.json" \
-	    --target ask-user-question --runs $(RUNS) --workers $(WORKERS) \
-	    --out "$(OUT)/trigger" > "$(OUT)/trigger/report.md" || true
-	@sed -n '/^## All queries/,/^|:/p' "$(OUT)/trigger/report.md" | head -6
+	    --target-path "$(SKILL)" --target-type skill \
+	    --model $(MODEL) --runs-per-query $(RUNS) \
+	    $(if $(WORKERS),--num-workers $(WORKERS),) \
+	    --results-dir "$$run" \
+	    2>&1 1>"$$run/stdout.json" | tee "$$run/trigger.log"; \
+	  printf '\n  $(B)summary$(X)\n'; \
+	  tail -3 "$$run/trigger.log" 2>/dev/null || true; \
+	  printf '  $(D)%s$(X)\n' "$$run"
 
-all: checks disclosure composition trigger ## everything, in the required order (~90 min)
+all: checks measure-disclosure disclosure composition trigger ## everything, in the required order
 	@printf '\n  $(B)done$(X)  $(OUT)\n'
-	@find "$(OUT)" -maxdepth 2 -type f \( -name '*.md' -o -name '*.json' -o -name '*.txt' \) \
+	@find "$(OUT)" -maxdepth 3 -type f \( -name '*.md' -o -name '*.json' -o -name '*.txt' \) \
 	  | sed 's|$(OUT)/|    |' | sort
 	@printf '\n  $(D)read in order: checks must pass; then trigger (precision first, then\n'
 	@printf '  which queries lost and to what); then composition; then disclosure.$(X)\n\n'
