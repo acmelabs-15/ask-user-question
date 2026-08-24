@@ -763,6 +763,19 @@ _Empty._
 - No spawn site passes `--allowedTools` today, so adding the grant is a clean addition with no merge hazard
 - Process correction from the owner, and it was deserved. Probes were taking ten minutes because they ran sequentially, on opus, with full scenario prompts, and waited for completion when the answer arrives in the first seconds. Rebuilt concurrent, on sonnet, one-line prompt, killing each run the moment the Skill result arrives: 6 probes in 4.8 seconds, and a 20-run five-arm experiment in 14.9 seconds. The trigger harness already short-circuits this way; the probe work simply had not
 
+## Event 72 — the trigger is our own frontmatter, and the bug was total rather than intermittent
+
+- Timestamp: 2026-08-24 05:45 PDT
+- Three independent lines converged on one trigger. The binary: `LST(a)` walks the resolved skill record against a 43-key allowlist and `allowedTools` is NOT among them, so a skill declaring it can never reach the auto-allow branch. The web: GitHub issue 77363, open against 2.1.208, reports the identical error string with the trigger "allowed-tools in SKILL.md frontmatter, headless, permission mode default or acceptEdits", 100% reproducible. The measurement: as shipped 0 of 2 loaded, with `allowed-tools` stripped 2 of 2 loaded and no grant needed
+- So the failure was never 30%. It was 100% deterministic for this skill. What varied was only whether the model bothered to read SKILL.md itself afterwards, and that is a property of the model rather than of the bug
+- Two fixes, both measured, and they are for different problems. The harness grant already committed fixes MEASUREMENT for every skill plugin-kit tests whatever its frontmatter. Removing `allowed-tools` from the skill would fix the ARTIFACT, which is a separate question about what we ship
+- The shipping consequence, stated plainly because it is not a measurement artifact: as shipped, this skill does not load in a headless Claude Code session for anyone. Interactively it is fine, because a human answers the permission ask. That is a real property of the thing we are publishing, discovered only because the harness bug forced us to look
+- Prior art found by the web search. Issue 59816, closed as completed in May 2026, is the original headless regression and carries the cleanest diagnostic anywhere: broken runs return `Execute skill: <name>` while working ones return `Launching skill: <name>`. Issue 83076, open against 2.1.220, is the mirror image with `disallowed-tools` and acceptEdits. Nothing in the changelog between 2.1.140 and 2.1.245 acknowledges any of them
+- Corroboration that the fix is the sanctioned one: a public eval harness by Scott Spence already runs `claude -p --allowedTools Skill`, arrived at independently and without explaining why
+- A claim NOT to carry upstream, flagged by the search: commenters on issue 38505 assert that skills are not loaded in `-p` mode and that the docs say so. The docs say the opposite. Repeating it would undercut a report
+- The settings.json result is documented behaviour, not a bug, and should not be filed. Project `permissions.allow` grants capability and is gated on the workspace trust dialog, which a `-p` session never shows, so the file is inert there by design while the CLI flag is not. An untracked `.claude/settings.local.json` is the documented way to make rules apply without the trust step, and is untested here
+- Docs recommend a stricter pairing than the bare flag: `--allowedTools` with `--permission-mode dontAsk`, so an unlisted tool is denied outright rather than falling through silently. Not adopted, and deliberately: the scenarios write files, so `dontAsk` would require enumerating every tool a scenario needs and would deny the rest. That is a real change with breakage risk rather than a drop-in
+
 ## Observations
 
 ### Build decisions
