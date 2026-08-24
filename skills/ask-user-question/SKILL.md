@@ -415,7 +415,7 @@ When someone tells you they cannot answer, or asks what you are talking about,
 the question failed. The fix is a rewrite of the call, not more prose around it.
 
 Read `references/failed-question.md` when a question has already failed, or when
-you are rewriting someone else's. It carries six failure modes, a table mapping what
+you are rewriting someone else's. It carries seven failure modes, a table mapping what
 the reader said onto which one you hit, and the rewrite for each. Open it before
 rewriting rather than after: the modes want opposite fixes, so the repair that
 cures a buried premise makes a compound question worse.
@@ -447,8 +447,8 @@ the words the reader agreed to.
 
 `examples.md` holds one finished call of each shape in Section 3: a decision that
 fits in a sentence, one that needs rendering and goes to a preview, and one that
-needs context but not rendering and keeps it in the question. It ends with the table
-that chooses between them. Open it when you want the finished artifact rather than
+needs context but not rendering and keeps it in the question, plus one that failed
+five times with its diagnosis and repair. It ends with the table that chooses. Open it when you want the finished artifact rather than
 the rules, or to measure a draft against calls that pass all of them.
 
 The step most often dropped is the second half of an option description: the

@@ -212,3 +212,111 @@ Note what the descriptions do in this third call, against what they do in the se
 one. Here they are displayed, so they carry the costs and do the work Section 4 asks
 of them. There they are discarded, so they carry nothing. Same field, opposite
 instructions, and the layout is what decides which you are writing.
+
+## One that failed, five times
+
+Not invented. This call went to a reader five times during the session that produced
+this skill, and was rejected five times. It is here because the reason is not the one
+a careful composer would look for.
+
+```json
+{
+  "questions": [
+    {
+      "question": "Eleven real gaps were found between the retired skill and the new one. Which should I close?\n\nDECIDE WHETHER TO ASK\n`reversibility` tiebreaker is missing, so Section 1 gives the opposite verdict on a one-way call\n`ask on arrival` is absent — Section 1 never says when to raise a fork\n`retry ladder` is not among the four non-decisions\n\nLABELS AND OPTIONS\nthe `meta-label` ban is absent, so `Yes` and `No` pass every rule\noptions are drawn from habit rather than from what the project has\n\nBATCHING AND SEQUENCE\nthe independence test licenses a decision plus a sequencing question\n`series position` and `run budget` return zero hits\n`re-ask hygiene` is missing from the rewrite reference\n\nSCOPE AND HOSTS\napproval scope is stated for notes only\n`plan mode` invisibility returns zero hits\nmulti-question host fragility is unverifiable at this build",
+      "header": "Coverage",
+      "options": [
+        {
+          "label": "Items 1 to 8 (Recommended)",
+          "description": "Closes the seven body-shaped gaps and the reference-shaped one. Leaves the three ranked lowest on confidence for a later pass.",
+          "preview": "**Eight of eleven**\n\nThe seven body-shaped gaps cost about 320 tokens\nagainst roughly 600 spare, so they fit together."
+        },
+        {
+          "label": "Items 1 to 4",
+          "description": "Closes only the four strongest. Cheapest to review, and leaves seven known gaps open in a skill about not leaving gaps."
+        },
+        {
+          "label": "All eleven",
+          "description": "Closes everything found. Two of the eleven rest on claims that could not be verified against the current build."
+        }
+      ]
+    }
+  ]
+}
+```
+
+The content is accurate, the grouping is sensible, and the descriptions state real
+costs. It passes a proofread. It is still unanswerable, and the reader's eventual
+reply was that all eleven looked problematic and could there be a better way to
+integrate them — which is an answer to a question that was never asked.
+
+### The diagnosis, worst first
+
+**The eleven were findings, not options.** They are what the reader needs in order to
+decide. Putting them in the option slots turned context into choices, and there is
+nothing to choose between a finding and another finding.
+
+**The three options are cut points, not approaches.** `Items 1 to 8` and `Items 1 to
+4` differ by where somebody stopped counting. Nobody holds a view about that. They
+compare perfectly — same axis, same units, same order — which is why the comparability
+repair in `failed-question.md` would have produced a tidier version of the same dead
+end. Mode 7 in that file is this failure, and it exists because of this call.
+
+**The real decision was never asked.** It was *how* to integrate eleven findings, and
+that has three genuine answers: fold each into the section that owns its topic, append
+one new section listing them, or close the wrong-guidance ones now and defer the rest.
+
+Only then the layout, and it is the least of it: four ALL-CAPS headers costing reading
+speed against Title Case, six of twenty lines past the 60-column budget, and ten
+backticked identifiers that render as literal backtick characters because a question
+renders no markdown.
+
+**And the descriptions were never displayed.** One option carried a preview, so the
+whole question took the preview layout and every description was discarded — including
+the costs, which were the one part doing real work. The reader never saw them, and
+from the author's side the question simply would not land, with no signal saying why.
+That is this file's own warning, caught happening to the person it was written for.
+
+### The repair
+
+```json
+{
+  "questions": [
+    {
+      "question": "Eleven gaps between the retired skill and this one.\n\nWrong Guidance, Not Silence:\n\n• The ask-or-decide test lost its reversibility tiebreaker.\n• The label rule lets Yes and No through unchallenged.\n• Batching lets a decision pair with a sequencing question.\n\nThe Other Eight:\n\n• All are silences rather than contradictions.\n• Seven are body-shaped and one belongs in a reference.\n\nHow should I integrate them?",
+      "header": "Coverage",
+      "options": [
+        {
+          "label": "Fold into owning sections (Recommended)",
+          "description": "Each gap goes in the section that already covers its topic. Costs a careful pass over six sections, and the three wrong-guidance ones need their existing rule rewritten rather than extended."
+        },
+        {
+          "label": "One new section",
+          "description": "Adds the eleven as a list of new rules in one place. Fastest to write and to review, and it leaves each rule far from the section it contradicts."
+        },
+        {
+          "label": "Close the three, defer the rest",
+          "description": "Fixes only the guidance that currently points the wrong way. Leaves eight known silences in the file, and a second pass has to reopen all of this."
+        }
+      ]
+    }
+  ]
+}
+```
+
+**What changed, and what did not.** The eleven are still there — the reader still
+cannot decide without knowing what was found. What changed is that they are context
+now, and they are summarised by *class* rather than enumerated: three wrong guidance,
+eight silences, seven body-shaped. That is the shape the decision turns on, and the
+titles of all eleven are not.
+
+This is the sharper reading of everything needed to decide goes inside the call. It
+does not mean everything you know. It means everything the reader needs, and working
+out which is which is the composition.
+
+The options are approaches now, so each one is a position somebody could hold and
+argue against, and the descriptions carry their costs and are displayed, because
+nothing here needs rendering and no preview is in the way.
+
+Measured: 14 lines, widest 59 display cells, two groups against rule 4's four, and a
+five-word decision sentence at the end where rule 13 puts it.

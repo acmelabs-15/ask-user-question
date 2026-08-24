@@ -5,7 +5,7 @@ answer, asked what you were talking about, picked something and then said it was
 not what they meant, or went quiet on a question they should have found easy. Also
 open it when you are rewriting someone else's question.
 
-The repair depends on which way the question failed, and the six modes below want
+The repair depends on which way the question failed, and the seven modes below want
 opposite fixes. That is the reason to diagnose before rewriting: adding context
 repairs mode 1 and makes mode 5 worse.
 
@@ -25,6 +25,7 @@ The reader's own words usually name the mode.
 | `why do you recommend that`, `does it matter which` | Mode 4 |
 | `it depends`, `yes to the first part`, `which one are you asking` | Mode 5 |
 | `just do it`, `why are you asking me` | Mode 6 |
+| `all of these look wrong`, `can we do X instead` | Mode 7 |
 
 Silence is ambiguous and usually means mode 1 or mode 5. When you cannot tell,
 treat it as mode 1, because the repair for mode 1 is additive and safe.
@@ -114,6 +115,36 @@ three things SKILL.md asks for on that path.
 
 This mode is the only one whose repair is not another question. Re-pitching here
 means not pitching.
+
+## Mode 7: the options are not the decision
+
+The reader is neither confused nor irritated. They answer past the question — telling
+you what they would rather decide, or that the whole set looks wrong. That is the
+signature: a reply that is an answer to a different question.
+
+It happens when a list of things you found gets put into the option slots. The items
+are context, so there is nothing to choose between them, and the options end up as
+arbitrary slices of the list — the first four, the first eight, all of them — which
+nobody can hold a view about.
+
+**This mode is why mode 2 is not enough.** Those slices compare perfectly: same axis,
+same units, same order. Applying the comparability repair produces a tidier version of
+a question that still cannot be answered, and the tidiness makes the real defect
+harder to see rather than easier.
+
+**Repair:** work out which decision was actually live, which is usually one level up —
+not *which of these* but *what should be done about them*. Move the items into the
+question as context, summarised by whatever class the decision turns on rather than
+enumerated. Then write options that are approaches, so each is a position somebody
+could argue against.
+
+- Before: eleven findings as context, options `Items 1 to 8`, `Items 1 to 4`, `All
+  eleven`.
+- After: the findings summarised as three wrong-guidance and eight silences, asking
+  how to integrate them, with options that are three ways of integrating.
+
+`examples.md` has the whole call, before and after, with the rest of what was wrong
+with it.
 
 ## After the rewrite
 
