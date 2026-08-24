@@ -39,10 +39,19 @@ Inline reflect capture for the active session note SESSION-2026-08-23_01: Ask Us
 - [MED] A detection signature that cannot be implemented as written — such as same-sentence matching over tokens containing sentence terminators — gets the nearest unit that cannot mis-split, stated at the call site with the direction the error runs.
   - Source: the line-unit decision in the manifest-form detector, same report.
 
+- [MED] A stated count and the examples supporting it come out of the same command. A count written separately from its example list drifts, and prose that names three while asserting five reads plausibly enough to survive two reviews.
+  - Source: the structural-genres note's Genre 1 count, corrected 2026-08-24.
+
+- [MED] A reported error is a sample, not the population. When one defect of a class is reported, sweep the class before closing; the sweep found two more count errors in adjacent lines that the report did not name.
+  - Source: the same correction pass, which grew from one fix to three.
+
 ## Edge Cases (MED confidence)
 
 - [MED] `write_note` silently drops the `status` frontmatter field even when `metadata` is populated on the call — three of three occurrences today, so reproducible rather than flake and ticket-worthy against the brain tooling. Until it is fixed, every write is followed by a read-back and a `find_replace` repair with `expected_replacements: 1`; the note is otherwise indexed and queryable, which is why the drop is easy to miss.
   - Source: three repairs across two projects, 2026-08-24.
+
+- [MED] The report-through-SendMessage miss has a second cause beyond forgetting: an agent can explicitly reason that its automatic final return suffices and that a closing send would be redundant. That is a wrong inference about the channel rather than a lapse, which is why the rule needs its flat form — the report is only real through the tool, and the automatic return is not a substitute — rather than a reminder form.
+  - Source: the genre-writer's self-diagnosis, third instance, 2026-08-24.
 
 ## Notes for Review (LOW confidence)
 
@@ -61,6 +70,10 @@ Inline reflect capture for the active session note SESSION-2026-08-23_01: Ask Us
 - [constraint] Nothing is posted to external public repositories regardless of queue history — prior approval expires, and drafts for upstream stay local unless the owner explicitly orders a post #external-posting #consent
 - [technique] A detection signature handed from an analysis note gets its finished detector run back over the corpus the note counted, turning a plausible implementation into a checkable claim — confirming two counts and refuting a third in one run #verification #detectors
 - [technique] A signature that cannot be implemented as written gets the nearest unit that cannot mis-split, stated at the call site with the direction the error runs #detectors #honest-error
+
+- [insight] The report-through-the-tool rule needs its flat form because the miss has a second cause: an agent can explicitly reason that its automatic final return suffices — a wrong channel inference a reminder would never catch #delegation #reporting
+- [technique] A stated count and the examples supporting it come out of the same command; written separately they drift, and a sentence naming three while asserting five reads plausibly enough to survive two reviews #counting #drift
+- [technique] A reported error is a sample, not the population — sweep the class before closing, which here turned one count fix into three #verification #class-sweep
 
 ## Relations
 - caused_by [[SESSION-2026-08-23_01: Ask User Question Fresh Build]]
