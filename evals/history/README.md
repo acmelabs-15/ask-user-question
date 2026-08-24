@@ -27,6 +27,35 @@ between two different experiments.
 | `trigger-results-postextraction/` | Per-query trigger output for the post-extraction run. |
 | `disclosure-comparison.html` | Rendered side-by-side of which references got read per scenario, and what each run cost. |
 | `composition-results-first-run/` | The first composition run: three arms scored by the deterministic linter and the LLM judge, plus its disclosure results. Lived at `evals/composition/results-first-run/` in the fork. |
+| `trigger-runner.ts` | The retired 0.2.0-generation trigger harness. **Nothing invokes it.** |
+
+## `trigger-runner.ts`
+
+Retired when the Makefile was retargeted at plugin-kit, whose
+`shared/operations/measure-triggering.ts` and `optimize-description.ts` do this job and
+isolate their own measurement. It is kept rather than deleted because two things in it are
+cited as evidence and are not recoverable from anywhere else.
+
+**The last-path-segment scorer fix.** The scorer compares the router's chosen skill on the
+last `:`-delimited segment rather than on the whole qualified name, because one skill can
+answer under more than one qualified name and an exact match scores every one of them as a
+miss.
+
+**The collision incident it documents.** A run where the skill won 10 of 10 should-trigger
+queries scored 4/10 on exact match, because the router answered as both `ask-user-question`
+and `skills:ask-user-question` within the same run while two copies were installed. A second
+run, after a partial deduplication, scored 0/10 for the same reason against the single
+surviving name. That failure mode is silent and reads exactly like a broken description,
+which is the expensive part: the obvious response is to rewrite prose that was never at
+fault. The reasoning is in the comment above `tail()`.
+
+Two notes for anyone reading it. Its `progress` import was repointed from `./lib/progress.ts`
+to `../lib/progress.ts` when it moved, so it still loads and still fails the way it was
+designed to; `evals/lib/progress.ts` itself stays where it is, because the live
+`composition/composition-runner.ts` imports it. And it carries a hardcoded absolute path to a
+`skill-creator` checkout, overridable with `SKILL_CREATOR_DIR` — deliberately, per its own
+comment, so that a missing split fails loudly instead of being reimplemented into silent
+incomparability.
 
 The Makefile writes new results to `$(OUT)` — outside the repo by default — so a fresh run
 cannot land here and quietly join the record.

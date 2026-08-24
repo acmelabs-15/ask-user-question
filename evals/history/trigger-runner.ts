@@ -42,7 +42,7 @@
 const SKILL_CREATOR =
   process.env.SKILL_CREATOR_DIR ?? "/Users/peter.kloss/Dev/ACMElabs/skill-creator";
 
-import { progress } from "./lib/progress.ts";
+import { progress } from "../lib/progress.ts";
 
 let mapWithConcurrency: <T, R>(items: readonly T[], limit: number, fn: (item: T, i: number) => Promise<R>) => Promise<R[]>;
 let splitEvalSet: <T>(set: readonly T[], holdout: number) => [T[], T[]];
