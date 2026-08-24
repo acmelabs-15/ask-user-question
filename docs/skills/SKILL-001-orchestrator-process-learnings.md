@@ -25,10 +25,19 @@ Inline reflect capture for the active session note SESSION-2026-08-23_01: Ask Us
 - [HIGH] A teammate's report is only real when it goes through SendMessage. Plain text written at the end of a turn is invisible to the team and reads as an agent idling with finished work, so the report is lost exactly when it carries the most that cannot be recovered from the artifacts: the verification evidence, the defect reports, and any disclosed deviation from the brief. Finished artifacts on disk do not substitute — they show what landed, never what was checked, what broke, or what was done outside scope.
   - Source: this agent's own failure delivering the reflect-capture report, plus the toc-writer's identical failure earlier the same day; third-person observed (team-lead, 2026-08-24).
 
+- [HIGH] Nothing is posted to external public repositories — Anthropic's GitHub included — regardless of queue history. A finding being drafted, queued, or previously approved for posting is not standing authorization; upstream findings are drafted local-only and stay local unless the owner explicitly orders a post.
+  - Source: "I don't want to post anything to Anthropics GitHub" (user, 2026-08-24, overriding the earlier queued comment on the claude-code issue).
+
 ## Preferences (MED confidence)
 
 - [MED] When an operator habitually misuses a generic knob against a standing ruling, the remedy is removing the knob and giving deliberate uses a purpose-named escape hatch — not a louder warning. Warnings were measured ineffective against habit in this session: a code warning sat on the flag and the flag was passed again anyway, against an explicit prior ruling. A generic knob invites the habitual reach; a purpose-named one forces the operator to state intent before the knob is reachable at all.
   - Source: the `--num-workers` corrections and the subsequent `--model` / `--permission-mode` removal (commit d01cdd9), same session.
+
+- [MED] When a task hands you a detection signature from an analysis note, run the finished detector back over the corpus the note counted. It turns a plausible implementation into a checkable claim, and today it confirmed two counts and refuted a third.
+  - Source: the genre-detector run finding ANALYSIS-005's Genre 1 repo count at 3 of 5 against a recorded 5 of 5, 2026-08-24.
+
+- [MED] A detection signature that cannot be implemented as written — such as same-sentence matching over tokens containing sentence terminators — gets the nearest unit that cannot mis-split, stated at the call site with the direction the error runs.
+  - Source: the line-unit decision in the manifest-form detector, same report.
 
 ## Edge Cases (MED confidence)
 
@@ -48,6 +57,10 @@ Inline reflect capture for the active session note SESSION-2026-08-23_01: Ask Us
 
 - [constraint] A teammate's final report is real only when sent through the messaging tool — plain text at end of turn is invisible to the team, and what is lost is exactly what a disk listing cannot show: what was checked, what broke, and what was done outside scope #delegation #reporting
 - [problem] The brain write path silently drops the frontmatter status field even with metadata populated, three of three occurrences on 2026-08-24, while leaving the note indexed and queryable — which is why every write is followed by a read-back and a targeted repair #brain-tooling #write-path
+
+- [constraint] Nothing is posted to external public repositories regardless of queue history — prior approval expires, and drafts for upstream stay local unless the owner explicitly orders a post #external-posting #consent
+- [technique] A detection signature handed from an analysis note gets its finished detector run back over the corpus the note counted, turning a plausible implementation into a checkable claim — confirming two counts and refuting a third in one run #verification #detectors
+- [technique] A signature that cannot be implemented as written gets the nearest unit that cannot mis-split, stated at the call site with the direction the error runs #detectors #honest-error
 
 ## Relations
 - caused_by [[SESSION-2026-08-23_01: Ask User Question Fresh Build]]
