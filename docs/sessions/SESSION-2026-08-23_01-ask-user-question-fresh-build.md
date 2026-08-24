@@ -1382,6 +1382,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Owner on the separating result, verbatim: "I think option one makes sense, but I don't want to do it until we get the results of our research back. Which should give us something to think about." Direction: restore the proven old description text and add the review-my-draft wording. Gate: the weak-model routing research report, whose findings may shape the final text before anything ships. No edit until then; the description stays frozen at the shipped bytes
 - Pending stack after this: the tooling escalation (next), then nothing until the research or the gated description work returns
 
+## Event 150 — the escalation reframed by the owner: guarantee isolation, do not just record it
+
+- Timestamp: 2026-08-24 13:05 PDT, measured
+- The record-the-isolation ask drew two owner challenges that each sharpened the problem. First: "shouldn't it always be isolated?" — answered from source: it already is, the flag and empty temp cwd are hardwired at all three spawn sites through one wrapper. Second, the reframe that superseded the options entirely: "what really should happen is we should look into what changes have to be made to ensure that it is always actually isolated and that there will never be contamination"
+- The honest channel inventory behind that answer: cross-session agent messaging is open and was observed live this morning (the eval worker's fixture escalation); the child's visible surface is believed from one probe on one build, not proven per run; and the machine-state backup check is blind to the plugin cache. Recording a flag fixes none of those
+- Dispatched isolation-guarantee-build (Bun engineer, background): phase 1 a channel-by-channel audit with evidence (skills, settings, MCP, env, network, grader, cross-session messaging), phase 2 hardening in value order — a per-run isolation PROOF asserting the child's world is exactly the skill under test plus built-ins, landing in the envelope so verified isolation supersedes requested isolation; severing or namespacing the cross-session channel if a clean mechanism exists, named upstream ask if not; the install-state sweep kept as belt with the cache root added only if history's meaning survives
+- The builder's original record-the-flag recommendation is superseded by this stronger form, with the disposition recorded rather than silently dropped
+
 ## Observations
 
 ### Build decisions
