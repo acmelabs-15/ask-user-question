@@ -286,3 +286,5 @@ is placed.
 - pairs_with [[ANALYSIS-002: Evidence Rules From Measured Failures]]
 - pairs_with [[ANALYSIS-001: Plugin Kit Authoring Standards for the Ask User Question Plugin]]
 - pairs_with [[ANALYSIS-005: Monospace Decision Dialog Layout Rules]]
+- relates_to [[ANALYSIS-004: AskUserQuestion Tool Capability Audit at Build 2.1.241]]
+- pairs_with [[ANALYSIS-006: Surface Portability of the Ask User Question Skill's Claims]]

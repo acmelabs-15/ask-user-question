@@ -441,6 +441,28 @@ _Empty._
 - Measured against the real case: eleven items across four groups is 2.75 per group and inside every threshold found, so the risk is the group count rather than the item count
 - Left open and flagged rather than guessed: whether the pane soft-wraps and where a continuation starts, whether width is measured by display cells or code units, and the pane's actual column width
 
+## Event 40 — tool capability audited against the shipped binary
+
+- Timestamp: 2026-08-24 00:35
+- Created: ANALYSIS-004, read out of the installed 2.1.241 binary with byte offsets recorded, and measured with the host's own width function
+- Reversed a current skill claim: previews are **on by default** in the terminal. The format env var defaults to markdown for the CLI client type, the renderer never checks the format, and the layout selector branches only on whether a single-select question carries a preview
+- Established: `preview` is the only field that renders markdown, and it renders it fully — headings, emphasis, lists, blockquotes, tables and fenced code with highlighting. `question` preserves newlines but renders no markdown; `label` and `description` turn a newline into a literal replacement character
+- Established: the host measures width with its runtime's width function under narrow-ambiguous, not string length, and truncates grapheme-aware. The dingbat circled numerals measure 1 under both settings, so no terminal setting can widen them — which confirms the width half of the user's suggestion while ANALYSIS-005's font-coverage half still rules them out
+- Costed: the preview layout drops every option description, has no free-text box, and its pane is the terminal's columns minus 34 by rows minus 26, so it is a large-terminal feature
+- Corrected three further skill claims: multiSelect does have a conversational escape behind a screen-reader gate, option lists do scroll, and the header's hard cut is 48 display columns rather than the advisory 12
+- Named as unused: image paste, an external editor on a keystroke, notes on a preview question, an AFK timeout setting, and the fact that "Chat about this" returns a reformulation instruction with the reader's partial answers rather than abandoning the call
+
+## Event 41 — surface portability resolved, and it is smaller than feared
+
+- Timestamp: 2026-08-24 00:37
+- Created: ANALYSIS-006
+- Frame that decides it: there is exactly one implementation of the tool, compiled into the binary. Only two things vary — whether the binary runs, and who draws the dialog. A bridge can race the terminal dialog and win; a chat channel cannot, because the tool declares that it requires user interaction, which is the predicate excluding channel callbacks
+- Split: three claims are universal because one implementation exists; four are terminal-dialog facts; one is wrong as worded, since headless is conditional rather than prohibited and scheduled runs are the same clause
+- Finding worth its own line: the destructive-first rule is correct everywhere and its stated reason is terminal-only. It rests on a single single-select submitting on one keystroke, so the rule needs a surface-independent justification — a first option is the default, and a default carries decision weight whatever draws it
+- Exposure bounded: the skill ships as a plugin, and plugins load only in Claude Code, Desktop Code and Cowork. Chat, web and mobile cannot load it at all, so an over-broad claim cannot mislead a reader there
+- Recommended and accepted in principle: narrow the compatibility field to drop the any-runtime clause, mark exactly four Gotchas as terminal facts with a marker used nowhere else, leave the rest unmarked, and restate the headless clause as conditional
+- Measured: the description is 1002 characters against a 200-character cap on the web surface, so that route would require rewriting the field the skill can least afford to compress
+
 ## Observations
 
 ### Build decisions
@@ -479,5 +501,7 @@ _Empty._
 - leads_to [[ANALYSIS-002: Evidence Rules From Measured Failures]]
 - leads_to [[ANALYSIS-003: Coverage Check Against the Retired Asking Users Questions Skill]]
 - leads_to [[ANALYSIS-005: Monospace Decision Dialog Layout Rules]]
+- leads_to [[ANALYSIS-004: AskUserQuestion Tool Capability Audit at Build 2.1.241]]
+- leads_to [[ANALYSIS-006: Surface Portability of the Ask User Question Skill's Claims]]
 
 <!-- The two-relation minimum is met as of the evidence-rules analysis landing in this project. The two prior-art notes this session rests on live in the plugin-kit project and cannot be wikilinked across projects; they are named as plain text in the Prior art header line, in Event 11, and in the Observations above. -->

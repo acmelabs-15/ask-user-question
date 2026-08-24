@@ -290,3 +290,4 @@ Ranked by how much difference each makes.
 - part_of [[ANALYSIS-001: Plugin Kit Authoring Standards for the Ask User Question Plugin]]
 - depends_on [[ANALYSIS-002: Evidence Rules From Measured Failures]]
 - pairs_with [[ANALYSIS-003: Coverage Check Against the Retired Asking Users Questions Skill]]
+- pairs_with [[ANALYSIS-004: AskUserQuestion Tool Capability Audit at Build 2.1.241]]
