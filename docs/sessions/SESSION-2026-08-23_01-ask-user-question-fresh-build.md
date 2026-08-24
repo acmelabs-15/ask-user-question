@@ -1318,6 +1318,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The batch-2 capture verified against the artifact and committed in this boundary: the pathspec-recommit trap and the loaded-skill snapshot as edge cases, the deletions-before-additions ceiling technique as a preference, all three mirrored — the sidecar holds twenty-four observations across its three sub-groups, none near the cap
 - New Brain-tooling instance for the deferred bug report: a SUCCESS payload carried phantom doubled tallies (HIGH 10, MED 34 against a true 5 and 16) on a write that was in fact correct and single — the capture agent read back instead of "fixing" the phantom duplication, extending the read-back-before-reacting rule from error payloads to bogus success payloads. The Event 116 tally noise is now independently confirmed by a second observer
 
+## Event 142 — the display work verified, and two owed items returned to the builder
+
+- Timestamp: 2026-08-24 11:59 PDT, measured
+- The subset display round verified: suite 1,684 from 1,666 with zero failures (captured), the CLI showing only filtered rows with subset denominators and the one-line caveat in three deliberate placements, the dashboard chip and run-page banner carrying subset-ness as a FIELD rather than parsed label prose, and a half-written marker dropped whole rather than rendered beside wrong counts. The builder's own test round caught a real self-defect: a banner sentence split mid-phrase across a concatenation rendered fine but was ungreppable — re-split on phrase boundaries and pinned
+- Two brief items confirmed missing and returned: the tier-study chip (the brief said BOTH not-of-record classes; the builder built the pattern and wired only subsets, disclosing the gap honestly) and the operator-docs subsections (item 2 of the follow-up, absent from the diff — git over shared/references/ is empty). The feature commits as one when both land
+- Held facts for the eventual commit: the CLI smoke's gap-register 0/1 row is a smoke, not a measurement — stamped as such by the tool itself
+
 ## Observations
 
 ### Build decisions
