@@ -1442,6 +1442,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The placement lesson from the integration report rides for the retrospective: integrating a research note is a placement problem, and the position carries the argument
 - In flight: the isolation audit alone
 
+## Event 157 — the second-pass report reconciles: all of it was already in the commit
+
+- Timestamp: 2026-08-24 13:30 PDT, measured
+- The modernize agent's final report crossed with the commits; the tree is clean and 853237f already carries everything it describes, including three second-pass integrations Event 156 did not name: the Vercel/TanStack passive-context convergence into progressive-disclosure (placed as the built version of the missing declarative mechanism, honestly bounded — not a lever a skill author holds), the forceful-phrasing counterexample into the method-not-phrasings section, and the suite-hardening controls beside the training-prior twin. Its re-read also corrected the dispatch brief's premise a fifth time today: it had been working from the 24-finding note all along, confirmed byte-for-byte
+- The withdrawal-needs-a-destination lesson rides for the retrospective: deleting the misattributed figure would have been the smaller and worse edit — because the convergence gave the sound measurement a correct home, the correction says "this belongs there" rather than "this was wrong", which is more honest and harder to accidentally undo
+- Every Vercel citation across the file set audited to its home; the withdrawn figure survives only inside its own withdrawal paragraph, on the same never-re-derive reasoning as the struck-rule historicizing clauses
+- The board: the isolation audit is the sole thread in flight; then the mechanism-level items and the retrospective
+
 ## Observations
 
 ### Build decisions
