@@ -61,8 +61,14 @@ you have it, and when to throw it away.
 
 ---
 
-**Path key.** Bare paths are relative to this repository root. `PK/` is the plugin-kit
-repository root. Every rule below carries the citation it rests on; if a rule and its
+**Path key, and the SHA these citations are pinned to.** Bare paths are relative to this
+repository root. `PK/` is the plugin-kit repository root, **pinned at `2a7c0d5`**
+(`2a7c0d59f8a6b1e0e63ccc1f5f7237b44449d791`). Line numbers below were verified against that
+commit and nothing else. This pin is not decoration: one `PK/` line number in this document
+drifted by three lines between being cited and being re-read, during the writing of this file.
+A line citation without a SHA is a citation to a moving target — Section 0 rule C applied to
+this document's own apparatus. Re-verify before relying on any `PK/` line number at a later
+commit. Every rule below carries the citation it rests on; if a rule and its
 citation disagree, the citation wins and this file is stale. Citations into the `Makefile`
 name a target or a variable rather than a line, because that file is under active revision
 and its line numbers moved twice while this one was being written.
@@ -324,9 +330,10 @@ directory. *Isolated* means the inventory is gone, not that the model sits still
       installed copies (`Makefile`, `doctor` target). Note it does **not** fail on a missing
       `SKILL.md` — that is informational only (`Makefile`, `doctor` target), so a green `doctor` does
       not mean there is anything to measure.
-- [ ] **A `SKILL.md` exists.** `skills/ask-user-question/` currently holds only `.gitkeep`.
-      Every figure in this repository was measured against an artifact that is not here
-      (`evals/history/README.md:3-6`).
+- [ ] **A `SKILL.md` exists, and you know which artifact your baseline describes.** As of
+      2026-08-23 21:39 `skills/ask-user-question/` holds a real `SKILL.md` (283 lines) and three
+      references. Every figure under `evals/history/` still describes the *prior fork*, not this
+      artifact (`evals/history/README.md:3-6`), so the two are not a before-and-after pair.
 - [ ] **No second copy is installed, under this name or a previous one.** Two detectors, and
       each is blind to what the other catches. `make absent-check` finds copies under the
       **current** name (Section 1.1b). `doctor`'s sweep finds copies under the three
@@ -688,7 +695,7 @@ number does not get quoted, does not get compared, and does not go on a fix list
 | A `headline` delta with no comparability check behind it | "A `headline[].delta` is only ever filled in after that check has passed" (`PK/shared/references/schemas.md:543`) | **DISCARD** the delta |
 | A whole-set score with no `caps` sentence and a held-out split in play | Rows computed over the train split only, read as if computed over everything (`PK/shared/references/schemas.md:441-442`, `:495`) | **RE-RUN WITH** the split stated, or re-report scoped to the split |
 | A token figure against the 5,000 budget from an estimator | "A body measured at 4,800 estimated tokens against a 5,000-token budget has not been shown to be inside it" (`PK/shared/references/disclosure-optimization.md:48`) | **RE-RUN WITH** `tiktoken` present before claiming compliance |
-| A description character count near 1,024 | 1,024 is "a real cliff rather than a guideline: a description over it is silently truncated" (`PK/shared/references/description-writing.md:67`). Locally, the plain-scalar branch of the frontmatter parser stops collecting at a blank line (`evals/frontmatter.test.ts:43-47`), so a count taken through it can be short — the exact shape of fault F0 | **RE-RUN WITH** the description authored as a `\|` block scalar (`evals/frontmatter.test.ts:32-35` tolerates blank lines) and the count re-taken |
+| A description character count near 1,024 | 1,024 is "a real cliff rather than a guideline: a description over it is silently truncated" (`PK/shared/references/description-writing.md:67`). Locally, the plain-scalar branch of the frontmatter parser stops collecting at a blank line (`evals/frontmatter.test.ts:43-47`), so a count taken through it can be short — the exact shape of fault F0 | **RE-RUN WITH** the description on **one physical line**, which is immune to both parser branches rather than dependent on the reader being the fixed one, and the count re-taken. Count the value, not the enclosing quotes |
 | A 0% false-positive rate in every condition tested | The negatives are too easy. A set of nine such queries "would have certified the worst description in the set as flawless" (`PK/shared/references/description-writing.md:110-112`) | **DISCARD.** Rewrite the negatives to the standard at `:116-120` |
 | A positive query losing to `(answered directly)` | The query never reached skill selection, so it measures the query rather than the description (`PK/shared/references/description-optimization.md:175-178`; `PK/shared/references/description-writing.md:114`) | **DISCARD** that query from the recall denominator; rewrite it |
 | Two figures from different harnesses differenced | "measure with the harness that produced the number you are comparing against" (`evals/README.md:122`) | **DISCARD** the delta |
@@ -716,18 +723,90 @@ are **not comparable** with the pre-fix baseline (`:41-45`). *Local status:* the
 branch here tolerates blank lines (`evals/frontmatter.test.ts:32-35`); the plain wrapped-scalar
 branch does not (`:43-47`).
 
-**This is the strongest case in this document, and it is not hypothetical.** As of 2026-08-23,
-plugin-kit's own flagship skill still loses **40.2%** of its description to a block-scalar reader —
-and the dropped text is exactly the negatives block that its measured improvement is credited to.
-Every trigger measurement ever taken of that skill scored a truncated string. The figure is
-corroborated by the independent record at `PK/evals/MEASUREMENT-CAVEATS.md:21-27`, which puts
-`skill-creator` at 947 characters shipped against 567 measured — a 40.1% loss, matching to
-rounding. Reported as being fixed; not verified fixed here.
+### F0's real shape: the readers were fixed, the artifact was not
 
-So: **the repository that publishes this standard was violating it, silently, in the artifact its
-own measurements were taken against.** No amount of care in reading a number protects you from
-this. Only measuring the thing you think you are measuring does — which is Section 0 rule B, in
-the place it costs the most.
+An earlier draft of this section claimed that *every* trigger measurement of plugin-kit's flagship
+skill scored a truncated description. **That was wrong, and it is exactly the over-generalisation
+this document argues against**, so the correction is kept in place rather than quietly edited out.
+
+What was actually true, verified per consumer at `2a7c0d5`:
+
+| Consumer | Which reader | Affected? |
+|---|---|---|
+| `PK/shared/operations/measure-triggering.ts:463-478` | `parseFrontmatterBlock`, i.e. real `Bun.YAML.parse` (`PK/shared/parse/lib.ts:72`) | **no**, since `037d59f` |
+| the same, for `targetType === "command"` only | hand-rolled reader (`:469`) | dead branch — the repo ships no command artifact, documented at `:456-461` |
+| `PK/shared/operations/propose-description.ts:408` | destructures `{ name, content }` only | **no** — never reads the description |
+| `PK/shared/operations/disclosure-measure.ts:462` | conformant reader, deliberately | **no** |
+| `PK/shared/tools/check-overlap.ts:135` | real `Bun.YAML.parse` | **no** |
+
+So the consumer split was real and **was fixed on the reader side** at `037d59f` — which is what
+`PK/evals/MEASUREMENT-CAVEATS.md:41-45` already records. **The 2026-08-08 corpus was affected;
+measurements after `037d59f` were not.**
+
+What remained was the trap in **the artifact**: the two readers disagreed about what the shipped
+file said, so any future or third-party consumer reaching for the hand-rolled reader would silently
+get a description up to 40% shorter. That is a narrower claim than "every measurement is
+compromised" and it is the one the evidence supports.
+
+**Now fixed in the artifact too**, at `2a7c0d5`, all five creator skills re-serialised to a single
+double-quoted line. Verified here independently by running both readers over each file — they agree
+byte-for-byte on all five:
+
+| skill | before: real / hand-rolled | after, both agree | recovered |
+|:--|:--|--:|--:|
+| `skill-creator` | 949 / 567 | **947** | +380 |
+| `command-creator` | 834 / 586 | **832** | +246 |
+| `plugin-creator` | 893 / 688 | **891** | +203 |
+| `agent-creator` | 944 / 735 | **942** | +207 |
+| `mcp-creator` | 944 / 943 | **943** | 0 |
+
+`mcp-creator` carried no blank line, so nothing was ever truncated — its one-character gap was the
+block scalar's trailing newline. It was never mis-measured and its change is pure form-hardening.
+
+The residual lesson still stands, in its accurate form: **a repository publishing a standard had a
+divergence between two of its own readers, and only one of them was ever going to be right about
+what shipped.** Section 0 rule B is what catches that — measure the thing, do not reason about the
+format.
+
+**The counter-example, in the same repository, and the fix is better than the one this document
+originally recommended.** This plugin's own `SKILL.md`, authored 2026-08-23, carries its
+description as a **single physical line**, double-quoted, with a comment sitting directly above it:
+
+```
+# description must stay on ONE physical line. A blank line or a wrap inside it
+# truncates the value in the measurement tooling, silently and without warning.
+```
+
+Measured independently here at **947 characters**, agreeing with the three parsers the author ran
+— 77 characters of headroom under the 1,024 cap. A one-line scalar cannot contain a blank line and
+cannot wrap, so it defeats **both** branches of the frontmatter reader at the source, where a `|`
+block scalar merely relies on the reader's block branch being the fixed one. If you author a
+description, do this rather than what row 19 of the discard table used to say.
+
+*One measurement note that is itself an instance of Section 0 rule C.* First pass here returned
+**949**, not 947, and the gap was real rather than rounding: the regex was counting the two
+enclosing double quotes. The shipped string is the value, not the literal. A two-character
+disagreement is worth chasing to its cause when the cap is a hard cliff 77 characters away.
+
+**The one-line double-quoted form is CONDITIONALLY safe, and the condition is not obvious.** The
+hand-rolled reader's `stripQuotes` (`PK/shared/parse/frontmatter.ts:69-71`) strips *repeated*
+leading and trailing quote characters and **unescapes nothing**. So the five re-serialised
+descriptions round-trip identically only because none of them contains a `"` or a `\`. Verified
+here: all five are clean on both counts.
+
+A description that quotes a phrase — or carries a backslash — would round-trip **differently**
+through the two parsers and reintroduce the same divergence class. Worse than the original, because
+there would be no blank line to make it visible. **This is a pre-ship check, not a pre-run one:**
+
+```bash
+# every shipped description must agree under both readers, and must contain no " or \
+```
+
+**The durable fix is a test asserting both readers agree on every shipped skill**, which would catch
+a quoted phrase *and* a reformat back to a block scalar. Not written as of `2a7c0d5`; assigned. Until
+it exists, treat "both readers agree" as a claim someone has to re-establish by hand after any
+description edit — and note that the check is cheap: parse the frontmatter twice and compare the
+`description` field.
 
 **F1 — An invalid model id, read as a broken description.**
 *Signature:* every call fails, the score is a uniform floor, and the failure tally is
@@ -851,6 +930,31 @@ defect under every rule below" (`evals/composition/LINT-RULES-PENDING.md:26-29`)
 `checks.test.ts` "Asserts nothing while `ACTIVE_RULE_COUNT === 0`" (`:16`), so a green
 `make checks` (`Makefile`, `checks` target) is not evidence — and `make all` runs `checks` first
 (`Makefile`, `all` target), which makes it look like a gate.
+
+**F12 — A sentinel value passing a validity test too weak to exclude it.**
+*Signature:* a guard that reads as correct, over an input domain that contains a value the guard's
+own predicate accepts and the downstream call reinterprets. It is a distinct class from everything
+else here: F0-F10 are checks that reported clean while the state was wrong, and this is a check
+that was *satisfied* by exactly the value it existed to reject.
+
+*The instance, verified in source rather than relayed.*
+`PK/shared/report/generate-review.ts` reclaims a port by signalling whatever `lsof -ti :<port>`
+returns. `lsof` returning `0` would have reached `process.kill(0, "SIGTERM")` — which signals
+**every process in the caller's own process group**, not one process — because `Number.isInteger(0)`
+is true and nothing else rejected it. Both defects are now fixed, and the guard carries the
+reasoning at the site: "`pid > 0` is load-bearing rather than defensive: `process.kill(0, ...)`
+signals every process in the caller's own process group, and `Number.isInteger(0)` is true"
+(`PK/shared/report/generate-review.ts:712-713`, filter at `:714`). The companion defect — signalling
+any PID whatever the process was — is now a two-condition match requiring both a `/^bunx?[\d.]*$/`
+runtime basename and an argv token that is or ends in `/generate-review.ts`
+(`:688`, `:676`, `:729-737`), and it "is deliberately unwilling to guess. Anything it cannot
+positively identify is reported as foreign and left running... The reverse mistake terminates
+somebody's database" (`:722-727`).
+
+*The check, generalised:* for any validity predicate, ask what the *most destructive* value in the
+input domain is, then check whether the predicate admits it. `Number.isInteger` admits `0`;
+`typeof x === "string"` admits `""`; a non-null check admits `NaN`. A type test is not a range
+test, and the damage lives in the range.
 
 **F11 — A relayed premise, generalised past its scope, acted on as settled.**
 *Signature:* a confident instruction to change an artifact, resting on a claim whose code path,
