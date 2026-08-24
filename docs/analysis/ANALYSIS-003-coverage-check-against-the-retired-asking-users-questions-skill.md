@@ -253,6 +253,17 @@ moved to a reference may never be read. Gap 8 is the only one that is genuinely
 reference-shaped, and it is therefore the one least likely to reach a reader wherever it
 is placed.
 
+## Erratum (2026-08-24)
+
+Dated corrections, recorded beside the note rather than edited into it. The findings above describe the skill as it stood on 2026-08-23; the authoring revisions that followed absorbed most of the gap list, and several premises moved.
+
+- Ten of the eleven Bucket-1 gaps are closed in the current tree, verified at file and line on 2026-08-24: gaps 1, 2, 3, 6, 7 and 9 in the body (Sections 1, 2 and 4), gap 10 in the first Gotcha, and gaps 4, 5 and 8 in the asking-again reference. The fold that D-8 locked was therefore already done in substance when it was decided.
+- Gap 11 landed hedged in the schema-limits Gotcha at skill version 0.1.3 by owner ruling, stated as host history with no known instance at build 2.1.241 and a steer against splitting for fear of the host.
+- The closure-cost premise is stale: the body sits at roughly 5,794 tokens against a 5,800 gate, not near 88% of a 5,200-token gate with about 600 spare.
+- "Three references" is stale: the skill ships five reference files plus a top-level examples file.
+- The "all three references opened zero times across 24 runs" measurement predates the run-collector symlink fix and is not reliable; post-fix recall measured 33-100% per file, so the argument against reference placement no longer holds.
+- Mentions of the re-pitch reference refer to the file now named asking-again, renamed in the plain-words pass.
+
 ## Observations
 
 ### On the gap set

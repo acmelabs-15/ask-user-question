@@ -1053,6 +1053,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Because ten-of-eleven reverses the premise of a decision locked minutes earlier, the gap-11 and diff disposition goes to the owner rather than being taken here; the coverage note receives a dated erratum in every case, per the house errata convention
 - [reflect-capture] MED, preference: a gap inventory authored before a revision pass is not evidence of a gap — re-verify every entry against the artifact as of now before implementing; here that changed the task from eleven folds to one judgment call. Capture dispatched in the background to the reflect sidecar SKILL-001: Orchestrator Process Learnings, which crosses its 15-observation threshold on this addition and takes H3 sub-grouping in the same edit
 
+## Event 110 — gap 11 lands hedged at 0.1.3, and D-8 closes end to end
+
+- Timestamp: 2026-08-24 09:28 PDT, measured
+- Owner chose, verbatim: "Land gap 11 hedged" — against the recorded drop recommendation, on stated costs; dissent closed. The diff was read in full before applying, and the hedge is stronger than the objection assumed: it states the host history, states no known instance at this build, and steers against splitting for fear of the host
+- Landed at commit 9136ba4: the hedged caution in the schema-limits Gotcha, funded by six wording trims — body net zero at ~5,794 tokens, 440 lines, references and the frozen description untouched. make checks, the frontmatter test and the validator all pass; version 0.1.3 across the three bound sites; installed cache refreshed 0.1.2 to 0.1.3
+- Comparability boundary recorded: the +16.1 outcomes figure and the 16-of-20 recall table were measured against the 0.1.1 body; from 0.1.3 the body differs by the hedge and six trims, so those baselines are directional context rather than strict comparators until re-measured
+- The coverage note received its dated erratum: ten gaps closed by post-authoring revisions with the evidence map, gap 11's landing, the stale token budget, the stale reference count, the pre-collector-fix zero-pulls measurement, and the re-pitch rename — verified in place before this event
+- D-8 is closed end to end: locked at Event 108, premise corrected at Event 109, disposition ruled and landed here. The oldest open decision on the board is done
+
 ## Observations
 
 ### Build decisions
