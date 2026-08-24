@@ -36,7 +36,6 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 |:--|:--|:--|:--|:--|:--|:--|
 | T-06 | Wave 5 | Wire `measure-outcomes` into the Makefile and reshape the eval set to `evals.json` shape | — | `Makefile`, `evals/` | M | Event 31 |
 | T-07 | Wave 5 | Supply the 27 lint rules to `measure-outcomes` as an injected grader, so the run keeps a deterministic floor | — | `evals/composition/checks.ts` | M | Event 31 |
-| T-08 | Wave 6 | Retire `asking-users-questions` and sweep its stray copies | — | external | M | Event 03 |
 | T-09 | Wave 6 | Uninstall plugin-kit and hand-remove its marketplace entry | — | user config | S | Event 22 |
 
 #### Blocked
@@ -51,10 +50,11 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 ### Archive (completed + deleted)
 
 <details>
-<summary>5 archived tasks</summary>
+<summary>6 archived tasks</summary>
 
 | T-ID | Status | Group | Subject | Agent | Files | Effort | Created | Resolved |
 |:--|:--|:--|:--|:--|:--|:--|:--|:--|
+| T-08 | completed | Wave 6 | Retire `asking-users-questions` and sweep its stray copies | — | external | M | Event 03 | Event 70 |
 | T-01 | completed | Wave 1 | Create the `ACMElabs/ask-user-question` repo | W1a-repo | `<repo root>/**` | S | Event 10 | Event 15 |
 | T-02 | completed | Wave 1 | Environment dedup plus copy inventory of the prior WIP | W1b-hygiene | prior WIP tree | S | Event 10 | Event 15 |
 | T-03 | completed | Wave 1 | Verify plugin-kit tooling runs | W1c-tooling | `Makefile`, harness scripts | S | Event 10 | Event 15 |
@@ -884,6 +884,16 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Three candidates refuted outright: three-words-one-concept under minus-wording (0.40, exactly control — consistent with Event 79, where sonnet never reads wording.md on it, so removing what is never read changes nothing), reader-says-options-are-the-same under minus-failed-question (0.80, above control), timeout-with-partial-selection under minus-reading-answers (1.00, perfect without the file). All three stay undetermined rather than guessed
 - Corpus populated at `evals/composition/disclosure-evals.json`: 16 rows annotated — ten derived attributions plus six negatives — and 11 left absent, which the schema distinguishes from empty by design. Validated through plugin-kit's scenario-set schema, zero findings. Caveat carried: the six negatives are measured-flat at or near ceiling, so a pull there reads as over-fetch by the outcome definition even where the scenario was designed around a reference; the body alone suffices on sonnet for those
 - n=2 per stage-2 cell is thin; the reproductions are believed because nine of ten agree with the folded stage-1 direction, not because any single cell is powered
+
+## Event 89 — the interrupted conversation recovered, and the plan for the guidance rewrite reshapes
+
+- Timestamp: 2026-08-24 08:20 PDT
+- Owner pointed at the previous conversation's transcript; the pointer first named the plugin-kit one (a 16-minute bootstrap that verified the five in-flight patches landed), then corrected to the ask-user-question one. Both read in full, plus the two documents the interrupted session was verifying when it died: plugin-kit's continuation and architecture documents
+- What the interrupted session's own rehydration report carries that this session had not recovered: the reference-count cap NEVER reached plugin-kit's shipped guidance — caught in draft, so the rewrite is smaller on that half. And the raw-pull-rate verdict lives at THREE layers that must change together or the guidance will contradict the tool: the progressive-disclosure doctrine reference ("Pulled on no run, body points at it → Delete it"), the disclosure-optimization operator reference (prune at zero-with-pointer AND inline at ≥80% raw — equally a raw-rate rule), and `decideFileVerdict` in the disclosure code
+- The largest recovered fact: the 5,000-token post-compaction retention claim — "after auto-compaction only the first 5,000 tokens of each skill are re-attached" — is the stated justification for the entire disclosure objective, the 5,800 fail gate, and this skill's body-at-ceiling constraint. It is asserted in the architecture document with no source; the continuation document's open-questions section already says of its 25,000 companion "find the source"; and the interrupted session's grep for any source came back empty. By this session's own citing rule the load-bearing number of the whole operation is unverified. Opened as a work item rather than assumed
+- Both documents are stale as handovers: the continuation document describes the pre-restructure tree, says measure-disclosure and measure-outcomes do not exist (both now built), and its reference-merging guidance — "run optimize-disclosure and let co-pull decide" — is another home of raw-rate doctrine. The architecture document's proposed tree has about seven paths that do not exist and its anti-Zod position is superseded by the continuation document's own evidence-marked reversal
+- Consequence for the queue: items 2 and 3 are one change — recall reporting (in flight with the engineer agent), verdict logic made recall-aware within the Event 76 rulings (budget stays the objective, reachability protected and repaired, never prune the unreachable), and both reference documents rewritten in the same pass, with the continuation document's disclosure guidance updated or marked superseded
+- Ledger hygiene from the recovered report: T-08 (retire the old plugin) completed at Event 70 but still sat in the unblocked backlog; moved to the archive in this edit
 
 ## Observations
 
