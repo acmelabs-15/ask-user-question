@@ -49,9 +49,9 @@ looks fine to the author, who can see the context.
 The options are distinguishable to you and not to the reader, because they compare
 on different axes, in different orders, or in different units.
 
-**Repair:** pick the axes that actually differ, then write every description on the
-same axes in the same order. Where two options really do the same thing, delete
-one.
+**Repair:** pick the axes that actually differ, then apply the comparability rule
+from SKILL.md to every description. Where two options really do the same thing,
+delete one.
 
 - Before: option one described by its speed, option two by its safety.
 - After: both described by speed and then by safety, so the reader sees the trade
@@ -78,15 +78,15 @@ hidden reads as advocacy.
 Either a label carries the marker and its description gives no checkable reason, or
 one option is clearly better and nothing says so.
 
-**Repair, arbitrary case:** put a fact from the situation into the recommended
-option's own description, or remove the marker. A marker the reader cannot check
-is worse than none, because it teaches them that markers mean nothing.
+**Repair, arbitrary case:** either put a fact from the situation into the
+recommended option's own description, or remove the marker. SKILL.md gives the
+reason removing it is a real option and a bare marker is not.
 
-**Repair, missing case:** mark the option you would pick, first in the array, with
-the reason in its description.
+**Repair, missing case:** mark the option you would pick and move it first, with
+the reason in its own description.
 
-**Repair, genuine tie:** mark none, and say in the question text that the options
-are equivalent. That is a complete answer. Marking two is always wrong.
+**Repair, genuine tie:** take the no-marker path in SKILL.md rather than inventing
+a preference. Marking two is always wrong.
 
 ## Mode 5: the question is compound
 
@@ -109,8 +109,8 @@ The reader is irritated rather than confused, because you asked for a
 confirmation, reported progress, requested a value only they can type, or asked how
 before anyone settled whether.
 
-**Repair:** withdraw the question and decide. State what you decided, the evidence
-that decided it, and what would change your mind. Then continue.
+**Repair:** withdraw the question and decide it yourself, then continue, saying the
+three things SKILL.md asks for on that path.
 
 This mode is the only one whose repair is not another question. Re-pitching here
 means not pitching.

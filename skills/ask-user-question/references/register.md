@@ -118,15 +118,22 @@ the reader meets it while looking at the option it applies to.
 The before version reads as three concepts. The reader cannot confirm they are one
 concept without leaving a dialog they cannot leave.
 
-## Using the project's own words
+## Diagnosing a vocabulary mismatch
 
-Where the repository carries a vocabulary, domain-language or context document,
-take the reader's nouns from it. The point is not fidelity to a file; it is that
-the reader recognises the thing being decided without translating. A question
-about `the sync worker` reads instantly to someone whose codebase calls it that,
-and a question about `the background job` makes them stop and map it.
+SKILL.md carries the rule about taking the reader's nouns from the project. What it
+cannot give you is the test for whether you have, so here is the one to apply.
 
-Where the repository carries no such document, take the nouns from the
-conversation you are already in. The reader has been using words for these things.
-Use theirs rather than importing a synonym from your own vocabulary, and never
-rename a thing in a question — a question is a bad place to introduce a term.
+Read the question aloud as the reader. Every noun they would have to translate is a
+defect, and the translation is invisible to you because you already know both
+words. A question about `the sync worker` reads instantly to someone whose codebase
+calls it that; `the background job` makes the same person stop and map it, and they
+cannot ask you which you meant.
+
+Two failures look alike and are not. A word the project never uses is a mismatch,
+and the repair is to swap it. A word the project uses for something *else* is worse,
+because the reader will not notice the collision, and the repair is to rename your
+concept rather than reuse theirs.
+
+Where nothing in the repository names the thing, take the noun from the conversation
+you are in. Never introduce a term inside a question: a dialog is the one place a
+reader cannot ask what a word means.

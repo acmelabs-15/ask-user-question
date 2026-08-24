@@ -3,16 +3,13 @@
 Open this when the reply is not exactly one of your labels. Each shape below
 authorises something different, and two of them authorise nothing at all.
 
-## The matching mechanic that catches people first
+## The matching mechanic
 
-**An option's value is its label string, in full.** The reply you match against is
-the label text exactly as you wrote it, including the ` (recommended)` suffix if
-it carries one. So a reply of `Rebuild now (recommended)` is a match on that
-option, and stripping the suffix before comparing is what makes a correct answer
-look unrecognised.
-
-Match on the whole label. Where you need the bare name for a later message, keep
-it separately rather than deriving it by trimming the reply.
+SKILL.md's Gotchas carry the fact that an option's returned value is its whole
+label, `(Recommended)` suffix included, because it bites before you ever open this
+file. The operational consequence belongs here: keep the bare name separately when
+you need it for a later message, rather than deriving it by trimming the reply.
+Trimming works until the day the label you trim is the one the reader chose.
 
 ## The shapes, and what each one licenses
 
@@ -34,8 +31,10 @@ do not second-guess it.
 
 ### Free text the reader typed
 
-The tool always offers a free-text box, so this is available on every question
-without your authoring it. Free text means the reader rejected your option set.
+The tool appends a free-text box on the plain-list and `multiSelect` layouts, so on
+those you get this without authoring it. **A preview question has no free-text box**,
+and there the nearest equivalent is a note attached to a selection, covered below.
+Free text means the reader rejected your option set.
 
 Read it as a finding about the call, not as noise to be coerced. The nearest label
 is usually not what they meant, and mapping their text onto it silently discards
@@ -62,9 +61,9 @@ answer is the failure this shape exists to prevent.
 The reader declined to choose. This authorises **nothing**.
 
 A skip is not consent, not agreement with your recommendation, and not permission
-to take the option you would have picked. Two paths are open: decide it yourself
-and say so in prose with the evidence and what would change your mind, or work out
-why the question was unanswerable and repair it.
+to take the option you would have picked. Two paths are open: take the
+decide-it-yourself path in SKILL.md, or work out why the question was unanswerable
+and repair it, for which `re-pitch.md` has the failure modes.
 
 Where the decision is destructive, outward-facing, or hard to reverse, a skip is a
 stop. Do not read absence as authorisation for anything you could not undo.

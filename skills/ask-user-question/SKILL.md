@@ -30,35 +30,75 @@ do not know exists.
 - **The dialog covers the conversation.** While it is open, the reader cannot see
   what you wrote above it, cannot scroll back, cannot open the file you are
   asking about, and cannot ask you a follow-up question. Context you put in the
-  message before the call is invisible at the moment it is needed. Everything
-  required to decide goes inside the call.
+  message before the call is invisible at the moment the reader needs it.
+  Everything required to decide goes inside the call.
 - **No option is pre-selected, and there is no `recommended` field.** The tool's
-  own documentation is explicit that ordering plus the label is what makes a
-  sensible default read as the default. There is no other mechanism, so a
-  recommendation you state in the prose around the call does not reach the reader.
-- **Never author an `Other`, `None` or `Skip` option.** The tool adds a free-text
-  box and a Skip control on its own. An authored one competes with the real one
-  and wastes one of your four slots.
-- **A `preview` on a `multiSelect` question is discarded in silence.** The
-  preview path runs only when `multiSelect` is absent or false. You get no error
-  and no rendered preview.
-- **A `preview` over 2000 characters is withheld, not truncated.** The reader
-  sees a placeholder instead of your content. A whitespace-only preview is
-  dropped the same way.
+  own prompt says to make the recommended option first and to end its label with
+  `(Recommended)`. That is the whole mechanism, so a recommendation you state in
+  the prose around the call never reaches the reader.
+- **Duplicate question text or duplicate labels reject the whole call.** Question
+  texts must differ across the call, and labels must differ inside one question.
+  The schema enforces this, so the reader never sees the dialog. Two options that
+  both read `Keep it` are the usual way this happens.
+- **An option's returned value is its whole label, `(Recommended)` suffix
+  included.** Match the full string. If you trim the suffix before comparing, a
+  correct answer looks unrecognised, and this bites on the ordinary path where the
+  reader picked exactly the option you marked.
+- **Each layout takes something away, and it takes it silently.** The tool appends
+  its own escapes, but not everywhere:
+
+  | Layout | Free-text `Other` | Conversational escape |
+  |---|---|---|
+  | plain list | yes | yes, `Chat about this` |
+  | `multiSelect` | yes | **none** |
+  | `preview` | **none** | a footer row that abandons the question |
+
+  So a preview question has no `Other` at all. The reader's only way to say
+  something is a note on an option they may not want to pick. Check this before you
+  reach for a preview, because the tool's own prompt promises the model that
+  `Other` is always there and a preview question breaks that promise without
+  saying so. Option lists also never scroll, which is why four is a structural cap
+  rather than a stylistic one.
+- **Never author an `Other`, `None` or `Skip` option** on the two layouts that
+  append their own. On those, yours competes with the real one and spends a slot.
+  On a preview question, authoring one does not give you back what the layout
+  removed — reconsider the layout instead.
+- **A `multiSelect` question throws your previews away without a word.** Nothing
+  validates the combination, so you get a plain checkbox list and lose whatever you
+  spent composing them.
+- **Previews do not exist unless the host opted in.** They resolve from
+  `CLAUDE_CODE_QUESTION_PREVIEW_FORMAT` or the SDK's
+  `toolConfig.askUserQuestion.previewFormat`, as `markdown` or `html`. Where
+  neither resolves, leave the field alone — the host may not render it. Under
+  `html` a preview must contain at least one tag, so plain text is a hard error
+  rather than a passthrough, and the validator also turns away `<script>`,
+  `<style>` and whole documents. A short terminal hides the overflow behind a
+  `lines hidden` count, which argues for previews that compare rather than
+  previews that document.
 - **Multi-select answers come back as one comma-separated string**, not an array.
   Split on the comma before you match a label.
-- **A skip is not consent.** It records that the reader declined to choose. It
-  does not authorise the option you would have preferred.
+- **A skip is not consent.** It records that the reader declined to choose. It does
+  not authorise the option you would have preferred.
 - **`1` to `4` questions per call and `2` to `4` options per question are hard
-  schema limits.** They are refused above the bound even when the user asks for
-  more. `header`, `label` and `description` are all required on every option.
-- **`header` is a chip of about 12 characters, and nothing enforces it.** A long
-  header is accepted and then overflows its chip in the interface.
+  schema limits.** The tool refuses anything past them, even when the reader asks
+  for more. `header` belongs to the question; `label` and `description` are
+  required on every option.
+- **`header` is a chip of about 12 characters, and nothing enforces it.** The tool
+  accepts a long header and then overflows its chip in the interface.
+- **You may not be able to ask at all.** The tool is absent in subagents, headless
+  runs, scheduled runs and chat-channel sessions, a host can omit it from the
+  toolset, and `dontAsk` permission mode denies the call. None of these degrade
+  gracefully. Section 1 says what to do instead.
 
 ## 1. Decide whether to ask at all
 
 Asking is not the safe default. A dialog costs the reader a context switch, so it
 has to buy a decision that is genuinely yours to lose.
+
+First check that you can ask. Where the tool is missing, per the Gotchas above,
+do not wait on a call that will hang or resolve empty: write the question and its
+options into your own reply and hand it to whoever dispatched you, so a caller who
+does have the tool can put it to a person.
 
 Ask when the fork is real: two or more paths are defensible, the choice changes
 what you build next, and you cannot settle it from evidence available to you.
@@ -103,7 +143,7 @@ reader needs a fact to choose, that fact belongs here, not in the message above.
 
 - Weak: `How should we handle this?`
 - Weak: `Which approach do you prefer for the migration?`
-- Better: `The migration drops the legacy index. Rebuild it now, or ship without
+- Better: `The migration drops the legacy search index. Rebuild it now, or ship without
   it and rebuild on the next deploy?`
 
 For a `multiSelect` question, phrase it as a plural selection, such as
@@ -145,8 +185,14 @@ choice reads as a decision already made.
 A recommendation is three things on **one** option, and all three are required:
 
 1. It is **first** in the options array.
-2. Its label ends with the exact token ` (recommended)`.
+2. Its label ends with ` (Recommended)`.
 3. Its own description carries the justification.
+
+Use the platform's own spelling, capital R, because the tool's prompt instructs
+every model to write `(Recommended)` and a skill that teaches a second spelling
+puts two conventions in front of the same reader. Case almost certainly does not
+matter to the tool, which reads the label as an opaque string; it matters to the
+person, who sees one convention or two.
 
 Position is part of the rule because it is the only positional affordance the tool
 gives you: ordering is half of what makes a default read as one, so a marker on the
@@ -154,6 +200,13 @@ third option fights the reading order. It also makes a second marker visibly
 inconsistent rather than merely discouraged, since only one option can be first.
 Nothing stops you writing two, so this is a rule you check rather than a limit the
 tool enforces.
+
+**First position is also the cheapest to choose by accident.** A call with one
+single-select question skips the review screen and submits on the keystroke that
+picks an option, with no confirmation. So never put a destructive or one-way option
+first, even when you would otherwise recommend it. Where the option you recommend
+is the irreversible one, add a second question that confirms it, or leave the
+recommendation unmarked and say in the question text why you are not steering.
 
 The justification has to cite a fact from the situation, not a virtue. `Your
 lockfile already pins version 3, so this needs no dependency change` is a
@@ -182,14 +235,20 @@ reader to skim caveats.
 
 ## 7. Choose the layout
 
-Single-select is the default. Reach past it deliberately:
+Single-select is the default. Reach past it deliberately, and read the layout table
+in the Gotchas first, because each alternative removes an escape the reader may
+need:
 
 - **`multiSelect: true`** when the choices genuinely combine, such as which of
   four checks to run. The 2-to-4 option cap still applies, so group or split when
-  you have more. Remember previews are discarded here.
-- **`preview`** when the reader is comparing rendered things, such as two
-  variants of a message, a diff, or a snippet. Keep each one under 2000
-  characters. Previews work only on single-select.
+  you have more. This layout has no conversational escape, so a reader who wants to
+  say something has only the free-text box.
+- **`preview`** when the reader is comparing rendered things, such as two variants
+  of a message or two diffs, and only where the host has opted into a preview
+  format. This is the layout with no free-text box at all, so do not choose it for a
+  question the reader might need to push back on. Keep previews short enough to
+  survive a small terminal, and make them differ visibly — a preview that documents
+  rather than compares wastes the one thing the layout buys.
 
 ## Register
 
@@ -231,7 +290,7 @@ fluently and still cannot be answered cold.
       "header": "Index",
       "options": [
         {
-          "label": "Rebuild now (recommended)",
+          "label": "Rebuild now (Recommended)",
           "description": "Runs the rebuild inside this migration. Your index is 40 MB, so this adds about two minutes of downtime, and the deploy window you booked is thirty."
         },
         {
@@ -255,16 +314,20 @@ again. One clean pass on a first draft says nothing about the third, because a
 rewrite for one item routinely breaks another. Stop when a pass finds nothing.
 
 1. Question count is 1 to 4. Option count is 2 to 4 per question.
-2. Every option has a `label`, a `description`, and the question has a `header`.
-3. No option is named `Other`, `None`, or `Skip`.
-4. Exactly one label ends with ` (recommended)`, and it is the first option. Or
-   no label does, and the question text says the options are equivalent.
-5. The recommendation's justification is in its own description and cites a fact.
-6. Every description names a cost, a risk, or something foreclosed.
-7. Descriptions compare on the same axes, in the same order, in the same units.
-8. Nothing needed to decide sits outside the call.
-9. No `preview` on a `multiSelect` question. No `preview` over 2000 characters.
-10. Sentences are short, active, and use the project's own words.
+2. Every question text differs from the others, and every label differs from its
+   siblings. A duplicate on either rejects the call.
+3. Every option has a `label` and a `description`; every question has a `header`.
+4. No option is named `Other`, `None`, or `Skip`.
+5. Exactly one label ends with ` (Recommended)`, and it is the first option. Or no
+   label does, and the question text says the options are equivalent.
+6. The recommendation's justification is in its own description and cites a fact.
+7. The first option is not destructive or one-way.
+8. Every description names a cost, a risk, or something foreclosed.
+9. Descriptions compare on the same axes, in the same order, in the same units.
+10. Nothing needed to decide sits outside the call.
+11. No `preview` on a `multiSelect` question, and no `preview` on a question the
+    reader may need to answer in their own words.
+12. Sentences are short, active, and use the project's own words.
 
 ## Re-pitching a question nobody could answer
 
