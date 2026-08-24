@@ -1113,6 +1113,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Verdict-layer guard recorded: these results files compute per-file verdicts against a two-scenario subset, so their verdict columns (including a prune on wording.md) are NOT of record and must not be quoted outside this experiment
 - Consequences held for the owner's ruling before any note or corpus edit: the corpus row's examples annotation, the ANALYSIS-007 dated correction, and the method addendum to the plugin-kit research note
 
+## Event 117 — the row goes negative by ruling, and a Mode 1 failure repaired on the way
+
+- Timestamp: 2026-08-24 10:21 PDT, measured
+- The corpus-row ask failed twice before it landed: the owner opened the chat escape on the first form, then answered "I didn't understand what you were asking me" to the offer of clarification. Diagnosed via the skill's own failed-question reference as Mode 1 — the premise was buried in measurement jargon (corpus row, expects_references, recall) the reader does not own, on a call that passed the full pre-flight. Repaired by restating the same decision in the reader's nouns: a test-task tag saying which file should be read. The repaired call was answered on first presentation
+- [reflect-capture] MED, edge case: a call can pass every layout rule and still fail Mode 1 on vocabulary — the cold-reader re-read must check the nouns as hard as the facts. Capture dispatched in the background to the reflect sidecar SKILL-001: Orchestrator Process Learnings
+- Owner chose, verbatim: "Needs no file (Recommended)" — the measure-a-draft row is re-derived to an outcome negative. Executed at fe1d8f9: `expects_references: []`, corpus validates clean through the scenario-set schema (16 annotated, 7 negatives, 27 rows). First validation attempt errored on my own call — the checker takes (raw, source) and I passed one argument; the builder's control run had proven the checker sound, so the signature was checked before the edit was suspected
+- ANALYSIS-007 carries the dated erratum (attribution withdrawn on the current base, row negative by ruling, stage-2 counts read as-of-stage-2, the stronger-tier caveat as the deletion guard); plugin-kit's ANALYSIS-004 Finding 18 gains the fifth design detail — re-derive ground truth after base drift, stamp attributions with their base version — committed and pushed at plugin-kit 173cea7
+- Brain edit_note timeouts that mask completed writes are now three of three under sweep-adjacent load this session; every ledger and note write this window was disk-verified before commit
+
 ## Observations
 
 ### Build decisions
