@@ -1474,6 +1474,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Residuals on the board, named not hidden: inbound cross-session reachability (upstream ask specified), graders unprovable under text output, env and network open by design
 - The board is CLEAR of running work. Remaining: the mechanism-level items, the four validator candidates, and the retrospective over Events 1-160 plus the thirty sidecar findings — the queued protocol step whenever the owner calls it
 
+## Event 161 — the vitest sighting root-caused: persona noise, and the hazard it leaves
+
+- Timestamp: 2026-08-24 14:39 PDT, measured
+- The isolation agent's confirmation closes the watch-item with the probable source found: the bun-ts-engineer persona's stock operating instructions mandate bunx vitest run in their completion gate, and the persona's bundled audit script prints failure marks for the ABSENCE of vitest and biome config — so "vitest" plausibly scrolled as audit noise in an agent pane without any runner being used. Verified airtight in the tree: zero vitest hits across the working diff and all repo source, package.json and lockfile untouched, bun:test imports with 54 test() and zero it(), five full-suite runs all under bun test
+- The agent resolved the persona-versus-repo conflict correctly and silently (the codebase in front of it beat the generic default, and both its subagents were briefed on the runner explicitly), flagging it afterwards — the disclosed-deviation shape the reporting rule exists for
+- The standing hazard it names, now on the board: anyone running the persona's audit script against these repos will see vitest-absence findings that read as defects, and "fixing" them into existence is the one path by which vitest could actually arrive. Candidate, owner's call: amend the bun-ts-engineer agent definition (a user-level config file, out of this session's scope to touch unprompted) so its completion gate and audit defer to the repository's own runner where one is established
+- With this, every watch-item of the day is closed or on the board as a named candidate; the retrospective remains the sole queued step
+
 ## Observations
 
 ### Build decisions
