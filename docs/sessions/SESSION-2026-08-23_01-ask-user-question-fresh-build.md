@@ -1102,6 +1102,17 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Three sweeps launched concurrently from this session at 09:54: arm A the shipped 0.1.3 tree, arm B minus-prose, arm C minus-file; 10 runs per scenario over the two-scenario set, 7 workers per arm, results to examples-boundary-a/-b/-c. Sixty runs in flight
 - The builder's own reflect findings (two HIGH: section-removal interaction surfaced before the run; briefed-pattern sweeps widened to the class) ride in its report for the retrospective; the fixture-leakage caveat stands for the run window
 
+## Event 116 — the content-boundary readout: a double null, and the attribution does not reproduce
+
+- Timestamp: 2026-08-24 10:08 PDT, measured
+- Completeness gate PASS on all three arms: 20 of 20 run files each, every run graded, identical 110-assertion denominators, zero file-loads, install state absent. The per-run comparison was made across arms per the standing rule, not read from headlines
+- The registered subject, measure-a-draft-against-a-good-one at n=10 per arm: A (shipped 0.1.3) 0.700, B (minus-prose) 0.740, C (minus-file) 0.720. The registered prose-carried condition — B at least 15 points under A with C within 5 of B — is NOT met: B sits 4 points ABOVE A and all three arms lie within 4 points of each other
+- Two findings, both against the going theory. First, the teaching-prose-carrier hypothesis is refuted at this n on this base: removing the dropped-cost-half lesson and the shape enumeration cost nothing. Second, the stage-2 bundle attribution itself (0.80 to 0.60 at n=2 on the pre-ToC base) does not reproduce: removing the entire file-plus-prose bundle on 0.1.3 at five times the sample moves the score 2 points. Whether the n=2 cell was noise or the base drift (ToC blocks, trims) dissolved the need cannot be separated from this data; the ablation note's own Finding 8 warned no stage-2 cell stands alone
+- The dead route holds and extends: examples.md read 0 of 10 on measure-a-draft in A and 0 of 10 in B — the cumulative sonnet record on that route grows by 20 runs, still zero. The file WAS pulled 3 of 20 (A) and 4 of 20 (B) — but on the prepush rider, not the registered subject; the earlier per-run extraction that showed zero everywhere used a wrong key and was corrected from the authoritative files table before this event
+- The exploratory prepush rider, no registered prediction: A 0.717, B 0.583, C 0.833 — and in C, layout.md recall reaches 10 of 10 against 7 of 10 in both arms carrying the examples file. Directionally consistent with stage 2's refutation (minus-examples 0.83 over control 0.67): the examples file may distract from layout.md on this scenario. Hint only at these n; a registered follow-up would be needed before any claim
+- Verdict-layer guard recorded: these results files compute per-file verdicts against a two-scenario subset, so their verdict columns (including a prune on wording.md) are NOT of record and must not be quoted outside this experiment
+- Consequences held for the owner's ruling before any note or corpus edit: the corpus row's examples annotation, the ANALYSIS-007 dated correction, and the method addendum to the plugin-kit research note
+
 ## Observations
 
 ### Build decisions
