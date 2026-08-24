@@ -928,6 +928,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Caveats that travel with the number: sonnet only; one run per arm per scenario (the aggregate over 131 assertions is the reliable figure, per-eval deltas are not); and one worker mid-run escalated its scenario fixture out of the sandbox (recorded in the plugin-kit ledger as an isolation finding) — its scenario, timeout-with-partial-selection, shows no anomaly in its scored rows
 - With the run complete, the skill's six references are clear to receive the locked table-of-contents standard, where the intervention has a recall baseline to measure against
 
+## Event 94 — the six references carry the standard table of contents, `258ae2a`
+
+- Timestamp: 2026-08-24 12:20 PDT
+- All six bundled files now open with the locked standard block — `## Table of Contents` as the first H2, flat anchor-link bullets — applied as PURE additions: zero deletions across all six, verified per file by numstat, body untouched at 5,795 tokens. `make checks` and the frontmatter test pass
+- The purity constraint is the point: these six are the measurable test bed for the table-of-contents intervention, with sonnet recall baselined at 33-75%. A future disclosure sweep now compares exactly one variable. That re-measure is the natural next measurement when the optimization loop resumes
+- plugin-kit's new validator rule reports zero findings on this skill — the first artifact outside plugin-kit validated against the standard
+- Open micro-item: shipped skill content changed, so the next release bumps the version to 0.1.1 across plugin.json, the skill metadata, and the marketplace entry; the live file-source marketplace reads the working tree, so nothing is stale meanwhile
+
 ## Observations
 
 ### Build decisions
