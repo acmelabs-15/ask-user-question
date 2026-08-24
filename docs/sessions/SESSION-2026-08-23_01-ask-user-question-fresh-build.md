@@ -1342,6 +1342,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Dispatched to the Bun engineer, background, tree clean and to itself; diff before commit; the smoke is stamped not-a-measurement by design
 - T-13 leaves the Unblocked backlog into active work on this dispatch
 
+## Event 145 — crossed messages reconciled, and the asymmetry stated honestly until the build erases it
+
+- Timestamp: 2026-08-24 12:10 PDT, measured
+- The subset builder's final report reconciled a crossing: its third report had already delivered both owed items into the feature commit before my two-items-owed message landed — the tier-study chip at every layer (shared amber deliberately: the reader's question is binary, may-I-quote-this-or-not, and two colours would invite a milder-versus-worse reading the classes do not have), and both docs subsections with unchanged ToCs
+- Its self-verification caught the day's best defect-that-never-shipped: the disclosure docs could not honestly claim compareRuns enforcement because measure-disclosure writes no envelope — the exact gap the owner's envelope question had just surfaced independently, found a third time by a third route. Rather than ship the false claim or stay silent, the builder wrote the asymmetry: the disclosure subset stamp is a statement, not a guard
+- That +2 paragraph committed at plugin-kit c78e6b3 as the honest current state, and its supersession handed to the envelope builder mid-flight as part of that deliverable — when the envelope lands, the paragraph flips to stating the enforcement that then holds. The envelope builder also received the corrected tree position and the sibling's independent envelope-writer map
+- The subset thread is fully closed; the envelope build is the only work in flight
+
 ## Observations
 
 ### Build decisions
