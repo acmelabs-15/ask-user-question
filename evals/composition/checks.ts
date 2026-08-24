@@ -132,8 +132,17 @@ const VIRTUE = /\b(cleaner|more maintainable)\b/i;
 /** An explicit statement that the options tie, which SKILL.md:222-224 requires with no marker. */
 const EQUIVALENCE = /\bequivalent\b|\binterchangeable\b|\bno (strong )?preference\b|\beither (one|option|works|is fine)\b|\bboth work\b|\bno recommendation\b/i;
 
-/** Rules implemented here, for the runner's report and the calibration test. */
-export const ACTIVE_RULE_COUNT = 27;
+/**
+ * Rules implemented here, for the runner's report and the calibration test.
+ *
+ * Annotated `number` rather than left to infer the literal `27`. The calibration test
+ * guards against an emptied rule set with `ACTIVE_RULE_COUNT === 0`, and against a
+ * literal type that comparison is provably false, so `tsc` rejects it and the guard is
+ * dead. Widening keeps the guard live. The state it protects against is not
+ * hypothetical: this module held 0 active rules earlier in its life and its probe
+ * reported a clean 1.00 while checking nothing.
+ */
+export const ACTIVE_RULE_COUNT: number = 27;
 
 export function checkCall(call: Call): Finding[] {
   const out: Finding[] = [];
