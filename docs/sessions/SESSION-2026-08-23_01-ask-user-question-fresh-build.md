@@ -1416,6 +1416,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Also confirmed again in passing: write_note status-drop (repaired), and insert_before_section as the safe growth primitive with append reserved for Relations — both now multiply corroborated
 - In flight: the ship-gate sweep, the standards integration (now with the correction and the 24-finding re-read), the ANALYSIS-005 correction, and the isolation audit
 
+## Event 154 — the ship gate holds: the review clause fails on all three counts
+
+- Timestamp: 2026-08-24 13:24 PDT, measured
+- The combined-description sweep landed clean and the gate's pre-committed read is FAIL for the addition: combined 24 of 39 positives against the plain restore's 26, a new false fire on the assumptions-and-open-risks-log negative (0.67, plausibly drawn by the draft-to-check-over vocabulary), and the target row itself — check-this-call-over-by-path — still at zero. The clause bought nothing and cost twice
+- The target row's persistence under its own purpose-built hook strengthens the diagnosis's file-reference hypothesis (the model opens the named file and starts editing, so no trigger is ever counted) and the training-prior lens now on record; its remedy is not description vocabulary
+- The plain restore stands fully measured and clean: 26 of 39, 15 of 15 silent, strictly comparable with the opus record it was measured under. Disposition to the owner: ship the restore alone, iterate the review clause on subsets, or hold
+- Per-row movements between old-alone and combined arms (five lost, three gained at n=3 per row) are within run noise and are not individually quoted
+
 ## Observations
 
 ### Build decisions
