@@ -389,6 +389,37 @@ _Empty._
 - Cost: the seven body-shaped gaps total roughly 300-340 tokens against about 600 spare
 - Open: which gaps to close is undecided and sits with the user
 
+## Event 35 — plugin-kit's authoring standard read in full, and two of my positions corrected
+
+- Timestamp: 2026-08-24 00:05
+- Read: the `plugin-kit:skill-creator` skill and all twenty files it points at, about 3,100 lines, after the user observed that framing a 600-token ceiling as the binding constraint meant progressive disclosure was not being used
+- Corrected: the token budget is not the constraint it was being treated as. The doctrine says that at the limit the answer is another layer of hierarchy with clear pointers, not tighter prose
+- Corrected: the disclosure result was over-read. `prune` means the pointer works and nothing needed the file, but the same page says deleting it is a hypothesis the loop tests, and only the measuring half was run. Two runs per scenario is named as the smallest number that can distinguish always from sometimes, and that is what was run. The twelve scenarios were also authored against the eight-reference fork, so they may never create the conditions the three current references fire on
+- Established: the measured render facts are Gotcha-shaped by the doctrine's own rule, which keeps environment-specific traps in the body regardless of size
+- Surfaced: plugin-kit's inventory tool reports four capabilities the description never mentions — the Gotchas block, the finished-call example, the pre-flight loop, and the bundled-files section. Its own guidance says to put that list in front of the user immediately, and it had been sat on
+
+## Event 36 — nine findings from live use, distinct from the retired-skill gaps
+
+- Timestamp: 2026-08-24 00:05
+- Source: five rejected dialogs put in front of the user during this session, each rejection a real defect
+- Finding: the question-length ceiling of about 25 words is stated in the body and checked by nothing; one dialog ran to 180 words
+- Finding: no layout rule exists at all — the body governs word choice and sentence shape and says nothing about the visual form of the string
+- Finding: the register standard is mandated but never demonstrated on a string that resists, so every rule can be satisfied while the sentence stays unreadable
+- Finding: **the self-containment rule and the length rule cannot both hold.** Everything needed to decide goes inside the call, and the question is about 25 words. For a decision carrying eleven items both are impossible, and the skill offers no resolution. This is the root cause of the rejected dialogs
+- Finding: nothing requires the question to state what the reader is being asked to do; one dialog served as a layout test and a decision at once and was unanswerable for that reason
+- Finding: sentence case with terminal punctuation reads better than lowercase fragments in a list, per direct user observation
+- Finding: the middle dot reads well as a marker; circled numerals carry marker weight at single width
+- Finding: decoration with a closing right edge cannot be hand-authored reliably — drawn boxes misaligned in both the question field and the preview pane on the same render
+- Finding: emoji degrade to their monochrome text glyph rather than rendering in colour
+
+## Event 37 — two research tracks dispatched, each authoring its own analysis note
+
+- Timestamp: 2026-08-24 00:07
+- Dispatched: tool-capability research — per-field render behaviour, Unicode width safety, length limits, Claude Desktop versus Claude Code, and an audit of the retired 348-line tool contract against the current build
+- Dispatched: readability research — scannability in monospace without colour or weight, list and hierarchy in plain text, marker glyphs, sentence case, chunking limits, and decision-dialog design, with concrete checkable rules as the required output
+- Both briefed to author their findings as Brain analysis notes directly rather than reporting prose, and to separate measured evidence from convention from judgement
+- Held until the research lands: the placement plan for the eleven retired-skill gaps and the nine findings above
+
 ## Observations
 
 ### Build decisions
