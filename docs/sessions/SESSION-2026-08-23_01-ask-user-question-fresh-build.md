@@ -532,6 +532,30 @@ _Empty._
 - Added: a selection table the skill never had, giving the four cases and what each costs
 - Measured: the long specimen renders at 57 cells widest across 14 lines, with a 10-word decision sentence
 
+## Event 50 — the decision sentence rule, settled by the artifact rather than by either argument
+
+- Timestamp: 2026-08-24 01:55
+- Commit `23f36d0`. I framed it as decision-last against front-loading-wins and asked the author agent to pick a side; it took neither
+- Resolution: orient first, context, decide last — which is what the long specimen already did. The distinguishing thing at field level is the subject rather than the question mark, so this is the front-loading rule applied one level up rather than an exception to it
+- Why that matters beyond precision: carving an exception would have left a reader believing the standard contradicts itself where it does not
+- Placement: the reasoning sits beside the rule it reconciles rather than in the section that states it, because a reconciliation stated far from one of its halves is one nobody meets
+- Recorded: stating it in full in the body would have breached the ceiling, so it moved to the reference instead — the agent applying to itself the rule it had been given
+
+## Event 51 — the body is full on both axes
+
+- Timestamp: 2026-08-24 01:55
+- Measured: 5,785 tokens against a 5,800 ceiling, and 457 lines against 500
+- Every round of this revision has found something that belonged in the body, so the next finding arrives with nowhere to go
+- Consequence recorded now rather than under pressure: the honest options at that point are a restructure that pushes a whole section behind a pointer with a real firing condition, or a considered raise with an argument. Not another squeeze
+
+## Event 52 — plugin-level audit, and a correction to plugin-kit's own documentation
+
+- Timestamp: 2026-08-24 02:05
+- Structurally sound: both silent-failure layout invariants satisfied, no path overrides, no dangling references, no machine-anchored paths in shipped content, version agreement across manifest and marketplace, and `claude plugin validate --strict` clean
+- Four findings, all distribution hygiene rather than loading failures. The retired plugin is still listed in the shared marketplace with a near-duplicate description, which would split triggers for a fresh install although it is disabled on this machine. No LICENSE file despite the manifest declaring one. The homepage and repository fields name a remote that does not exist and has never been pushed to. And roughly a megabyte of development payload would travel with every install against a hundred kilobytes of skill, including seven knowledge-graph notes carrying wikilinks that resolve to nothing outside this project
+- Correction to plugin-kit, proven with a control plugin rather than read: under `--strict`, a manifest-stage warning short-circuits the run before component checks happen at all. Its own reference says the validator walks the component directories, which holds only once the manifest passes
+- Deferred deliberately: none of the fixes land while disclosure measurements are in flight, because mutating installed state mid-measurement produces a figure nobody can reproduce
+
 ## Observations
 
 ### Build decisions
