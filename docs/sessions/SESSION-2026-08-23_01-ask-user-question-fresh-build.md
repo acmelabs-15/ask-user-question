@@ -671,10 +671,22 @@ _Empty._
 - Third sweep complete against commit 4710db8, temp root back to default, fix two deliberately held out so the comparison moved one variable
 - Verdicts agree on all six files, `keep` against `keep`. The patch reproduces the workaround's conclusion without the workaround
 - Per-file pulls move in both directions and total 106 against 96: examples.md 32 to 23, layout.md 21 to 23, wording.md 24 to 21, asking-again.md 11 to 11, failed-question.md 12 to 9, reading-answers.md 6 to 9. Nothing collapses to zero and no verdict flips, so the movement is the model not reading identically run to run
-- The third point settles two figures Event 62 refused to interpret. Pass rate across three sweeps of identical bytes: 0.8473, 0.9008, 0.8321. Context per run: 317,145, 412,953, 299,156. The workaround sweep was the outlier on both, so the pass-rate rise was noise and the context rise was noise. Neither entered the record as a finding, which is the only reason there is nothing to retract
+- The third point settles two figures Event 62 refused to interpret. Pass rate across three sweeps of identical bytes: 0.8473, 0.9008, 0.8321. Context per run: 317,145, 412,953, 299,156. The workaround sweep was the outlier on both. This bullet called that noise, and CORRECTED IN EVENT 65: the pass-rate spread is not noise, it is the load-failure rate, which was unmeasurable until the second fix landed
 - Noise band for pass rate on this scenario set is therefore about seven points across three runs, wider than the two-query band measured for triggering. Quote it when comparing sweeps
 - `runs_without_skill: 0` on all three sweeps is NOT evidence of anything. All three predate the second fix, so the field was true whenever a load was merely attempted; it cannot distinguish no failures from invisible failures
 - A fourth sweep is running against commit 02248f3 with both fixes to close that, and to show whether the guardrail in optimize-disclosure now has anything to fire on
+
+## Event 65 — a third of the runs never got the skill, and that was the noise all along
+
+- Timestamp: 2026-08-24 02:25 PDT
+- Fourth sweep, commit 02248f3, both fixes, temp root default. 18 of 54 runs never loaded the skill. All 18 requested it and were refused, so this is a load failure and not a routing failure — the distinction the second fix added `skillRequested` to make, paying off on its first real run
+- `countedRuns` falls 54 to 36 and every pull rate rises accordingly: examples.md 42.6% to 69.4%, wording.md 38.9% to 69.4%, layout.md 42.6% to 50.0%, failed-question.md 16.7% to 41.7%, asking-again.md 20.4% to 36.1%, reading-answers.md 16.7% to 27.8%. All six stay `keep`
+- The harness warning fired for the first time: "the skill never loaded on 18 run(s). Those runs are excluded from every pull rate, so the verdicts rest on less evidence than the run count suggests." It could never have fired before, because its input was true whenever a load was attempted
+- Checked for a false negative rather than assuming the number. The two populations separate on every independent axis: loaded runs score 0.949 with a mean of 2.94 in-skill reads and 350k context; unloaded runs score 0.667 with ZERO in-skill reads in all 18, 7 Read calls between them, and 226k context. Not one unloaded run pulled a single in-skill file, which is the contradiction a false negative would have produced. The classification is sound
+- CORRECTION to Event 64. The pass-rate spread across sweeps is not noise. Pass rate is a mix of the two populations: observed = 0.949x + 0.667(1-x) for x the fraction that loaded. Measure four's 36 of 54 predicts 0.8550 against an observed 0.8550, to four decimals. The earlier sweeps imply about 83%, 59% and 67% loaded, which is what moved their pass rates and their context per run
+- So the seven-point band recorded in Event 64 as a noise figure to quote is withdrawn. It was a real signal that no instrument in this session could see until now
+- Consequence for every disclosure figure taken before this: pull rates were computed over a denominator roughly one and a half times too large, and were understated by about that factor. The verdicts do not change; the rates do
+- New question for plugin-kit, not for this skill: the disclosure harness fails to deliver the skill on about a third of its runs. That is a measurement-quality problem in the tool, now visible for the first time, and it belongs in the upstream report alongside the two defects
 
 ## Observations
 
