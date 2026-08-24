@@ -1465,6 +1465,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Standing caution renewed: if the isoprobed peer session messages this conversation, it is the audit's own probe demonstrating the open channel — recorded, never answered
 - Capture dispatched to the sidecar, with the auto-memory-naming fence stated in the brief this time
 
+## Event 160 — the last thread lands: isolation proven per run, and the audit's second channel
+
+- Timestamp: 2026-08-24 14:38 PDT, measured
+- The isolation build delivered, verified (suite 1,800 from 1,719 at zero failures, captured; tsc clean; the flags, envelope field and proof module confirmed in the tree) and landed at plugin-kit 10622f0 with its ledger event at 3e8db8b — both ledgers current per the standing rule
+- The owner's guarantee reframe is vindicated twice over: the audit found a SECOND open channel beyond the observed one — every eval child and grader ever spawned had the operator's private auto-memory inlined into its system prompt, unfenced by any existing flag. Both channels now closed (the dedicated env var post-merge; messaging tools denied — the probe corrected the mechanism, children bind their own inboxes so env scrubbing severs nothing), and every run now PROVES its surface from the init event at zero extra spawns, with run.isolation a required comparability key
+- Honest implication for this project's numbers: every A/B today carried the auto-memory confound in both arms equally, so all deltas stand — the separating result, the boundary null, the outcomes gap; absolute levels carried a constant contaminant now removed, folding into the standing re-baseline note for the next sweep of record
+- Residuals on the board, named not hidden: inbound cross-session reachability (upstream ask specified), graders unprovable under text output, env and network open by design
+- The board is CLEAR of running work. Remaining: the mechanism-level items, the four validator candidates, and the retrospective over Events 1-160 plus the thirty sidecar findings — the queued protocol step whenever the owner calls it
+
 ## Observations
 
 ### Build decisions
