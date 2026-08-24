@@ -31,14 +31,16 @@ do not know exists.
   what you wrote above it, cannot scroll back, cannot open the file you are
   asking about, and cannot ask you a follow-up question. Context you put in the
   message before the call is invisible at the moment the reader needs it.
-  Everything required to decide goes inside the call.
+  Everything required to decide goes inside the call. In plan mode the blindness
+  has a second source: the reader cannot see the plan until you leave that mode, so
+  a question referring to it is unanswerable by construction. Name the thing rather
+  than pointing at where it is written.
 - **No option is pre-selected, and there is no `recommended` field.** The tool's
   own prompt says to make the recommended option first and to end its label with
   `(Recommended)`. That is the whole mechanism, so a recommendation you state in
   the prose around the call never reaches the reader.
-- **A call with one single-select question has no review screen.** It submits on
-  the keystroke that picks an option, so the reader cannot look again before it
-  lands. Section 5 says what that costs the first option.
+- **A call with one single-select question has no review screen.** It submits on the keystroke that picks an option, so the reader cannot look again
+  before it lands. Section 5 says what that costs the first option.
 - **Duplicate question text or duplicate labels reject the whole call.** Question
   texts must differ across the call, and labels must differ inside one question.
   The schema enforces this, so the reader never sees the dialog. Two options that
@@ -67,8 +69,7 @@ do not know exists.
   shortened and not scrolled. They are not displayed. Everything you wrote about
   what an option costs is gone, the dialog still looks finished, and the free-text
   box goes with them. Decide the layout before you write the descriptions.
-- **Each layout takes something away, and it takes it silently.** The tool appends
-  its own escapes, but not everywhere:
+- **Each layout takes something away, and it takes it silently.** The tool appends its own escapes, but not everywhere:
 
   | Layout | Free-text `Other` | Conversational escape |
   |---|---|---|
@@ -86,9 +87,9 @@ do not know exists.
   validates the combination, so you get a plain checkbox list and lose whatever you
   spent composing them.
 - **Previews are on by default, and the format setting does not gate them.**
-  `CLAUDE_CODE_QUESTION_PREVIEW_FORMAT` resolves to `markdown` in an ordinary
-  terminal session, and the renderer never reads it: a single-select question
-  carrying a preview gets the preview layout whatever the setting says. The setting
+  `CLAUDE_CODE_QUESTION_PREVIEW_FORMAT` resolves to `markdown` in
+  an ordinary terminal session, and the renderer never reads it: a single-select
+  question carrying a preview gets the preview layout whatever the setting says. It
   decides two other things — whether preview guidance reaches your own prompt, and
   whether HTML shape validation runs. Under `html` a preview must contain at least
   one tag, so plain text is a hard error there rather than a passthrough, and a
@@ -105,10 +106,10 @@ do not know exists.
   required on every option. The cap belongs to the schema and not to the screen —
   a long list does scroll on a short terminal, and what that costs the reader is
   the side-by-side comparison the options were written for.
-- **`header` is cut at 48 display columns, not at the 12 it asks for.** The 12 is
-  advisory and no validator reads it. The real sequence is a cut at 48 columns and
-  then a second cut by the tab strip, where an over-long header eats the space its
-  neighbours needed.
+- **`header` is cut at 48 display columns, not at the 12 it asks for.**
+  The 12 is advisory and no validator reads it. The real sequence is
+  a cut at 48 columns and then a second cut by the tab strip, where an over-long
+  header eats the space its neighbours needed.
 - **You may not be able to ask at all.** The tool is absent in subagents and in
   chat-channel sessions, a host can omit it from the toolset, and `dontAsk`
   permission mode denies the call. In a non-interactive run — `-p`, `--print`, no
@@ -129,7 +130,16 @@ does have the tool can put it to a person.
 Ask when the fork is real: two or more paths are defensible, the choice changes
 what you build next, and you cannot settle it from evidence available to you.
 
-Four things look like decisions and are not. Do not spend a call on them:
+Then let reversibility break the tie that test leaves. A change you could revert in
+a few lines is yours to make even where the fork is real, because being wrong costs
+one revert. A one-way door earns a question even where you are confident, because
+confident and right are not the same thing and only one of them is recoverable.
+
+Ask on arrival, not in advance. A fork three steps ahead can be perfectly real and
+still not worth raising: the work may never reach it, and an answer given in the
+abstract is given without the facts that would have decided it.
+
+Five things look like decisions and are not. Do not spend a call on them:
 
 - **A confirmation.** You already know the answer and you want cover for it.
 - **A progress report.** Nothing forks. Say it in prose and continue.
@@ -137,6 +147,9 @@ Four things look like decisions and are not. Do not spend a call on them:
   Inventing four candidate values wastes the option slots. Ask in prose.
 - **A mechanism whose premise is still open.** You are asking how before anyone
   has agreed whether.
+- **A retry ladder.** The options are attempts in sequence — the cache, then the
+  API, then the manual path. Offered as a question it returns an ordering, because
+  an ordering is what you handed over. Run the ladder and report where it stopped.
 
 When the fork is not real, decide it yourself, then say three things in prose and
 keep going: what you decided, the evidence that decided it, and what would change
@@ -158,14 +171,32 @@ With more than four independent questions, ask the four that block your next ste
 and leave the rest. Do not compress two decisions into one question to fit the
 cap, because a reader cannot answer half of a compound question.
 
+One pairing passes the independence test on paper and fails a reader: a decision
+together with a question about what happens next. Any combination of the two
+answers makes sense, so the test permits it, and the reader still meets one dialog
+asking them to choose and to plan a sequence at the same time. Ask the decision.
+The sequencing usually follows from the answer, and where it does not it is a call
+of its own, later.
+
 ## 3. Write the question text
 
 State the decision, in one sentence, ending in a question mark. Around 25 words
 is the working ceiling.
 
 The question carries what all the options share, so the options do not repeat it.
-Name the thing being decided and the consequence that makes it matter. If the
-reader needs a fact to choose, that fact belongs here, not in the message above.
+Name the thing being decided, the consequence that makes it matter, and what the
+reader is being asked to do about it. If they need a fact to choose, that fact
+belongs here, not in the message above. A call doing a second job at the same time
+— checking a layout, reporting progress — leaves the reader unable to tell which
+of the two they are answering.
+
+**Where the decision carries more than a sentence can hold, the preview is the
+resolution.** Everything needed to decide goes inside the call, and a question runs
+to about 25 words. On a decision carrying eleven items those two rules cannot both
+hold in the question field, and the answer is not to break one of them. `preview`
+holds structure and renders markdown, so the question states the decision in a
+sentence and the preview carries the items. Price it first, per the Gotchas — it
+costs you every option description — and shape it with `references/layout.md`.
 
 - Weak: `How should we handle this?`
 - Weak: `Which approach do you prefer for the migration?`
@@ -180,9 +211,12 @@ For a `multiSelect` question, phrase it as a plural selection, such as
 The label and the description do different jobs. The label is what the reader
 scans; the description is what the reader decides on.
 
-**Label:** one to five words. The distinguishing difference, not a restatement of
-the question. Labels are read side by side, so they have to differ in the word
-that matters.
+**Label:** one to five words naming the outcome. The distinguishing difference, not
+a restatement of the question. Labels are read side by side, so they have to differ
+in the word that matters. `Yes`, `No`, `OK`, `Cancel`, `Proceed`, `Approve`, `Skip`
+and `Defer` all fail on the same point, and so do `Option A` and `Approach 1`: they
+are short, they distinguish, and they say nothing about what happens. `Rebuild now`
+against `Ship without it` costs the same characters and carries the decision.
 
 **Description: two parts, in this order, both required.**
 
@@ -204,7 +238,14 @@ stylistic preference here; it is what makes a scan work.
 Cover the space. Options are mutually exclusive unless `multiSelect` is set, and
 the set should include the do-nothing path where one exists, and the option you
 would rather the reader did not take. A set of options that omits the honest bad
-choice reads as a decision already made. Never author an `Other`, `None` or `Skip`
+choice reads as a decision already made.
+
+Draw the set from what this project actually has: check that each option names a
+mechanism that exists here before you finalise it. A set assembled from habit
+offers something this project does not have and omits the thing it uses, and every
+word of it can still be well written.
+
+Never author an `Other`, `None` or `Skip`
 option: on the two layouts that append their own, yours competes with the real one
 and spends a slot, and on a preview question it does not give back what the layout
 took — reconsider the layout instead.
@@ -275,13 +316,12 @@ need:
   you have more. It keeps both escapes, so a reader who wants to say something can.
 - **`preview`** when the reader is comparing rendered things — two variants of a
   message, two diffs — or when the decision carries more structure than a question
-  can hold. It is the only field that renders markdown, so it is where a list, a
-  table or a diff belongs. Pay its price knowingly, per the Gotchas: the
-  descriptions go, so whatever distinguishes the options has to be in the labels,
-  in the question, or visible in the preview itself. Previews are a large-terminal
-  feature — the pane is the terminal's width less 34 columns and its height less 26
-  rows. Make them differ visibly: one that documents rather than compares wastes
-  the one thing the layout buys.
+  can hold, per Section 3. Pay the price the Gotchas name: with the descriptions
+  gone, whatever distinguishes the options has to be in the labels, in the
+  question, or visible in the preview itself. It is a large-terminal feature, the
+  pane being the terminal's width less 34 columns and its height less 26 rows. Make
+  the previews differ visibly: one that documents rather than compares wastes the
+  one thing the layout buys.
 
 ## Register and layout
 
@@ -327,17 +367,22 @@ rewrite for one item routinely breaks another. Stop when a pass finds nothing.
 2. Every question text differs from the others, and every label differs from its
    siblings. A duplicate on either rejects the call.
 3. Every option has a `label` and a `description`; every question has a `header`.
-4. No option is named `Other`, `None`, or `Skip`.
-5. Exactly one label ends with ` (Recommended)`, and it is the first option. Or no
+4. No option is named `Other`, `None`, or `Skip`, and every label names an outcome
+   rather than an act of answering.
+5. Every option names something this project has.
+6. Exactly one label ends with ` (Recommended)`, and it is the first option. Or no
    label does, and the question text says the options are equivalent.
-6. The recommendation's justification is in its own description and cites a fact.
-7. The first option is not destructive or one-way.
-8. Every description names a cost, a risk, or something foreclosed.
-9. Descriptions compare on the same axes, in the same order, in the same units.
-10. Nothing needed to decide sits outside the call.
-11. No `preview` on a `multiSelect` question, and no `preview` on a question the
-    reader may need to answer in their own words.
-12. Sentences are short, active, and use the project's own words.
+7. The recommendation's justification is in its own description and cites a fact.
+8. The first option is not destructive or one-way.
+9. Every description names a cost, a risk, or something foreclosed.
+10. Descriptions compare on the same axes, in the same order, in the same units.
+11. Nothing needed to decide sits outside the call, and the call is doing one job.
+12. No `preview` on a `multiSelect` question, and no `preview` on a question the
+    reader may need to answer in their own words. Where there is a preview, no
+    description is carrying anything the reader needs.
+13. No line break in any `label` or `description`.
+14. Sentences are short, active, and use the project's own words. Anything with
+    parts passes the checks in `references/layout.md`.
 
 ## Re-pitching a question nobody could answer
 
@@ -360,6 +405,18 @@ Read `references/reading-answers.md` when the reply is not exactly one of your
 labels. It maps each shape to what it licenses you to do next. Skipping it is how
 a skip gets read as agreement, which costs a wrong action rather than a wrong
 sentence.
+
+## Asking a second time
+
+Two calls in one piece of work make a run, which has properties one call does not:
+how long the reader thinks this goes on, and what their earlier answer still
+authorises.
+
+Read `references/across-a-run.md` when you are about to ask again. It branches on
+what happened to the last call, because the repairs point opposite ways — a skipped
+call must not be re-sent, while a clean answer that opened a new fork should be
+followed up rather than left. Skipping it is how an approval quietly widens past
+the words the reader agreed to.
 
 ## The shape of a finished call
 
