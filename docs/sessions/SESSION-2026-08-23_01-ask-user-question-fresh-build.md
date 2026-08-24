@@ -1209,6 +1209,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The trigger-miss diagnosis agent died on an API server error mid-response; per owner instruction it was nudged to resume from its transcript and deliver rather than re-dispatched from scratch
 - The skill review re-dispatched on the corrected, committed reviewer definition; the sixth sidecar capture (stop-stale-runs) verified and committed at bee0fca
 
+## Event 129 — the second home found: portability.md still says add-freely
+
+- Timestamp: 2026-08-24 11:12 PDT, measured
+- The modernization agent's scope-extension report landed after the commit and surfaced one contradiction it was correctly fenced out of fixing: shared/references/portability.md line 38 classifies allowed-tools fail-safe and says "Add these freely" — right on its own axis (other runtimes ignoring the field), materially misleading for headless Claude Code consumers, and in the shared pool all five creator skills read, so the stale advice had the wider audience while the correction landed in the narrower file
+- Follow-on dispatched to the same agent under the same fence: qualify the add-freely sentence with the measured headless behaviour and point to the full treatment in skill-frontmatter.md; classification kept; uncommitted; report back
+- The agent's three process learnings batch-dispatched to the reflect sidecar: a doctrine strike colonises output templates and severity schemes beyond prose; a struck rule can bundle a claim that survives it, so re-grounding reads the block sentence by sentence; a measured finding lands in more than one document and the scoped file is not always the load-bearing one — grep the shared pool before calling the edit complete
+- Still in flight: the resumed trigger-miss diagnosis, the clean skill review, the portability fix, and the batch capture
+
 ## Observations
 
 ### Build decisions
