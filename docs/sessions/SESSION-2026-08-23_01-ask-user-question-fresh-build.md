@@ -14,12 +14,66 @@ tags:
 # SESSION-2026-08-23_01: Ask User Question Fresh Build
 
 **Scope**: Build a new ACMElabs plugin `ask-user-question` authored fresh against plugin-kit standards, optimize its description and progressive-disclosure layout with plugin-kit tooling, evaluate it, and retire the `asking-users-questions` plugin entirely.
-**State**: Wave 1 dispatched (repo creation, environment dedup plus copy inventory, tooling verification, authoring standards brief, this session note). Five decisions locked; four measured defects recorded as the fresh author's fix list. Ledger migrated into this project at Event 11.
+**State**: Skill authored and measured. Description at 1002 characters scoring 49/52, recall 95.5%, false triggers 6.7%. Disclosure measured: all three references at 0 pulls of 24, verdicted `prune`, on a run where `Read` was available and spent elsewhere. Seven decisions locked. The local composition runner is retired in favour of plugin-kit's outcome measurement, which is scoped but not yet wired. A coverage check against the retired skill found 11 real gaps, 7 strong, three of which are wrong guidance rather than silence; which to close is the open decision. Cleanup and retirement of the old plugin have not started.
 **Prior art**: this build follows the shared-layer restructure work carried out in the separate `plugin-kit` Brain project. Two notes there are load-bearing context and are named as plain text rather than wikilinks, because Brain wikilinks cannot resolve across projects: SESSION-2026-08-09_01 "Plugin Kit Shared Layer Restructure", and ADR-001 "Skill Creator Merge Conflict Resolutions".
 
 ## Tasks
 
 Canonical task registry for this session. T-NN is the stable session-note ID; editor IDs are mirrors.
+
+### Active (in_progress)
+
+_Empty. All dispatched work is landed or explicitly stopped; the session is at a user decision point._
+
+| T-ID | Group | Subject | Agent | Files | Effort | Created |
+|:--|:--|:--|:--|:--|:--|:--|
+
+### Backlog (pending)
+
+#### Unblocked — ready to pick up
+
+| T-ID | Group | Subject | Agent | Files | Effort | Created |
+|:--|:--|:--|:--|:--|:--|:--|
+| T-06 | Wave 5 | Wire `measure-outcomes` into the Makefile and reshape the eval set to `evals.json` shape | — | `Makefile`, `evals/` | M | Event 31 |
+| T-07 | Wave 5 | Supply the 27 lint rules to `measure-outcomes` as an injected grader, so the run keeps a deterministic floor | — | `evals/composition/checks.ts` | M | Event 31 |
+| T-08 | Wave 6 | Retire `asking-users-questions` and sweep its stray copies | — | external | M | Event 03 |
+| T-09 | Wave 6 | Uninstall plugin-kit and hand-remove its marketplace entry | — | user config | S | Event 22 |
+
+#### Blocked
+
+| T-ID | Group | Subject | Agent | Files | Effort | Blocked by | Created |
+|:--|:--|:--|:--|:--|:--|:--|:--|
+| T-10 | Wave 4 | Close the coverage gaps the user selects | — | `skills/ask-user-question/**` | M | D-8 undecided | Event 34 |
+| T-11 | Wave 4 | Spend the held 18 characters on the review-a-draft hook | — | `SKILL.md` frontmatter | XS | sequenced after T-10, which may need description coverage | Event 29 |
+| T-12 | Wave 5 | Run the outcome measurement | — | `evals/` | L | T-06, T-07 | Event 31 |
+| T-13 | — | Fix plugin-kit's install detection so it distinguishes "no competing copy" from "not reachable" | — | plugin-kit `shared/envelope.ts` | M | out of repo; needs its own task | Event 30 |
+
+### Archive (completed + deleted)
+
+<details>
+<summary>5 archived tasks</summary>
+
+| T-ID | Status | Group | Subject | Agent | Files | Effort | Created | Resolved |
+|:--|:--|:--|:--|:--|:--|:--|:--|:--|
+| T-01 | completed | Wave 1 | Create the `ACMElabs/ask-user-question` repo | W1a-repo | `<repo root>/**` | S | Event 10 | Event 15 |
+| T-02 | completed | Wave 1 | Environment dedup plus copy inventory of the prior WIP | W1b-hygiene | prior WIP tree | S | Event 10 | Event 15 |
+| T-03 | completed | Wave 1 | Verify plugin-kit tooling runs | W1c-tooling | `Makefile`, harness scripts | S | Event 10 | Event 15 |
+| T-04 | completed | Wave 1 | Author the plugin-kit authoring standards brief | W1d-standards | standards brief | M | Event 10 | Event 15 |
+| T-05 | completed | Wave 1 | Create this IN_PROGRESS session note | memory | `sessions/` | XS | Event 01 | Event 10 |
+
+</details>
+
+### Editor mirror IDs
+
+| T-ID | CC-ID | Cursor-ID | Last synced |
+|:--|:--|:--|:--|
+| T-01 — T-05 | — | — | Event 15 |
+| T-06 — T-13 | — | — | Event 34 |
+
+### Pending User Decisions (surface on resume)
+
+- **D-8, open**: which of the 11 coverage gaps to close. Seven are body-shaped and total roughly 300-340 tokens against about 600 spare, so they fit together. Three of them are wrong guidance rather than silence and are therefore not optional in the same way as the rest: the ask-or-decide test has lost its reversibility tiebreaker, the meta-label ban is absent so `Yes` and `No` pass every rule, and the independence test positively licenses pairing a decision with a sequencing question. To be put to the user as grouped choices rather than eleven separate ones.
+
 
 ### Active (in_progress)
 
@@ -247,6 +301,94 @@ _Empty._
 - Timestamp: 2026-08-23 22:08
 - Decision: `oncall`'s dependency is fixed before the near-duplicate is disabled
 
+## Event 25 — Trigger measurement of record
+
+- Timestamp: 2026-08-23 22:13
+- Measured: 52-query candidate eval set, 3 runs each, 156 probes; 47/52 passed, recall 90.1%, false triggers 11.1%
+- Verified: all 15 gap-test rows fired, 45 of 45 attempts, across six `gap-*` groups
+- Corrected: an aggregate of "14 rows / 42 attempts" was wrong; per-group figures were right and sum to 15
+- Boundary read: row 51 fired 3/3 while row 32 declined 0/3, confirming the redrawn third exclusion
+- Committed: `1ad0e60` — the measured eval set of record, with its annotation sidecar
+
+## Event 26 — Composition lint rules re-derived from the frozen skill
+
+- Timestamp: 2026-08-23 22:20
+- Commit: `e41b79f` — 27 rules, 16 errors and 11 warnings, each carrying its SKILL.md line
+- Verified: the acceptance probe that scored 1.00 against zero wired rules now fails at 0.00
+- Declined: the inherited 22-pattern banned-words table, adopting only the two words the skill itself quotes
+- Threshold correction: a sentence limit derived at 20 words would have fired on the skill's own 24-word worked example; set to 25
+- Rejected: `recommend.absent` as an error, which the current skill contradicts at :222-224
+
+## Event 27 — Absence guard made advisory on the three isolated targets
+
+- Timestamp: 2026-08-23 22:41
+- Commit: `6fb39ab` — `GUARD_FATAL := 0` on `measure-disclosure`, `disclosure` and `composition`
+- Evidence: the harness spawn measured both ways — 0 plugin-namespaced entries with the isolation flags against 97 without, with `Read` surviving in both cases
+- Corrected: a header conclusion stating this project's own plugin must be disabled before measuring; refuted by that measurement
+- Corrected: an orchestrator citation naming the wrong file — the Makefile runs `measure-disclosure.ts`, which reaches isolation through a shared `runScenario` rather than declaring the flags itself
+- No configuration was mutated; `oncall`'s dependency is untouched
+
+## Event 28 — Description optimization loop rejected in favour of a hand-edit
+
+- Timestamp: 2026-08-23 22:52
+- Ran: the description optimizer, 5 iterations authorised, stopped at 2 on `all_passed`
+- Result: winner scored train 32/32 and held-out 18/20, but train precision improved sixfold while held-out precision degraded — a memorisation stop
+- Rejected: the winner deleted the five named exclusions, and a requirements-interview query then fired 3/3 on held-out, which a different skill owns
+- Noise floor established: the loop scored identical baseline bytes at 45/52 where the dedicated run scored 47/52, so figures carry roughly ±2 queries of variance
+
+## Event 29 — D-6 locked: ship three harvested phrasings, hold the fourth pending measurement
+
+- Timestamp: 2026-08-23 23:00
+- Decision: apply the three harvested clauses plus the compressions funding them; hold the review-a-draft hook and measure it instead of guessing
+- Commit: `263146b` — description at 1002 characters, sha256 `107a6cea…`, one physical line, three parsers agreeing
+- Re-measured: 49/52, recall 95.5%, false triggers 6.7%, all six gap groups holding at 15/15 rows and 45/45 attempts
+- Corrected: the clause called "held-out validated" reached only 1/3 when extracted alone, while the clause labelled unverified delivered 0/3 to 3/3 — a held-out gain inside a multi-clause rewrite is not evidence for any one clause
+- Commit: `b6e44ca` — the two queries deciding the held hook; the no-paste form fails 1/3 while the pasted form passes 3/3 twice
+
+## Event 30 — Disclosure measured; all three references scored zero pulls
+
+- Timestamp: 2026-08-23 22:48
+- Measured: 12 scenarios × 2 runs; pass rate 88.6%, body 4,190 tokens, context mean 227,102
+- Result: `register.md`, `re-pitch.md` and `reading-answers.md` each 0 pulls of 24, all verdicted `prune`
+- Not the void signature: the skill loaded 24 of 24 times and the model made 40 `Read` calls on other things, so `Read` was available and simply never spent on a reference
+- Confirmed absent: `measure-disclosure` takes no holdout, so the 12-scenario thinness cannot corrupt it the way it would corrupt the optimizer
+- Defect found: the envelope records `install_state: absent` while the local guard exits 1, because plugin-kit's `detectInstallState` excludes the artifact under test by design
+
+## Event 31 — D-7 locked: retire the local composition runner for plugin-kit's outcome measurement
+
+- Timestamp: 2026-08-23 23:05
+- Decision: retire `evals/composition/composition-runner.ts`, adopt plugin-kit's `measure-outcomes.ts`, keep the 27 lint rules as a standalone check
+- Cause: two defects in the local runner were both symptoms of maintaining parallel infrastructure — eight reference expectations naming files that do not exist, flooring reference recall at 0.00; and a precision metric returning 1.00 when nothing was opened, rewarding not reading the references at all
+- Migration cost established from source: reference-open counting moves to `measure-disclosure`; the lint rules survive as an injected grader; the eval format is `evals.json` shape, a copy of which is already archived under `evals/history/`
+- Inherited: `measure-outcomes` calls the same install detection, so one fix in plugin-kit corrects both operations
+
+## Event 32 — Typecheck gate added, and it found a dead guard on its first run
+
+- Timestamp: 2026-08-23 23:12
+- Commit: `b1d4432` — `tsconfig.json`, `package.json` and a `typecheck` target, following plugin-kit's own `tsc --noEmit` pattern
+- Established: plugin-kit typechecks its own source and offers no typechecking service to other plugins, so this is convention-matching rather than duplication
+- Found: `ACTIVE_RULE_COUNT === 0` was provably false against an inferred literal type, so the emptied-rule-set guard could never fire
+- Commit: `1096bea` — annotation widened to `number` to keep the guard live, rather than deleting a check that protects against a state this module was actually in earlier today
+
+## Event 33 — Session working directory was a stale non-git copy
+
+- Timestamp: 2026-08-23 23:25
+- Issue: the session's working directory was a separate directory from the repo, holding the previous generation of the skill including the eight reference files this session had been calling nonexistent
+- Blast radius checked and clean: no artifact references the stale tree; the disclosure run recorded an absolute repo path; and the shipped trigger measurement's description sha256 matches the repo file exactly at 1002 characters
+- Fixed: the stale copy moved to a dated backup and the path replaced with a link to the repo, so relative paths and `process.cwd()` consumers now resolve correctly without losing the session
+- Residual: the absence guard's content sweep had been sweeping the stale tree all session; its config route, the half that found the plugin, was unaffected
+
+## Event 34 — Coverage check against the retired skill
+
+- Timestamp: 2026-08-23 23:27
+- Created: ANALYSIS-003, the coverage check against the retired skill
+- Method: plugin-kit's `synthesize-scenarios --inventory-only` against both skills for two independently derived capability inventories, then a rule-by-rule read of all 9 files and 2,267 lines
+- Result: 11 real gaps of which 7 are strong; 6 groups correctly excluded by the description; roughly 40 rules covered differently
+- Three findings are wrong guidance rather than silence: the ask-or-decide test lost its reversibility tiebreaker and now gives the opposite verdict on a confident-but-irreversible call; the meta-label ban is absent, so `Yes` and `No` pass every rule and every pre-flight item; and the independence test positively licenses pairing a decision with a sequencing question
+- Corrected: two of ten prior candidates do not survive, and a third was declined as inflation
+- Cost: the seven body-shaped gaps total roughly 300-340 tokens against about 600 spare
+- Open: which gaps to close is undecided and sits with the user
+
 ## Observations
 
 ### Build decisions
@@ -283,5 +425,6 @@ _Empty._
 ## Relations
 - relates_to [[ANALYSIS-001: Plugin Kit Authoring Standards for the Ask User Question Plugin]]
 - leads_to [[ANALYSIS-002: Evidence Rules From Measured Failures]]
+- leads_to [[ANALYSIS-003: Coverage Check Against the Retired Asking Users Questions Skill]]
 
 <!-- The two-relation minimum is met as of the evidence-rules analysis landing in this project. The two prior-art notes this session rests on live in the plugin-kit project and cannot be wikilinked across projects; they are named as plain text in the Prior art header line, in Event 11, and in the Observations above. -->

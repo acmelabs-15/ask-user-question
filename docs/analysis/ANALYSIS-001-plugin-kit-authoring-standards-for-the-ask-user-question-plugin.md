@@ -197,3 +197,4 @@ plugin-kit is silent on third-party attribution — a grep for attribution, thir
 - pairs_with [[ANALYSIS-002: Evidence Rules From Measured Failures]]
 
 <!-- The two-relation minimum is met as of the evidence-rules analysis landing in this project. A further edge, to plugin-kit's ADR-001 on skill-creator merge-conflict resolutions, is deferred by instruction because that note's type is decision. See Blockers. -->
+- pairs_with [[ANALYSIS-003: Coverage Check Against the Retired Asking Users Questions Skill]]
