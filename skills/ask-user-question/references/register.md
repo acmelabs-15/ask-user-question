@@ -54,6 +54,14 @@ holds one option. When it starts explaining a second option by contrast, that
 material belongs in the other option's own description, where the reader looking
 at that option will find it.
 
+**Words: no idiom, and no jargon the project has not already used (Part 1).** An
+idiom is the thing a reader translates rather than reads, and a dialog is where they
+cannot ask what it meant. `Bite the bullet on the rewrite` and `the nuclear option`
+both carry a tone and no content. Jargon is narrower and sharper: a term the project
+already uses is the reader's own word and belongs in the question, while a term from
+your vocabulary that the project has never used is one they have to map. The section
+below on diagnosing a vocabulary mismatch is the test for which you have.
+
 ## What this file does not adopt, and why
 
 **The Dictionary of approved words.** Two independent reasons. It is published

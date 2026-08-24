@@ -334,17 +334,10 @@ need:
 ## Register and layout
 
 Every string in the call is read once, cold, under time pressure. Write them in
-ASD-STE100 Simplified Technical English, the controlled-language specification
-from the AeroSpace and Defence Industries Association of Europe, reduced to the
-rules that carry here:
-
-- One instruction or one statement per sentence.
-- Around 25 words per sentence, and fewer in an option description.
-- Active voice. `This drops the index`, not `the index will be dropped`.
-- Simple tenses. Prefer `this removes` over `this will have removed`.
-- One meaning per word, and one word per concept, across the whole call. If the
-  question says `check`, no option says `validation`.
-- No idiom, and no jargon outside the vocabulary the project already uses.
+ASD-STE100 Simplified Technical English, the controlled-language specification from
+the AeroSpace and Defence Industries Association of Europe — one statement per
+sentence, active voice, simple tenses, one word per concept, no idiom — reduced to
+the rules that carry in a dialog.
 
 Then use the project's own words. Where the repository carries a vocabulary or
 domain-language document, take the reader's nouns from it, so the question uses
@@ -353,9 +346,9 @@ in. Do not import a synonym from your own vocabulary for a thing the project has
 already named.
 
 Read `references/register.md` when a string will not come down to one clause, or
-when you have to justify a rewrite to whoever wrote the original. It carries the
-rules above by rule number, with worked rewrites and the test for whether you have
-actually taken the reader's nouns. Skipping it costs you a question that reads
+when you have to justify a rewrite to whoever wrote the original. It carries each of
+those rules by its number in the specification, with worked rewrites and the test
+for whether you have actually taken the reader's nouns. Skipping it costs you a question that reads
 fluently and still cannot be answered cold.
 
 Read `references/layout.md` **before** you compose anything with parts — a list,
