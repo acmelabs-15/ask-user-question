@@ -1432,6 +1432,16 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Still open on the board, now as a mechanism-level item rather than a wording one: the review-a-draft-by-path phrase (the model plausibly opens the named file and works, never triggering — the file-reference hypothesis, testable by stripping paths), alongside the training-prior audit of the should-fire set before further quoting
 - In flight: the standards integration (with corrections), the ANALYSIS-005 dated correction, and the isolation audit
 
+## Event 156 — the standards integration lands, and the lineage loses its last measured rule
+
+- Timestamp: 2026-08-24 13:29 PDT, measured
+- Both deliveries verified against artifacts and landed at plugin-kit 3ca48a1 and 853237f, pushed. The integration: identification findings as evaluation criteria (sibling-overlap, routing-tier measurement, the no-inert-scenario item from the training-prior test, deliberate installed-set sizing with the tools-to-skills transfer fence), remedy findings as doctrine (two-surface split, method-not-phrasings with three converging sources, capability-graded null reading in both loops, compositional load as consistent-with beside the null it explains) — fence-grep zero, ToCs verified, checklist counts mechanically checked, skill-creator body untouched at 4,990. Four validator automations recorded as candidates for the owner, none built: the embedding-overlap detector, the inert-scenario audit over existing ablation output, the installed-set reporter, and the cross-tier diff column
+- The ANALYSIS-005 correction ran to NINE sites, not the three my grep found — the researcher swept the downstream framing claims and observations the citations fed. The sharpened honest claim now stated at every site: after the withdrawal, none of the four surviving structural rules carries a positive measured result. Rule 1's verdict is SURVIVES, EVIDENCE WITHDRAWN — kept distinct from refutation because nothing tested the shape; its citation measured a different mechanism. New discipline written into the note: a citation inherited from a sibling note counts as unverified until opened in primary text here
+- body-structure.md's twin sites were corrected by the modernize agent AFTER its report was sent — a report-lags-artifact instance caught because the tree was checked rather than the report trusted; the diff matched the instruction exactly and landed in the integration commit
+- Tooling: the phantom-tally defect now observed at 3x as well as 2x — the multiplier is not stable, only the read-back is; joins the bug-report dossier
+- The placement lesson from the integration report rides for the retrospective: integrating a research note is a placement problem, and the position carries the argument
+- In flight: the isolation audit alone
+
 ## Observations
 
 ### Build decisions
