@@ -17,7 +17,16 @@
  *   bun checks.test.ts          # exits non-zero on any failure
  */
 
-import { checkCall, scoreFindings, type Call } from "./checks.ts";
+// Points at the quarantined module, which is what this file is the record OF. It used to
+// import `./checks.ts`, which was harmless while that module held no rules and became
+// misleading the moment it held 27 different ones derived from a different artifact: a reader
+// would have taken this as calibration of the active set against thresholds it never shared.
+//
+// This file still cannot run. `before-and-after.md` below belongs to the retired fork and does
+// not exist here, so it exits ENOENT — the honest reason, and the same one it had before. It is
+// not in `make checks`. Restoring it means bringing a corpus for the CURRENT rules, which is
+// what `checks.test.ts` now does from SKILL.md's own worked example.
+import { checkCall, scoreFindings, type Call } from "./checks.quarantined.ts";
 
 const CORPUS = new URL("../../skills/ask-user-question/references/before-and-after.md", import.meta.url).pathname;
 
