@@ -104,6 +104,35 @@ const noJudge = has("no-judge");
  */
 const maxTurns = flag("max-turns", "24");
 
+/**
+ * Flags that keep every call in this harness out of the operator's own configuration.
+ *
+ * Verbatim from plugin-kit's helper path, where the pair was measured together; shipping one
+ * of the two would ship an arrangement no evidence covers. `--setting-sources project`
+ * excludes more than its name promises -- not just project settings, but plugin skills and
+ * user-level skills too.
+ *
+ * Load-bearing HERE for two arms, in opposite directions.
+ *
+ * The `disclosed` arm decides whether progressive disclosure works by counting `Read` calls.
+ * Content served through the skill system produces no Read, so a copy of this skill visible
+ * to the loader floors `refsRead`, reference recall, precision and `refCounts` together, and
+ * the arm reports that disclosure does not work when what failed was the measurement. Same
+ * void signature the disclosure targets gate against; the injection the `skill` arm relies on
+ * never covered this arm.
+ *
+ * The `baseline` arm is the no-guidance control. A visible copy puts this skill in front of
+ * the very runs that define zero, biasing the control up and making the harness understate
+ * its own subject.
+ *
+ * MEASURED against a throwaway skill directory, running this file's own spawn both ways:
+ * with the flags the run saw 0 plugin-namespaced entries, without them 97. In both cases the
+ * disclosed arm still read SKILL.md and the reference it points to, so isolation does not
+ * cost the metric -- which was the open question, since a flag that silenced `Read` would
+ * have traded one void number for another.
+ */
+const ISOLATION_FLAGS: readonly string[] = ["--setting-sources", "project", "--strict-mcp-config"];
+
 /** Minimal concurrency pool. Kept local so this file has no external dependency. */
 async function mapWithConcurrency<T, R>(
   items: readonly T[], limit: number, fn: (item: T, index: number) => Promise<R>,
@@ -145,6 +174,7 @@ async function claudeWithReads(
     const proc = Bun.spawn(
       ["claude", "-p", prompt, "--model", useModel, "--max-turns", maxTurns,
        "--output-format", "stream-json", "--verbose",
+       ...ISOLATION_FLAGS,
        "--allowedTools", "Read,Glob,Grep,Bash(bun:*),Write"],
       { cwd, env, stdin: "ignore", stdout: "pipe", stderr: "ignore", signal: controller.signal },
     );
@@ -180,7 +210,7 @@ async function claude(prompt: string, useModel: string): Promise<string> {
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const proc = Bun.spawn(
-      ["claude", "-p", prompt, "--model", useModel, "--max-turns", "1"],
+      ["claude", "-p", prompt, "--model", useModel, "--max-turns", "1", ...ISOLATION_FLAGS],
       { cwd: "/tmp", env, stdin: "ignore", stdout: "pipe", stderr: "ignore", signal: controller.signal },
     );
     return await new Response(proc.stdout).text();
