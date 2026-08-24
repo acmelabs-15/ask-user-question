@@ -39,7 +39,7 @@ The recommendation is therefore a hybrid that also narrows the compatibility fie
 
 ## Approach
 
-The claim-by-claim verdicts were derived from the shipped binary at `/Users/peter.kloss/.local/share/claude/versions/2.1.241`, read by byte offset, using the same method as ANALYSIS-004; that note carries the per-claim source evidence and this one carries the portability question only. Dialog ownership was established from the permission-flow dispatcher at offset 296873230 and the tool's own `requiresUserInteraction` declaration.
+The claim-by-claim verdicts were derived from the shipped binary at ``<claude versions dir>/2.1.241``, read by byte offset, using the same method as ANALYSIS-004; that note carries the per-claim source evidence and this one carries the portability question only. Dialog ownership was established from the permission-flow dispatcher at offset 296873230 and the tool's own `requiresUserInteraction` declaration.
 
 Surface capability came from plugin-kit's distribution-targets reference, read in full. The skill's frontmatter was measured directly.
 

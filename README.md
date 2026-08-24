@@ -3,17 +3,16 @@
 A Claude Code plugin that ships one skill, `ask-user-question`, for composing
 `AskUserQuestion` calls.
 
-`skills/ask-user-question/` carries a `SKILL.md` and three files under `references/`. The
-measurement infrastructure in `evals/` was ported ahead of the skill, so the skill can be
-measured from its first draft rather than graded after the fact. `make checks` passes.
+`skills/ask-user-question/` carries a `SKILL.md`, an `examples.md`, and five files under
+`references/`. The measurement infrastructure in `evals/` was ported ahead of the skill, so
+the skill can be measured from its first draft rather than graded after the fact.
 
-One thing still bites if you skip it:
-
-- The composition linter has **zero active rules**. The prior fork's 32 rules are
-  quarantined in `evals/composition/checks.quarantined.ts` because they encode the old
-  skill's doctrine, and a score from the empty rule set is `1.00` for every input including
-  a broken one. Read `evals/composition/LINT-RULES-PENDING.md` before treating any
-  composition score as a measurement. `make checks` says so on every run.
+The composition linter's rules live in `evals/composition/checks.ts`, re-derived from this
+skill rather than inherited. `make checks` reports how many are active and verifies that
+each one fires on a broken call and stays quiet on a correct one; take the count from that
+run rather than from any prose, including this file. The prior fork's 32 rules stay
+quarantined in `checks.quarantined.ts`, unimported, because they encode the retired skill's
+doctrine — `evals/composition/LINT-RULES-PENDING.md` has that history.
 
 ## Running the evals
 
@@ -57,13 +56,18 @@ two are not comparable.
 
 ```
 .claude-plugin/plugin.json   manifest
-skills/ask-user-question/    SKILL.md plus references/
+skills/ask-user-question/
+  SKILL.md                   the skill body
+  examples.md                four finished calls, one of them a failure
+  references/                wording, layout, failed-question, reading-answers, asking-again
+docs/                        Brain knowledge-graph notes for this build
 evals/
   frontmatter.test.ts        SKILL.md frontmatter against the spec
   assert-skill-absent.ts     refuses a run while a copy is installed
   trigger-eval-set.json      the seeded queries; authored input, do not regenerate
   composition/               three-arm harness, linter, judge rubric
-  history/                   frozen results from the prior fork; not inputs
+  history/                   frozen records; not inputs, and not regenerated
+  results/                   generated output, gitignored
   lib/progress.ts            progress bar for the long runs
   rename-skill.sh            rename the skill and plugin together
   TRUSTWORTHINESS.md         what voids a measurement, and how to tell

@@ -1,4 +1,8 @@
-# Inherited lint rules, quarantined pending re-derivation
+# Inherited lint rules, and why they stayed quarantined
+
+**Status: the re-derivation happened.** `checks.ts` now carries its own rules, derived from
+this skill rather than inherited, and `make checks` verifies each fires on a broken call and
+stays quiet on a correct one. What follows is why the inherited 32 were never wired up.
 
 The composition eval's deterministic linter shipped 32 rules in the fork this repo was
 ported from. Every one of them encoded a claim the old `SKILL.md` made, calibrated against
@@ -12,8 +16,8 @@ they produced would look like a measurement. So they are inert:
 |:--|:--|
 | `checks.quarantined.ts` | The 32 rules, byte-identical to the fork. Nothing imports it. |
 | `checks.quarantined.test.ts` | Their corpus calibration, byte-identical. Nothing imports it. |
-| `checks.ts` | The active rule set. Zero rules. Same exported API, so the runner runs. |
-| `checks.test.ts` | Reports the zero. Asserts nothing while `ACTIVE_RULE_COUNT === 0`. |
+| `checks.ts` | The active rule set, re-derived from this skill. Same exported API. |
+| `checks.test.ts` | Calibrates the active rules against a broken call and a correct one. |
 
 Byte-identical matters for one practical reason: the `file:line` references below resolve
 against `checks.quarantined.ts` exactly as they did against the original `checks.ts`.

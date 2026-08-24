@@ -35,7 +35,7 @@ Four claims in the current skill are wrong at this build, and three of them woul
 
 ## Approach
 
-Primary source was the shipped binary at `/Users/peter.kloss/.local/share/claude/versions/2.1.241`, a Bun standalone executable whose bundled JavaScript is stored as readable text. Locations were found by byte offset with `grep -a -b -o` and read back with random-access seeks; every claim below traces to a byte offset in that file. The identifiers are minified and are renamed every release, so they are given here as landmarks for a re-read of this build, not as stable names.
+Primary source was the shipped binary at ``<claude versions dir>/2.1.241``, a Bun standalone executable whose bundled JavaScript is stored as readable text. Locations were found by byte offset with `grep -a -b -o` and read back with random-access seeks; every claim below traces to a byte offset in that file. The identifiers are minified and are renamed every release, so they are given here as landmarks for a re-read of this build, not as stable names.
 
 Width classes were measured on this machine by calling `Bun.stringWidth` directly with both ambiguity settings, which is the same function the renderer calls, so the numbers are the host's own arithmetic rather than an independent implementation of it.
 
