@@ -1457,6 +1457,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Standing rule from here: a state change landing in plugin-kit gets its event in plugin-kit's note in the same boundary as this ledger's, with this ledger holding the narrative and the companion holding the repository-local record — the same one-source-plus-pointers shape the two notes already used this morning
 - Capture dispatched to the sidecar: the dual-ledger rule as the cross-project extension of the sync-per-batch discipline
 
+## Event 159 — the vitest watch-item: tree swept clean, and the runner constraint made explicit
+
+- Timestamp: 2026-08-24 14:22 PDT, measured
+- Owner thought a delegated agent might be using vitest. Sweep result: clean everywhere — no vitest process, no vitest import or dependency in either repo, the isolation agent's in-flight test file already on bun:test with test() throughout, and the whole 1,719-test suite running under bun test. Also verified while checking: the isolation build is RUNNING, not stuck — its own probe session appeared in the peer list one second before the check, live evidence it is mid-audit on the cross-session channel
+- The real gap the watch-item exposed: no dispatch brief had ever STATED the runner — the standard held only because agents inferred it from surrounding code. Closed both ways: the running agent got the constraint explicitly (no reply needed unless it changes something), and every future brief states it, the same brief-carries-what-context-cannot principle as inline status enums
+- Standing caution renewed: if the isoprobed peer session messages this conversation, it is the audit's own probe demonstrating the open channel — recorded, never answered
+- Capture dispatched to the sidecar, with the auto-memory-naming fence stated in the brief this time
+
 ## Observations
 
 ### Build decisions
