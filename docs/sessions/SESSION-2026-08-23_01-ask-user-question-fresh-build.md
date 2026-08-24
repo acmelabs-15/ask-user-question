@@ -688,6 +688,17 @@ _Empty._
 - Consequence for every disclosure figure taken before this: pull rates were computed over a denominator roughly one and a half times too large, and were understated by about that factor. The verdicts do not change; the rates do
 - New question for plugin-kit, not for this skill: the disclosure harness fails to deliver the skill on about a third of its runs. That is a measurement-quality problem in the tool, now visible for the first time, and it belongs in the upstream report alongside the two defects
 
+## Event 66 — a third plugin-kit defect: the report was written but never advertised
+
+- Timestamp: 2026-08-24 02:45 PDT
+- Found by the owner opening a dashboard link and getting a status table where the results belonged. The report existed on disk the whole time
+- `serveReport` in generate-dashboard.ts:663 serves a run's real report when `detail.reportPath` is set and falls back to the progress page when it is not. measure-disclosure.ts published `resultsDir` alone, and writes `report.html` about thirty lines further down without ever saying where. optimize-disclosure.ts:395 and optimize-description.ts:456 both set the field, which is why only measured sweeps dead-ended
+- The fallback carries a comment calling this "the dead end the user actually hit", written about the description report and left open for this one. The same defect had already been diagnosed once in the same file
+- Fixed in commit e70b881 by resolving the path before the run starts and publishing it on the reporter's detail. Safe ahead of the file existing, because the dashboard checks for it and falls through while missing, so one run links to progress while measuring and to its report afterwards
+- Coverage recorded honestly rather than claimed complete. `liveReportPath` is pure and tested four ways; the dashboard half was already covered; the single line joining them is not unit-testable without exporting `main`, and was verified by hand — setting the field on five live status files made the dashboard serve real tables at URLs that had shown status a moment before. 1506 pass, 0 fail, typecheck clean
+- A related cost of the temp-root workaround, found in the same pass. `statusDir()` is `${tmpdir()}/skill-creator-progress` at progress.ts:219, so the second sweep registered into the workaround's temp root and never appeared on the dashboard at all. The run was fine and its results were written; it was simply invisible. Restored by copying the status file across. A fourth argument that the workaround was never a durable answer
+- A claim of mine retracted within the minute it was made. I reported a `180%` on the report page as a value no pull rate could hold. It is `backdrop-filter: saturate(180%)` in the page stylesheet. Grepping rendered HTML for percentages returns CSS, and quoting the result without opening it is the session's own recurring error committed once more, in miniature
+
 ## Observations
 
 ### Build decisions
