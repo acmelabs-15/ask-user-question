@@ -22,6 +22,7 @@
 #   make                     list targets
 #   make doctor              check the environment before spending 35 minutes
 #   make checks              free, seconds
+#   make typecheck           free, seconds — the only gate that does not execute the code
 #   make measure-trigger     per-query trigger rates, comparable across runs
 #   make measure-disclosure  what the skill costs as authored, nothing changed
 #   make trigger             optimize the description, ~35 min
@@ -94,6 +95,12 @@ EVAL_SET    ?= $(EVALS)/trigger-eval-set.json
 # this is a path a user will override on the command line, so `EVAL_SET=~/my-set.json`
 # otherwise arrives with a literal ~ and fails on a file they can see with ls.
 override EVAL_SET := $(call tilde,$(EVAL_SET))
+
+# What `typecheck` reads. The include and exclude lists live in that file rather than in this
+# one, so pointing this elsewhere changes which files are checked as well as how.
+# Tilde-expanded and `override`n for the same reason as the three paths above.
+TSCONFIG    ?= $(ROOT)/tsconfig.json
+override TSCONFIG := $(call tilde,$(TSCONFIG))
 
 # Every measurement target mints its own directory at recipe time and writes both results
 # and logs inside it. Three reasons, none of them tidiness:
@@ -177,7 +184,7 @@ FIND_OLD     = find $(CLAUDE_DIR)/skills $(CLAUDE_DIR)/plugins -maxdepth 3 \
 # comment on `absent-check` for why composition needs it too.
 ABSENT_GUARD := $(EVALS)/assert-skill-absent.ts
 
-.PHONY: help doctor require-kit absent-check checks measure-disclosure disclosure composition trigger measure-trigger all purge-old clean
+.PHONY: help doctor require-kit absent-check checks typecheck measure-disclosure disclosure composition trigger measure-trigger all purge-old clean
 
 help: ## show this
 	@printf '\n  $(B)ask-user-question$(X)  $(D)measurement targets$(X)\n\n'
@@ -189,6 +196,7 @@ help: ## show this
 	@printf '        DISC_WORKERS=$(D)$(if $(DISC_WORKERS),$(DISC_WORKERS),unset — the disclosure scripts decide)$(X)\n'
 	@printf '        COMP_WORKERS=$(D)$(COMP_WORKERS)$(X) $(D)(composition)$(X)\n'
 	@printf '        PLUGIN_KIT=$(D)$(PLUGIN_KIT)$(X)\n'
+	@printf '        TSCONFIG=$(D)$(TSCONFIG)$(X) $(D)(typecheck)$(X)\n'
 	@printf '        EVAL_SET=$(D)$(notdir $(EVAL_SET))$(X) $(D)(triggering targets;'
 	@printf ' trigger-eval-set-candidate.json is the 52-row alternative)$(X)\n\n'
 	@printf '  $(D)Nothing here installs the skill: every plugin-kit operation copies it into$(X)\n'
@@ -304,6 +312,53 @@ checks: ## frontmatter + linter, no model calls, seconds
 	  bun "$(EVALS)/frontmatter.test.ts"        | tee "$$run/frontmatter.txt" | tail -2; \
 	  bun "$(EVALS)/composition/checks.test.ts" | tee "$$run/checks.txt"      | tail -1; \
 	  printf '  $(D)%s$(X)\n\n' "$$run"
+
+# The static gate, and the only one here that does not run the code it checks. `checks` above
+# EXECUTES, which is a different guarantee: it proves the paths its fixtures happen to reach and
+# says nothing about the rest, and most of the linter's 27 rules have no fixture reaching them.
+# Before this target existed nothing statically read `evals/**/*.ts` at all, so a type error
+# surfaced only if an executed path happened to hit it.
+#
+# This follows plugin-kit's OWN arrangement -- a tsconfig.json plus `tsc --noEmit` -- rather than
+# borrowing a checker from it. plugin-kit type-checks its own source and exposes no typechecking
+# operation to other plugins, so there is nothing there to reuse and this is not a duplicate of
+# it. `bun run typecheck` runs the same thing for anyone who expects the npm-script spelling;
+# both paths take every check-altering setting from tsconfig.json, so they cannot drift.
+#
+# The include and exclude lists live in tsconfig.json rather than here, and one exclusion is
+# load-bearing: `evals/history/**` holds frozen records of runs that happened, and the one .ts
+# file in it produces 2 errors under this config (measured, not assumed). Excluding it is the
+# correct answer rather than fixing it -- a gate on today's work must not depend on a file nobody
+# is allowed to change. Do not "fix" those two errors and do not widen the include to reach them.
+#
+# No `doctor` prerequisite, matching `checks`: this makes no model calls and costs seconds, so the
+# environment checks that exist to protect a 35-minute run have nothing to protect here.
+#
+# UNLIKE `checks`, this propagates the real exit status. `checks` ends on a printf and so reports
+# success whatever its two scripts did; a gate that cannot fail is not a gate, and the whole point
+# of this one is to fail.
+TSC := $(ROOT)/node_modules/.bin/tsc
+
+typecheck: ## tsc --noEmit over evals/, no model calls, seconds
+	@printf '\n  $(B)typecheck$(X) $(D)no model calls$(X)\n'
+	@if ! test -x "$(TSC)"; then \
+	   printf '  $(R)no$(X)   no tsc at $(D)%s$(X)\n' '$(TSC)'; \
+	   printf '       $(D)typescript and @types/bun are devDependencies, and node_modules is$(X)\n'; \
+	   printf '       $(D)gitignored, so a fresh clone has neither:$(X)\n'; \
+	   printf '       $(C)cd $(ROOT) && bun install$(X)\n\n'; exit 1; fi
+	@if ! test -d "$(ROOT)/node_modules/@types/bun"; then \
+	   printf '  $(R)no$(X)   tsc is here but @types/bun is not.\n'; \
+	   printf '       $(D)refusing rather than reporting: without it every Bun.file, Bun.Glob$(X)\n'; \
+	   printf '       $(D)and Bun.spawn reference becomes an error and the real findings drown$(X)\n'; \
+	   printf '       $(D)in hundreds of fake ones. a useless check, not a weaker one.$(X)\n'; \
+	   printf '       $(C)cd $(ROOT) && bun install$(X)\n\n'; exit 1; fi
+	@run="$(call stamped,typecheck)"; mkdir -p "$$run"; \
+	  "$(TSC)" -p "$(TSCONFIG)" 2>&1 | tee "$$run/typecheck.txt"; \
+	  status=$${PIPESTATUS[0]}; \
+	  if [ "$$status" = 0 ]; then printf '  $(G)ok$(X)   no type errors\n'; \
+	  else printf '  $(R)no$(X)   %s type error(s)\n' "$$(grep -c 'error TS' "$$run/typecheck.txt")"; fi; \
+	  printf '  $(D)%s$(X)\n\n' "$$run"; \
+	  exit $$status
 
 # REPORT-ONLY, and deliberately so. This target deletes nothing; it prints what it found and
 # the command that would remove it.
@@ -474,12 +529,16 @@ trigger: doctor require-kit ## optimize the description against the eval set (~3
 	  tail -3 "$$run/trigger.log" 2>/dev/null || true; \
 	  printf '  $(D)%s$(X)\n' "$$run"
 
-all: checks measure-trigger measure-disclosure disclosure composition trigger ## everything, in the required order
+# `checks` stays FIRST rather than `typecheck`, which is cheaper and would otherwise lead. That
+# ordering is cited: TRUSTWORTHINESS.md's fault F9 rests on "`make all` runs `checks` first", and
+# citations into this file name a target rather than a line precisely so additions like this one
+# cannot stale them. Putting the new gate second keeps that sentence true.
+all: checks typecheck measure-trigger measure-disclosure disclosure composition trigger ## everything, in the required order
 	@printf '\n  $(B)done$(X)  $(OUT)\n'
 	@find "$(OUT)" -maxdepth 3 -type f \( -name '*.md' -o -name '*.json' -o -name '*.txt' \) \
 	  | sed 's|$(OUT)/|    |' | sort
-	@printf '\n  $(D)read in order: checks must pass; then trigger (precision first, then\n'
-	@printf '  which queries lost and to what); then composition; then disclosure.$(X)\n\n'
+	@printf '\n  $(D)read in order: checks and typecheck must pass; then trigger (precision first,\n'
+	@printf '  then which queries lost and to what); then composition; then disclosure.$(X)\n\n'
 
 clean: ## delete every results directory
 	@rm -rf "$(HOME)/auq-results" && printf '  $(G)ok$(X)   cleaned\n'

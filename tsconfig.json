@@ -1,0 +1,43 @@
+{
+  // Type checking only. `make typecheck` runs `tsc --noEmit`; nothing here builds or bundles,
+  // because every script under evals/ is executed directly by Bun.
+  //
+  // `make checks` EXECUTES code, which is a different guarantee: it proves the paths its
+  // fixtures happen to reach, and says nothing about the rest. That gap is what this file
+  // closes -- most of the linter's rules have no fixture exercising them.
+  "compilerOptions": {
+    // Bun-native, not Node. `types: ["bun"]` is what makes Bun.file, Bun.Glob, Bun.spawn and
+    // Bun.argv resolve; it also brings the node: builtins these scripts import, so no separate
+    // @types/node is needed. Dropping it does not produce a weaker check, it produces a
+    // useless one -- every Bun.* reference becomes an error and the real findings drown.
+    "types": ["bun"],
+    "target": "ESNext",
+    // No DOM, which is the one place this deliberately departs from plugin-kit's tsconfig.
+    // Nothing under evals/ touches a browser API, and adding DOM would let `document` or
+    // `localStorage` type-check clean in a script that runs under Bun and would crash there.
+    "lib": ["ESNext"],
+
+    // Preserve + bundler: Bun resolves and runs the TypeScript itself, so tsc must not rewrite
+    // module syntax. allowImportingTsExtensions is required rather than stylistic -- the
+    // imports in this repo carry explicit .ts suffixes, which tsc rejects without it.
+    "module": "Preserve",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+
+    "noEmit": true,
+    "skipLibCheck": true,
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  // evals/ only. skills/ holds markdown and history/ holds retired code kept for the record
+  // rather than for use -- type-checking a frozen artifact would gate today's work on a file
+  // nobody intends to change.
+  "include": ["evals/**/*.ts"],
+  "exclude": ["node_modules", "evals/history"]
+}
