@@ -610,6 +610,26 @@ _Empty._
 - Landed as `048339e` and `80ea10d`: the layout standard's internal contradictions resolved, its three undefined nouns defined, a check that cited two different measures reconciled, per-rule examples added where a shape shows what a sentence cannot, a recognition table replacing prose that described strings, and both specimens rebuilt
 - Verified against the artifact rather than the report: the eleven-finding repair renders at 22 lines, widest 58 display cells, nothing over 60, four groups at the cap, with the status glyph taking the marker slot in the group where every item carries one
 
+## Event 59 — the zero was the instrument, and finding that took five dead hypotheses
+
+- Timestamp: 2026-08-24 03:30
+- The disclosure result reported in Event 57 — six references, zero pulls across 54 runs — is void. The references were being read the whole time
+- Evidence that forced the reopening: transcripts reproduced text present only in a reference and absent from the body, across all six files and 28 of 54 runs, including a phrase added by a commit minutes before the sweep began, which rules out memorisation
+- Five explanations were killed in turn: prune the references, the instrument is broken in general, our pointers are unresolvable, reads are being denied, and the pointer-form difference. Two of the five were mine. The instrument records pulls up to 1.00 on the tool's own skills, and those skills use the same bare relative pointer form as ours
+- **Root cause, found by reading the collector rather than reasoning about it:** on macOS the temp directory is reached through a symlink, so the skill directory the collector holds and the paths the model actually uses differ by that symlink. The comparison normalises but does not canonicalise, so a genuine in-skill read is classified as outside and never counted
+- Reproduced independently: the relative path between the two forms comes back with a parent-directory prefix, which the check reads as outside the skill. Four of six diagnostic probes opened at least one reference by correct absolute path; none was counted
+- Second defect found alongside it: the flag recording whether the skill loaded is set when the request is seen and never checks the result. One probe called the skill twice, both returned errors, the model improvised the entire answer with nothing from the body or the references in its reply, and that run would still have been recorded as having loaded the skill
+- **The two compound, and that is the finding worth carrying:** a run that measured nothing looks like a clean sweep of deletion verdicts, and the pass-rate guardrail cannot catch it because the content is still reaching the model by a route the instrument cannot see
+
+## Event 60 — measured again without touching the tool
+
+- Timestamp: 2026-08-24 03:40
+- Fix chosen: point the run's temp root at a path not reached through a symlink, rather than edit a tool that belongs to another project and is under active development. Verified with the collector's own comparison before launching and against a live worker root during the run — literal path and canonical path identical in both checks
+- Re-launched against the corrected artifact, three commits later than the void sweep, with the write-permission flag the first run omitted. That omission had depressed the earlier pass rate by about one point, measured rather than assumed
+- The tool's own repository confirmed untouched: no edit, no patch, no local divergence
+- An upstream report is drafted covering both defects with file, line, reproduction, blast radius and a workaround available today, so a reader has something to do rather than waiting for a fix
+- What stands from the void sweep: body tokens, context cost per run, and the pass rate, none of which depend on the path comparison. What does not: every per-file verdict
+
 ## Observations
 
 ### Build decisions
