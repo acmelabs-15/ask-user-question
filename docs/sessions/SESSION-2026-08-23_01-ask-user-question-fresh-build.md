@@ -994,6 +994,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The three structural-genre reporters landed in plugin-kit at `924a74f`: ordered-step contiguity, the anti-rationalization table, and the manifest-form split, as an informational section that structurally cannot touch the verdict — suite 1612 passing, pushed. The engineer's back-run of the finished detector over the note's own corpus confirmed two ANALYSIS-005 counts digit for digit and refuted a third: the Genre 1 repository line says 5 of 5 numbered-step spines where the strict signature finds 3 of 5. Dated correction routed to the note's author; two method learnings routed to the reflect sidecar
 - Still in flight: the genre authoring reference with three checklist fixes folded in, the ANALYSIS-005 correction, and the sidecar captures
 
+## Event 103 — the closing reports: three counts corrected, one channel inference diagnosed
+
+- Timestamp: 2026-08-24 08:41 PDT, measured
+- The structural-genres note corrected itself a second time, landed at plugin-kit `93d4110`: the detector-reported Genre 1 count fixed to 3 of 5, plus two neighbours the class sweep found — the manifest count was also 3 of 5, with two creator skills using exclusively the refuted in-step pointer form (a substantive asymmetry now honestly recorded), and the gotchas-first placement was three, not four. The generalizable diagnoses are captured: a count and its examples must come from the same command, and a reported error is a sample rather than the population — sweep the class before closing
+- The genre writer's own miss produced the sharpest process finding of the closing round: its final report was withheld not by forgetting but by an explicit wrong inference that the automatic return channel suffices — which is why the sidecar rule carries the flat form rather than a reminder form. Its two unrequested edits to the genre reference, both chasing the struck-rule inconsistency into lines that would have licensed enforcing it, were verified as landed improvements
+- The final reflect batch is with the capture agent: the channel-inference edge case and the two counting preferences. With it, the day's capture work closes at ten findings
+
 ## Observations
 
 ### Build decisions
