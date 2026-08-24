@@ -1278,6 +1278,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - [reflect-capture] MED, edge case: git commit with a pathspec re-adds a working file over a staged index-only deletion (git rm --cached), so untracking commits must be pathspec-free with the staged state verified first — the pathspec habit is for content edits, not for tracking changes. Capture to the sidecar rides the next batch rather than a dedicated dispatch
 - History note, stated not acted: HANDOFF.md remains in the pushed history prior to 81085ee (it carries no secrets, swept). Scrubbing history would need a force push to main, which the house rules forbid — that only changes on an explicit owner ruling
 
+## Event 137 — owner catches an overclaim, and the re-invocation dedupe is discovered
+
+- Timestamp: 2026-08-24 11:38 PDT, measured
+- Owner challenged "this conversation is using 0.1.4 right now" and the challenge was correct: a loaded skill is a snapshot at invocation time, and this session's snapshot predates the 0.1.3 body edits and the 0.1.4 fixes. What was true: a fresh invocation serves 0.1.4; what was overclaimed: that this equalled the running conversation using it
+- The remedy attempt surfaced a tool behaviour worth keeping: re-invoking an already-loaded skill is DEDUPED in-session — the harness answers "already loaded above; instructions unchanged" and injects nothing, so the stale snapshot cannot be refreshed by re-invocation. In-context currency comes only from reading the changed files directly or from a session restart. This sharpens the compaction-retention picture: the most-recent-invocation rule and the in-session dedupe together mean a session can hold a stale skill for its whole life while the tree moves
+- This conversation's working knowledge is nonetheless current by a different route: every delta between the snapshot and 0.1.4 was authored or reviewed in this session, so the diffs are in context even though the reload was refused
+- [reflect-capture] MED, edge case, queued for the next batch with the pathspec trap: version claims about a running session must distinguish the invocation-time snapshot from what a fresh read serves; and re-invocation cannot refresh a loaded skill — the dedupe answers instructions-unchanged without comparing bytes
+
 ## Observations
 
 ### Build decisions
