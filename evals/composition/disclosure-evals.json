@@ -37,6 +37,9 @@
         "Nesting stops at two levels.",
         "No drawn box with hand-computed padding appears anywhere in the call.",
         "The question ends with the decision sentence rather than opening with it."
+      ],
+      "expects_references": [
+        "references/layout.md"
       ]
     },
     {
@@ -49,6 +52,9 @@
         "The six steps are laid out as items, and a group header appears only where there is more than one group.",
         "Which steps need a maintenance window is visible in the structure rather than stated only in the option descriptions.",
         "The decision itself is one sentence ending in a question mark."
+      ],
+      "expects_references": [
+        "references/layout.md"
       ]
     },
     {
@@ -61,6 +67,9 @@
         "No meaning-carrying word is deleted to hit the length — articles survive and a clause is cut instead.",
         "The rewrite still names what this option costs the reader, not only what it does.",
         "The rewrite contains no line break, since a newline in a description renders as a replacement character."
+      ],
+      "expects_references": [
+        "references/wording.md"
       ]
     },
     {
@@ -73,6 +82,9 @@
         "It identifies at least one thing Priya's version did better, rather than defending the rewrite on every axis.",
         "It notes that the rewrite's own opening clause is still passive, or shows a further rewrite that fixes it.",
         "It does not propose re-sending either version with an explanation wrapped around it."
+      ],
+      "expects_references": [
+        "references/wording.md"
       ]
     },
     {
@@ -121,6 +133,9 @@
         "The reply says explicitly that adding context here would make it worse, rather than treating more context as the general fix.",
         "It states what 'yes to the first part' is being taken to settle, and does not assume it resolves both decisions.",
         "The two resulting questions each state one decision ending in a question mark."
+      ],
+      "expects_references": [
+        "references/failed-question.md"
       ]
     },
     {
@@ -156,6 +171,9 @@
         "It recovers the intended option from the note where the note settles it, or asks once with the note quoted back where it does not.",
         "It does not map the note onto the nearest label by similarity.",
         "It says the note's content constrains anything that follows, so 'only for staging' is not authorisation for production."
+      ],
+      "expects_references": [
+        "references/reading-answers.md"
       ]
     },
     {
@@ -168,7 +186,8 @@
         "It either acts on what is unambiguous or asks a corrected question whose options now cover what she named.",
         "Any follow-up carries her stated constraint about surviving a rolling restart rather than dropping it.",
         "The reply reads her whole paragraph as the answer rather than treating the length as unusual."
-      ]
+      ],
+      "expects_references": []
     },
     {
       "id": "multiselect-empty-and-parsing",
@@ -180,6 +199,9 @@
         "The reply says matching must use each option's whole label, including any ` (Recommended)` suffix, rather than a trimmed form.",
         "A result naming every option is treated as a real answer rather than a mis-click.",
         "The reply does not assume the result arrives as an array."
+      ],
+      "expects_references": [
+        "references/reading-answers.md"
       ]
     },
     {
@@ -204,6 +226,9 @@
         "It still tells the reader whether the run is bounded, in a form honest about the total being unknown, rather than staying silent about the shape.",
         "It restates what is being decided and what makes it matter, rather than relying on Tomas remembering the earlier two calls.",
         "It says a wrong count is worse than no count, or otherwise explains why an invented number is not the fix."
+      ],
+      "expects_references": [
+        "references/asking-again.md"
       ]
     },
     {
@@ -216,7 +241,8 @@
         "It quotes the chosen option's own words rather than paraphrasing them into a broader scope.",
         "It names specifically what widened — the media reindex and the 40 minutes — and why the earlier answer does not reach it.",
         "The new question restates the anchor rather than assuming last week's context is still in mind."
-      ]
+      ],
+      "expects_references": []
     },
     {
       "id": "reask-after-the-options-moved",
@@ -228,6 +254,9 @@
         "It addresses how many times the option set has now changed for this decision and what a second change would mean.",
         "The question text restates what is being decided rather than assuming Monday's context is still in mind.",
         "It does not simply re-send the original three options."
+      ],
+      "expects_references": [
+        "references/asking-again.md"
       ]
     },
     {
@@ -240,7 +269,8 @@
         "It concludes the cohort question is a new fork created by their answer and is legitimate to raise.",
         "It says the follow-up should name the earlier answer rather than alluding to it.",
         "It does not propose re-confirming the flag decision."
-      ]
+      ],
+      "expects_references": []
     },
     {
       "id": "just-show-me-a-finished-call",
@@ -252,7 +282,8 @@
         "Every option description states an outcome and then a cost.",
         "The recommended option's description cites a fact from the situation rather than a virtue such as 'cleaner' or 'more maintainable'.",
         "No option is named Other, None or Skip, and every label names an outcome rather than an act of answering."
-      ]
+      ],
+      "expects_references": []
     },
     {
       "id": "measure-a-draft-against-a-good-one",
@@ -264,6 +295,9 @@
         "It flags that neither description states a cost — only what happens — so the reader cannot tell afterwards that they chose wrongly.",
         "It says whether the two descriptions compare on the same axes in the same order.",
         "It produces a repaired version of the call rather than only a critique."
+      ],
+      "expects_references": [
+        "examples.md"
       ]
     },
     {
@@ -276,7 +310,8 @@
         "It gives the resulting call, or its shape, rather than only naming a field.",
         "It says what would change the answer — content needing a diff, a table or styled text.",
         "It does not present the two fields as an even choice."
-      ]
+      ],
+      "expects_references": []
     },
     {
       "id": "retry-budget-two-options",
@@ -308,7 +343,8 @@
         "No dialog is opened, because a multiple-choice answer cannot carry a value only the reader has.",
         "The value is requested in prose, with where to obtain it.",
         "No candidate DSN values are invented to fill option slots."
-      ]
+      ],
+      "expects_references": []
     },
     {
       "id": "no-tool-in-this-context",
