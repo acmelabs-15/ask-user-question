@@ -1286,6 +1286,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - This conversation's working knowledge is nonetheless current by a different route: every delta between the snapshot and 0.1.4 was authored or reviewed in this session, so the diffs are in context even though the reload was refused
 - [reflect-capture] MED, edge case, queued for the next batch with the pathspec trap: version claims about a running session must distinguish the invocation-time snapshot from what a fresh read serves; and re-invocation cannot refresh a loaded skill — the dedupe answers instructions-unchanged without comparing bytes
 
+## Event 138 — the live invocation catches the third home: skill-creator's own body
+
+- Timestamp: 2026-08-24 11:43 PDT, measured
+- Owner invoked Skill(plugin-kit:skill-creator) directly — after correcting my unqualified notation, which in this environment is genuinely ambiguous (a standalone skill-creator plugin also ships a skill-creator skill; the qualified name is the address, same lesson as the marketplace update command)
+- Reading the freshly served body against current doctrine caught three stale lines the day's sweeps had not reached, because they live in body PROSE rather than in agents or references: line 85 routes reviews to the standalone plugin's un-modernized reviewer by name (skill-creator:skill-reviewer, not the re-grounded plugin-kit:skill-reviewer); line 212 teaches raw pull rate as the disclosure evidence, superseded by recall in the three-layer rewrite that landed hours after this body's last commit; line 218 teaches the struck pointer-without-a-condition rule as fact
+- Class sweep localizes the drift: the other four creator bodies are clean on all markers. Fix dispatched to the modernization agent under the standing fence plus one hard constraint — this body sits deliberately at 4,999 of 5,000 tokens and MUST NOT grow, so every edit is token-neutral or negative, verified by the validator before and after
+- The day's doctrine-propagation map now spans four layers: reviewer agents, the frontmatter reference, the shared portability reference, and a skill body — each found by a different route (owner suspicion, owner suspicion, agent flag, live invocation), which is itself the strongest argument yet for the strike-sweep-the-class rule the sidecar carries
+
 ## Observations
 
 ### Build decisions
