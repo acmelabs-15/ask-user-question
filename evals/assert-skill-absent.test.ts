@@ -176,7 +176,7 @@ if (live === undefined) {
     );
     check(
       sighted.sightings.some((s) => s.includes("ask-user-question@ACMElabs")),
-      "the sighting names the plugin, so the remedy is disable rather than delete",
+      "the sighting names the plugin, so a config-route copy is distinguishable from a file one",
     );
   }
   // The inverse, and the more important half: a guard that refuses every run is useless.

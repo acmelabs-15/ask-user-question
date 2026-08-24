@@ -217,22 +217,41 @@ doctor: ## check the environment before spending 35 minutes
 # `doctor` wants: `checks` and the two triggering targets are genuinely unaffected by an
 # installed copy and must not be blocked by one.
 #
-# `composition` USED TO BE ON THAT LIST, on the grounds that it injects skill content rather
-# than routing to it. That is true of the `skill` arm and false of the `disclosed` arm, which
-# is the one `make composition` also runs. That arm measures disclosure the same way the
-# disclosure targets do -- by counting `Read` tool calls against reference paths
-# (`composition-runner.ts:159-162`) -- and it spawns `claude` with no `--setting-sources` and
-# no `--strict-mcp-config`, so the machine's installed skills are in scope. Content that
-# arrives through the skill system produces no `Read`, so a visible copy floors `refsRead`,
-# reference recall, precision and `refCounts` together, and the arm reports that disclosure
-# does not work when what failed was the measurement. Same void signature as disclosure,
-# reached by the same mechanism; the injection argument never covered this arm.
+# ALL THREE of those targets now pass GUARD_FATAL=0, and the guard reports without refusing.
+# That is a REVERSAL of the hard gate this comment used to justify, so the reason is recorded
+# rather than assumed.
 #
-# The `baseline` arm has a separate and narrower exposure that this gate also closes: it is
-# the no-guidance control, and a copy the loader can see puts this skill in front of the very
-# runs that define zero.
+# The gate was correct for the arrangement that existed when it was written. Every one of the
+# three spawns has since been isolated, and the void signature the gate prevents cannot occur
+# on a spawn that does not read the operator's configuration:
+#
+#  - `composition` -- `composition-runner.ts` defines ISOLATION_FLAGS and applies it to BOTH
+#    of its spawns. Measured there, against a throwaway skill directory, running that file's
+#    own spawn both ways: with the flags 0 plugin-namespaced entries, without them 97. In both
+#    cases the `disclosed` arm still read SKILL.md and the reference it points to, so the
+#    isolation does not cost the metric -- which was the open question, since a flag that
+#    silenced `Read` would have traded one void number for another.
+#  - `measure-disclosure` and `disclosure` -- both plugin-kit entry points reach one spawn,
+#    `runScenario` in `shared/operations/disclosure-measure.ts`, which passes the same
+#    `--setting-sources project --strict-mcp-config` pair and runs with `cwd` on a throwaway
+#    root that carries its own copy of the skill.
+#
+# So a copy visible to the OPERATOR's loader is not visible to the subprocess doing the
+# measuring. The sighting is still worth reporting -- it is a real fact about the machine, and
+# the guard still prints it -- but it no longer voids these runs.
+#
+# WHAT WOULD BRING THE HARD GATE BACK: a measurement path that spawns `claude` WITHOUT both
+# of those flags, or one that runs in the operator's own tree rather than a throwaway root.
+# Check the spawn before assuming this comment still covers a new target. Verify it per entry
+# point rather than inferring from a sibling -- these two entry points share `runScenario`,
+# which is why one check settled both, and that is a property to confirm rather than expect.
+#
+# The fatal path stays reachable and unchanged: GUARD_FATAL defaults to 1, so `make
+# absent-check` on its own still refuses, and the three exit codes still mean what they did.
 #
 # Exit codes from the script: 0 absent, 1 installed, 2 absence could not be confirmed.
+# Exit 2 remains a non-pass: "nothing found" and "nothing found where I could look" are the
+# same output and opposite claims, and isolation says nothing about that distinction.
 GUARD_FATAL ?= 1
 absent-check:
 	@bun "$(ABSENT_GUARD)" "$(SKILL)"; status=$$?; \
@@ -241,8 +260,11 @@ absent-check:
 	    printf '\n  $(R)no$(X)   refusing to start a measurement that would be void under this condition.\n\n'; \
 	    exit $$status; \
 	  fi; \
-	  printf '\n       $(D)advisory here. the disclosure targets and $(X)$(C)composition$(X)$(D) refuse$(X)\n'; \
-	  printf '       $(D)on this; the triggering targets are unaffected by it.$(X)\n\n'; \
+	  printf '\n       $(D)advisory here, and the run proceeds. every measurement spawn$(X)\n'; \
+	  printf '       $(D)isolates with $(X)$(C)--setting-sources project --strict-mcp-config$(X)$(D),$(X)\n'; \
+	  printf '       $(D)so a copy your loader can see is not visible to the subprocess$(X)\n'; \
+	  printf '       $(D)doing the measuring. reported because it is true of this machine,$(X)\n'; \
+	  printf '       $(D)not because it voids the numbers.$(X)\n\n'; \
 	  exit 0
 
 # Hard gate for every target that runs a plugin-kit operation, and -- with KIT_FATAL=0 --
@@ -332,6 +354,8 @@ purge-old: ## report copies installed under this skill's previous names
 # --skill-path, not --target-path: only the two SHARED_EVAL_FLAGS scripts accept the alias.
 # Both disclosure scripts declare their own flag spec with --skill-path alone, so the
 # asymmetry with `trigger` below is required, not an oversight. Do not "fix" it.
+# Advisory, not fatal: this spawn isolates. See the comment on `absent-check`.
+measure-disclosure: GUARD_FATAL := 0
 measure-disclosure: doctor require-kit absent-check ## what the skill costs as authored, nothing restructured
 	@printf '\n  $(B)measure-disclosure$(X) $(D)measure only · run this first$(X)\n'
 	@run="$(call stamped,measure-disclosure)"; mkdir -p "$$run"; \
@@ -363,6 +387,8 @@ measure-disclosure: doctor require-kit absent-check ## what the skill costs as a
 # invisible one.
 #
 # --skill-path, not --target-path: see the note on `measure-disclosure`.
+# Advisory, not fatal: this spawn isolates. See the comment on `absent-check`.
+disclosure: GUARD_FATAL := 0
 disclosure: doctor require-kit absent-check ## measure, then propose a cheaper layout and re-measure
 	@printf '\n  $(B)disclosure$(X) $(D)measure + propose · several sweeps$(X)\n'
 	@run="$(call stamped,disclosure)"; mkdir -p "$$run"; \
@@ -382,6 +408,8 @@ disclosure: doctor require-kit absent-check ## measure, then propose a cheaper l
 # `absent-check` is a hard prerequisite for the `disclosed` arm's sake, not the `skill` arm's.
 # See the comment on `absent-check` for which arm breaks and how. No `require-kit`: this target
 # runs its own runner and calls no plugin-kit operation.
+# Advisory, not fatal: both of this runner's spawns isolate. See the comment on `absent-check`.
+composition: GUARD_FATAL := 0
 composition: doctor absent-check ## three arms, judge on (~45 min)
 	@printf '\n  $(B)composition$(X) $(D)3 arms · judge on · ~45 min$(X)\n'
 	@run="$(call stamped,composition)"; mkdir -p "$$run"; \

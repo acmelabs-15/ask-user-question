@@ -55,8 +55,36 @@
  * test. That is the worst version of the fault rather than an exempt one -- the model gets
  * the full body free, and every pull rate floors at zero.
  *
- * Which means `absent` no longer means "no duplicate". It means "not reachable", and this
- * project's own plugin must be disabled before disclosure or composition is measured.
+ * Which means `absent` no longer means "no duplicate". It means "not reachable".
+ *
+ * WHAT REACHABILITY IS WORTH, which is narrower than an earlier version of this comment
+ * claimed. That version concluded "this project's own plugin must be disabled before
+ * disclosure or composition is measured". It was written for an arrangement that no longer
+ * holds, and the measurement refutes it, so it is corrected here rather than left to be
+ * discovered: reachability from the OPERATOR's loader is only void-making on a measurement
+ * path that does not isolate, and every path this repo gates no longer qualifies.
+ *
+ * `composition-runner.ts`, in the comment on its `ISOLATION_FLAGS` declaration, records that
+ * file's own spawn run both ways against a throwaway skill directory: with the flags 0
+ * plugin-namespaced entries, without them 97. Critically, in both cases the `disclosed` arm
+ * still read SKILL.md and the reference it points to, so isolating does not cost the metric --
+ * a flag that silenced `Read` would only have traded one void number for another. The two
+ * disclosure entry points reach one spawn, `runScenario` in plugin-kit's
+ * `shared/operations/disclosure-measure.ts`, which passes the same pair and runs with `cwd` on
+ * a throwaway root.
+ *
+ * So this guard REPORTS reachability; it does not by itself establish that a run is void. The
+ * Makefile passes `GUARD_FATAL=0` on the three isolated targets for that reason, and the
+ * fatal path remains for a caller that wants it. Disabling a plugin is NOT the remedy for
+ * those targets, and nothing here asks an operator to mutate their configuration.
+ *
+ * WHEN IT WOULD BE: a measurement path that spawns without both flags, or one that runs in the
+ * operator's own tree instead of a throwaway root. Confirm that per entry point rather than
+ * inferring it from a sibling script.
+ *
+ * The fault history above this paragraph is untouched and still explains why the config route
+ * exists at all. The stub-cache discovery and the figure it produced are real; what changed is
+ * only what a sighting licenses you to conclude.
  */
 
 import { resolve } from "node:path";
@@ -388,18 +416,25 @@ async function main(): Promise<void> {
     );
     for (const path of result.sightings) console.error(`       ${path}`);
     console.error(
-      "\n  A disclosure run measures which bundled files get READ, and so does composition's\n" +
-        "  `disclosed` arm. Content served through the skill system produces no Read, so such\n" +
-        "  a run scores every file at a pull rate of zero and reports `prune` on all of them.\n" +
-        "  Remove or rename the copies above before measuring disclosure or running\n" +
-        "  `make composition`. `make purge-old` reports copies under this skill's previous\n" +
-        "  names.\n\n" +
-        "  A copy annotated `(enabled plugin ...)` is reachable by CONFIG, so deleting files\n" +
-        "  will not clear it -- disable the plugin instead:\n" +
-        "       claude plugin disable <name>@<marketplace>\n" +
-        "  That includes a plugin whose source resolves to this very directory, which is not\n" +
-        "  an exemption: the loader serves the artifact under test, so the run measures a\n" +
-        "  skill the model was handed for free.",
+      "\n  This is REPORTED, and for the repo's own measurement targets it is not a defect.\n" +
+        "  `make measure-disclosure`, `make disclosure` and `make composition` all spawn with\n" +
+        "  `--setting-sources project --strict-mcp-config` on a throwaway root, so a copy your\n" +
+        "  loader can see is not visible to the subprocess doing the measuring. Those targets\n" +
+        "  pass GUARD_FATAL=0 and proceed. You do NOT need to disable anything for them, and\n" +
+        "  nothing here asks you to change your configuration.\n\n" +
+        "  Measured, so this is not an assumption: running the composition harness's own spawn\n" +
+        "  both ways saw 0 plugin-namespaced entries with those flags and 97 without, and the\n" +
+        "  `disclosed` arm still read SKILL.md and its reference either way -- so the isolation\n" +
+        "  does not cost the metric it protects.\n\n" +
+        "  WHEN THIS DOES VOID A RUN: any measurement that spawns `claude` WITHOUT both of\n" +
+        "  those flags, or that runs in this tree rather than a throwaway root. Content served\n" +
+        "  through the skill system produces no Read, so such a run scores every bundled file\n" +
+        "  at a pull rate of zero and reports `prune` on all of them -- a clean-looking table\n" +
+        "  resting on nothing. Check the spawn before trusting the numbers.\n\n" +
+        "  If you are on such a path: `make purge-old` reports copies under previous names,\n" +
+        "  and a copy annotated `(enabled plugin ...)` is reachable by CONFIG, so deleting\n" +
+        "  files will not clear it. That includes a plugin whose source resolves to this very\n" +
+        "  directory, where the loader would serve the artifact under test itself.",
     );
     process.exit(EXIT.installed);
   }
