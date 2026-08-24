@@ -699,6 +699,17 @@ _Empty._
 - A related cost of the temp-root workaround, found in the same pass. `statusDir()` is `${tmpdir()}/skill-creator-progress` at progress.ts:219, so the second sweep registered into the workaround's temp root and never appeared on the dashboard at all. The run was fine and its results were written; it was simply invisible. Restored by copying the status file across. A fourth argument that the workaround was never a durable answer
 - A claim of mine retracted within the minute it was made. I reported a `180%` on the report page as a value no pull rate could hold. It is `backdrop-filter: saturate(180%)` in the page stylesheet. Grepping rendered HTML for percentages returns CSS, and quoting the result without opening it is the session's own recurring error committed once more, in miniature
 
+## Event 67 — the three fixes landed in plugin-kit proper
+
+- Timestamp: 2026-08-24 03:00 PDT
+- All three commits moved onto `restructure-shared-layer`, the branch the repository actually has checked out and the line this work was based on. Fast-forward, so history stays linear and no merge commit was made: 4710db8 symlink canonicalisation, 02248f3 load believed only on its result, e70b881 the report path advertised to the dashboard
+- No divergence to resolve. The branch had not moved from the merge base since the worktree was cut, and the tree was clean, which is the only reason a fast-forward was honest rather than convenient
+- Verified in the real checkout rather than inherited from the worktree, which carried its own dependencies: 1506 pass, 0 fail across 43 files, typecheck clean. Each of the five code markers confirmed present by reading the checked-out files
+- The temporary worktree at /tmp/pk-fix is removed and the now-merged branch deleted. Nothing of this work sits on a temp path any more, which was the standing risk since it was written
+- Nothing pushed. Three commits sit ahead of the upstream on that branch
+- These are on `restructure-shared-layer` and NOT on `main`, which is a separate line at b0d1c9b. Whoever merges that line will need these carried across
+- Consequence worth stating: the temp-root workaround is now unnecessary. A measurement run from this checkout classifies in-skill reads correctly at the default temp root, reports a load only when one succeeded, and links from the dashboard to its own results
+
 ## Observations
 
 ### Build decisions
