@@ -747,6 +747,22 @@ _Empty._
 - HANDOFF.md rewritten. It had become the largest concentration of stale claims in the repo: the disclosure measurement described as void, the instrument bug as unfixed with a workaround to apply, the empty install cache as "the one that bites", and a queue with three completed items still on it. The temp-root workaround is now flagged as dead weight to delete rather than as advice to follow. Commit 87109ec
 - A process note worth keeping. One edit script asserted its way to a failure partway through and did not write the file, so an earlier successful replacement in the same script was silently lost. It was caught only by sweeping the file for the stale string afterwards rather than by trusting the run. Multi-edit scripts need the sweep, not the exit code
 
+## Event 71 — the load failure root-caused: a permission ask, terminal in headless
+
+- Timestamp: 2026-08-24 05:10 PDT
+- Root cause, read from the binary at offset 296541987. The Skill tool's permission ladder is deny rules, then allow rules, then an auto-allow predicate, then a fallthrough returning `behavior: "ask"` with `message` of `Execute skill: <alias>`. The string everyone was reading as an error is the PERMISSION PROMPT LABEL, and it is also the tool's own `description` field at 296538443
+- The decisive corroboration is Anthropic's own embedded SDK schema doc at 287400600, describing the `permission_denied` event: "Without one (bare -p / SDK query() with no canUseTool), 'ask' decisions are terminal, so this event also covers those implicit denials." Their text, in their binary, saying bare `-p` turns an ask into a denial
+- The real success payload is a different string entirely, `Launching skill: <name>`, so any run showing `Execute skill:` never reached the tool's `call()` at all
+- Fix measured, not argued: baseline 0 of 4 runs load; `--allowedTools Skill` gives 4 of 4, with the `Launching skill:` payload present. Scoped forms `Skill(<alias>)` and `Skill(<alias>:*)` also work
+- Project `settings.json` with `permissions.allow: ["Skill"]` does NOT work: 0 of 4, even though `--setting-sources project` reads that file. The CLI flag works and the settings route does not, which is worth reporting upstream on its own
+- The grant is additive rather than restrictive, checked because the opposite would have been catastrophic: with `--allowedTools Skill` the runs still made 3, 3, 0 and 2 reference reads, so `Read` survives and pulls stay measurable
+- The "70% loaded" was never the skill system. It was the model reading SKILL.md as a file after the refusal. Measured: opus falls back 3 of 4 with 2-3 reference reads; sonnet falls back 0 of 4 and reads nothing at all. So the same sweep on sonnet would have reported near-zero load and a full table of `prune`
+- Consequence for every disclosure figure taken so far: they were measured in the wrong regime. The body arrived by the model rummaging in the skill directory, not by injection, and it then read references while already in that directory. That is not how a pointer sends a model to a file in real use
+- Blast radius across the repo, from all eight `claude` spawn sites. measure-triggering.ts:697 is UNAFFECTED and this was verified rather than assumed: its reader decides on `content_block_start` and `content_block_delta`, the streamed tool_use request, which precedes any permission check. So the trigger measurements stand. disclosure-measure.ts:208 is BROKEN. measure-outcomes.ts:917 is BROKEN. The other four are grader and proposer helper calls that involve no skill
+- measure-outcomes is the worst case and has never been run. Its design is treatment against `control: "artifact-withheld"`; with no grant the treatment arm never loads the skill and collapses into the control, so the operation built to answer whether a skill helps would have answered no for every skill
+- No spawn site passes `--allowedTools` today, so adding the grant is a clean addition with no merge hazard
+- Process correction from the owner, and it was deserved. Probes were taking ten minutes because they ran sequentially, on opus, with full scenario prompts, and waited for completion when the answer arrives in the first seconds. Rebuilt concurrent, on sonnet, one-line prompt, killing each run the moment the Skill result arrives: 6 probes in 4.8 seconds, and a 20-run five-arm experiment in 14.9 seconds. The trigger harness already short-circuits this way; the probe work simply had not
+
 ## Observations
 
 ### Build decisions
