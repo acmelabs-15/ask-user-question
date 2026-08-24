@@ -2,7 +2,7 @@
 name: ask-user-question
 compatibility: "Claude Code. The composition guidance applies wherever the tool is offered; the Gotchas marked [terminal] describe the Claude Code terminal dialog, and a host that draws its own dialog owes none of them. No scripts, no network access, no system packages. The wording step reads a project vocabulary file where one exists and degrades to the vocabulary already in the conversation where none does."
 metadata:
-  version: "0.1.2"
+  version: "0.1.3"
   component-type: "skill"
   acknowledgement: "The re-pitch trigger and the controlled-register idea come from the wait-what skill by Matt Pocock, MIT licensed. No text was carried across."
 # description must stay on ONE physical line. A blank line or a wrap inside it
@@ -110,7 +110,9 @@ marker appears nowhere else in this block, so its absence here means something.
   for more. `header` belongs to the question; `label` and `description` are
   required on every option. The cap belongs to the schema and not to the screen —
   a long list does scroll on a short terminal, and what that costs the reader is
-  the side-by-side comparison the options were written for.
+  the side-by-side comparison the options were written for. Hosts have shipped bugs
+  that draw the first question and drop the rest. None is known at this build, so
+  split for dependency, per Section 2, not for fear of the host.
 - **`header` is cut at 48 display columns, not at the 12 it asks for.**
   **[terminal]** The 12 is advisory and no validator reads it. The real sequence is
   a cut at 48 columns and then a second cut by the tab strip, where an over-long
@@ -191,12 +193,11 @@ carry context lines too — `references/layout.md` exists because a question can
 long and structured.
 
 Where brevity and completeness pull against each other, **completeness wins.**
-Everything needed to decide going inside the call is the requirement; brevity is
-what you spend the room that is left on. A short question that leaves the reader
-unable to choose has failed in the way that costs something, and a long one that is
-long because the decision carries that much has not. Cutting context to hit a length
-is how a call comes back as `what are you asking me?` — a whole round trip against
-the few words the fact would have cost.
+Everything needed to decide goes inside the call; brevity is what you spend the
+room that is left on. A short question that leaves the reader unable to choose has
+failed, and a long one that is long because the decision carries that much has not.
+Cutting context to hit a length is how a call comes back as `what are you asking
+me?` — a round trip against the few words the fact would have cost.
 
 The question carries what all the options share, so the options do not repeat it.
 Name the thing being decided, the consequence that makes it matter, and what the
@@ -247,16 +248,16 @@ against `Ship without it` costs the same characters and carries the decision.
 2. What it costs, forecloses, or risks.
 
 The second part is the one that gets dropped, and it is the part that does the
-work. A reader who picks an option has to be able to tell from the screen that it
-went wrong for them, and only the cost tells them that. An option described by
-its benefit alone hides the consequence while every sentence in it stays true,
-which is the failure that survives proofreading. Write the cost of the option you
-are recommending as plainly as the cost of the others.
+work. A reader has to be able to tell from the screen that an option went wrong
+for them, and only the cost tells them that. An option described by its benefit
+alone hides the consequence while every sentence in it stays true, which is the
+failure that survives proofreading. Write the cost of the option you are
+recommending as plainly as the cost of the others.
 
 Options also have to be comparable. Compare them on the same axes, in the same
 order, in the same units, so a reader scanning down finds the real difference
-rather than a difference in how you wrote them. Parallel structure is not a
-stylistic preference here; it is what makes a scan work.
+rather than a difference in how you wrote them. Parallel structure is what makes
+the scan work, not a stylistic preference.
 
 Cover the space. Options are mutually exclusive unless `multiSelect` is set, and
 the set should include the do-nothing path where one exists, and the option you
@@ -282,25 +283,23 @@ A recommendation is three things on **one** option, and all three are required:
 3. Its own description carries the justification.
 
 Use the platform's own spelling, capital R, because the tool's prompt instructs
-every model to write `(Recommended)` and a skill that teaches a second spelling
-puts two conventions in front of the same reader. Case almost certainly does not
-matter to the tool, which reads the label as an opaque string; it matters to the
-person, who sees one convention or two.
+every model to write `(Recommended)` and a second spelling puts two conventions in
+front of one reader. The tool reads the label as an opaque string, so case matters
+to the person rather than to the parser.
 
 Position is part of the rule because it is the only positional affordance the tool
 gives you: ordering is half of what makes a default read as one, so a marker on the
-third option fights the reading order. It also makes a second marker visibly
-inconsistent rather than merely discouraged, since only one option can be first.
-Nothing stops you writing two, so this is a rule you check rather than a limit the
-tool enforces.
+third option fights the reading order. Only one option can be first, which makes a
+second marker visibly inconsistent. Nothing stops you writing two, so this is a rule
+you check rather than a limit the tool enforces.
 
 **First position is also the cheapest to choose by accident.** The first option is
 the default, and a default is taken more often than the same option placed
-anywhere else. That holds whatever draws the dialog, and in the terminal it is
-sharper still, because a single-question call submits on one keystroke. So never
-put a destructive or one-way option first, even when you would otherwise recommend
-it. Where the option you recommend is the irreversible one, add a second question
-that confirms it. Where a second round trip costs more than the steer is worth,
+anywhere else. That holds wherever the dialog is drawn, and the terminal sharpens
+it, because a single-question call submits on one keystroke. So never put a
+destructive or one-way option first, even when you would otherwise recommend it.
+Where the option you recommend is the irreversible one, add a second question that
+confirms it. Where a second round trip costs more than the steer is worth,
 leave the recommendation unmarked instead and say in the question text why you are
 not steering.
 
@@ -322,10 +321,9 @@ missing step. Two markers is the one shape that is always wrong.
 ## 6. State what you have not checked
 
 Where a gap in your own evidence could change which option is right, name it in the
-description it bears on. Put it in the question text instead when it bears on every
-option equally, since that is what the question is for. `I have not run the test
-suite against the second option` costs one clause and moves a risk from hidden to
-shared.
+description it bears on. Put it in the question text where it bears on every option
+equally, since that is what the question is for. `I have not run the test suite
+against the second option` costs one clause and moves a risk from hidden to shared.
 
 Where there is no real gap, write nothing. A manufactured caveat trains the
 reader to skim caveats.
@@ -346,10 +344,9 @@ need:
   question, or visible in the preview itself. The only thing a reader can still say
   is a note on an option, opened with `n`, so say in the question text that the key
   exists — someone who cannot find a way to qualify their answer picks nothing. It is
-  a large-terminal feature, the pane being the terminal's width less 34 columns and
-  its height less 26 rows. Make
-  the previews differ visibly: one that documents rather than compares wastes the
-  one thing the layout buys.
+  a large-terminal feature: the pane is the terminal's width less 34 columns and its
+  height less 26 rows. Make the previews differ visibly: one that documents rather
+  than compares wastes the one thing the layout buys.
 
 ## Wording and layout
 
