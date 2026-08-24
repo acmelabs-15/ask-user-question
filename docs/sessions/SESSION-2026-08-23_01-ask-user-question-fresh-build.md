@@ -1200,6 +1200,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Instrument: skillLoaded is set from the tool result (the Launching-skill payload) per the 02248f3 collector fix, so a refused load cannot read as loaded
 - Verdict: the grant works correctly, measured not argued
 
+## Event 128 — the modernization lands and pushes; the diagnosis resumes; the review re-runs clean
+
+- Timestamp: 2026-08-24 11:11 PDT, measured
+- The reviewer-modernization report verified against the artifacts (diff stat, the re-run sweep showing one historicizing hit per edited file and zero teaching hits, strict validate pass, suite 1,612) and committed at plugin-kit f88fb50, pushed. Five files: the four re-grounded reviewers plus skill-frontmatter.md — whose scope-extension edit had landed on disk before any second report arrived, was read in full, and matches the fence exactly: field kept, trap taught with the upstream issue numbers, the Execute-versus-Launching diagnostic included
+- The modernization report's process learnings ride in its report for the retrospective, the sharpest being that a doctrine strike colonises output templates and severity schemes, not only prose — the specified sweep found the teaching text and missed a table column enforcing the same rule. Also surfaced: all five reviewer descriptions exceed 1,024 chars (1,876-2,530), a standing pre-existing finding queued for plugin-kit backlog; and measure-triggering covers agents and commands too, an available follow-on re-grounding deliberately not taken
+- Owner verification answered from source: the optimizers are safe with allowed-tools in a skill's frontmatter — optimize-disclosure runs scenarios through the granted disclosure-measure module, optimize-description through the pre-permission trigger path, and callClaude in both is the skill-free grader helper
+- The trigger-miss diagnosis agent died on an API server error mid-response; per owner instruction it was nudged to resume from its transcript and deliver rather than re-dispatched from scratch
+- The skill review re-dispatched on the corrected, committed reviewer definition; the sixth sidecar capture (stop-stale-runs) verified and committed at bee0fca
+
 ## Observations
 
 ### Build decisions
