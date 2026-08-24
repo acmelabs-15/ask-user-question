@@ -858,6 +858,23 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Anomaly worth carrying: first-call-in-a-new-vocabulary scores 20 points HIGHER without references (0.70 to 0.90). Consistent with Event 79 — sonnet never reads wording.md on that scenario, so the file cannot be helping sonnet there; what the drop map measures is content need, not pointer health
 - Stripped-arm quirk, harmless but real: sentry-dsn-not-in-repo loaded the body via file Read in 3 of 4 stripped runs across both pairs and never in control; all such runs passed 3/3
 
+## Event 86 — LOCKED: the quarantined pair folds in as extra samples
+
+- Timestamp: 2026-08-24 07:05 PDT
+- Owner chose, verbatim: "Fold it in (Recommended)" — the quarantined first pair, proven complete by per-run inspection, joins the measurement of record. n rises to 4 runs per scenario on the stripped arm and 6 on the control arm (both pairs plus the stored sonnet sweep)
+- The folded map holds the aggregate at a 10-point cost: control 82.4%, stripped 72.5%. Two n=2 artifacts dissolved — two-release-notes-rendered and retry-budget-two-options were noise. reader-says-it-depends returns to the dropped list at −28: still the highest-variance scenario (control samples 0.00 to 0.70), but at n=6 against n=4 the gap is credible
+- Final stage-1 verdict: 15 scenarios dropped more than 5 points, 9 strong; 6 scenarios need nothing and validate the negatives; the references earn their existence as a set
+
+## Event 87 — stage 2 launched: one file removed at a time, candidates assigned from prompts
+
+- Timestamp: 2026-08-24 07:10 PDT
+- The hand annotation never reached the corpus — `expects_references` exists in the schema and no eval row declares it — so candidate assignment for stage 2 was re-derived from the scenario prompts against each reference's stated job. This is judgement and is labelled as such; stage 2 exists to replace it with outcome
+- Six variants built from the shipped skill, each removing ONE file and its pointers, with the pointer prose re-worded rather than line-deleted, per the Event 82 principle. Every edit asserted exactly-one match; every variant swept for residual mentions of the removed filename. Variants under `/tmp/auq-ablation-stage2/minus-*/`
+- Assignments: minus-layout gets prepush-checks-in-question and layout-choice-migration-steps; minus-wording gets description-will-not-shorten, defend-rewrite-to-its-author, three-words-one-concept; minus-failed-question gets reader-says-options-are-the-same and reader-says-it-depends; minus-reading-answers gets notes-only-sentinel, multiselect-empty-and-parsing, timeout-with-partial-selection, reader-says-it-depends; minus-asking-again gets third-call-of-an-open-run and reask-after-the-options-moved; minus-examples gets measure-a-draft-against-a-good-one and prepush-checks-in-question. Two scenarios carry two candidates each
+- Held out with no plausible candidate: off-by-one-already-fixed (−8) and no-tool-in-this-context (−6) — ask-or-decide and the no-tool fallback are body content; they escalate to wider ablation only if stage 2 leaves them unexplained
+- 15 scenario-variant pairs, 30 runs, six arms concurrent at 3 workers each — 18 children, inside the measured-good zone. Results to `~/auq-results/ablation2-minus-*`
+- Operational note: the launch wrapper's wait failed on unsplit pids under zsh and exited early; the nohup'd arms were unaffected and a watcher now covers both completion and death of any arm
+
 ## Observations
 
 ### Build decisions
