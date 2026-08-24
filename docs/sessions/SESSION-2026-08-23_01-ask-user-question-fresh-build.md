@@ -1390,6 +1390,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Dispatched isolation-guarantee-build (Bun engineer, background): phase 1 a channel-by-channel audit with evidence (skills, settings, MCP, env, network, grader, cross-session messaging), phase 2 hardening in value order — a per-run isolation PROOF asserting the child's world is exactly the skill under test plus built-ins, landing in the envelope so verified isolation supersedes requested isolation; severing or namespacing the cross-session channel if a clean mechanism exists, named upstream ask if not; the install-state sweep kept as belt with the cache root added only if history's meaning survives
 - The builder's original record-the-flag recommendation is superseded by this stronger form, with the disposition recorded rather than silently dropped
 
+## Event 151 — the research lands as ANALYSIS-006, and the description gate can open
+
+- Timestamp: 2026-08-24 13:07 PDT, measured
+- The weak-model routing research delivered and verified: ANALYSIS-006 in the plugin-kit project, 15 evidence-labeled findings, committed and pushed at plugin-kit b49a383 with inverse edges closed on ANALYSIS-004, ANALYSIS-005 and the plugin-kit session ledger (the last added by this session, as the agent correctly declined to race an active ledger)
+- The write-path status-drop reproduced again exactly as briefed (metadata does not prevent it; repair-after-read-back is the only path), and the primary-text rule caught a second fabricated-summary instance — a search summary attributed a headline figure and a claim to a paper whose full text contains neither and argues the opposite; the fabrication was confirmation-shaped, which is the dangerous kind
+- The findings most load-bearing for the gated description decision: remedy benefit is capability-graded (power A/Bs on the weak tier; a strong-tier null is the predicted result, not a refutation — this re-frames how the ToC and placement results should be quoted); a strong-model rewrite can make a weak model route WORSE, measured — which validates reverting a rewrite the weak tier measured as harmful; three sources converge that there is no portable weak-model phrasing rule, only the measure-on-the-weak-tier method this house already practises; the two-surface split (concise text routes, detail governs) is the vendor articulation of our frontmatter-versus-body mechanism; and consolidation-over-proliferation names description overlap as the confusion mechanism, with embedding-similarity over sibling descriptions as a detectable form — a future validator candidate
+- Also stated as scoped negatives: Addy Osmani publishes nothing on model tiers (his convergent idea is the two-surface split in other words), and skills have no forced-invocation analogue — ANALYSIS-004's central mechanism gap recurring at the triggering surface
+- The description work's gate condition is met; the go/no-go goes to the owner with the research's bearing attached
+
 ## Observations
 
 ### Build decisions
