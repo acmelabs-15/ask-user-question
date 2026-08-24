@@ -38,23 +38,22 @@ errors across 223 files (verified by the team lead at that commit, not re-run he
 | Helper calls seeing the operator's installed skills | all four sites pass `--setting-sources project --strict-mcp-config` with a per-call empty cwd | `31e91e1` |
 | A key typo in an eval or scenario set silently defaulting | schemas name the typo | `35455b0` |
 | An empty scenario array told about a key it never had | error message corrected | `ffb68b2` |
-| A copy installed under the current name | `make absent-check`, a hard prerequisite of both disclosure targets | local |
+| A copy installed under the current name | `make absent-check`, a hard prerequisite of both disclosure targets **and of `composition`** | local, `c6f85ef` |
 
 **Still manual. This list is the one that matters.**
 
-1. **`make composition` has no install-state gate.** Both disclosure targets refuse; this one does
-   not, and `composition-runner.ts` has no isolation of its own. Run `make absent-check` by hand
-   first. (Section 1.1)
-2. **`measure-disclosure` writes no envelope**, so `installState` is not in
+1. **`measure-disclosure` writes no envelope**, so `installState` is not in
    `provenance.installState` where a consumer looks for it. Read `install_state` out of
    `results.json`, or establish absence out of band. (Section 1.1a)
-3. **`ANTHROPIC_DEFAULT_*_MODEL` aliases reach every child in every configuration.** Two runs whose
+2. **`ANTHROPIC_DEFAULT_*_MODEL` aliases reach every child in every configuration.** Two runs whose
    envelopes both record `model: opus` may not be comparable across machines. No flag closes this.
    (Section 2.1, "The ceiling")
-4. **A copy under a *previous* name is invisible to `absent-check`**, which matches the current
+3. **A copy under a *previous* name is invisible to `absent-check`**, which matches the current
    name. `make doctor` covers that, and covers nothing else. Run both. (Section 1.2)
-5. **`checks.ts` has zero rules**, so any composition lint figure is vacuous and `make checks`
-   gates nothing while appearing to. (Section 1.4)
+4. ~~**`checks.ts` has zero rules**, so any composition lint figure is vacuous and `make checks`
+   gates nothing while appearing to.~~ **CLOSED in `e41b79f`** (2026-08-23): 27 rules are active,
+   each carrying its `SKILL.md` line, and the calibration probe that scored 1.00 against an empty
+   module now fails at 0.00 as designed. `make checks` gates something. (Section 1.4)
 
 Everything else in this document is a reading skill rather than a gate: what a number means once
 you have it, and when to throw it away.
@@ -85,8 +84,9 @@ faults in Section 4 were entirely silent, and one — F3 — was silent *by cons
 exact-match comparison that never fires an error, it just scores every win as a miss. Before
 trusting a clean run, establish that the check you are relying on actually exists and actually
 ran. Some do (`PK/shared/operations/measure-disclosure.ts:117-135` prints its install-state
-conflict unconditionally); some do not (`evals/composition/checks.ts` has zero rules and scores
-1.00 on anything).
+conflict unconditionally); some did not — `evals/composition/checks.ts` held zero rules and scored
+1.00 on anything until `e41b79f` (2026-08-23) landed 27. The example is kept because the *class* of
+defect is the point: a scoring surface that reports a clean number while checking nothing.
 
 **B. Absence of a warning is not evidence of validity, and the presence of a flag is not
 evidence it took effect.** This is stated as a count rather than a principle, because the count is
@@ -178,9 +178,32 @@ skill directory (`:305`), and tells the model `A skill that applies here is inst
 ${skillDir}` (`:276`). The machine's installed skills are therefore in scope for the
 `disclosed` arm. If a copy of this skill is visible to the skill system, that arm's
 `refsRead` can be empty for the F5 reason — content arriving without a `Read` — and its
-reference recall, precision and `refCounts` all floor. It is also the only measurement target
-without `absent-check` as a prerequisite (`Makefile`, `composition` target), so nothing stops
-the run. Gate it by hand: `make absent-check` before `make composition`.
+reference recall, precision and `refCounts` all floor.
+
+**Gated in `c6f85ef`, then relaxed in `6fb39ab` (2026-08-23).** `absent-check` is a declared
+prerequisite of the `composition` target, but all three measurement families now pass
+`GUARD_FATAL := 0` and proceed past a sighting rather than refusing it. The reason is measured:
+running the harness spawn both ways saw 0 plugin-namespaced entries with `--setting-sources
+project --strict-mcp-config` against 97 without, and the `disclosed` arm still read its references
+in both cases (`evals/composition/composition-runner.ts`, the `ISOLATION_FLAGS` declaration). So
+the guard reports and the run continues; a sighting is only void-making on a path that does not
+isolate.
+
+Two details from the investigation worth carrying, because neither is obvious from the arm names.
+**The `disclosed` arm does not inject**: it points `cwd` at the skill directory, tells the model a
+skill is installed there, and measures disclosure by counting `Read` calls against reference
+basenames — the same mechanism the disclosure targets use. **And the `baseline` arm has a separate,
+narrower exposure the same gate closes**: it is the no-guidance control, so a copy the loader can
+see "puts this skill in front of the very runs that define zero", biasing the control upward and
+understating the effect the harness exists to measure (`Makefile`, comment above `absent-check`).
+
+*A deeper fix is in flight and this gate is not the final state:* `--setting-sources project
+--strict-mcp-config` on `composition-runner.ts`'s two spawn sites (`:145`, `:182`), which would make
+isolation structural and leave the gate as the backup. It had been withheld to protect comparability
+with the committed baselines in `evals/history/` — a concern this document's own finding dissolves,
+since those figures describe the prior fork and the current artifact was authored from scratch, so
+there was never a before-and-after pair to protect. If the `disclosed` arm breaks under those flags,
+the gate stands alone.
 
 ### 1.1a What guards each operation, and what record it leaves
 
@@ -192,7 +215,7 @@ afterwards.
 | `optimize-disclosure` | yes — `detectInstallState` + `installConflict`, deliberately outside the envelope block so an un-flagged run still warns (`PK/shared/operations/optimize-disclosure.ts:1630-1651`) | yes, as an envelope `caps` sentence | the envelope's `installState` and `caps` |
 | `measure-disclosure` | yes — `warnOnInstallConflict`, called **before** the sweep (`PK/shared/operations/measure-disclosure.ts:117-135`, invoked at `:152-154`) | **no envelope**, but `install_state` and `install_conflict` on `MeasureOutput` (`:80`, `:88`, populated `:210-211`) | those two fields in `results.json`; stderr carries the same warning |
 | both, locally | yes — `absent-check` refuses the run before it starts (`Makefile`, `absent-check` target) | the guard's own exit code and report | that the target ran it; it is a declared prerequisite |
-| `composition-runner` (local) | **no** | no | run `make absent-check` yourself first |
+| `composition-runner` (local) | yes, since `c6f85ef` — `absent-check` is a declared prerequisite of the `composition` target | the guard's exit code | that the target ran it |
 
 **A note on the age of this table, because it is the point of Section 0 rule C.** Until
 2026-08-23 21:17 `measure-disclosure` genuinely had no detector — that is what commit
@@ -690,7 +713,7 @@ number does not get quoted, does not get compared, and does not go on a fix list
 | A second `measure-disclosure` run into the same `--results-dir` | It writes `results.json` with no timestamped subdirectory (`PK/shared/operations/measure-disclosure.ts:348`) where the two optimizers mint one, and `Bun.write` truncates — the earlier measurement is **gone**, not corrupted, with no partial record | **DISCARD** the assumption you still have the earlier run. Fresh directory per run |
 | Spliced output: a results file whose tail describes a different run | Confined to `PK/evals/drivers/run-measurement.ts:98-104`, which passes a `BunFile` as spawn stdout. `Bun.write` and `tee` both truncate, and nothing in `PK/shared/` uses a FileSink — so this **cannot** be the explanation for a `shared/operations/` output | **DISCARD** the affected driver record. **TRUST** a `shared/operations/` output against this specific concern |
 | Precision 100% alongside recall 0% | The vacuous case, and also the signature of F3 and F4. The upstream harness handles it correctly — recall is omitted rather than reported as zero when the numerator is empty (`PK/shared/operations/measure-triggering.ts:1242-1243`), per `PK/shared/references/schemas.md:513`. A harness that reports `1` here is computing over nothing | **DISCARD** both figures. Check the target name and the installed set first |
-| Lint mean exactly 1.00 on every arm | `checks.ts` has zero rules; the score means "nothing was checked" (`evals/composition/LINT-RULES-PENDING.md:26-29`) | **DISCARD** |
+| Lint mean exactly 1.00 on every arm | `checks.ts` held zero rules until `e41b79f` (2026-08-23), so the score meant "nothing was checked" (`evals/composition/LINT-RULES-PENDING.md:26-29`) | **DISCARD** any figure produced before that commit. After it, 1.00 is a real score over 27 rules and the calibration probe fails at 0.00, so read it as a measurement |
 | Judge dimensions all reporting `0` | The judge was off. `judgeModel: null` and every per-result `judge: null`, with the summary block still emitting six zeros — a metric reported as zero where its numerator does not exist (`PK/shared/references/schemas.md:513`) | **DISCARD** the judge block. **TRUST** the lint and abstention columns of the same run |
 | A `headline` delta with no comparability check behind it | "A `headline[].delta` is only ever filled in after that check has passed" (`PK/shared/references/schemas.md:543`) | **DISCARD** the delta |
 | A whole-set score with no `caps` sentence and a held-out split in play | Rows computed over the train split only, read as if computed over everything (`PK/shared/references/schemas.md:441-442`, `:495`) | **RE-RUN WITH** the split stated, or re-report scoped to the split |
@@ -777,8 +800,10 @@ description as a **single physical line**, double-quoted, with a comment sitting
 # truncates the value in the measurement tooling, silently and without warning.
 ```
 
-Measured independently here at **947 characters**, agreeing with the three parsers the author ran
-— 77 characters of headroom under the 1,024 cap. A one-line scalar cannot contain a blank line and
+Measured independently here at **954 characters** — 70 characters of headroom under the 1,024 cap.
+(It was 947 when first authored; reviewer findings added the missing capability of whether questions
+share one call or run as a sequence. Still one physical line, still free of `"` and `\`, both
+re-verified here.) A one-line scalar cannot contain a blank line and
 cannot wrap, so it defeats **both** branches of the frontmatter reader at the source, where a `|`
 block scalar merely relies on the reader's block branch being the fixed one. If you author a
 description, do this rather than what row 19 of the discard table used to say.
@@ -930,6 +955,33 @@ defect under every rule below" (`evals/composition/LINT-RULES-PENDING.md:26-29`)
 `checks.test.ts` "Asserts nothing while `ACTIVE_RULE_COUNT === 0`" (`:16`), so a green
 `make checks` (`Makefile`, `checks` target) is not evidence — and `make all` runs `checks` first
 (`Makefile`, `all` target), which makes it look like a gate.
+
+**F13 — A wrong recorded decision, which licenses removing a correct guard.**
+*Signature:* a guard is absent, and a comment or note in the tree explains *why it is correctly
+absent*. The explanation is wrong, but it is durable, committed, and reads as considered — so the
+next person to look does not re-derive the question, and anyone who adds the guard later finds a
+written justification for taking it out again.
+
+*The instance.* `composition` was excluded from the install-state gate on the recorded grounds that
+it "injects skill content rather than routing to it." That is true of the `skill` arm and **false of
+the `disclosed` arm**, which the same target also runs: that arm points `cwd` at the skill directory
+and counts `Read` calls against reference paths (`evals/composition/composition-runner.ts:159-162`),
+spawning with no `--setting-sources` and no `--strict-mcp-config`. So a machine-visible copy floored
+`refsRead`, recall, precision and `refCounts` together, and the arm would report that progressive
+disclosure does not work when what failed was the measurement. Closed in `c6f85ef` — **and the
+comment was corrected in the same commit**, which is the part that matters. The Makefile now records
+that `composition` "USED TO BE ON THAT LIST" and why the injection argument never covered that arm
+(`Makefile`, comment above `absent-check`).
+
+*Why this is not F11.* A relayed premise is ephemeral and dies with the conversation. A recorded
+decision is an artifact: it outlives its author, it is the first thing a maintainer reads, and it
+converts a gap into a *policy*. **Fixing the code without fixing the comment leaves the fault
+intact** — the next person has a documented reason to undo the fix.
+
+*The check:* when you add a guard where one was deliberately absent, find the note explaining the
+absence and correct it in the same commit. If you cannot find one, write it. And when you read a
+comment justifying the lack of a check, treat it as a claim to verify rather than a decision already
+made — Section 0 rule C applies to your own repository's comments, not only to briefs.
 
 **F12 — A sentinel value passing a validity test too weak to exclude it.**
 *Signature:* a guard that reads as correct, over an input domain that contains a value the guard's
