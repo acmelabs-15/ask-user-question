@@ -14,7 +14,7 @@ tags:
 # SESSION-2026-08-23_01: Ask User Question Fresh Build
 
 **Scope**: Build a new ACMElabs plugin `ask-user-question` authored fresh against plugin-kit standards, optimize its description and progressive-disclosure layout with plugin-kit tooling, evaluate it, and retire the `asking-users-questions` plugin entirely.
-**State**: Skill authored and measured. Description at 1002 characters scoring 49/52, recall 95.5%, false triggers 6.7%. Disclosure measured: all three references at 0 pulls of 24, verdicted `prune`, on a run where `Read` was available and spent elsewhere. Seven decisions locked. The local composition runner is retired in favour of plugin-kit's outcome measurement, which is scoped but not yet wired. A coverage check against the retired skill found 11 real gaps, 7 strong, three of which are wrong guidance rather than silence; which to close is the open decision. Cleanup and retirement of the old plugin have not started.
+**State**: Skill authored and measured; description frozen at 1002 characters (49/52, recall 95.5%, false triggers 6.7%); body at its ceiling, 5,795 of 5,800 tokens. The disclosure investigation is complete: the instrument was broken four ways in plugin-kit and once in Claude Code — the Skill tool's permission ask is terminal in headless runs, triggered by our own `allowed-tools` frontmatter, since removed — all fixed with regression tests. Recall replaced raw pull rate as the number to read; the two model tiers fail in opposite directions, so sonnet is the detection instrument. The placement hypothesis was refuted at n=40 and the reference-count cap was a category error in its source. The retired plugin is gone. In flight: the stage-1 ablation rerun (Event 83), which produces the ground-truth reference map. Open: D-8, which coverage gaps to close — its token budget is stale now the body is at ceiling. Queued: populate `expects_references` and teach the tooling recall, rewrite plugin-kit's authoring guidance, outcome measurement, merge plugin-kit's staging branch to main.
 **Prior art**: this build follows the shared-layer restructure work carried out in the separate `plugin-kit` Brain project. Two notes there are load-bearing context and are named as plain text rather than wikilinks, because Brain wikilinks cannot resolve across projects: SESSION-2026-08-09_01 "Plugin Kit Shared Layer Restructure", and ADR-001 "Skill Creator Merge Conflict Resolutions".
 
 ## Tasks
@@ -74,56 +74,6 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 
 - **D-8, open**: which of the 11 coverage gaps to close. Seven are body-shaped and total roughly 300-340 tokens against about 600 spare, so they fit together. Three of them are wrong guidance rather than silence and are therefore not optional in the same way as the rest: the ask-or-decide test has lost its reversibility tiebreaker, the meta-label ban is absent so `Yes` and `No` pass every rule, and the independence test positively licenses pairing a decision with a sequencing question. To be put to the user as grouped choices rather than eleven separate ones.
 
-
-### Active (in_progress)
-
-| T-ID | Group | Subject | Agent | Files | Effort | Created |
-|:--|:--|:--|:--|:--|:--|:--|
-| T-01 | Wave 1 | Create the `ACMElabs/ask-user-question` repo (absent at session start) | W1a-repo | `<repo root>/**` | S | Event 10 |
-| T-02 | Wave 1 | Environment dedup plus copy inventory of the prior WIP | W1b-hygiene | prior WIP tree | S | Event 10 |
-| T-03 | Wave 1 | Verify plugin-kit tooling runs (trigger runner, composition harness, judge, frontmatter tests, Makefile) | W1c-tooling | `<repo root>/Makefile`, harness scripts | S | Event 10 |
-| T-04 | Wave 1 | Author the plugin-kit authoring standards brief for the fresh skill | W1d-standards | standards brief | M | Event 10 |
-
-### Backlog (pending)
-
-#### Unblocked — ready to pick up
-
-_Empty. Waves 2-6 are approved in sequence but not yet decomposed into T-NN rows; decomposition happens as each wave opens._
-
-| T-ID | Group | Subject | Agent | Files | Effort | Created |
-|:--|:--|:--|:--|:--|:--|:--|
-
-#### Blocked
-
-_Empty._
-
-| T-ID | Group | Subject | Agent | Files | Effort | Blocked by | Created |
-|:--|:--|:--|:--|:--|:--|:--|:--|
-
-### Archive (completed + deleted)
-
-<details>
-<summary>1 archived task</summary>
-
-| T-ID | Status | Group | Subject | Agent | Files | Effort | Created | Resolved |
-|:--|:--|:--|:--|:--|:--|:--|:--|:--|
-| T-05 | completed | Wave 1 | Create this IN_PROGRESS session note | memory | `sessions/` | XS | Event 01 | Event 10 |
-
-</details>
-
-### Editor mirror IDs
-
-| T-ID | CC-ID | Cursor-ID | Last synced |
-|:--|:--|:--|:--|
-| T-01 | — | — | Event 10 |
-| T-02 | — | — | Event 10 |
-| T-03 | — | — | Event 10 |
-| T-04 | — | — | Event 10 |
-| T-05 | — | — | Event 10 |
-
-### Pending User Decisions (surface on resume)
-
-- None currently. Five decisions locked at Events 03-07.
 
 ## Event 01 — Session started
 
