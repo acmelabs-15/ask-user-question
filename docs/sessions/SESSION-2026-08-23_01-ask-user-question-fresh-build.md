@@ -1176,6 +1176,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The review re-dispatches after the reviewer-modernization diff is reviewed and committed. The diagnosis agent is unaffected (it reads doctrine references directly, not the reviewer definition) and keeps running
 - [reflect-capture] MED, preference: when the definition governing a dispatched agent is proven stale mid-run, stop the run and re-dispatch on the corrected definition — planning to filter the stale output at triage is the weaker remedy and spends the same review twice. Capture dispatched in the background to the reflect sidecar SKILL-001: Orchestrator Process Learnings
 
+## Event 125 — the second sync sweep: the frontmatter reference teaches the measured trap, five skills carry it
+
+- Timestamp: 2026-08-24 11:02 PDT, measured
+- Owner asked whether skill-creator's authoring checklist and its frontmatter reference survived the doctrine updates. Verified: authoring-checklist.md is CURRENT (last touched in the 08-24 genre commit; the Event 101 defect pair fixed there; ToC item and 5,000-token check present). skill-frontmatter.md is 08-09 vintage and actively recommends `allowed-tools: Read, Grep, Glob` as prompt-free orientation — the exact field Events 71-72 measured as a 100 percent deterministic headless load failure (not in the binary's 43-key allowlist; upstream issue 77363), the reason this project's skill ships without it
+- Class sweep: ALL FIVE plugin-kit creator skills carry `allowed-tools` in their own frontmatter, so each has the same headless defect their reference taught. The plugin-kit session note's open candidate (two creator skills on the refuted pointer form) now has a sibling class finding at the frontmatter layer
+- Scope note held onto: command-frontmatter `allowed-tools` and MCP grant strings are different mechanisms and are NOT covered by the Event 72 measurement; any fix there needs its own verification, not a blanket strip
+- Disposition to the owner: strip the field from the five (the precedent this project set), or keep it documented as interactive-only. The Event 72 record is the evidence either way
+
 ## Observations
 
 ### Build decisions
