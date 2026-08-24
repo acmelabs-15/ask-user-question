@@ -936,6 +936,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - plugin-kit's new validator rule reports zero findings on this skill — the first artifact outside plugin-kit validated against the standard
 - Open micro-item: shipped skill content changed, so the next release bumps the version to 0.1.1 across plugin.json, the skill metadata, and the marketplace entry; the live file-source marketplace reads the working tree, so nothing is stale meanwhile
 
+## Event 95 — the table-of-contents intervention goes under measurement
+
+- Timestamp: 2026-08-24 12:35 PDT
+- Launched the recall re-measure of the six ToC-carrying references: identical command, corpus, model, permission mode and runs-per-scenario as the morning's sweep of record, results to the recall-sweep-toc directory. The comparison baseline is that sweep's per-file recall — reading-answers 4/4, failed-question 2/2, layout 3/4, asking-again 2/4, wording 2/4, examples 0/2 — with the ToC blocks the only changed bytes, verified pure additions at commit `258ae2a`
+- What the experiment can and cannot say, stated before the result: denominators are 2-4 runs per file, so single-file movements are hints; the honest read is the direction of the whole table plus whether the two dead spots (examples at 0/2, wording at 2/4) move at all. A null is a finding — the ToC rule's mechanism is partial-read completeness, not pointer-following, so recall may well not move, and saying so would keep the ToC standard honest about what it buys
+- Completeness gate on landing: 54/54 delivered, zero file-loads, denominators matching the baseline sweep
+
 ## Observations
 
 ### Build decisions
