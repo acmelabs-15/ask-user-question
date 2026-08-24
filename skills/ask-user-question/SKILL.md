@@ -427,9 +427,11 @@ the words the reader agreed to.
 
 ## The shape of a finished call
 
-`example.md` holds one complete call, with what each half of each description is
-doing. Open it when you want the finished artifact rather than the rules, or to
-measure a draft against a call that passes all of them.
+`examples.md` holds two complete calls. The first is the ordinary shape, with what
+each half of each description is doing. The second is a decision too big for a
+question, resolved the way Section 3 describes — and it shows what that costs the
+descriptions, which is the trap. Open it when you want the finished artifact rather
+than the rules, or to measure a draft against calls that pass all of them.
 
 The step most often dropped is the second half of an option description: the
 cost. A call whose options list only their benefits looks finished and leaves the

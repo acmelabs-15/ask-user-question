@@ -23,9 +23,15 @@ option, which is rule 12.
 
 ### 1. Budget 60 display columns in a `question`, and wrap it yourself
 
-**Check:** no physical line of a question exceeds 60 display columns, measured in
-display cells rather than characters. A preview needs none of this: the renderer
-wraps its own lines to the pane.
+**Check:** no line *you write* into a question exceeds 60 display columns, measured
+in display cells rather than characters.
+
+The budget is about authored line structure, so three cases fall outside it. A
+one-paragraph question with no newlines in it is wrapped by the host and is not a
+breach however long it runs. A preview is wrapped by its renderer. And `label` and
+`description` cannot hold a line break at all — a newline there becomes a
+replacement character — so the host wraps those too and the budget never reaches
+them.
 
 You cannot detect the terminal width and the pane is narrower than the terminal, so
 budget blind and clamp low. Well-behaved command-line tools clamp their help output
