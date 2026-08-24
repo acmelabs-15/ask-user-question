@@ -630,6 +630,41 @@ _Empty._
 - An upstream report is drafted covering both defects with file, line, reproduction, blast radius and a workaround available today, so a reader has something to do rather than waiting for a fix
 - What stands from the void sweep: body tokens, context cost per run, and the pass rate, none of which depend on the path comparison. What does not: every per-file verdict
 
+## Event 61 — the install cache fixed, and two claims in the brief were wrong
+
+- Timestamp: 2026-08-24 01:50 PDT
+- Clock note: every stamp from Event 47 to Event 60 runs about two hours ahead of this machine's clock, which agrees with `date`, with file mtimes and with commit times. Stamps from here carry an explicit zone. The apparent jump backwards at this event is that correction, not disorder
+- Version moved 0.0.1 to 0.1.0 in three coupled places: the plugin manifest, the skill's frontmatter `metadata.version`, and the marketplace entry. The coupling is enforced by `evals/frontmatter.test.ts`, which asserts the first two agree. Commit 21a9c1f
+- `claude plugin update ask-user-question@ACMElabs` then repopulated the cache with all seven files. Verified in the cache copy rather than in the report: SKILL.md at 456 lines, description 1002 characters, sha 107a6cea, `metadata.version` 0.1.0
+- First correction. The empty cache was not what served the skill and was never load-bearing. The ACMElabs marketplace is a `file` source whose `installLocation` is the working tree, so the loader reads the repository directly — which is why the live skill was current all session while the cache held a zero-byte `.gitkeep`. The contradiction was visible from the start: the skill was in the session's own skill list
+- Second correction. It was not a packaging defect either. All seven skill files are tracked and unignored, so a fresh clone was never broken. What was stale was one snapshot of commit b8583360, taken before the skill was written
+- `homepage` and `repository` are not a naming error and were left alone. Every sibling plugin uses `acmelabs-15/<name>`, and `oncall` and `zephyr-mcp` ship with the same not-yet-created repository. The org exists; four sibling repos resolve
+- The retired plugin was removed from the marketplace, which left a dangling install record reporting `Plugin asking-users-questions not found in marketplace ACMElabs`. Uninstalled properly to close the half-state rather than leave the error standing
+
+## Event 62 — the references cleared, and the instrument was the whole story
+
+- Timestamp: 2026-08-24 01:52 PDT
+- The sweep launched at Event 60 completed: 27 scenarios, two runs each, 54 of 54 logs
+- Every bundled file inverted. examples.md 32 pulls at 59.3%, wording.md 24 at 44.4%, layout.md 21 at 38.9%, failed-question.md 12 at 22.2%, asking-again.md 11 at 20.4%, reading-answers.md 6 at 11.1%. All six verdict `keep`, where all six had been 0 pulls and `prune`
+- The cleanest proof is not the verdicts but the read counts. Sweep one recorded 159 `Read` calls and 0 classified in-skill; sweep two recorded 154 and 106. Near-identical behaviour, opposite measurement
+- Both sweeps returned `success` on all 54 runs, so no part of the difference is failed runs
+- Pass rate moved 0.8473 to 0.9008. Explicitly NOT attributed to the fix: the temp-root change alters only how a read is classified, never what the model receives. Treat it as run-to-run variation until a repeat bounds it
+- Context per run moved 317,145 to 412,953, which the classification account does not explain. That figure is a sum dominated by cached-prefix reads, so it is recorded as unexplained rather than reasoned about
+- The standing decision to reject deleting the references is now measured rather than argued. The evidence that would have justified deletion was an artifact of the tool
+
+## Event 63 — both collector defects fixed, and the second one had disabled a guardrail
+
+- Timestamp: 2026-08-24 02:00 PDT
+- Worked in a git worktree at /tmp/pk-fix on branch `fix-disclosure-collector-symlink`, so the shared plugin-kit checkout kept its own branch and the session working there was not disturbed. Baseline before any edit: 1495 pass, 0 fail across 43 files
+- First defect, commit 4710db8. `resolve` is string arithmetic and leaves symlinks intact, so a skill installed under a `/var/...` temp root never matched reads reported through the canonical `/private/var/...`. Fixed by resolving the longest existing ancestor and rejoining the missing remainder, which also handles a path that no longer exists
+- Second defect, commit 02248f3. `skillLoaded` was set the moment a `Skill` tool-use appeared and never read the result. The interface already documented the opposite — "whether the body reached context at all" — so this restored the contract rather than changing it
+- Blast radius of the second, which is wider than the field. `skillLoaded` gates `countedRuns`, so failed runs sat in the denominator of every pull rate; it gates `runsWithoutSkill`, which drives the harness warning, the report health banner, and the guardrail in optimize-disclosure that refuses a layout whose runs never loaded. That guardrail could not fire, because its input was true whenever a load was merely attempted
+- Verified by replay over six real transcripts rather than by argument. Unfixed: 6 of 6 loaded, 0 pulls. Fixed: 4 of 6 loaded, 6 pulls. The two that flip are the runs whose `Skill` calls returned `is_error: true`, one of them the probe where both calls failed and the model improvised the entire answer
+- A near-miss worth recording. `is_error` is ABSENT on success, not `false`. Twelve successful results across those transcripts carried no flag, so `=== false` would have called every one a failure — the same shape of mistake as the defect being fixed. Caught by opening the transcripts instead of assuming the shape
+- Pulls were deliberately left on the request. A pull asks whether the body's pointer sent the model to a file, and reaching for it is the evidence; a load asks whether content arrived. The distinction is commented in place so it does not read as the same bug left half-fixed
+- Each fix carries a regression test that fails on its parent commit. The symlink test is the only case in that file touching the disk, because a symlink cannot be faked with a synthetic path. After both: 1502 pass, 0 fail, typecheck clean. Nothing pushed
+- A third sweep is running against the fix-1-only commit with the temp root back to default, deliberately holding fix two out so the comparison isolates one change
+
 ## Observations
 
 ### Build decisions
