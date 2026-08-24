@@ -1,186 +1,280 @@
-# Cold-start prompt — ask-user-question build
+# Cold-start prompt — ask-user-question, and the disclosure investigation
 
-Paste this whole file into a fresh conversation. Written to be read cold, by someone with no history here.
+You are picking up a long session that started as "finish a skill" and turned into
+"the tool measuring the skill was measuring the wrong thing." Both halves are live.
+Read §8 before you trust any disclosure number, and §12 for what to do next.
 
----
+Start in `/Users/peter.kloss/Dev/ACMElabs/ask-user-question`. Much of the outstanding
+work lands in `plugin-kit`.
 
 ## 1. The goal
 
-Build a Claude Code plugin, `ask-user-question`, at `/Users/peter.kloss/Dev/ACMElabs/ask-user-question`. Its single skill teaches an agent to compose an `AskUserQuestion` call — the question text, the options, the recommendation, the layout, and how to read the reply.
+Two goals now, and they are entangled.
 
-It **replaced** `asking-users-questions`, now fully retired: uninstalled, dropped from the marketplace, and its directory deleted 2026-08-24 (its history survives on `github.com/acmelabs-15/asking-users-questions`). **Nothing was ported.** The old plugin was used once as a coverage reference and is not a content source. Do not copy from it.
+**The artifact.** A Claude Code plugin, `ask-user-question`, whose single skill teaches
+an agent to compose an `AskUserQuestion` call — the question text, the options, the
+recommendation, the layout, and how to read the reply. The owner's standing requirement
+is **no gaps in triggering**: it should fire in every scenario where it should.
 
-The owner's standing requirement: **no gaps in triggering.** The skill should fire in every scenario where it should fire.
+**The instrument.** Measuring whether that skill's progressive disclosure works exposed
+four defects in plugin-kit's disclosure harness and one in Claude Code. Those are fixed.
+What is not finished is the consequence: the number the harness reports is still the
+wrong number to look at, and plugin-kit's authoring guidance still contains a rule this
+project invented and then measured to underperform.
 
 ## 2. Paths, tools, and the binary rule
 
 | Thing | Path |
-|---|---|
+| --- | --- |
 | This plugin | `/Users/peter.kloss/Dev/ACMElabs/ask-user-question` |
 | The skill | `skills/ask-user-question/` |
-| plugin-kit (authoring toolkit) | `/Users/peter.kloss/Dev/ACMElabs/plugin-kit` |
+| plugin-kit | `/Users/peter.kloss/Dev/ACMElabs/plugin-kit` |
 | Marketplace | `/Users/peter.kloss/Dev/ACMElabs/.claude-plugin/marketplace.json` |
 | Results | `~/auq-results/` |
 
-**Binary tool rule.** Files under `docs/**` are Brain notes: use `mcp__plugin_brain_brain__*` only — never Read/Edit/Write/Grep/Glob. Everything else uses ordinary file tools and never Brain MCP. Brain project **`ask-user-question`** is active and maps to this repo.
+**Binary tool rule.** Files under `docs/**` are Brain notes: use `mcp__plugin_brain_brain__*`
+only — never Read/Edit/Write/Grep/Glob. Everything else uses ordinary file tools and never
+Brain MCP. Brain projects **`ask-user-question`** and **`plugin-kit`** are both active and
+map to their repos.
 
-**Two Brain traps that will bite.** A `[[wikilink]]` in a prose bullet is parsed as a typed relation and the write is rejected — wikilinks belong only in `## Relations` with a valid verb. And `edit_note` with `append` lands *after* `## Relations`, breaking the invariant that a note ends `## Observations` then `## Relations`; use `insert_before_section` on `## Observations` instead.
+**Three Brain traps that will bite.** A `[[wikilink]]` in a prose bullet is parsed as a
+typed relation and the write is rejected — wikilinks belong only in `## Relations`.
+`edit_note` with `append` lands *after* `## Relations`, breaking the invariant that a note
+ends `## Observations` then `## Relations`; use `insert_before_section` on `## Observations`.
+And **`edit_note` responses report unreliable counts** — observation totals doubling and
+halving between calls. Verify by re-reading the note, and set `expected_replacements: 1`
+on every `find_replace` so a miss fails loudly.
 
-**Session working directory.** `~/Downloads/ask-user-question` is a symlink to the repo (created mid-session to fix a genuine divergence). The pre-symlink copy is preserved at `~/Downloads/ask-user-question.pre-repo-backup-20260823` and holds the previous generation of the skill. Never read it.
+**Cross-project wikilinks do not resolve.** Name the other project's notes as plain text.
 
 ## 3. Use plugin-kit properly
 
-Load its skills formally rather than reading the files: `Skill(skill="plugin-kit:skill-creator")`, `Skill(skill="plugin-kit:plugin-creator")`. Its agents are dispatchable: `plugin-kit:skill-reviewer`, `plugin-kit:plugin-reviewer`.
+Load its skills formally rather than reading the files: `Skill(skill="plugin-kit:skill-creator")`,
+`Skill(skill="plugin-kit:plugin-creator")`. Its agents are dispatchable: `plugin-kit:skill-reviewer`,
+`plugin-kit:plugin-reviewer`.
 
 Its references, and which question each answers:
 
 | File | Read it when |
-|---|---|
-| `progressive-disclosure.md` | Placing any bundled file, or the body nears its size limits |
-| `disclosure-optimization.md` | Reading a disclosure report — `prune` vs `signpost` need opposite fixes |
-| `description-writing.md` | Before writing or defending any description |
-| `description-optimization.md` | Before generating trigger queries |
-| `running-detached.md` | Before launching any long run |
+| --- | --- |
+| `progressive-disclosure.md` | Placing any bundled file — **and see §9, parts of this are now known wrong** |
+| `disclosure-optimization.md` | Reading a disclosure report |
+| `description-writing.md` / `description-optimization.md` | Any description work |
+| `running-detached.md` | Before any long run |
 | `portability.md` / `skill-frontmatter.md` | Any frontmatter decision |
-| `plugin-skills.md` | Plugin layout and manifest |
-| `distribution-targets.md` | Where the artifact can actually run |
+| `plugin-skills.md` / `distribution-targets.md` | Layout, manifest, where it can run |
 | `grader.md`, `benchmark-notes.md`, `eval-evidence.md`, `schemas.md` | Running and recording evals |
-
-**Two doctrine points that decided real arguments here.** Gotchas and the validation loop belong in the body *regardless of size* — a trap behind a pointer arrives after the mistake. And a pointer must carry a firing condition and the cost of skipping, not just a path; a bare path is the documented cause of an unread reference.
 
 ## 4. Working rules, learned the hard way
 
-**The failure mode is not reasoning, it is citing.** Six times in one session a ruling was sound as an argument and wrong in its stated evidence — a token divisor, a Unicode width class, which file held some isolation flags, a header convention, a permission theory, a payload size. An argument gets tested by argument. A citation only gets tested when someone opens the thing. **Any sentence of the form "X was measured as Y" is worth thirty seconds of opening X.**
+**The failure mode is not reasoning, it is citing.** Nine times this session a ruling was
+sound as argument and wrong in its stated evidence. **Any sentence of the form "X was
+measured as Y" is worth thirty seconds of opening X.** Three of those nine were claims
+relayed from a research agent without checking the source — see §9's count-cap story,
+where the number was real, the citation was real, and the *definition* was something else
+entirely. **A number in authoring advice needs its definition checked, not just its citation.**
 
-**A measurement is not evidence the thing measured exists in the artifact.** An agent measured two edits, reported the figures confidently, and never staged them.
+**A measurement is not evidence the thing measured exists in the artifact.** Verify agent
+reports against the artifact, not the report.
 
-**Verify agent reports against the artifact, not the report.** Several were wrong in ways only a direct check caught.
+**When you find a stale claim, sweep for its copies.** One false claim had three homes.
 
-**When you find a stale claim, sweep for its copies.** One false claim had three homes, all drifted independently. The durable fix is to state a number in no prose at all and point at whatever computes it.
+**Size an experiment before running it, and never report an underpowered null.** A first
+placement A/B at n=8 per arm returned 2/8 against 2/8; the noise was the size of any
+effect that design could see. Re-run at n=40 it read 8/40 against 4/40, p≈0.20.
 
-**Subagents idle constantly** — going idle without starting work, and without reporting finished work. Nudge with a compact restatement; check git and the filesystem rather than trusting silence; ask them to confirm they have started. **Never make a release conditional on something they cannot observe.** Also: the owner sometimes interrupts an agent so it picks up a pending message, which is expected rather than a fault.
+**Bound concurrency on anything that spawns `claude`.** `Promise.all` over 80 tasks spawns
+80 processes; 48 concurrent takes CPU idle to 0.6% and slows every run about fivefold.
+20 is the measured-good figure on this box.
 
-**Ask questions using the skill's own standards.** The owner has corrected this repeatedly. One decision at a time; a recommendation with the fact behind it; options that state costs rather than only upside; the question self-contained, because the dialog covers the conversation and anything outside it is invisible. Keep the question inside its length budget and put structure in `preview` — the only field that renders markdown.
+**Probes should be fast.** Concurrent, on sonnet, one-line prompt, and killed the moment
+the answer arrives. That took probe work from ten minutes to 4.8 seconds.
+
+**Multi-edit scripts need a sweep, not an exit code.** A script that asserts partway
+through leaves earlier successful edits unwritten. This happened twice.
+
+**Subagents go idle holding finished work.** The cause was identified: they write reports
+to plain output instead of `SendMessage`. **Tell every dispatched agent to report via
+`SendMessage` to `main`, incrementally.** Verify their claims against the artifact.
+
+**Ask questions using the skill's own standards.** One decision at a time; a recommendation
+with the fact behind it; options stating costs; the question self-contained.
 
 ## 5. The owner's rulings — settled, do not reopen
 
-- **Glyph set**, one per job: `•` top-level marker, `◦` nested, `➊`–`➓` numbered items, `✔` passed, `✗` failed, `⚠` trap, `❯` item under discussion, `➞` leads-to, `·` inline separator only. **Font coverage is explicitly waived** — do not caveat on it. Width still matters, because mixing width classes in an aligned column breaks it.
-- **Status glyphs replace the marker** where every item in a group carries one, evaluated per group; a mixed group keeps `•`; nested keeps `◦`.
-- **Retire the composition runner** in favour of plugin-kit's `measure-outcomes`, keeping the 27 lint rules as a standalone check.
-- **The gate matches plugin-kit's severity** — warn at 5,000 tokens, fail at 5,800, measured with tiktoken.
-- **Include all necessary context in a question**, even when long. Brevity is what you spend the remaining room on. The word ceiling governs the decision sentence, not the field.
-- **Every filename and heading in plain words.** `register.md` became `wording.md`, `across-a-run.md` became `asking-again.md`, because a filename is a pointer's first word.
-- **Fix plugin-kit** where it needs fixing — authorised late in the session, after earlier caution.
+- **Glyph set**, one per job: `•` top-level, `◦` nested, `➊`–`➓` numbered, `✔` passed, `✗` failed, `⚠` trap, `❯` under discussion, `➞` leads-to, `·` inline separator. **Font coverage is waived.** Width still matters in aligned columns.
+- **Status glyphs replace the marker** where every item in a group carries one; a mixed group keeps `•`.
+- **Retire the composition runner** for plugin-kit's `measure-outcomes`, keeping the 27 lint rules.
+- **The gate matches plugin-kit's severity** — warn at 5,000 tokens, fail at 5,800, tiktoken cl100k, body only.
+- **Include all necessary context in a question**, even when long. The word ceiling governs the decision sentence, not the field.
+- **Every filename and heading in plain words.**
+- **Fix plugin-kit where it needs fixing.**
+- **plugin-kit is Claude-first.** Cross-vendor findings are evidence and technique; where anything conflicts, the Claude standard wins.
+- **Do not prune what the model cannot reach — work out how to reach it.** This reframed the whole disclosure objective (§8).
+- **The body token limit stays enforced.** It is the point of progressive disclosure.
 
 ## 6. What the skill is now
 
 ```
 skills/ask-user-question/
-  SKILL.md              456 lines · 5,795 tiktoken tokens
+  SKILL.md              456 lines · 5,795 tiktoken tokens (cl100k, body only)
   examples.md           four specimens
   references/layout.md            thirteen rules + the glyph table
-  references/wording.md           ASD-STE100, with before/after per rule
+  references/wording.md           ASD-STE100, before/after per rule
   references/failed-question.md   seven repair modes + diagnosis table
   references/reading-answers.md   reply shapes + recognition table
   references/asking-again.md      the multi-call run
 ```
 
-**Frontmatter is exactly the six standard fields** — `name`, `description`, `license`, `compatibility`, `allowed-tools`, `metadata`. `evals/frontmatter.test.ts` fails on any extension. `allowed-tools` is space-separated for portability, which is correct per plugin-kit's own reference.
+**Frontmatter is five standard fields.** `allowed-tools` was **removed** (`1f83f92`) — see §8.
+`evals/frontmatter.test.ts` fails on any non-spec field.
 
-**The description is frozen** at 1002 of 1024 characters, one physical line (a wrap silently truncates it in the tooling), sha `107a6cea…`. Do not edit without re-measuring.
+**The description is frozen** at 1002 characters, one physical line, sha `107a6cea`.
+A wrap silently truncates it in the tooling.
 
-**The body is at its ceiling** — 5,795 of 5,800 tokens, 456 of 500 lines. Further additions go in references. If something genuinely belongs in the body, the honest options are a restructure or a considered raise with an argument, not a squeeze.
-
-The four specimens: a simple call; a preview call; a long-context call; and a before-and-after repair of a call that genuinely failed in front of the owner. The last one is the most instructive — its diagnosis is that eleven findings were put in the option slots when they were context, and the live decision was never asked.
+**The body is at its ceiling** — 5,795 of 5,800 tokens, 456 of 500 lines. Additions go in
+references. Version is `0.1.0`; a bump touches `plugin.json`, the skill's `metadata.version`,
+and `marketplace.json` — `evals/frontmatter.test.ts` binds the first two.
 
 ## 7. What has been measured
 
 | | |
-|---|---|
-| Trigger | **49 / 52** queries, recall 95.5%, false triggers 6.7%, ±2 queries of run-to-run noise |
-| Gap tests | 15 of 15 rows fired, 45 of 45 attempts, six groups |
-| Disclosure | all six files **`keep`**, pull rates 28-69% — see §8 for the denominator |
-| Outcomes | never run formally; §8 carries an accidental one |
-| Lint | 27 rules, each citing its `SKILL.md` line, probe fails at 0.00 as designed |
+| --- | --- |
+| Trigger | 49 / 52 queries, recall 95.5%, false triggers 6.7%, ±2 queries of noise |
+| Gap tests | 15 of 15 rows fired, 45 of 45 attempts |
+| Disclosure | see §8 — the headline number changed twice |
+| Outcomes | never run. `measure-outcomes` was broken until `34e68c7` |
+| Lint | 27 rules, each citing its `SKILL.md` line |
 
-The ±2 noise figure is real and was measured by scoring identical bytes twice — 45/52 and 47/52. Quote attempt-level recall rather than pass counts when comparing.
+**Four trigger collisions** exist against installed neighbours (`pptx`, `pdf`, `capture`,
+`docx`), each flagged for universal-quantifier phrasing in the *neighbour's* description.
+Not fixable here.
 
-**Disclosure, measured 2026-08-24.** examples.md 69.4%, wording.md 69.4%, layout.md 50.0%, failed-question.md 41.7%, asking-again.md 36.1%, reading-answers.md 27.8%. Every file earns its place, and two are pulled in seven of every ten runs that receive the skill.
+## 8. The disclosure investigation — read this before trusting any number
 
-**Those rates are over 36 runs, not 54.** Eighteen of the 54 never received the skill at all (§8). Any disclosure figure taken before 2026-08-24 used the 54 denominator and is understated by roughly half again.
+### What was broken, and is now fixed
 
-**Four trigger collisions** exist against installed neighbours (`pptx`, `pdf`, `capture`, `docx`), each flagged for universal-quantifier phrasing in the *neighbour's* description. plugin-kit's own measurement says rewriting ours does not recover them. Not fixable here.
+**In Claude Code, not plugin-kit.** The `Skill` tool's permission ladder falls through to
+`behavior: "ask"` whose message is the literal string `Execute skill: <name>` — a *permission
+prompt label*, not an error. The binary's own SDK schema doc states that in bare `-p` an ask
+is terminal. So the skill **never loaded**. Measured 0 of 4 without a grant, 4 of 4 with
+`--allowedTools Skill`, and only granted runs carry the real success payload `Launching skill:`.
 
-## 8. The instrument bug — fixed 2026-08-24, and what it cost
+The trigger was **our own frontmatter**: a skill declaring `allowed-tools` can never take the
+auto-allow branch, because the resolved-record allowlist in the binary does not contain that
+key. GitHub issue [#77363](https://github.com/anthropics/skills/issues/77363) reports the same
+thing, open, no maintainer response. Fixed both ways — the harness grants the tool (`34e68c7`),
+and the skill dropped the field (`1f83f92`).
 
-All three defects are fixed in plugin-kit on `restructure-shared-layer`, with tests that
-fail on their parent commits. **The `TMPDIR` workaround is now dead weight — delete it
-from any script that still carries it**, because `statusDir()` is keyed to `tmpdir()` and
-a moved temp root hides the run from the dashboard for no benefit.
+**It looked like a 30% flake and was 100%.** A strong model reads SKILL.md itself after the
+refusal; opus fell back 3 of 4, sonnet 0 of 4. So the failure's visibility depended on which
+model was under test.
 
-| Defect | What it did | Fix |
-|---|---|---|
-| Symlink | `resolve()` left symlinks intact, so a skill under `/var/…` matched no read reported through `/private/var/…`. Every file: 0 pulls, `prune` | `4710db8` |
-| Load on request | `skillLoaded` was set on seeing the `Skill` tool-use and never read the result | `02248f3` |
-| Scored the unreached | pass rate and context cost were taken over runs the layout never reached | `e0be400` |
-| Report never advertised | `measure-disclosure` wrote `report.html` and never set `detail.reportPath`, so dashboard links dead-ended on a status page | `e70b881` |
+**Four plugin-kit defects, all fixed with regression tests** — see the plugin-kit session note
+for detail: symlink path comparison (`4710db8`), load recorded on request not result
+(`02248f3`), report written but never advertised (`e70b881`), and pull rates and pass rates
+disagreeing about what a valid run is (`e0be400`, narrowed by `792e17c`).
 
-The third is the one to understand. An unloaded run is cheap — 226k tokens against 350k —
-so counting it meant a candidate that broke loading reported a *lower* context cost and
-cleared the objective more easily. **The loop was being paid to break the skill.** And the
-pass rate became a mix of 0.949 loaded against 0.667 unloaded, moving 6.9 points across
-three sweeps of identical bytes, against a tolerance of 0.05 calibrated to about one
-assertion of noise. What counting unloaded runs protected was real, so it is now a named
-`loadRate` guard rather than a distortion folded into two other figures.
+### The finding that matters most
 
-**What is NOT fixed, and bounds every number here.** Eighteen of 54 runs never receive the
-skill. The `Skill` tool returns `is_error` with content `Execute skill: <alias>` and no
-body; the model then says so in its own answer. Not the permission mode (`acceptEdits`
-loads fine in isolation), not path scoping (`--add-dir` changes nothing). That is Claude
-Code, not plugin-kit. **A disclosure sweep measures about two thirds of the runs it pays
-for, and which two thirds varies.**
+**Raw pull rate is the wrong number.** It cannot separate *rarely needed* from *needed and
+missed*. `wording.md` reads as 5.6% raw and is **37.5% recall** — the rest of the denominator
+was scenarios correctly not needing it.
 
-**An accidental outcome measurement.** Those 18 runs are a natural control arm: same
-scenarios, same grader, without the skill. They scored **0.667 against 0.949** — the skill
-is worth about 28 points. Unplanned sample, so treat it as indicative, but it is the
-sharpest evidence yet that the skill helps.
+With ground truth applied to both sweeps:
 
-Finding the first defect took five dead hypotheses — prune the references, broken
-instrument, unresolvable pointers, denied reads, pointer-form difference. What forced the
-reopening was transcripts reproducing text present only in a reference. The sentence worth
-keeping: *a measurement that cannot detect the thing it measures returns a confident
-answer, and its guardrail confirms it.* All six findings are written up in plugin-kit's
-`ANALYSIS-003: Measurement Fault Classes`.
+| reference | sonnet recall | opus recall |
+| --- | --- | --- |
+| references/layout.md | 90% | 100% |
+| references/asking-again.md | 75% | 100% |
+| references/reading-answers.md | 60% | 100% |
+| examples.md | 50% | 100% |
+| references/wording.md | 37.5% | 75% |
+| references/failed-question.md | 33% | 100% |
+| **negatives** (should reach nothing) | **0/8 false pulls** | **3/8 false pulls** |
 
-## 9. Rejected, with reasons — do not re-propose
+**The models fail in opposite directions.** Opus has near-perfect recall and over-fetches
+37.5% of the time. Sonnet never over-fetches and misses a third to two-thirds. **A skill tuned
+only on opus cannot be shown to have working disclosure** — opus papers over every routing
+defect by reading eagerly. Measure on sonnet; it is also 1.7× cheaper.
 
-- **Adopting the description loop's winner.** It scored better on paper and deleted the five named exclusions, so a "grill me on requirements" query fired 3/3 on held-out — a different skill's query. Three of its phrasings were harvested by hand instead.
-- **Moving the pre-flight checklist behind a pointer.** The doctrine names the validation loop as one of two things that stay in the body regardless of size.
-- **Cutting the Gotchas to reach 5,000 tokens.** They are roughly a quarter of the body because a source audit found fifteen traps a composer cannot discover otherwise.
-- **Deleting the references.** The evidence for it was the void measurement, and the corrected sweep refutes it outright: every file is pulled in 28-69% of runs that receive the skill.
-- **Editing plugin-kit mid-investigation** — superseded twice: authorised, then done.
+### Ground truth is derivable, not a judgement call
 
-## 10. In flight
+A scenario needs reference X if reading X **improves its assertion score**. Measured: runs that
+read `wording.md` passed **86.7%** of assertions, runs that did not passed **51.4%**. That
+validated the hand annotation and retires it as a bottleneck.
 
-Nothing. No background runs, no unfinished edits, no agents.
+The hand-written mapping is in the session ledger (Event 77 area) and in `evals/` nowhere yet —
+**the `expects_references` field exists in the schema (`8d79a13`) and no corpus declares it.**
 
-## 11. Queued, in order
+### What was tried and refuted
 
-1. **`optimize-disclosure`** — unblocked for the first time. Its guardrail and objective
-   are now clean, so it is finally comparing layouts rather than load-failure noise. Note
-   it proposes edits against a body already at its ceiling (§6), so its candidates may not
-   be applyable without the restructure-or-raise conversation.
-2. **`measure-outcomes`** — never wired. §8 answers it accidentally and indicatively; a
-   designed run would answer it properly.
-3. **Extended optimization** on description and disclosure, per the owner's plan: read
-   plugin-kit in full with no sampling, then its reviewer agents, then iterate.
-4. **Uninstall plugin-kit** — last, because item 3 needs its reviewer agents. Its *repo*
-   stays; this is only the installed plugin.
+- **Pointer placement.** Moving `wording.md`'s pointer from a trailing section into the workflow
+  step where its condition fires **halved** its reach: 8/40 → 4/40, p≈0.20. No detectable effect,
+  trending against. **Do not write this into guidance.** `layout.md`'s 90% recall remains
+  unexplained; mention count and topic centrality are both still live and untested.
 
-**Not queued, but open:** plugin-kit's fixes sit unpushed on `restructure-shared-layer`
-and are not on `main`. Whoever merges that line must carry them across.
+## 9. What plugin-kit's guidance now gets wrong
 
-## 12. Commands
+`ANALYSIS-004: What Makes a Bundled Reference Get Read` in the **plugin-kit** Brain project is
+the durable home for this. Two things in the shipped guidance are wrong:
+
+**The pointer rule is invented.** "Name the file, the condition that fires it, and the cost of
+skipping" has **no published basis anywhere, including at Anthropic**, whose own two canonical
+examples do not follow it and contradict each other. Our four textbook pointers built on it are
+the ones failing.
+
+**The reference-count cap does not exist.** A claim that skills should carry ≤3 references was
+relayed into a guidance draft as measured. The source counts **whole skills attached to a task**,
+not reference files; "module" is never defined in the paper. Anthropic explicitly calls bundled
+resources **"unlimited"** and ships a 66-reference skill; 13 of their 20 exceed three. Across 398
+installed skills, p90 is 10 bundled files.
+
+**What is defensible instead: depth, not count.** Every reference linked directly from SKILL.md.
+Anthropic states this as a mechanism — a nested reference gets previewed with `head -100` and
+yields incomplete information — and it matches an independent measurement of accuracy collapsing
+0.91 → 0.64 with a second level. Fan-out unbounded, depth bounded at one.
+
+**What else has real measurement behind it**: an explicit ordered workflow instruction beat
+conditional availability (invocation 44%→95%, pass 53%→79%); tool necessity is decodable from
+hidden states at 0.89-0.96 AUROC while models still fail to act, implying pointer *wording*
+optimises the wrong stage; and every other vendor — Cursor, Windsurf, Copilot, Continue, Cline,
+Gemini CLI — moved deferred context to **harness auto-attachment**. A Claude Code skill reference
+is the only case left where the read depends on the model choosing to read. Claude Code already
+does deterministic attachment for `CLAUDE.md` `@path` imports; skill references simply are not
+wired to it.
+
+## 10. Rejected, with reasons — do not re-propose
+
+- **Adopting the description loop's winner.** Deleted the five named exclusions; a different skill's query then fired 3/3 on held-out.
+- **Moving the pre-flight checklist behind a pointer.** Doctrine names the validation loop as one of two things that stay in the body regardless of size.
+- **Cutting the Gotchas to reach 5,000 tokens.** They are a quarter of the body because a source audit found fifteen traps.
+- **Deleting the references.** Refuted twice — first the evidence was a void measurement, then the corrected sweep put every file at 20-54% raw and 33-100% recall.
+- **Decoupling grading from the run pool.** Predicted 15-20%, measured **MINUS 12%**; the limiter doubled peak concurrency into the thrashing zone.
+- **`--bare` for scenario runs.** 0 of 3 loaded; it strips the skill system.
+- **Sonnet for the disclosure *measurement of record*.** Rejected on argument, then partly rehabilitated: sonnet is right for measuring *recall* (§8), wrong for absolute rates a user of opus would see.
+- **A reference-count cap.** §9.
+
+## 11. In flight
+
+Nothing. No background runs, no agents. Both repos clean.
+
+## 12. Queued, in order
+
+1. **The ablation, stage 1.** Remove *all* references, run 27 scenarios twice on sonnet — about 54 runs, ~10 minutes. Every scenario whose score drops needs something; every scenario unchanged needs nothing, which validates the four negatives without anyone's judgement. **Stage 2** ablates individual files only for scenarios that dropped, against only their plausible candidates — about 22 minutes total against 324 for the full grid. This produces the ground-truth map and retires the hand annotation.
+2. **Populate `expects_references`** in `evals/composition/disclosure-evals.json` from the ablation, then teach `optimize-disclosure` to report recall alongside pull rate. The schema field exists and nothing reads it.
+3. **Update plugin-kit's authoring guidance** per §9 — strike the invented pointer rule, strike the count cap, write the depth principle, and label every remaining rule with what backs it. This is the deliverable the research was for.
+4. **`optimize-disclosure`** — only meaningful once recall is the reported number. Note it proposes edits against a body already at its ceiling.
+5. **`measure-outcomes`** — never run, and was broken until `34e68c7`. The sharpest open question: does the skill actually help? An accidental control arm suggested ~28 points.
+6. **Comment on [#77363](https://github.com/anthropics/skills/issues/77363)** — open, zero comments, our exact trigger. The framing nobody has stated: the documented permission flow terminates in an error naming neither permission nor denial.
+7. **Push plugin-kit.** 16 commits on `restructure-shared-layer`, unpushed, **not on `main`**. This has been the standing risk all session.
+8. **Uninstall plugin-kit** last — item 3 needs its reviewer agents.
+
+**Also open, unscheduled:** every keep-or-prune verdict plugin-kit has ever issued on a raw pull
+rate should be re-derived. The collector fixes corrected *which reads were counted*, never *what
+they were divided by*. ANALYSIS-003 Finding 11 records exactly such verdicts.
+
+## 13. Commands
 
 ```bash
 make checks          # 27 lint rules
@@ -188,12 +282,24 @@ make typecheck       # tsc --noEmit over evals/
 bun evals/frontmatter.test.ts
 bun /Users/peter.kloss/Dev/ACMElabs/plugin-kit/shared/validate/validate.ts \
     --target-type skill "$PWD/skills/ask-user-question" --extended --with-environment
+
+# a disclosure sweep — workers now default to 2x cores, capped at 24
+cd /Users/peter.kloss/Dev/ACMElabs/plugin-kit && bun shared/operations/measure-disclosure.ts \
+  --skill-path /Users/peter.kloss/Dev/ACMElabs/ask-user-question/skills/ask-user-question \
+  --scenarios /Users/peter.kloss/Dev/ACMElabs/ask-user-question/evals/composition/disclosure-evals.json \
+  --model sonnet --permission-mode acceptEdits --runs-per-scenario 2 \
+  --results-dir ~/auq-results/<name>
 ```
 
-Commit on `main` by **explicit pathspec** — several agents share this tree and a bare `git add .` sweeps their work. Do not push. No AI attribution in commit messages.
+Commit on `main` by **explicit pathspec** — several agents share this tree and a bare
+`git add .` sweeps their work. **Do not push.** No AI attribution in commit messages.
 
-## 13. Reading order
+## 14. Reading order
 
-`docs/sessions/SESSION-2026-08-23_01-*` — the ledger, sixty events, every decision and correction in order. Then `ANALYSIS-003` (coverage against the retired skill, eleven real gaps), `ANALYSIS-004` (tool capabilities read from the shipped binary), `ANALYSIS-005` (monospace layout rules with confidence classes), `ANALYSIS-006` (surface portability). All via Brain MCP.
+1. `docs/sessions/SESSION-2026-08-23_01-*` in **ask-user-question** — 80 events, every decision and correction in order. Events 57-80 are the disclosure investigation.
+2. `ANALYSIS-004: What Makes a Bundled Reference Get Read` in **plugin-kit** — the research, with our measurements separable from published work and from open questions.
+3. `ANALYSIS-003: Measurement Fault Classes` in **plugin-kit** — sixteen ways this harness returns a confidently wrong number. ANALYSIS-004 is its sequel.
+4. `docs/sessions/SESSION-2026-08-23_01-plugin-kit-*` in **plugin-kit** — the same work from the tool's side.
+5. In ask-user-question: `ANALYSIS-003` (coverage against the retired skill), `ANALYSIS-004` (tool capabilities read from the shipped binary), `ANALYSIS-005` (monospace layout), `ANALYSIS-006` (surface portability). All via Brain MCP.
 
 Keep the ledger current — one event per state change, committed in the same turn.
