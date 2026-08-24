@@ -1303,6 +1303,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Optimizer wiring deliberately parked with the builder's analysis on record: the holdout-split interaction (a small subset makes selection rest on single attempts) and the apply fence (a slice must never auto-edit a shipped artifact) are decisions, not plumbing
 - Also on disk, report pending: the modernize agent's skill-creator body fix — commits separately once verified
 
+## Event 140 — the third home lands under its ceiling, and the fourth home settles by distribution check
+
+- Timestamp: 2026-08-24 11:49 PDT, measured
+- The skill-creator body fix verified and landed at plugin-kit 6c0bc4e, pushed: review routing to the modernized reviewer, recall named as the disclosure evidence with pull rate demoted-but-retained beside it (it stays a real report column; the objection was verdict status, not visibility), and the struck clause removed by ending its sentence early. Body 4,998 to 4,990 tokens — the deletion sequenced FIRST so its savings funded the reframe, the ceiling-edit-order lesson the agent stated cleanly
+- The agent's flagged fourth home resolved by checking the fact it could not reach: the standalone skill-creator plugin ships its OWN copy of the authoring checklist naming its own reviewer, correct for its users; plugin-kit's copy serves plugin-kit users, so its line 7 was repointed to plugin-kit:skill-reviewer in the same commit
+- The agent also warned unprompted about the shared working tree (a bare commit would sweep the subset builder's in-flight files) — the shared-index hazard held by both agents independently, and the pathspec commit kept the trees separate
+- plugin-creator's body at 5,012 tokens (12 over ceiling) re-confirmed by the agent's own instrument — already on the plugin-kit backlog from Event 131
+- Batch reflect capture dispatched for the three queued findings: the pathspec-recommit trap, the loaded-skill snapshot with its re-invocation dedupe, and deletions-before-additions on a hard-budget artifact
+
 ## Observations
 
 ### Build decisions
