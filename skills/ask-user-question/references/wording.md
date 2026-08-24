@@ -17,7 +17,7 @@ shifted between issues of the specification. The numbers below are the ones
 commonly cited, and the constraint matters more than the number. Cite the rule by
 what it requires, and name the issue if precision matters.
 
-## The rules that apply, and what each one buys a cold reader
+## The rules, and what each one buys a cold reader
 
 **Words: use one word for one concept (Part 1).** The specification's own form is
 stricter, since it fixes a single approved word for each meaning and a single part
@@ -60,7 +60,7 @@ cannot ask what it meant. `Bite the bullet on the rewrite` and `the nuclear opti
 both carry a tone and no content. Jargon is narrower and sharper: a term the project
 already uses is the reader's own word and belongs in the question, while a term from
 your vocabulary that the project has never used is one they have to map. The section
-below on diagnosing a vocabulary mismatch is the test for which you have.
+below on checking you used the reader's words is the test for which you have.
 
 ## What this file does not adopt, and why
 
@@ -128,7 +128,7 @@ the reader meets it while looking at the option it applies to.
 The before version reads as three concepts. The reader cannot confirm they are one
 concept without leaving a dialog they cannot leave.
 
-## Diagnosing a vocabulary mismatch
+## Checking you used the reader's words
 
 SKILL.md carries the rule about taking the reader's nouns from the project. What it
 cannot give you is the test for whether you have, so here is the one to apply.

@@ -2,7 +2,7 @@
 
 Open this when you are shaping something with parts — a list, groups, more than one
 line — rather than writing one sentence. For getting a single sentence down to one
-clause, that is `register.md`.
+clause, that is `wording.md`.
 
 Layout applies to two fields only. A line break in a `label` or a `description`
 becomes a replacement character rather than a line, so the only fields that can
@@ -100,7 +100,7 @@ Compute the indent for the marker you actually used, and keep it consistent down
 list. This is the reason the glyph set matters to layout at all: a continuation
 aligned under a one-cell marker sits wrong under a two-cell one.
 
-### 7. Front-load the word that distinguishes the item
+### 7. Put the word that tells items apart first
 
 **Check:** truncate every item in a group to its first 11 characters. If the items
 are still distinguishable and each still says what it is, the group passes. If
@@ -122,7 +122,7 @@ act on; `Rebuilds the index on the next deploy.` does. The rule defaults to the
 sentence because most groups have something to say about each item, and a group
 that genuinely does not is the narrow case the exception covers.
 
-### 9. Parallel items take parallel structure
+### 9. Write every item in a group the same way
 
 **Check:** items in one group begin with the same part of speech and compare on the
 same axes in the same order.
@@ -207,18 +207,24 @@ and if nothing is lost it was decoration.
 **Do not mix width classes inside a single aligned column, and compute a hanging
 indent for the marker you actually used.**
 
-That is the whole of it. Two glyphs in the table are East Asian Ambiguous and render
-at one cell or two depending on a terminal setting you cannot see: the top-level
-marker `•` and the inline separator `·`. Everything else is Neutral and is one cell
-everywhere.
+That is the whole of it. One glyph in the table varies: the top-level marker `•`,
+measured at one cell or two depending on a terminal setting you cannot see.
+Everything else is one cell, measured with the host's own width function under both
+of its settings.
 
-Ambiguity matters less than it sounds, which is why it does not disqualify either of
-them. A marker used consistently down a list lines up with itself at either width,
-and the separator has nothing aligned after it — `2 files · 40 lines` cannot cost you
-anything. The failure needs a mix: two width classes in one aligned column, or an
-indent computed for a width the glyph does not render at. So do not start one item
-with `•` and its neighbour with `➊`, and do not hand-count columns from a marker
-whose width is not yours to know.
+That does not disqualify `•`, because a marker used consistently down a list lines
+up with itself at either width. The failure needs a mix: two width classes in one
+aligned column, or an indent hand-counted from a width the glyph does not render at.
+So do not start one item with `•` and its neighbour with `➊`, and let the rule 6
+indent be the same all the way down.
+
+The inline separator `·` is worth one sentence of its own, because two authorities
+disagree about it. Unicode's width data classes it Ambiguous; the host's width
+function returns one cell whatever its ambiguity setting is. So the layout
+arithmetic and a terminal following the Unicode tables could draw it differently.
+That disagreement is bounded to nothing, which is why it is the inline separator:
+`2 files · 40 lines` has nothing aligned after it, so a cell either way costs you
+nothing.
 
 ### Two things that stay prohibited
 
@@ -235,7 +241,7 @@ line inside it, and one added word breaks the block silently. Rule 11 has the co
 model. Content that wants a box goes in a preview, where the host draws the border
 and owns the padding.
 
-## A string that resists, worked
+## Eleven findings, in a preview
 
 The hardest real case is a decision carrying many items — the shape that makes the
 self-containment rule and the 25-word question fight each other. The resolution is
@@ -278,7 +284,7 @@ The question carrying it stays short, because the preview is doing the work:
 `Eleven findings, four of them blocking. Fix the blocking two now, or take the
 whole list in one pass?`
 
-## A shorter one, in the question field
+## Three checks, in a question
 
 Not everything needs a preview. Three checks and their outcomes fit in a question,
 and this is what the glyph set is for:

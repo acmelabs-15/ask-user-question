@@ -1,7 +1,7 @@
 ---
 name: ask-user-question
 license: MIT
-compatibility: "Claude Code. The composition guidance applies wherever the tool is offered; the Gotchas marked [terminal] describe the Claude Code terminal dialog, and a host that draws its own dialog owes none of them. No scripts, no network access, no system packages. The register step reads a project vocabulary file where one exists and degrades to the vocabulary already in the conversation where none does."
+compatibility: "Claude Code. The composition guidance applies wherever the tool is offered; the Gotchas marked [terminal] describe the Claude Code terminal dialog, and a host that draws its own dialog owes none of them. No scripts, no network access, no system packages. The wording step reads a project vocabulary file where one exists and degrades to the vocabulary already in the conversation where none does."
 allowed-tools: Read Grep Glob
 metadata:
   version: "0.0.1"
@@ -331,7 +331,7 @@ need:
   the previews differ visibly: one that documents rather than compares wastes the
   one thing the layout buys.
 
-## Register and layout
+## Wording and layout
 
 Every string in the call is read once, cold, under time pressure. Write them in
 ASD-STE100 Simplified Technical English, the controlled-language specification from
@@ -345,11 +345,11 @@ the name they use. Where it carries none, take them from the conversation you ar
 in. Do not import a synonym from your own vocabulary for a thing the project has
 already named.
 
-Read `references/register.md` when a string will not come down to one clause, or
+Read `references/wording.md` when a string will not come down to one clause, or
 when you have to justify a rewrite to whoever wrote the original. It carries each of
 those rules by its number in the specification, with worked rewrites and the test
-for whether you have actually taken the reader's nouns. Skipping it costs you a question that reads
-fluently and still cannot be answered cold.
+for whether you have actually taken the reader's nouns. Skipping it costs you a
+question that reads fluently and still cannot be answered cold.
 
 Read `references/layout.md` **before** you compose anything with parts — a list,
 groups, anything past a single line. It carries twelve rules with the check that
@@ -385,14 +385,14 @@ rewrite for one item routinely breaks another. Stop when a pass finds nothing.
 14. Sentences are short, active, and use the project's own words. Anything with
     parts passes the checks in `references/layout.md`.
 
-## Re-pitching a question nobody could answer
+## When a question fails
 
 When someone tells you they cannot answer, or asks what you are talking about,
 the question failed. The fix is a rewrite of the call, not more prose around it.
 
-Read `references/re-pitch.md` when a question has already failed, or when you are
-rewriting someone else's. It carries six failure modes, a table that maps what the
-reader said onto which mode you hit, and the rewrite for each. Open it before
+Read `references/failed-question.md` when a question has already failed, or when
+you are rewriting someone else's. It carries six failure modes, a table mapping what
+the reader said onto which one you hit, and the rewrite for each. Open it before
 rewriting rather than after: the modes want opposite fixes, so the repair that
 cures a buried premise makes a compound question worse.
 
@@ -413,7 +413,7 @@ Two calls in one piece of work make a run, which has properties one call does no
 how long the reader thinks this goes on, and what their earlier answer still
 authorises.
 
-Read `references/across-a-run.md` when you are about to ask again. It branches on
+Read `references/asking-again.md` when you are about to ask again. It branches on
 what happened to the last call, because the repairs point opposite ways — a skipped
 call must not be re-sent, while a clean answer that opened a new fork should be
 followed up rather than left. Skipping it is how an approval quietly widens past

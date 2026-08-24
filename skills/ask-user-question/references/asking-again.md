@@ -15,7 +15,7 @@ flowchart TD
   A[About to ask again] --> B{What happened to the last call?}
   B -->|Answered cleanly| C{Does the new fork come from that answer?}
   B -->|Answered, then the scope grew| D[Ask again — the approval covered the option's words]
-  B -->|Skipped, or nothing came back| E[Do not re-send. Diagnose first, in re-pitch.md]
+  B -->|Skipped, or nothing came back| E[Do not re-send. Diagnose first, in failed-question.md]
   B -->|Chat about this| F[Answer in prose. Ask only if a fork survives it]
   C -->|Yes, a new decision| G[Ask, and say what the first answer settled]
   C -->|No, the same decision| H[Do not re-confirm. Proceed]

@@ -76,7 +76,7 @@ The reader declined to choose. This authorises **nothing**.
 
 A skip is not consent, not agreement with your recommendation, and not permission
 to take the option you would have picked. Work out why the question was
-unanswerable and repair it, for which `re-pitch.md` has the failure modes. Where
+unanswerable and repair it, for which `failed-question.md` has the failure modes. Where
 the decision turns out not to have been a real fork, take the decide-it-yourself
 path in SKILL.md instead.
 
