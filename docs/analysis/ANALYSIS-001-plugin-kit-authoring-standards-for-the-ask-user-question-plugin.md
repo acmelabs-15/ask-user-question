@@ -147,33 +147,53 @@ plugin-kit is silent on third-party attribution — a grep for attribution, thir
 
 ## Blockers
 
-- [problem] `write_note`'s `metadata` parameter is silently dropped, so `status` never reaches the frontmatter. Workaround applied to this note: `write_note`, then `edit_note` with `find_replace` inserting `status: DRAFT` between the `type:` and `permalink:` lines, then a filter-only `search` on `status: "DRAFT"` with `note_types: ["analysis"]` to prove it landed. `DRAFT` was chosen because this project had no existing analysis notes to establish another convention #brain-mcp #workaround
-- [problem] The two-relation minimum is met to 1 of 2. The project graph was empty when this note was first written; once the session ledger landed in the project, a real bidirectional edge was added — `relates_to` outbound from here, the reciprocal on the session note, both confirmed by a references sweep reporting direction `both` and zero dangling outbound edges. The project holds only two notes, so one target is all that exists; the remaining shortfall closes as sibling notes are created #relations #shortfall
-- [problem] One edge is deliberately not written: to plugin-kit's ADR-001 on skill-creator merge-conflict resolutions. It is a `decision`-type note, and creating the edge would count as editing an ADR and trip a blocking review gate. Named in prose here instead #relations #deferred
-- [problem] An earlier copy of this brief was written into the `plugin-kit` project as ANALYSIS-002 under a superseded instruction, then deleted after this note verified, on the team lead's ruling that two copies are two sources of truth and the plugin-kit one was the defective copy — it carried the forbidden ADR edge and no `status`. Deletion removed that one-way edge without editing ADR-001 #cleanup #resolved
-- [problem] Brain MCP returned `Connection closed` on six consecutive calls during this task. Root cause, diagnosed by the team lead: `create_project` wrote this project into `~/.basic-memory/config.json` as a bare path string instead of an object carrying `path`, `mode`, `workspace_id`, `local_sync_path`, `bisync_initialized` and `last_sync`, so basic-memory failed reading `.path` off a string. Repaired to the sibling shape. Note titles were verified by reading files on disk while the server was down #brain-mcp #root-cause
+- `write_note`'s `metadata` parameter is silently dropped, so `status` never reaches the frontmatter. Workaround applied to this note: `write_note`, then `edit_note` with `find_replace` inserting `status: DRAFT` between the `type:` and `permalink:` lines, then a filter-only `search` on `status: "DRAFT"` with `note_types: ["analysis"]` to prove it landed. `DRAFT` was chosen because this project had no existing analysis notes to establish another convention #brain-mcp #workaround
+- The two-relation minimum is now met at 2 of 2. The project graph was empty when this note was first written; once the session ledger landed in the project, a real bidirectional edge was added — `relates_to` outbound from here, the reciprocal on the session note, both confirmed by a references sweep reporting direction `both` and zero dangling outbound edges. The evidence-rules analysis then landed as a third note and a second bidirectional edge was added, `pairs_with` in both directions, which closed the shortfall #relations #shortfall
+- One edge is deliberately not written: to plugin-kit's ADR-001 on skill-creator merge-conflict resolutions. It is a `decision`-type note, and creating the edge would count as editing an ADR and trip a blocking review gate. Named in prose here instead #relations #deferred
+- An earlier copy of this brief was written into the `plugin-kit` project as ANALYSIS-002 under a superseded instruction, then deleted after this note verified, on the team lead's ruling that two copies are two sources of truth and the plugin-kit one was the defective copy — it carried the forbidden ADR edge and no `status`. Deletion removed that one-way edge without editing ADR-001 #cleanup #resolved
+- Brain MCP returned `Connection closed` on six consecutive calls during this task. Root cause, diagnosed by the team lead: `create_project` wrote this project into `~/.basic-memory/config.json` as a bare path string instead of an object carrying `path`, `mode`, `workspace_id`, `local_sync_path`, `bisync_initialized` and `last_sync`, so basic-memory failed reading `.path` off a string. Repaired to the sibling shape. Note titles were verified by reading files on disk while the server was down #brain-mcp #root-cause
 
 ## Observations
+
+### Description standards
 
 - [fact] The description rule is stated verbatim as "matchable on the artifact it produces, not the topic it is about" at `shared/references/description-writing.md:7`, with four checkable criteria at `:53-59` #description #standards
 - [constraint] A description over 1,024 characters is silently truncated and its tail stops triggering; the cap is enforced in code at `shared/validate/validate-skill.ts:68` #description #hard-limit
 - [fact] The documented router limitation is that Claude only consults a skill for work it cannot easily handle on its own, which is why easy near-miss queries certify every description as flawless — `shared/references/description-writing.md:114` #triggering #evals
+
+### Disclosure and body budget
+
 - [constraint] A SKILL.md body must be under 500 lines AND under 5,000 tokens, measured rather than estimated near the ceiling — `shared/references/progressive-disclosure.md:13`, `shared/references/disclosure-optimization.md:48` #disclosure #budget
 - [decision] References are justified only when the body approaches its ceiling, the extracted section exceeds roughly 250 tokens, and the pointer states the condition that fires it — `shared/references/progressive-disclosure.md:15`, `shared/references/disclosure-optimization.md:74` #disclosure #authoring
 - [insight] A pull rate of zero splits two ways needing opposite fixes: `prune` when the body points at the file, `signpost` when nothing names it — so the prior fork's all-`prune` verdict means its pointers worked and its deferred content was never conditional — `shared/references/disclosure-optimization.md:61-62` #disclosure #diagnosis
 - [problem] The prior fork deferred eight references off a body still inside the token budget, inverting both the body-at-ceiling justification and the extraction floor #disclosure #antipattern
+
+### Layout and frontmatter
+
 - [decision] A new user-invoked entry point ships as a skill directory rather than a `commands/` file, because both load identically and only the skill layout forecloses nothing — `shared/references/plugin-skills.md:60`, `skills/command-creator/SKILL.md:34` #commands #layout
 - [fact] `disable-model-invocation: true` removes the description from context entirely, so such a skill cannot be triggered, cannot be truncated in the listing, and cannot steal a sibling's triggers — `skills/command-creator/SKILL.md:88` #frontmatter #invocation
 - [constraint] Fail-open frontmatter fields lose their guardrail in any runtime that ignores them, so safety must also live in the body and in permission settings — `shared/references/portability.md:42-48` #frontmatter #portability
 - [requirement] Environment-specific gotchas stay in the body rather than behind a pointer, the single place the disclosure rule inverts — `shared/references/progressive-disclosure.md:50` #disclosure #gotchas
+
+### Licensing and controlled language
+
 - [risk] The upstream `wait-what` artifact is MIT with a named copyright holder, so carrying its prose across verbatim attaches a notice obligation that a matching MIT licence does not discharge; paraphrasing avoids it #licensing #attribution
 - [risk] ASD-STE100's approved-word dictionary is published under the specification owner's terms, so bundling the word list into a reference or asset directory is a licensing question rather than an authoring one #licensing #controlled-language
+
+### Graph state and checkability
+
 - [risk] The inverse edge to plugin-kit's ADR-001 on skill-creator merge-conflict resolutions is deferred rather than written, because creating it would count as editing a `decision`-type note and trip a blocking review gate; the relationship is recorded in prose only, so nothing in the graph expresses it #relations #deferred
 - [insight] ASD-STE100 is only partly mechanically checkable — sentence length and approved-word lookup are scriptable, Technical Name and Technical Verb determination is domain judgement — mirroring plugin-kit's own validator-versus-reviewer split #controlled-language #tooling
+
+### Standards gaps, tooling and conventions
+
 - [problem] The standards contradict themselves on a bare top-level `version:` field: valid and not-to-be-flagged at `agents/skill-reviewer.md:69`, non-conformant noise at `shared/references/portability.md:86` #frontmatter #gap
 - [fact] plugin-kit has no `skills/skill-creator/scripts/` directory and no `run-loop.ts`, but is not documentation-only: its executables live under `shared/`, grouped by function rather than load mode because none of it enters context — `agents/skill-reviewer.md:114` #tooling #provenance
+- [constraint] A category prefix sets an observation's category rather than its observation-hood: a bullet parses as an observation wherever it sits, defaulting to category `note` when no prefix is present. The convention still holds — the prefix belongs only where an observation belongs, and a Blockers bullet is a status report about the work rather than an observation of the note's subject — but stripping a prefix recategorises rather than removes, and does not reduce the parsed count that governs the sub-grouping threshold #conventions #observation-parsing
+- [problem] The discriminator deciding which bullets count as observations is unidentified, and two hypotheses are eliminated by measurement rather than by argument: stripping the category prefix recategorises to `note` without moving the total, and bolding the lead phrase does not decategorise either. Two candidates remain untested — a trailing `#tags` run, which every counted bullet in this note carries and no uncounted one does, and section position, since every uncounted bullet sits above `## Gaps` while every counted one sits in the last two content sections. Left open deliberately rather than for want of effort: the answer would change no action, because the prefix convention rests on the category-error argument and not on parser behaviour #conventions #open-question
 
 ## Relations
 - relates_to [[SESSION-2026-08-23_01: Ask User Question Fresh Build]]
+- pairs_with [[ANALYSIS-002: Evidence Rules From Measured Failures]]
 
-<!-- One relation short of the two-note minimum: this project holds only two notes, so the session above is the sole valid target. A further edge, to plugin-kit's ADR-001 on skill-creator merge-conflict resolutions, is deferred by instruction because that note's type is decision. See Blockers. -->
+<!-- The two-relation minimum is met as of the evidence-rules analysis landing in this project. A further edge, to plugin-kit's ADR-001 on skill-creator merge-conflict resolutions, is deferred by instruction because that note's type is decision. See Blockers. -->

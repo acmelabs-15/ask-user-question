@@ -174,6 +174,79 @@ _Empty._
 - Corrected: the observation now records the path-level absence without the documentation-only claim and without the out-of-tree-only claim
 - Mechanism: plugin-kit groups executables by function under `shared/` rather than by load mode, because none of it is read into context
 
+## Event 14 — Evidence rules landed as a durable analysis note
+
+- Timestamp: 2026-08-23 21:47
+- Created: the evidence-rules analysis, recording four rules each derived from a failure in this session rather than from theory
+- Rules: a flag reporting success is not evidence it took effect; a relayed or scope-widened claim is weaker evidence or none; a differential test must run where the variable is live; a selectively quoted measurement is a false claim
+- Reason: the rules were paid for by four corrected premises and existed only in conversation prose
+- Relations: reciprocal edges formed with this ledger and with the authoring-standards analysis
+
+## Event 15 — Skill authored
+
+- Timestamp: 2026-08-23 22:08
+- Commit: `ba24391` — the skill authored, four files
+- Verified: validator clean at both tiers; `make checks` exit 0
+- Verified: the bundled specimen satisfies 19 of the skill's own rules mechanically
+
+## Event 16 — make composition gated on absence, and a recorded belief corrected
+
+- Timestamp: 2026-08-23 22:08
+- Commit: `c6f85ef` — `make composition` now gated on the artifact being absent
+- Corrected in the same commit: the recorded belief that the composition run needed no gate
+- Mechanism: the `disclosed` arm does not inject — it points cwd at the skill directory and counts `Read` calls, so a visible copy floors its reference metrics
+
+## Event 17 — Sentinel-value fault class added to the register
+
+- Timestamp: 2026-08-23 22:08
+- Commit: `447511a`
+- Fault: `lsof` returning `0` reached `process.kill(0)`, which signals the caller's whole process group
+- Why nothing rejected it: `Number.isInteger(0)` is true — a type test is not a range test
+
+## Event 18 — Trustworthiness gate committed
+
+- Timestamp: 2026-08-23 22:08
+- Commit: `ff8d491` — the 876-line trustworthiness gate
+- Also in scope: the records the gate judges, rescued from a directory `make clean` deletes
+
+## Event 19 — Four triggering gaps closed by folding rather than appending
+
+- Timestamp: 2026-08-23 22:08
+- Commit: `746889b`
+- Approach: folding into existing clauses rather than appending new ones
+- Measured: eleven scenarios in user voice — two matched before, eleven after
+- Cost: eleven characters
+
+## Event 20 — Factual layer fixed after independent review
+
+- Timestamp: 2026-08-23 22:08
+- Commit: `09be5a4`
+- Review returned: three HIGH and seven MEDIUM findings
+- Verified: every claim re-checked against the installed 2.1.241 build
+- Ship-blocker: the skill claimed a free-text box always exists, when a preview question has none
+
+## Event 21 — Evidence-rules note committed
+
+- Timestamp: 2026-08-23 22:08
+- Commits: `4a9cd37`, `9889986`
+
+## Event 22 — plugin-kit installed temporarily to run current-generation reviewers
+
+- Timestamp: 2026-08-23 22:08
+- Issue: the review that returned the ten findings used a different generation's reviewer
+- Action: plugin-kit installed temporarily so its own current-generation reviewers could run against the artifact
+
+## Event 23 — check-overlap is blind to the plugin cache tree
+
+- Timestamp: 2026-08-23 22:08
+- Issue: `check-overlap` cannot see 273 installed skills, because it never scans the plugin cache tree
+- Inside the blind spot: the near-duplicate skill being retired, so the tool could not have reported the overlap it exists to find
+
+## Event 24 — User ruling on retirement ordering
+
+- Timestamp: 2026-08-23 22:08
+- Decision: `oncall`'s dependency is fixed before the near-duplicate is disabled
+
 ## Observations
 
 ### Build decisions
@@ -209,5 +282,6 @@ _Empty._
 
 ## Relations
 - relates_to [[ANALYSIS-001: Plugin Kit Authoring Standards for the Ask User Question Plugin]]
+- leads_to [[ANALYSIS-002: Evidence Rules From Measured Failures]]
 
-<!-- One relation short of the two-note minimum: this project holds only two notes, so the analysis above is the sole valid target. The two prior-art notes this session rests on live in the plugin-kit project and cannot be wikilinked across projects; they are named as plain text in the Prior art header line, in Event 11, and in the Observations above. -->
+<!-- The two-relation minimum is met as of the evidence-rules analysis landing in this project. The two prior-art notes this session rests on live in the plugin-kit project and cannot be wikilinked across projects; they are named as plain text in the Prior art header line, in Event 11, and in the Observations above. -->
