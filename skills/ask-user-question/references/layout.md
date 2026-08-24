@@ -59,9 +59,9 @@ The upper bound anyone can hold at a glance is small, and the four-group cap is 
 tighter constraint of the two: the reader has to keep the group set in mind while
 reading the items inside it.
 
-### 5. In a `question`, `∙` then `◦`. In a `preview`, markdown lists
+### 5. In a `question`, `•` then `◦`. In a `preview`, markdown lists
 
-**Check:** an unnumbered question list uses `∙` at the top level and `◦` one level
+**Check:** an unnumbered question list uses `•` at the top level and `◦` one level
 in, and stops there. A numbered list takes `➊` to `➓` instead, and only where rule
 10 says a number earns its place. A preview uses markdown's own list syntax and no
 authored marker at all.
@@ -72,8 +72,10 @@ a markdown renderer, so `-` is drawn as a list and nesting is the renderer's pro
 instead of yours.
 
 Filled then hollow, which is the convention a reader already knows and does not have
-to be told. `∙` reads as a primary item and `◦` reads as subordinate to the one above
-it, so the two levels distinguish themselves without a header doing the work.
+to be told. Both are full size, so the pair differs in fill rather than in scale: `•`
+reads as a primary item and `◦` as subordinate to the one above it, and the two levels
+distinguish themselves without a header doing the work. A small mark over a large one
+would say the opposite of the hierarchy it marks.
 
 **Two levels, and a third is a diagnostic rather than a limitation.** Wanting a third
 means the content has outgrown the field — rule 4 caps a group at five items and a
@@ -94,11 +96,9 @@ group, and it is for the case where every item is a short name followed by an
 explanation; it costs you one width calculation per group, which is why it is not
 the default. Mixing the two inside one string is a defect either way.
 
-Compute the indent for the marker you actually used. This is the reason the glyph
-set matters to layout at all: a continuation aligned under a one-cell marker sits
-wrong under a two-cell one, and a nested `◦` is positioned relative to the `∙` above
-it. Every glyph in the set below is one cell, which is what makes the arithmetic
-something you can do once and trust.
+Compute the indent for the marker you actually used, and keep it consistent down the
+list. This is the reason the glyph set matters to layout at all: a continuation
+aligned under a one-cell marker sits wrong under a two-cell one.
 
 ### 7. Front-load the word that distinguishes the item
 
@@ -186,7 +186,7 @@ you are working harder than the field requires.
 
 | Job | Glyph |
 |---|---|
-| Leading marker, top level | `∙` |
+| Leading marker, top level | `•` |
 | Leading marker, nested one level | `◦` |
 | Numbered item | `➊` … `➓` |
 | Passed, satisfied, present | `✔` |
@@ -207,13 +207,18 @@ and if nothing is lost it was decoration.
 **Do not mix width classes inside a single aligned column, and compute a hanging
 indent for the marker you actually used.**
 
-That is the whole of it. Every glyph in the table is one display cell whatever the
-reader's terminal does with East Asian Ambiguous characters — except `·`, which is
-Ambiguous, and which is why its job is the inline separator: `2 files · 40 lines`
-has nothing aligned after it, so its width cannot cost you anything. Used
-consistently, an ambiguous glyph lines up with itself; the failure is only ever a
-column that mixes classes, or an indent computed for a width the glyph does not
-render at.
+That is the whole of it. Two glyphs in the table are East Asian Ambiguous and render
+at one cell or two depending on a terminal setting you cannot see: the top-level
+marker `•` and the inline separator `·`. Everything else is Neutral and is one cell
+everywhere.
+
+Ambiguity matters less than it sounds, which is why it does not disqualify either of
+them. A marker used consistently down a list lines up with itself at either width,
+and the separator has nothing aligned after it — `2 files · 40 lines` cannot cost you
+anything. The failure needs a mix: two width classes in one aligned column, or an
+indent computed for a width the glyph does not render at. So do not start one item
+with `•` and its neighbour with `➊`, and do not hand-count columns from a marker
+whose width is not yours to know.
 
 ### Two things that stay prohibited
 
@@ -281,9 +286,9 @@ and this is what the glyph set is for:
 ```text
 Pre-push checks:
 
-∙ Types ✔
-∙ Unit tests ✔
-∙ Integration ✗ (two failures in the billing suite)
+• Types ✔
+• Unit tests ✔
+• Integration ✗ (two failures in the billing suite)
   ◦ Both tests call the payment sandbox ➞ the test key expired on Friday.
   ◦ ⚠ Neither test failed on the last green build.
 
