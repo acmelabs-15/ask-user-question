@@ -1,6 +1,6 @@
 {
   "name": "ask-user-question",
-  "description": "PENDING: authored in wave 3",
+  "description": "Composes AskUserQuestion calls a human can answer on sight, and reads the replies that come back.",
   "version": "0.0.1",
   "author": {
     "name": "Peter Kloss",
