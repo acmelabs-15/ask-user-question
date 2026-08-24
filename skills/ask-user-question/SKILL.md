@@ -2,12 +2,12 @@
 name: ask-user-question
 compatibility: "Claude Code. The composition guidance applies wherever the tool is offered; the Gotchas marked [terminal] describe the Claude Code terminal dialog, and a host that draws its own dialog owes none of them. No scripts, no network access, no system packages. The wording step reads a project vocabulary file where one exists and degrades to the vocabulary already in the conversation where none does."
 metadata:
-  version: "0.1.4"
+  version: "0.1.5"
   component-type: "skill"
   acknowledgement: "The re-pitch trigger and the controlled-register idea come from the wait-what skill by Matt Pocock, MIT licensed. No text was carried across."
 # description must stay on ONE physical line. A blank line or a wrap inside it
 # truncates the value in the measurement tooling, silently and without warning.
-description: "Composes the AskUserQuestion call itself: question text, batching decisions into one call or a sequence, a label against its description, options that compare and show their costs, the one recommendation and the fact behind it, the layout: single-select, multiSelect or preview, what you have not checked, and reading a reply of free text, a note, a skip or silence. Use when the call is the deliverable, including whether to ask at all, a rejected call or one that hangs, and rewriting or tightening wording a cold reader could not act on. Do not use for prose about asking rather than a question: a guide, house conventions, training material, a decision log or a risk register. Do not use when a wider job merely pauses to ask, since implementing a spec, adjudicating a decision, interviewing for requirements, reviewing a diff and closing a session carry their own prompts. Do not use to render the dialog, fix a broken host or SDK integration, build a survey or a form, or page through many items."
+description: "Composes the AskUserQuestion call itself: question text, one call or a sequence, a label against its description, options that compare and show their costs, the one recommendation and the fact behind it, the layout: single-select, multiSelect or preview, what you have not checked, and how to read a reply of free text, a note, a skip or silence. Use when the call is the deliverable, including whether to ask at all, a rejected call or one that hangs, and rewriting or tightening the plain wording of a question nobody could answer. Do not use when the artifact wanted is prose about asking rather than a question: a guide, house conventions, training material. Do not use when a wider job merely pauses to ask along the way, since implementing a spec, adjudicating a decision, interviewing for requirements, reviewing a diff and closing a session carry their own prompts. Do not use to render the dialog, fix a broken host or SDK integration, build a survey or a form, or page through many items."
 ---
 
 # Composing an AskUserQuestion call
