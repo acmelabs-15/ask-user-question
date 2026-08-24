@@ -62,6 +62,9 @@ Inline reflect capture for the active session note SESSION-2026-08-23_01: Ask Us
 - [MED] The report-through-SendMessage miss has a second cause beyond forgetting: an agent can explicitly reason that its automatic final return suffices and that a closing send would be redundant. That is a wrong inference about the channel rather than a lapse, which is why the rule needs its flat form — the report is only real through the tool, and the automatic return is not a substitute — rather than a reminder form.
   - Source: the genre-writer's self-diagnosis, third instance, 2026-08-24.
 
+- [MED] A question composed by the skill's own rules can still fail the cold-reader test on vocabulary rather than on layout. Every layout rule passed, yet the call assumed the project's measurement jargon — corpus row, expects_references, recall signal — as shared ground, and the reader answered that they did not understand what was being asked. So the cold-reader re-read has to check the NOUNS as hard as it checks the facts: a premise carried in a term the reader does not own is as buried as one left in chat prose above the dialog. The wording rule already says to take the reader's nouns from the conversation, and the reader here is the project owner, not the measurement tooling. The fix was restating the same decision in plain words — a test-scenario tag that says which file should be read — rather than adding more context around the jargon.
+  - Source: "I didn't understand what you were asking me" (user, 2026-08-24), on a call that passed the full pre-flight; diagnosed as Mode 1 via the skill's own failed-question reference.
+
 ## Notes for Review (LOW confidence)
 
 - none yet
@@ -78,6 +81,7 @@ Inline reflect capture for the active session note SESSION-2026-08-23_01: Ask Us
 - [constraint] An AskUserQuestion call carries its whole decision context inside the call — question text and option descriptions — never in chat prose above the dialog; re-read every call as a cold reader who sees only the call text, and if any option or referenced item is not decidable from it, the call is not ready #ask-user-question #context-in-call
 - [constraint] AskUserQuestion calls in this project's own sessions are composed by formally loading this project's ask-user-question skill and following its rules for question text, labels, option descriptions and layout — never improvised, never one large block of question text — because live use here is also the test surface for the artifact being built #ask-user-question #dogfooding #skill-invocation
 - [insight] The report-through-the-tool rule needs its flat form because the miss has a second cause: an agent can explicitly reason that its automatic final return suffices — a wrong channel inference a reminder would never catch #delegation #reporting
+- [insight] A question can pass every layout rule and still fail the cold-reader test on vocabulary — jargon owned by the project's tooling rather than by the reader buries a premise as effectively as leaving it in chat prose, so the re-read checks the nouns as hard as the facts and the fix is restating the decision in plain words rather than adding context around the jargon #ask-user-question #vocabulary #mode-1
 
 ### Verification techniques
 
