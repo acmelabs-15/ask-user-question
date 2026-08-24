@@ -981,6 +981,12 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Three disjoint-file workstreams dispatched in parallel per owner approval: the structural-genre authoring reference for skill-creator (new body-structure.md plus a checklist hop, since the skill body sits at its ceiling); the three remaining genre detectors as informational-only reporters in validate — deliberately never warnings, because unvalidated genres reported as facts must not become guidance dressed as enforcement; and the draft upstream comment for the open Claude Code issue on allowed-tools skills failing headless, carrying the mechanism, the 0-of-4-to-4-of-4 measurement, and the flow-terminates-in-a-mislabeled-error framing — draft only, to be shown before anything is posted
 - Every dispatch brief now carries the standing reflect-protocol line: agents never write auto-memories; learnings return in reports and route through the reflect chain
 
+## Event 101 — the ledger clock corrected, and the reflect boundary closed
+
+- Timestamp: 2026-08-24 08:45 PDT, measured from the system clock — and this stamp breaks the sequence deliberately. The ledger's convention had drifted nearly six hours ahead of real time (Event 100 says 14:20 while the clock read 08:26), because since the drift was first flagged at Event 81 every writer, this session's included, derived each stamp from the previous event rather than from the clock. From this event forward, stamps are the measured clock; earlier stamps from Event 73 onward are ledger-convention time, not wall time, and file mtimes are the corroborated source for that span
+- The reflect sidecar gained two verified entries in one pass: the SendMessage constraint — a teammate's report is real only through the messaging tool, with what is lost being exactly what a disk listing cannot show — and the write-path status-drop edge case at three of three occurrences today, ticket-worthy against the brain tooling rather than a repair habit. The sidecar's Observations now mirror all four findings
+- Also swept into this boundary: the convention-mandated inverse edge on the evidence-rules analysis, and a checklist defect pair found on read — an own-goal relative path one level short, and the struck pointer rule still stated as a checkable standard in the authoring checklist, both routed to the writer currently holding that file
+
 ## Observations
 
 ### Build decisions
