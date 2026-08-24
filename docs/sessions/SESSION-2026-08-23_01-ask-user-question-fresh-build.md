@@ -1169,6 +1169,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Consequence for the review in flight: auq-skill-review spawned on the stale definition; its structural findings stand, its pointer-form findings get triaged against current doctrine before any reach the owner
 - Reviewer-modernization dispatch queued behind this event; the running review instance is unaffected by definition edits, which load at spawn
 
+## Event 124 — the stale review stopped by owner call, to re-run on the fixed definition
+
+- Timestamp: 2026-08-24 10:59 PDT, measured
+- Owner: a review running on a definition just proven stale should not keep running. Correct, and stronger than the plan it replaces — Event 123 had the review continuing with its pointer-form findings filtered at triage; filtering a stale reviewer is strictly weaker than re-running a current one, and the run costs more than the re-dispatch saves. auq-skill-review stopped mid-run; no findings were consumed from it
+- The review re-dispatches after the reviewer-modernization diff is reviewed and committed. The diagnosis agent is unaffected (it reads doctrine references directly, not the reviewer definition) and keeps running
+- [reflect-capture] MED, preference: when the definition governing a dispatched agent is proven stale mid-run, stop the run and re-dispatch on the corrected definition — planning to filter the stale output at triage is the weaker remedy and spends the same review twice. Capture dispatched in the background to the reflect sidecar SKILL-001: Orchestrator Process Learnings
+
 ## Observations
 
 ### Build decisions
