@@ -1350,6 +1350,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - That +2 paragraph committed at plugin-kit c78e6b3 as the honest current state, and its supersession handed to the envelope builder mid-flight as part of that deliverable — when the envelope lands, the paragraph flips to stating the enforcement that then holds. The envelope builder also received the corrected tree position and the sibling's independent envelope-writer map
 - The subset thread is fully closed; the envelope build is the only work in flight
 
+## Event 146 — the next-sweep question repaired twice, then answered: the separating run launches, and a research track opens
+
+- Timestamp: 2026-08-24 12:51 PDT, measured
+- The re-presented next-sweep ask failed on vocabulary a second time — the owner named three confusing phrases ("the sonnet pickup check", "misses sit right on it", the "pasted-text twin") and the options as unclear. Diagnosis: compressed metaphor is jargon too — everyday words used as terms of art bury the premise as effectively as identifiers. Repaired by answering the three questions in prose and re-asking with mechanisms spelled out; the repaired call was answered immediately. Second vocabulary capture dispatched to the sidecar, escalating the existing Mode-1 edge case
+- Owner's answer, two directives in one: "open to option one" — the separating run — plus a research track on why weaker models route progressive disclosure worse and what the community (Anthropic, Google Gemini, OpenAI, Addy Osmani and peers) favors as remedies, extended mid-flight by a third dimension: how the community DETECTS tier-dependent failures (cross-model eval matrices, canaries, routing observability, model-upgrade regression gates)
+- The separating run launched at 12:47: a copy of the current tree carrying the OLD 998-char description byte-exact (sha 0aefd25e verified against the preserved measurement bytes), sonnet, the 54-row candidate set, 3 runs per query, no early stop, envelope on — every parameter mirroring the morning sweep so the description text is the only variable. Detached; results to the separating directory
+- The research dispatched to the analyst, background, delivering a Brain ANALYSIS note in the plugin-kit project (counter verified before writing, expected ANALYSIS-006), grounded in the reference research's tier findings and the day's measured facts, with the primary-text-only evidence rule and all three known write-path defects in the brief
+- In flight now: the separating sweep, the research, the envelope build, and the jargon capture
+
 ## Observations
 
 ### Build decisions
