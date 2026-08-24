@@ -1450,6 +1450,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Every Vercel citation across the file set audited to its home; the withdrawn figure survives only inside its own withdrawal paragraph, on the same never-re-derive reasoning as the struck-rule historicizing clauses
 - The board: the isolation audit is the sole thread in flight; then the mechanism-level items and the retrospective
 
+## Event 158 — owner catches the stale companion ledger; both notes now current per state change
+
+- Timestamp: 2026-08-24 13:38 PDT, measured
+- Owner correction: keep BOTH plugins' session notes completely current. The drift was real — this ledger ran turn by turn while nine plugin-kit commits (f88fb50 through 853237f) accumulated unrecorded in plugin-kit's own session note, closed since morning. Repaired at plugin-kit d616581: three consolidated per-thread events (the doctrine-propagation sweep, subset-plus-envelope, the research-correction-integration arc), each pointing here for the full narrative, plus the State paragraph rewritten through 853237f with the candidates list updated for what the afternoon closed and opened
+- Standing rule from here: a state change landing in plugin-kit gets its event in plugin-kit's note in the same boundary as this ledger's, with this ledger holding the narrative and the companion holding the repository-local record — the same one-source-plus-pointers shape the two notes already used this morning
+- Capture dispatched to the sidecar: the dual-ledger rule as the cross-project extension of the sync-per-batch discipline
+
 ## Observations
 
 ### Build decisions
