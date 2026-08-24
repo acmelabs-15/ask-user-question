@@ -1235,6 +1235,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Owner feature request, driving the next engineering dispatch: the iterative optimization measures should run a SELECT GROUP of measures rather than the full set every time — focus on one group or one query while making small changes, full runs only to confirm. Direct fit to the description-iteration loop the diagnosis opened
 - The next-sweep decision (separating test versus minimal edit versus hold) was interrupted by this request and remains OPEN on the pending stack, to re-surface when the owner returns to it
 
+## Event 132 — the clean review lands verified, and the subset runner gains its display requirements
+
+- Timestamp: 2026-08-24 11:20 PDT, measured
+- The re-dispatched skill review (on the modernized reviewer definition) delivered: zero Critical, one High, three Medium, five Low, with the measured-and-deliberate set correctly fenced (no allowed-tools, ToC blocks, body-at-gate, frozen description all recognized, not flagged). Its three sharpest claims verified against the artifacts before any reached a decision: M1's two wrong self-measurement lines in the examples file (checkout 12 lines not 14; the repair 22 lines and four groups against its stale "14 lines, two groups" — converging with Event 107's independent catch), H1's noun audit exact (answer 0, user 1, dialog 1, prompt 1 — the symptom-side nouns anchored only in exclusion clauses, the mechanism consistent with the trigger diagnosis), and M3's destructive-confirmation contradiction at the cited lines in both references
+- One number held unsettled rather than adopted: the repair call's widest-line figure reads 58 display cells in the review and 62 codepoints in my check — remeasure with the host's own width function at fix time rather than trusting either
+- H1's candidate description (symptom-noun anchoring at 1,023 chars) joins the diagnosis's two candidates as a third input to the OPEN next-sweep decision — three draft descriptions now exist and none lands without the owner
+- Owner requirements for the subset runner relayed to the builder mid-build: the CLI displays only the filtered rows with subset-sized denominators and an explicit subset statement; the HTML report and dashboard listing carry an unmissable subset badge so an iteration run can never be mistaken for a run of record
+- Pending decisions stack, surfaced per the persistence rule: (1) the next-sweep decision — separating test, minimal edit, or hold, now with H1 as a third candidate; (2) the review-fix disposition for the three Mediums
+
 ## Observations
 
 ### Build decisions
