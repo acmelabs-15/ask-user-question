@@ -9,7 +9,7 @@ metadata:
   acknowledgement: "The re-pitch trigger and the controlled-register idea come from the wait-what skill by Matt Pocock, MIT licensed. No text was carried across."
 # description must stay on ONE physical line. A blank line or a wrap inside it
 # truncates the value in the measurement tooling, silently and without warning.
-description: "Composes the AskUserQuestion call itself: question text, how an option label and its description divide the work, the one recommendation and the fact that justifies it, the choice among single-select, multiSelect and preview, and how to read a reply that arrives as free text, a note, a skip or silence. Use when the call is the deliverable, including the decision not to ask, and rewriting a question nobody could answer. Do not use when the artifact wanted is prose about asking rather than a question: a guide, a cheat sheet, house conventions, a checklist, training material. Do not use when a wider job merely pauses to ask along the way, since implementing a spec, adjudicating a decision, interviewing for requirements, reviewing a diff and closing a session carry their own prompts. Do not use to render the dialog, debug a schema error or a hang, build a survey or a form, or page through many items, which enumerates rather than decides."
+description: "Composes the AskUserQuestion call itself: question text, one call or a sequence, how an option label and its description divide the work, the one recommendation and the fact justifying it, the choice among single-select, multiSelect and preview, and how to read a reply of free text, a note, a skip or silence. Use when the call is the deliverable, including the decision not to ask, and rewriting a question nobody could answer. Do not use when the artifact wanted is prose about asking rather than a question: a guide, a cheat sheet, house conventions, a checklist, training material. Do not use when a wider job merely pauses to ask along the way, since implementing a spec, adjudicating a decision, interviewing for requirements, reviewing a diff and closing a session carry their own prompts. Do not use to render the dialog, debug a schema error or a hang, build a survey or a form, or page through many items, which enumerates rather than decides."
 ---
 
 # Composing an AskUserQuestion call
@@ -123,11 +123,12 @@ that matters.
 1. What happens if the reader picks this.
 2. What it costs, forecloses, or risks.
 
-The second part is the one that gets dropped, and dropping it is the defect this
-section exists to prevent. A reader who picks an option has to be able to tell
-from the screen that it went wrong for them. An option described only by its
-benefit hides that, and every sentence in it can still be true. Write the cost of
-the option you are recommending as plainly as the cost of the others.
+The second part is the one that gets dropped, and it is the part that does the
+work. A reader who picks an option has to be able to tell from the screen that it
+went wrong for them, and only the cost tells them that. An option described by
+its benefit alone hides the consequence while every sentence in it stays true,
+which is the failure that survives proofreading. Write the cost of the option you
+are recommending as plainly as the cost of the others.
 
 Options also have to be comparable. Compare them on the same axes, in the same
 order, in the same units, so a reader scanning down finds the real difference
@@ -147,8 +148,12 @@ A recommendation is three things on **one** option, and all three are required:
 2. Its label ends with the exact token ` (recommended)`.
 3. Its own description carries the justification.
 
-Naming a position is what keeps this single. There is one first element, so a
-second recommendation has nowhere to live.
+Position is part of the rule because it is the only positional affordance the tool
+gives you: ordering is half of what makes a default read as one, so a marker on the
+third option fights the reading order. It also makes a second marker visibly
+inconsistent rather than merely discouraged, since only one option can be first.
+Nothing stops you writing two, so this is a rule you check rather than a limit the
+tool enforces.
 
 The justification has to cite a fact from the situation, not a virtue. `Your
 lockfile already pins version 3, so this needs no dependency change` is a
