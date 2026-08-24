@@ -1359,6 +1359,23 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The research dispatched to the analyst, background, delivering a Brain ANALYSIS note in the plugin-kit project (counter verified before writing, expected ANALYSIS-006), grounded in the reference research's tier findings and the day's measured facts, with the primary-text-only evidence rule and all three known write-path defects in the brief
 - In flight now: the separating sweep, the research, the envelope build, and the jargon capture
 
+## Event 147 — the envelope lands at 1719, and an escalation is held for the owner
+
+- Timestamp: 2026-08-24 12:58 PDT, measured
+- The envelope-plus-T-13 build verified (suite 1,719 from 1,688, zero failures; the one-of-six intermittent red re-observed and again uncaptured — the pre-existing flake candidate strengthens) and committed at plugin-kit 3819d55, pushed. measure-disclosure now writes the envelope by reusing the shared builder with optimizer-only caps gated per operation; slice-versus-full and tier-versus-record deltas are mechanically refused for disclosure; the counted-versus-all cap names both denominators and every exclusion cause, closing the interrupted-pair improvement candidate. T-13 done beyond its brief: the not-reachable state distinguishes a blind sweep from a non-applicable one, blindness downgrades absent and installed but never shadowed, and measure-outcomes gained the conflict check it never had. The follow-up round superseded the asymmetry paragraph with the enforcement that now holds — noting the asymmetry inverted: disclosure is now the stricter sweep on the tier class, since triggering records a nullable model
+- Held for the owner, NOT acted on — the builder's escalation: the install-state sweep is structurally blind to the plugin cache directory where marketplace installs actually live (five copies of this very skill sit there), so every historical install_state absent was an unearned claim; the runs were very likely fine anyway because the isolation flag fences plugin skills out of eval children, but the envelope never records that isolation. Builder recommends recording the isolation in the envelope over widening the sweep (which would wrongly void the corpus). Decision queued behind the separating-sweep decision, one at a time
+- The research agent gained two owner-named sources mid-flight (Vercel — already prior art via the invocation measurement — and TanStack, with stated-negative discipline if nothing is published), and the owner confirmed the deliverable is a Brain ANALYSIS note by a brain analyst, which the brief already mandated
+- The jargon capture (metaphor is vocabulary too) verified and committed at e737c20
+
+## Event 148 — the separating sweep answers: the edit cost ten rows, and the model costs nine
+
+- Timestamp: 2026-08-24 12:58 PDT, measured
+- The separating run landed clean: the OLD 998-char description (sha-verified bytes) on sonnet, full 54-row set, 3 runs per query — 26 of 39 should-fire phrases load the skill against the shipped wording's 20 of 39, negatives silent 15 of 15 on both
+- TEN of the nineteen morning misses RECOVER under the old wording on the same model. The diagnosis's mostly-model-bound headline is overturned in part: the description edit carried roughly ten rows of sonnet recall, spread far beyond the single register clause the per-word diff had flagged (recovered rows span reply-reading, costs, axes, default-signal and register clusters). Which individual clause carried which row remains open; the whole-edit effect is proven at full n
+- What remains missing under EITHER wording on sonnet, nine rows: both ask-or-decide phrasings, the evidence-skim, one comparability phrasing, the sanity-check and read-three-times register rows, the recommending-monolith cost row, the dialog-never-appears row, and review-a-draft-by-path — the last confirmed as a genuine missing-words gap (fails on both wordings; its pasted-text twin fires 3 of 3)
+- Comparability note: the opus record (49/52) was measured on the OLD description, so restoring that wording also restores strict comparability with the record; the shipped 1,002-char wording has no opus measurement of its own
+- Disposition to the owner next; nothing edited
+
 ## Observations
 
 ### Build decisions
