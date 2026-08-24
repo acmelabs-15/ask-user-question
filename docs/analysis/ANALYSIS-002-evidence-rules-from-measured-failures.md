@@ -17,7 +17,7 @@ tags:
 
 ## Context
 
-Four separate premises were corrected during a single session. That rate is the reason this note exists: the failures were not careless, they were plausible inferences drawn from real evidence that did not support them. A rule derived from a mistake someone actually made is worth more than a rule derived from principle, because it names the shape the mistake takes when it looks reasonable.
+Several premises were corrected during a single session, five of them sharing a single shape. That rate is the reason this note exists: the failures were not careless, they were plausible inferences drawn from real evidence that did not support them. A rule derived from a mistake someone actually made is worth more than a rule derived from principle, because it names the shape the mistake takes when it looks reasonable.
 
 These rules govern what counts as evidence in this project. They are deliberately narrow — each one closes a specific hole that was walked into.
 
@@ -45,9 +45,11 @@ The general failure: documentation describes a mechanism, and a mechanism suppor
 
 ### Rule 2: A relayed claim is weaker evidence than its source, and a claim generalised past its original scope is not evidence at all
 
-Four premises were corrected in one session. Three of them began life as a *true* finding about one file, and became false when generalised to a repository.
+Several premises were corrected during a single session. **Five shared one shape**: a true finding about one file, generalised into a claim about a system — that the toolkit shipped no runnable harness, that all subprocess spawning funnelled through one module, that Bun writes splice on re-run, that every trigger measurement scored a truncated description, and that a composition run injects skill content so an installed copy cannot affect it. Each was caught by an agent reading source rather than accepting the relay, which is the only detection method that worked. No amount of care in restating a claim would have surfaced these, because each restatement was faithful to what it received.
 
-That is the dangerous shape, because the origin is sound. Nobody invented the finding; someone observed it correctly at one scope and it was then restated at a wider one, at which point it was no longer supported by the observation behind it. Each relay hop also strips the qualifications that made the original true.
+**Other corrections had other shapes, and the distinction matters.** Twice the orchestrator adopted an agent's finding without verifying it and propagated the error onward. Once it prescribed an action that a rule written in the target artifact itself forbade. Once it reasoned from a capability's shape rather than from what a user would actually type, and concluded four real request types were not real. **Not every error is the same error**, and a register of one shape hides the others — so counting instances of the shape you have already named measures how often that shape recurred, not how many ways the work went wrong.
+
+The scope-widening shape is the dangerous one, because its origin is sound. Nobody invented the finding; someone observed it correctly at one scope and it was then restated at a wider one, at which point it was no longer supported by the observation behind it. Each relay hop also strips the qualifications that made the original true.
 
 The consequence worth recording: one such generalised claim reached the knowledge graph as recorded history before anything checked it. Once a claim is written into a durable note it stops looking like a claim and starts looking like history, and the cost of correcting it rises sharply.
 
@@ -80,13 +82,17 @@ This is the rule most likely to be broken while feeling rigorous, because citing
 - [constraint] A flag reporting success is not evidence it took effect, and reading its documentation is not observing the effect #evidence #flags
 - [insight] The sharp case: `--bare`'s help text says "Skills still resolve via /skill-name", which is accurate, while the inference drawn from it was wrong — it means resolvable by explicit name, not present in the router's inventory, and only a measurement settled it #evidence #bare
 - [constraint] A relayed claim is weaker evidence than its source, and a claim generalised past its original scope is not evidence at all #evidence #relay
-- [fact] Four premises were corrected in one session, three of which began as a true finding about one file and became false when generalised to a repository #premise-correction #scope
+- [fact] Several premises were corrected in one session and five of them shared one shape — a true finding about one file generalised into a claim about a system: that the toolkit shipped no runnable harness, that all subprocess spawning funnelled through one module, that Bun writes splice on re-run, that every trigger measurement scored a truncated description, and that a composition run injects skill content so an installed copy cannot affect it #premise-correction #scope
+- [insight] Each of the five scope-widened premises was caught by an agent reading source rather than by anyone scrutinising the claim, because each restatement was faithful to what it received — so care in relaying is not a detection method and only a fresh read is #premise-correction #detection
+- [problem] Other corrections had other shapes: twice the orchestrator adopted an agent's finding without verifying it and propagated the error onward, once it prescribed an action that a rule written in the target artifact itself forbade, and once it reasoned from a capability's shape rather than from what a user would actually type and concluded four real request types were not real #error-shapes #taxonomy
+- [insight] Not every error is the same error, and a register of one shape hides the others — counting instances of the shape already named measures how often that shape recurred, not how many ways the work went wrong #error-shapes #general-form
 - [problem] One such generalised claim reached the knowledge graph as recorded history before anything checked it, and a durable note converts a claim into apparent history #graph-integrity #unverified
 - [constraint] A differential test must run in the configuration where the variable is actually in play #evidence #differential
 - [insight] Four runs in ordinary mode showed a flag having no effect on model selection because the setting it overrides is not honoured there at all; the differential appeared only under `--bare`, so testing the ordinary path first gave the opposite conclusion #differential #null-result
 - [constraint] A selectively quoted measurement is a false claim, even when every quoted number is accurate #evidence #selective-quotation
 - [problem] Two lost judge dimensions were cited as a regression without mentioning the skill won four of six in the same record, and that neither loss has an established noise floor #selective-quotation #regression-claim
 - [insight] In all four rules something genuine was observed — help text, a true finding, four clean runs, two real numbers — and the error lay in the inference rather than the observation, which is why none of them are caught by more careful data collection #evidence #inference
+- [problem] This note required two rounds of correction because it was assembled from briefed claims rather than from sources — the exact failure it documents. Its own provenance is therefore its best evidence: the rule that a relayed claim is weaker than its source was not derived here in the abstract, it was demonstrated on this note twice, and a reader who knows that should trust the rule more rather than less #provenance #self-referential
 
 ## Relations
 
