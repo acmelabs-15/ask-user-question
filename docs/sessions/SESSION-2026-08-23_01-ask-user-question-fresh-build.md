@@ -840,6 +840,30 @@ _Empty._
 - The mechanism that best explains our data is the know-versus-do gap: tool necessity is linearly decodable from a model's hidden states at 0.89-0.96 AUROC while the model still fails to act on it. If that transfers, pointer wording optimizes the wrong stage entirely — the model already knows it should read wording.md and simply does not. That reframes the intervention from writing a better pointer to removing the option of proceeding without the read, which is what a workflow step does and a trailing reference section does not
 - A process warning worth carrying: the researcher caught its own fetch tool FABRICATING a paper summary, complete with invented experimental conditions and a "40%+ improvement" figure. It verified against primary text and reported the fabrication rather than the summary. Every citation above is primary text read directly
 
+## Event 79 — the placement hypothesis is refuted, and the annotation is validated
+
+- Timestamp: 2026-08-24 09:40 PDT
+- Placement A/B, on a copy of the skill so the shipped artifact was never touched. The wording.md pointer was MOVED — not duplicated — from its trailing section at line 369 into workflow step 3 at line 194, holding mention count at one so the test isolated placement from surface area. Four scenarios, ten attempts each, both arms interleaved at 20 concurrent so drift hit both equally
+- Result: trailing 8/40, in-step 4/40. Moving it in HALVED the reach. Run properly, 20% against 10% at n=40 gives z about 1.27 and p about 0.20, so the honest reading is no detectable effect with a trend AGAINST the hypothesis. It does not go into guidance
+- A first underpowered run of 8 per arm returned 2/8 against 2/8 and was not reported as a null. At that n the only detectable effect is enormous, and the trailing arm had already measured 3/8 in the sweep and 2/8 here, so the noise was the size of any difference the design could see
+- So layout.md's 90% recall still has no explanation. Mention count and topic centrality both remain live and both remain untested
+- The annotation was validated by outcome rather than by judgement, which retires it as a bottleneck. Across the four scenarios annotated as needing wording.md: runs that READ it passed 86.7% of assertions, runs that did not passed 51.4%. A 35-point gap
+- That answers the sharper question too. three-words-one-concept and first-call-in-a-new-vocabulary reached wording.md zero times in 20 sonnet runs, which looked like evidence the annotation was wrong. It is the opposite: three-words scores 2/5 on sonnet without the file and 5/5 on opus with it. They need it and sonnet never gets there
+- The generalizable method, and it is worth more than the specific answer: ground truth is DERIVABLE from outcome. A scenario needs reference X if reading X improves its assertion score. No judgement, and the data is already collected. The passive form only works where the model happened to be inconsistent; the rigorous form is ablation — remove a reference, re-run, see whose scores drop
+- A two-stage ablation design was scoped and not yet run: stage 1 removes ALL references and runs 27 scenarios twice, about 54 runs and ten minutes, which sorts scenarios into needs-something and needs-nothing and validates the four negatives as a by-product. Stage 2 ablates individual files only for scenarios that dropped, against only their plausible candidates. About 22 minutes total against 324 runs for the full grid
+
+## Event 80 — the reference-count cap does not exist, and was a category error
+
+- Timestamp: 2026-08-24 09:55 PDT
+- Owner pushed back on a claim I had relayed into the guidance draft as measured: that skills should carry at most three references. He was right, and the reason is worse than the number being low
+- The source sentence is real but means something else. In the cited paper, "module" is never defined; it appears three times in 112k characters. The body evidence is a table whose column header is "Skills Count" with rows of 1 skill, 2-3 skills, 4+ skills. A module is a whole SKILL attached to a task, not a bundled reference file. The paper says nothing at all about how many references belong inside a skill
+- Even on its own terms it does not say what I quoted. One skill scores +17.8 against 2-3 at +18.6, statistically indistinguishable, so the finding is that 4+ degrades rather than that three is optimal. The three strata also carry different no-skills baselines of 24.4, 23.4 and 26.9, so they are different task sets — observational, not a controlled manipulation of count
+- Anthropic states the opposite of a cap. Their own skill-creator: "Bundled resources - As needed (unlimited, scripts can execute without loading)." A grep of their docs for any at-most-N-references pattern returns zero matches
+- Shipped practice settles it. Anthropic's claude-api skill carries 66 reference files; 13 of their 20 skills exceed three. Across 398 deduped installed skills, p90 is 10 bundled files and the maximum is 223. plugin-kit's own five skills carry 2-3 each
+- The likely origin of the impression: the docs' own "Good example: One level deep" happens to show exactly three links. An illustration read as a limit
+- The defensible constraint is DEPTH, not count. Anthropic's actual rule is that references stay one level deep from SKILL.md, because a nested reference gets partially read via head -100 and yields incomplete information. That matches the independently measured collapse from 0.91 to 0.64 when a second level is introduced. Fan-out is unbounded; depth is capped at one
+- Third time this session I relayed a claim without opening the source. The pattern is consistent enough to belong in the guidance itself: a number in authoring advice needs its DEFINITION checked, not merely its citation
+
 ## Observations
 
 ### Build decisions
