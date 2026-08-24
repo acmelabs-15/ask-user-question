@@ -218,6 +218,11 @@ option description.
 Past all three it is not one question. Split it, or decide the parts you can and ask
 about the one you cannot. `examples.md` has a finished call of each shape.
 
+**In the middle shape, orient first and decide last**: an opening line saying what
+this is about, the context under it, and the decision sentence at the end against
+the options. `references/layout.md` rule 13 carries why, and the case where the rule
+says nothing.
+
 - Weak: `How should we handle this?`
 - Weak: `Which approach do you prefer for the migration?`
 - Better: `The migration drops the legacy search index. Rebuild it now, or ship without
@@ -371,7 +376,7 @@ you picked are the reader's. Skipping it costs you a question that reads fluentl
 and still cannot be answered cold.
 
 Read `references/layout.md` **before** you compose anything with parts — a list,
-groups, anything past a single line. It carries twelve rules with the check that
+groups, anything past a single line. It carries thirteen rules with the check that
 decides each one: the line budget, the blank-line rhythm, the group caps, the
 marker set, and who owns the padding on a drawn box. Skipping it is how a call
 arrives with a list that will not align and a marker one cell wide on your terminal

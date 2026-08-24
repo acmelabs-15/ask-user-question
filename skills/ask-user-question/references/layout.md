@@ -11,7 +11,7 @@ hold a shape are `question`, which keeps line breaks and renders no markup, and
 those two carries the structure is the first decision, and SKILL.md's Gotchas carry
 what a preview costs you.
 
-## The twelve rules
+## The thirteen rules
 
 Each carries the check that decides whether a string passes. They apply
 inside `question` and `preview`, which are the only fields that keep a line break.
@@ -185,6 +185,27 @@ With two to four options the dialog sits squarely in the range where the first
 things read carry the most weight. The tool already puts the recommendation first,
 so what is left to decide is everything below it, and an arbitrary order quietly
 promotes whichever option was typed second.
+
+### 13. Orient first, decide last
+
+**Check:** the first line of a multi-line question says what the question is about.
+The decision sentence is the last line, with the context between them. Where the
+question has no context at all, the sentence is the whole field and this rule says
+nothing.
+
+Both ends earn their position. A reader meeting four lines of background with no
+idea why is reading blind, and cannot tell which details matter until they reach the
+end. A decision sentence stranded at the top is separated from the options by
+everything between it and them, so the reader has to hold it in mind while reading
+or scroll back up to it — and the options are rendered directly under the field,
+which makes the last line the one adjacent to where they act.
+
+**This is rule 7 rather than an exception to it.** Front-loading says put the
+distinguishing thing first, and at the level of a whole field the distinguishing
+thing is the subject — what this is about — not the question mark. The decision
+sentence is a different element with a different job: it is the handoff to the
+options. The two rules only look like they disagree if you read rule 7 as being
+about sentences rather than about whatever the reader scans first.
 
 ## The glyph set
 
