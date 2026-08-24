@@ -155,7 +155,7 @@ taking every option description down with it.
 {
   "questions": [
     {
-      "question": "Checkout has been failing for 6% of sessions since 14:20.\n\nWhat We Know:\n\n• All failures are card payments through the EU gateway.\n• The gateway's own status page reports no incident.\n• Our error rate tracks their p99 latency exactly.\n\nAlready Tried:\n\n• Retrying the failed calls: same failure, same rate.\n• Failing over to the US gateway: blocked by PCI routing.\n\nRoll back the 14:15 deploy, or hold it and rate-limit?",
+      "question": "Checkout has been failing for 6% of sessions since 14:20.\n\nWhat We Know:\n• All failures are card payments through the EU gateway.\n• The gateway's own status page reports no incident.\n• Our error rate tracks their p99 latency exactly.\n\nAlready Tried:\n• Retrying the failed calls: same failure, same rate.\n• Failing over to the US gateway: blocked by PCI routing.\n\nRoll back the 14:15 deploy, or hold it and rate-limit?",
       "header": "Checkout",
       "options": [
         {
@@ -283,7 +283,7 @@ That is this file's own warning, caught happening to the person it was written f
 {
   "questions": [
     {
-      "question": "Eleven gaps between the retired skill and this one.\n\nWrong Guidance, Not Silence:\n\n• The ask-or-decide test lost its reversibility tiebreaker.\n• The label rule lets Yes and No through unchallenged.\n• Batching lets a decision pair with a sequencing question.\n\nThe Other Eight:\n\n• All are silences rather than contradictions.\n• Seven are body-shaped and one belongs in a reference.\n\nHow should I integrate them?",
+      "question": "Eleven gaps between the retired skill and this one.\n\nWrong Guidance, Not Silence:\n⚠ The ask-or-decide test lost its reversibility tiebreak.\n⚠ The label rule lets Yes and No through unchallenged.\n⚠ Batching permits a decision plus a sequencing question.\n\nMissing From Section 1:\n• Nothing says to ask on arrival, not three steps early.\n• A retry ladder is a plan, and is offered as a choice.\n\nMissing From Options And Replies:\n• Options are not checked against what the project has.\n• Approval scope is stated for notes only ➞ it widens.\n• Re-asking has no hygiene rule ➞ it reads as a duplicate.\n\nMissing From The Gotchas:\n• Series position and run budget appear nowhere.\n• Plan mode hides the plan a question refers to.\n• Multi-question host fragility is unverified here.\n\nHow should I integrate them?",
       "header": "Coverage",
       "options": [
         {
@@ -304,15 +304,25 @@ That is this file's own warning, caught happening to the person it was written f
 }
 ```
 
-**What changed, and what did not.** The eleven are still there — the reader still
-cannot decide without knowing what was found. What changed is that they are context
-now, and they are summarised by *class* rather than enumerated: three wrong guidance,
-eight silences, seven body-shaped. That is the shape the decision turns on, and the
-titles of all eleven are not.
+**What changed, and what did not.** All eleven are still there, because the reader
+cannot judge how to integrate findings without knowing what they are. What changed is
+that they are context rather than options, and that they are grouped by where each one
+lands — which is the thing the integration decision actually turns on.
 
-This is the sharper reading of everything needed to decide goes inside the call. It
-does not mean everything you know. It means everything the reader needs, and working
-out which is which is the composition.
+**This is the case that tests whether the standard survives contact.** Eleven items is
+a lot, and the temptation is to shrink the problem: summarise by class, cite a count,
+promise detail later. Each of those throws away what the reader needs to answer. The
+layout is what makes them readable instead — four groups, none over three items, one
+marker column, every line inside 60 display cells.
+
+**It is at rule 4's ceiling, and you should see that.** Four groups is the cap. A fifth
+would not be a layout problem to solve with tighter wording; it would be the signal
+that this is not one question, and the answer then is to split it or decide part of it
+yourself. The standard is being used at its limit here, deliberately.
+
+The first group takes `⚠` as its marker rather than `•`, because every item in it
+carries the same status — rule 5's per-group condition, with the other three groups
+keeping `•` in the same field.
 
 The options are approaches now, so each one is a position somebody could hold and
 argue against, and the descriptions carry their costs and are displayed, because
