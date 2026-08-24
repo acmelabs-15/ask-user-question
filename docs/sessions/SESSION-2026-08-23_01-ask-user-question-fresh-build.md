@@ -1244,6 +1244,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Owner requirements for the subset runner relayed to the builder mid-build: the CLI displays only the filtered rows with subset-sized denominators and an explicit subset statement; the HTML report and dashboard listing carry an unmissable subset badge so an iteration run can never be mistaken for a run of record
 - Pending decisions stack, surfaced per the persistence rule: (1) the next-sweep decision — separating test, minimal edit, or hold, now with H1 as a third candidate; (2) the review-fix disposition for the three Mediums
 
+## Event 133 — review-fix disposition LOCKED: the three Mediums draft now, toward 0.1.4
+
+- Timestamp: 2026-08-24 11:23 PDT, measured
+- Owner chose, verbatim: "Fix the three now (Recommended)" — the two wrong self-measurements in the examples file, the two missing reply-shape rows in the reading-answers recognition table, and the destructive-confirmation exception clause in both references. Diff shown before landing; version 0.1.4 across the three bound sites rides in the same working tree
+- The disputed widest-line figure resolves by measurement in the fix itself: the drafter measures with the host's own width function rather than adopting either prior number
+- The review's remaining findings stay recorded, not acted: H1 (the symptom-noun description proposal) is an input to the open next-sweep decision; L1-L5 hold — L2 explicitly because the outcome assertion set may target the sentence it would cut
+- Pending stack unchanged: (1) the next-sweep decision, now with three candidate descriptions; (2) this fix's diff approval when the draft returns
+
 ## Observations
 
 ### Build decisions
