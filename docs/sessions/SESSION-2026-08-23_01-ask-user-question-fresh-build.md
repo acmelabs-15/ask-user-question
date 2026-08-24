@@ -1043,6 +1043,16 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Owner note on the reply asked for clarification of the plan-mode gap; answered in prose. Verifying the answer surfaced that the shipped body ALREADY carries the plan-mode rule at SKILL.md line 37 — the coverage note measured zero hits on 2026-08-23 and the body was revised after, so gap 10 is already closed and the eleven-gap inventory is stale. Consequence: the fold pass re-verifies every gap against the current tree before drafting, and already-covered gaps become dated erratum candidates for the coverage note rather than edits
 - Dispatched d8-fold-draft (implementer, background): re-verify all eleven by grep, then draft the fold as a diff in a copy under the results directory — shipped tree untouched, description frozen, body at or under 5,800 post-edit, trims itemized and barred from Gotchas and ablation-attributed content, references keep their ToC accurate, gap 11 flagged as a judgment point. Brief carries the reflect-protocol line and the report-via-SendMessage rule
 
+## Event 109 — the fold report: ten of eleven gaps were already closed
+
+- Timestamp: 2026-08-24 09:24 PDT, measured
+- The d8-fold-draft report arrived via the messaging tool and was verified against the artifacts before acting: gaps 4, 5 and 8 confirmed by grep in the asking-again reference at the cited lines; gaps 1, 2, 3, 6, 7, 9 and 10 confirmed directly against the skill body already loaded this session; the gap-11 counter-evidence confirmed in the tool-capability audit, whose still-true list includes the review screen on a multi-question call, read from the shipped binary
+- Result: the coverage note's eleven-gap inventory (2026-08-23) predates the authoring revisions, which absorbed ten of the eleven — the fold locked at Event 108 is substantively already done. Only gap 11 (multi-question host fragility) is still absent, and on the scoped host the claim is contradicted rather than merely unverified; the coverage note itself pre-endorsed dropping it as a defensible authoring choice
+- The draft exists and the shipped tree is untouched: a 120-line diff (a hedged gap-11 Gotcha funded by six wording trims, net zero body tokens, no reference or frontmatter change) in the d8-fold results directory, apply-check clean. The trims exist only to fund gap 11
+- One agent-report caveat recorded verbatim: the draft validation ran without the environment flag, so the neighbour-collision errors were skipped rather than resolved; structure and token count both ran
+- Because ten-of-eleven reverses the premise of a decision locked minutes earlier, the gap-11 and diff disposition goes to the owner rather than being taken here; the coverage note receives a dated erratum in every case, per the house errata convention
+- [reflect-capture] MED, preference: a gap inventory authored before a revision pass is not evidence of a gap — re-verify every entry against the artifact as of now before implementing; here that changed the task from eleven folds to one judgment call. Capture dispatched in the background to the reflect sidecar SKILL-001: Orchestrator Process Learnings, which crosses its 15-observation threshold on this addition and takes H3 sub-grouping in the same edit
+
 ## Observations
 
 ### Build decisions
