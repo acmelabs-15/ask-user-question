@@ -47,6 +47,26 @@ do not know exists.
   included.** Match the full string. If you trim the suffix before comparing, a
   correct answer looks unrecognised, and this bites on the ordinary path where the
   reader picked exactly the option you marked.
+- **Only `preview` renders markdown, and only two fields keep a line break.** Four
+  author-facing fields, three different pipelines:
+
+  | Field | A newline in it | Markdown in it |
+  |---|---|---|
+  | `question` | kept | not rendered — backticks and asterisks print as themselves |
+  | `preview` | kept | rendered in full: headings, lists, tables, code fences |
+  | `label`, `description` | **becomes a replacement character** | not rendered |
+
+  So a line break in a label or a description does not break the line. It prints a
+  `�` glyph in the middle of the sentence. Any string that carries structure —
+  a list, a group, anything past one line — can only live in the question or in a
+  preview, and `references/layout.md` is how you shape it once it is there.
+- **One preview switches the whole question, and the switch drops every
+  description.** Adding a `preview` to a single option on a single-select question
+  puts the whole question into the preview layout, which draws a pointer, an index
+  and the label for each option and nothing else. The descriptions are not
+  shortened and not scrolled. They are not displayed. Everything you wrote about
+  what an option costs is gone, the dialog still looks finished, and the free-text
+  box goes with them. Decide the layout before you write the descriptions.
 - **Each layout takes something away, and it takes it silently.** The tool appends
   its own escapes, but not everywhere:
 
@@ -62,10 +82,6 @@ do not know exists.
   that promise without saying so. A screen reader moves both columns: `Chat about
   this` becomes an option in the list, disappears from `multiSelect`, and the
   preview layout is disabled outright, so a preview reader gets a plain list.
-- **Never author an `Other`, `None` or `Skip` option** on the two layouts that
-  append their own. On those, yours competes with the real one and spends a slot.
-  On a preview question, authoring one does not give you back what the layout
-  removed — reconsider the layout instead.
 - **A `multiSelect` question throws your previews away without a word.** Nothing
   validates the combination, so you get a plain checkbox list and lose whatever you
   spent composing them.
@@ -188,7 +204,10 @@ stylistic preference here; it is what makes a scan work.
 Cover the space. Options are mutually exclusive unless `multiSelect` is set, and
 the set should include the do-nothing path where one exists, and the option you
 would rather the reader did not take. A set of options that omits the honest bad
-choice reads as a decision already made.
+choice reads as a decision already made. Never author an `Other`, `None` or `Skip`
+option: on the two layouts that append their own, yours competes with the real one
+and spends a slot, and on a preview question it does not give back what the layout
+took — reconsider the layout instead.
 
 ## 5. Mark exactly one recommendation
 
@@ -254,14 +273,17 @@ need:
 - **`multiSelect: true`** when the choices genuinely combine, such as which of
   four checks to run. The 2-to-4 option cap still applies, so group or split when
   you have more. It keeps both escapes, so a reader who wants to say something can.
-- **`preview`** when the reader is comparing rendered things, such as two variants
-  of a message or two diffs. This is the layout with no free-text box at all, so
-  do not choose it for a question the reader might need to push back on. Keep
-  previews short enough to survive a small terminal, and make them differ visibly —
-  a preview that documents rather than compares wastes the one thing the layout
-  buys.
+- **`preview`** when the reader is comparing rendered things — two variants of a
+  message, two diffs — or when the decision carries more structure than a question
+  can hold. It is the only field that renders markdown, so it is where a list, a
+  table or a diff belongs. Pay its price knowingly, per the Gotchas: the
+  descriptions go, so whatever distinguishes the options has to be in the labels,
+  in the question, or visible in the preview itself. Previews are a large-terminal
+  feature — the pane is the terminal's width less 34 columns and its height less 26
+  rows. Make them differ visibly: one that documents rather than compares wastes
+  the one thing the layout buys.
 
-## Register
+## Register and layout
 
 Every string in the call is read once, cold, under time pressure. Write them in
 ASD-STE100 Simplified Technical English, the controlled-language specification
@@ -274,11 +296,7 @@ rules that carry here:
 - Simple tenses. Prefer `this removes` over `this will have removed`.
 - One meaning per word, and one word per concept, across the whole call. If the
   question says `check`, no option says `validation`.
-- No noun cluster longer than three nouns.
-- Keep articles. Terse interface copy drops `a` and `the` by instinct, and the
-  dropped article is what makes a label ambiguous.
 - No idiom, and no jargon outside the vocabulary the project already uses.
-- Parallel items get parallel structure.
 
 Then use the project's own words. Where the repository carries a vocabulary or
 domain-language document, take the reader's nouns from it, so the question uses
@@ -288,35 +306,16 @@ already named.
 
 Read `references/register.md` when a string will not come down to one clause, or
 when you have to justify a rewrite to whoever wrote the original. It carries the
-rule numbers and worked rewrites. Skipping it costs you a question that reads
+rules above by rule number, with worked rewrites and the test for whether you have
+actually taken the reader's nouns. Skipping it costs you a question that reads
 fluently and still cannot be answered cold.
 
-## The shape of a finished call
-
-```json
-{
-  "questions": [
-    {
-      "question": "The migration drops the legacy search index. Rebuild it now, or ship without it?",
-      "header": "Index",
-      "options": [
-        {
-          "label": "Rebuild now (Recommended)",
-          "description": "Runs the rebuild inside this migration. Your index is 40 MB, so this adds about two minutes of downtime, and the deploy window you booked is thirty."
-        },
-        {
-          "label": "Ship without it",
-          "description": "Deploys immediately with no downtime. Search returns no results until someone rebuilds by hand, and nothing in the deploy reminds them."
-        }
-      ]
-    }
-  ]
-}
-```
-
-Note what the second description does. It states the benefit, then the failure
-mode, in the same order as the first, in the same units. A reader who picks it
-and then finds search empty can tell from that text that they chose it.
+Read `references/layout.md` **before** you compose anything with parts — a list,
+groups, anything past a single line. It carries twelve rules with the check that
+decides each one: the line budget, the blank-line rhythm, the group caps, the
+marker set, and who owns the padding on a drawn box. Skipping it is how a call
+arrives with a list that will not align and a marker one cell wide on your terminal
+and two on the reader's.
 
 ## Pre-flight, run as a loop
 
@@ -362,14 +361,11 @@ labels. It maps each shape to what it licenses you to do next. Skipping it is ho
 a skip gets read as agreement, which costs a wrong action rather than a wrong
 sentence.
 
-## Bundled files, and when each one fires
+## The shape of a finished call
 
-- `references/register.md` — ASD-STE100 by rule number, with worked rewrites.
-  Open it when a string resists shortening, or when a rewrite needs defending.
-- `references/re-pitch.md` — the six ways a question fails a reader, and the
-  repair for each. Open it after a question has failed.
-- `references/reading-answers.md` — every reply shape and what it authorises.
-  Open it when the reply is not one of your labels.
+`example.md` holds one complete call, with what each half of each description is
+doing. Open it when you want the finished artifact rather than the rules, or to
+measure a draft against a call that passes all of them.
 
 The step most often dropped is the second half of an option description: the
 cost. A call whose options list only their benefits looks finished and leaves the

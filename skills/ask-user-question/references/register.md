@@ -1,7 +1,9 @@
 # ASD-STE100, reduced to the rules that carry in a dialog
 
 Open this when a string will not come down to one clause, or when a rewrite needs
-defending to whoever wrote the original.
+defending to whoever wrote the original. It governs one string at a time: the
+words in it, its length, its voice and its tense. For shaping something with parts
+— a list, groups, more than one line — that is `layout.md`.
 
 ASD-STE100 Simplified Technical English is a controlled-language specification
 from the AeroSpace and Defence Industries Association of Europe. It has two
@@ -137,3 +139,4 @@ concept rather than reuse theirs.
 Where nothing in the repository names the thing, take the noun from the conversation
 you are in. Never introduce a term inside a question: a dialog is the one place a
 reader cannot ask what a word means.
+
