@@ -919,6 +919,15 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - One open item recovered that no note or queue carries: **sonnet coverage for triggering and outcomes**. The owner's instinct — if it works on sonnet it should work on opus, so test the weaker model — was acknowledged there as a real gap for the pass/fail measurements: the 49/52 trigger sweep predates the question, and measure-outcomes has never run on any model. When queue item 5 (outcomes) runs, it should run on sonnet per that standing instinct; a sonnet trigger sweep is a cheap companion. The disclosure half of the instinct is already implemented (sonnet is the detection instrument)
 - Also confirmed from the full read: measure-outcomes' treatment arm silently collapsed into its control before the grant fix — the operation built to answer "does this skill help" would have answered "no" for every skill ever tested. Fixed at the grant commit; worth re-stating when outcomes finally runs so the first result is read against that history
 
+## Event 93 — the skill helps: plus 16 points, measured by design
+
+- Timestamp: 2026-08-24 11:35 PDT
+- The first honest outcomes measurement ever taken of this skill, and the first of any skill through the repaired harness: 27 scenarios, one run per arm, sonnet per the coverage ruling, treatment (skill installed) against control (artifact withheld) with identical flags so the skill's presence is the only variable. All 54 cells scored, zero failures, `exit_reason: complete`. Results in the outcomes-1 directory
+- **With the skill 91/131 assertions, 69.5%. Without it 70/131, 53.4%. The skill is worth +16.1 points on sonnet.** The accidental natural experiment from the load-failure era suggested ~28 points on opus-mixed populations; the designed measurement on the harder tier says +16, and both agree on the direction and the magnitude class
+- Per-scenario deltas are single-run-per-arm and are hints, not findings. Directionally: the largest gains sit on rendering and parsing scenarios (two-release-notes-rendered and multiselect-empty-and-parsing at +80%, nine-findings-one-question +67%, description-will-not-shorten +60%); the negative deltas cluster on exactly the scenarios already flagged as body-content or unresolved — no-tool-in-this-context and off-by-one-already-fixed (the two held-out from the ablation) and prepush-checks-in-question (the partial-attribution residue). At n=1 per cell those negatives warrant a repeat before any conclusion, but the coincidence with the ablation's problem-list is worth the note
+- Caveats that travel with the number: sonnet only; one run per arm per scenario (the aggregate over 131 assertions is the reliable figure, per-eval deltas are not); and one worker mid-run escalated its scenario fixture out of the sandbox (recorded in the plugin-kit ledger as an isolation finding) — its scenario, timeout-with-partial-selection, shows no anomaly in its scored rows
+- With the run complete, the skill's six references are clear to receive the locked table-of-contents standard, where the intervention has a recall baseline to measure against
+
 ## Observations
 
 ### Build decisions
