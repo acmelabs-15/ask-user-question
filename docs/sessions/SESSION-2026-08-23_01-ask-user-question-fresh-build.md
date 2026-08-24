@@ -1499,6 +1499,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Convention enforcement: the five-tag cap applied consistently (the third writer's six-tag set trimmed to match its siblings before commit), the no-inverse-on-originals exception commented in every sibling, symmetric relates_to edges closed on the plugin-kit session note
 - Open from the batch: the two ANALYSIS-005 residue corrections with the researcher; then the board returns to the mechanism items and the retrospective
 
+## Event 164 — the batch closes clean: eleven correction sites, zero bare stale hits
+
+- Timestamp: 2026-08-24 16:10 PDT, measured
+- The two paraphrase residues corrected in ANALYSIS-005 and verified independently (the corrected wordings present, the old denominator gone, single frontmatter), landed at plugin-kit 7d90437. The note of record and its readable sibling now agree everywhere; the correction's running total is eleven sites, and the extended sweep returns zero stale hits outside dated-correction prose
+- Two lessons ride for the retrospective: a correction sweep needs patterns for the corrected proposition's PARAPHRASES, not just its original wording — or a parity walk, which is what caught both; and the phantom-tally multiplier is now observed at 2x and 3x across three instances in one correction thread, so the tally is never usable as a check — only the read-back is
+- The readable-editions thread is fully closed. The board: the mechanism items, the validator candidates, the upstream asks, and the retrospective over Events 1-164 with the thirty sidecar findings — on the owner's call
+
 ## Observations
 
 ### Build decisions
