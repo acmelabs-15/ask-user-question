@@ -974,6 +974,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The null exposed an attribution confound in the ablation. The stage-2 minus-examples variant removed the file AND its pointer-section prose, and that section carries teaching content of its own — the dropped-cost-half lesson. A file never read on sonnet cannot have supplied the content whose removal dropped the scenario, so the 0.80-to-0.60 attribution belongs to the file-plus-prose bundle, with the body prose as the plausible carrier on this tier; the file's proven consumer remains the stronger tier, where its recall is 100%. Dated corrections issued to the reference-ablation analysis here and to the method finding in the plugin-kit research note
 - Remedy-ladder consequence, recorded: the reachability lever is measured-exhausted for this route on sonnet. If this scenario's sonnet score ever needs raising, the candidate lever is the content boundary — the teaching prose, not the file — and any such change re-derives its ground truth by ablation with the prose-versus-file split held apart
 
+## Event 100 — version 0.1.1, and three parallel workstreams open
+
+- Timestamp: 2026-08-24 14:20 PDT
+- The version bump owed since the references gained their tables of contents: 0.1.1 across all three bound sites (plugin manifest, skill metadata, marketplace entry), frontmatter test passing, committed at `a91647f`. The installed cache refreshed 0.1.0 to 0.1.1 — note the update command needs the marketplace-qualified name (`ask-user-question@ACMElabs`); the bare name reports not-found even while `plugin list` shows it
+- Three disjoint-file workstreams dispatched in parallel per owner approval: the structural-genre authoring reference for skill-creator (new body-structure.md plus a checklist hop, since the skill body sits at its ceiling); the three remaining genre detectors as informational-only reporters in validate — deliberately never warnings, because unvalidated genres reported as facts must not become guidance dressed as enforcement; and the draft upstream comment for the open Claude Code issue on allowed-tools skills failing headless, carrying the mechanism, the 0-of-4-to-4-of-4 measurement, and the flow-terminates-in-a-mislabeled-error framing — draft only, to be shown before anything is posted
+- Every dispatch brief now carries the standing reflect-protocol line: agents never write auto-memories; learnings return in reports and route through the reflect chain
+
 ## Observations
 
 ### Build decisions
