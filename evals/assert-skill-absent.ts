@@ -22,14 +22,44 @@
  *
  *   bun assert-skill-absent.ts <skill-dir>
  *
- * exit 0  absent        nothing answers to this name and every search root was readable
- * exit 1  installed     one or more separate copies answer to it
- * exit 2  undetermined  a root exists and would not enumerate, so absence is unproven
+ * exit 0  absent        nothing answers to this name and every route was readable
+ * exit 1  installed     this skill is reachable through the skill system
+ * exit 2  undetermined  a route would not answer, so absence is unproven
  *
  * Exit 2 is deliberately not a pass. "Nothing found" and "nothing found where I could
  * look" are the same output and opposite claims, and a guard that conflates them reports
  * success on the strength of having failed to look.
+ *
+ * TWO ROUTES, BECAUSE A CONTENT SWEEP ALONE RETURNED A FALSE PASS.
+ *
+ * The original guard swept four filesystem roots for a SKILL.md whose frontmatter name
+ * matched. That misses a skill registered by CONFIG. Measured on this machine:
+ * `ask-user-question@ACMElabs` was installed and ENABLED, its cache at
+ * `~/.claude/plugins/cache/ACMElabs/ask-user-question/0.0.1/skills/ask-user-question/` held
+ * a single 0-byte `.gitkeep`, and the loader served the real skill from the marketplace's
+ * source directory instead. The content sweep found nothing and reported `ok`, while all
+ * three gated targets would have produced the void signature.
+ *
+ * So the config route reads the enabled set from the loader's own view and resolves where
+ * each plugin's skills actually live. A stub cache is not unusual: 8 of 19 enabled plugins
+ * on the machine this was written against had one, across github, directory and file
+ * marketplace sources alike, so this is not one marketplace's quirk.
+ *
+ * THE TWO ROUTES ASK DIFFERENT QUESTIONS, AND ONLY ONE EXCLUDES THE SOURCE.
+ *
+ * The content sweep asks "is there a COMPETING copy elsewhere", so it excludes the
+ * directory under test -- otherwise every run would trip over itself. The config route asks
+ * "is this skill REACHABLE through the skill system", and for that the source directory is
+ * not exempt. It cannot be: the live fault is a marketplace whose plugin source resolves TO
+ * the directory being measured, so the skill the loader serves is the very artifact under
+ * test. That is the worst version of the fault rather than an exempt one -- the model gets
+ * the full body free, and every pull rate floors at zero.
+ *
+ * Which means `absent` no longer means "no duplicate". It means "not reachable", and this
+ * project's own plugin must be disabled before disclosure or composition is measured.
  */
+
+import { resolve } from "node:path";
 
 /** The four roots the loader reads from, in the order a report should present them. */
 export function searchRoots(home: string, projectDir: string): ReadonlyArray<Root> {
@@ -140,6 +170,190 @@ export async function sweep(params: {
   return { state: "absent", sightings, blindRoots };
 }
 
+// ---------------------------------------------------------------------------
+// The config route: what the loader has actually enabled, and where it lives
+// ---------------------------------------------------------------------------
+
+/** One plugin the loader reports as enabled. */
+export interface EnabledPlugin {
+  readonly id: string;
+  readonly installPath: string;
+}
+
+/**
+ * The enabled set, from `claude plugin list --json`.
+ *
+ * The CLI rather than `settings.json` plus `installed_plugins.json`, on this project's own
+ * rule that a check must observe the EFFECT and never the configuration that was supposed to
+ * produce it. `enabled` is the loader's own verdict, resolved across user, project and local
+ * scope; re-deriving it from config files would re-implement loader logic that is free to
+ * drift. `--json` is what makes the authoritative source deterministic too -- the human
+ * listing states status as a unicode tick, which is not something to parse.
+ *
+ * Returns undefined rather than an empty list when the CLI cannot be read, because "no
+ * plugins are enabled" and "I could not ask" are opposite claims. The caller turns undefined
+ * into `undetermined`.
+ */
+export async function enabledPlugins(timeoutMs = 30_000): Promise<readonly EnabledPlugin[] | undefined> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const proc = Bun.spawn(["claude", "plugin", "list", "--json"], {
+      stdin: "ignore",
+      stdout: "pipe",
+      stderr: "ignore",
+      signal: controller.signal,
+    });
+    const text = await new Response(proc.stdout).text();
+    if ((await proc.exited) !== 0) return undefined;
+    const parsed: unknown = JSON.parse(text);
+    if (!Array.isArray(parsed)) return undefined;
+    const enabled: EnabledPlugin[] = [];
+    for (const entry of parsed) {
+      if (typeof entry !== "object" || entry === null) continue;
+      const row = entry as Record<string, unknown>;
+      if (row["enabled"] !== true) continue;
+      const id = typeof row["id"] === "string" ? row["id"] : "";
+      const installPath = typeof row["installPath"] === "string" ? row["installPath"] : "";
+      if (id !== "") enabled.push({ id, installPath });
+    }
+    return enabled;
+  } catch {
+    return undefined;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/**
+ * Every directory an enabled plugin's skills may live in.
+ *
+ * `installPath` first, because a populated cache is the normal case. Then the marketplace
+ * source, because a stub cache is not: the loader falls back to the source tree and the
+ * cache keeps only a placeholder. Both are returned rather than the first that exists, so a
+ * partially populated cache cannot hide a skill sitting in the source.
+ *
+ * An empty list means the plugin could not be located at all, which is a blind spot rather
+ * than an absence -- a plugin's name says nothing about the names of the skills inside it,
+ * so an unlocatable plugin could be carrying the one being looked for.
+ */
+export async function pluginSkillRoots(
+  plugin: EnabledPlugin,
+  marketplaces: Readonly<Record<string, unknown>>,
+): Promise<readonly string[]> {
+  const roots: string[] = [];
+  if (plugin.installPath !== "") roots.push(plugin.installPath);
+
+  const [name, market] = [plugin.id.split("@")[0] ?? "", plugin.id.split("@")[1] ?? ""];
+  const entry = marketplaces[market];
+  const location =
+    typeof entry === "object" && entry !== null
+      ? (entry as Record<string, unknown>)["installLocation"]
+      : undefined;
+  if (typeof location !== "string" || location === "") return roots;
+
+  let manifest: unknown;
+  try {
+    manifest = await Bun.file(`${location}/.claude-plugin/marketplace.json`).json();
+  } catch {
+    return roots;
+  }
+  const declared =
+    typeof manifest === "object" && manifest !== null
+      ? (manifest as Record<string, unknown>)["plugins"]
+      : undefined;
+  const entries = Array.isArray(declared) ? declared : Object.values(declared ?? {});
+  for (const candidate of entries) {
+    if (typeof candidate !== "object" || candidate === null) continue;
+    const row = candidate as Record<string, unknown>;
+    if (row["name"] !== name) continue;
+    // A source is either a bare relative path or an object carrying one.
+    const raw = row["source"];
+    const source =
+      typeof raw === "string"
+        ? raw
+        : typeof raw === "object" && raw !== null && typeof (raw as Record<string, unknown>)["path"] === "string"
+          ? ((raw as Record<string, unknown>)["path"] as string)
+          : undefined;
+    if (source === undefined) continue;
+    roots.push(source.startsWith("/") ? source : resolve(location, source));
+  }
+  return roots;
+}
+
+/**
+ * Sweep the enabled plugins for a skill answering to `name`.
+ *
+ * The source directory is NOT excluded here. See the header: a marketplace whose plugin
+ * source resolves to the directory under test is the live fault this route exists for.
+ */
+export async function sweepEnabledPlugins(params: {
+  readonly name: string;
+  readonly home: string;
+}): Promise<Sighting> {
+  const plugins = await enabledPlugins();
+  if (plugins === undefined) {
+    return { state: "undetermined", sightings: [], blindRoots: ["claude plugin list --json"] };
+  }
+
+  let marketplaces: Record<string, unknown> = {};
+  try {
+    marketplaces = (await Bun.file(
+      `${params.home}/.claude/plugins/known_marketplaces.json`,
+    ).json()) as Record<string, unknown>;
+  } catch {
+    // Not fatal on its own: a populated cache needs no marketplace lookup. An enabled
+    // plugin that then fails to locate is reported as the blind spot it is, below.
+  }
+
+  const glob = new Bun.Glob("**/SKILL.md");
+  const sightings: string[] = [];
+  const blindRoots: string[] = [];
+  const seen = new Set<string>();
+
+  for (const plugin of plugins) {
+    const roots = await pluginSkillRoots(plugin, marketplaces);
+    let located = false;
+    for (const root of roots) {
+      let paths: string[];
+      try {
+        paths = await Array.fromAsync(glob.scan({ cwd: root, onlyFiles: true, followSymlinks: false }));
+      } catch {
+        continue;
+      }
+      located = true;
+      for (const relative of paths) {
+        if (relative.split("/").some((segment) => SKIP_SEGMENTS.includes(segment))) continue;
+        const absolute = `${root.replace(/\/+$/, "")}/${relative}`;
+        if (seen.has(absolute)) continue;
+        seen.add(absolute);
+        const found = await skillName(absolute, parentSegment(relative));
+        if (found === params.name) sightings.push(`${absolute}  (enabled plugin ${plugin.id})`);
+      }
+    }
+    if (!located) blindRoots.push(`enabled plugin ${plugin.id} (no readable directory)`);
+  }
+
+  if (sightings.length > 0) return { state: "installed", sightings, blindRoots };
+  if (blindRoots.length > 0) return { state: "undetermined", sightings, blindRoots };
+  return { state: "absent", sightings, blindRoots };
+}
+
+/**
+ * Both routes, merged.
+ *
+ * A sighting on either route is a sighting. Otherwise a blind spot on either route is
+ * `undetermined`, so neither route can vouch for the other's gap. Only two clean sweeps are
+ * `absent`.
+ */
+export function mergeSightings(content: Sighting, config: Sighting): Sighting {
+  const sightings = [...content.sightings, ...config.sightings];
+  const blindRoots = [...content.blindRoots, ...config.blindRoots];
+  if (sightings.length > 0) return { state: "installed", sightings, blindRoots };
+  if (blindRoots.length > 0) return { state: "undetermined", sightings, blindRoots };
+  return { state: "absent", sightings, blindRoots };
+}
+
 const EXIT: Record<State, number> = { absent: 0, installed: 1, undetermined: 2 };
 
 async function main(): Promise<void> {
@@ -149,24 +363,27 @@ async function main(): Promise<void> {
     process.exit(2);
   }
 
-  const trimmed = sourceDir.replace(/\/+$/, "");
+  // ABSOLUTE, because the content sweep excludes the source by comparing it against
+  // absolute sighting paths. Given a relative argument the two never matched and the source
+  // was reported as its own duplicate -- latent rather than live, since the Makefile passes
+  // an absolute path, but a guard whose answer depends on how the path was spelled is not one.
+  const trimmed = resolve(sourceDir.replace(/\/+$/, ""));
   const name = await skillName(`${trimmed}/SKILL.md`, parentSegment(`${trimmed}/SKILL.md`));
-  const result = await sweep({
-    name,
-    sourceDir: trimmed,
-    home: Bun.env.HOME ?? "",
-    projectDir: process.cwd(),
-  });
+  const home = Bun.env.HOME ?? "";
+  const result = mergeSightings(
+    await sweep({ name, sourceDir: trimmed, home, projectDir: process.cwd() }),
+    await sweepEnabledPlugins({ name, home }),
+  );
 
   if (result.state === "absent") {
-    console.error(`  ok   no installed copy answers to \`${name}\``);
+    console.error(`  ok   \`${name}\` is not reachable through the skill system`);
     process.exit(0);
   }
 
   if (result.state === "installed") {
     const count = result.sightings.length;
     console.error(
-      `\n  INSTALLED COPY FOUND: ${count} ` +
+      `\n  REACHABLE COPY FOUND: ${count} ` +
         `${count === 1 ? "copy answers" : "copies answer"} to \`${name}\`:`,
     );
     for (const path of result.sightings) console.error(`       ${path}`);
@@ -176,14 +393,20 @@ async function main(): Promise<void> {
         "  a run scores every file at a pull rate of zero and reports `prune` on all of them.\n" +
         "  Remove or rename the copies above before measuring disclosure or running\n" +
         "  `make composition`. `make purge-old` reports copies under this skill's previous\n" +
-        "  names.",
+        "  names.\n\n" +
+        "  A copy annotated `(enabled plugin ...)` is reachable by CONFIG, so deleting files\n" +
+        "  will not clear it -- disable the plugin instead:\n" +
+        "       claude plugin disable <name>@<marketplace>\n" +
+        "  That includes a plugin whose source resolves to this very directory, which is not\n" +
+        "  an exemption: the loader serves the artifact under test, so the run measures a\n" +
+        "  skill the model was handed for free.",
     );
     process.exit(EXIT.installed);
   }
 
   console.error(
-    `\n  CANNOT CONFIRM ABSENCE: ${result.blindRoots.length} search root(s) exist and would\n` +
-      "  not enumerate, so a copy installed under one of them would not appear here:",
+    `\n  CANNOT CONFIRM ABSENCE: ${result.blindRoots.length} route(s) would not answer, so a\n` +
+      "  copy reachable through one of them would not appear here:",
   );
   for (const path of result.blindRoots) console.error(`       ${path}`);
   console.error(

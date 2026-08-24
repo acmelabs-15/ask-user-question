@@ -12,7 +12,16 @@
  */
 
 import { rmSync } from "node:fs";
-import { searchRoots, skillName, sweep } from "./assert-skill-absent.ts";
+import {
+  enabledPlugins,
+  mergeSightings,
+  pluginSkillRoots,
+  searchRoots,
+  skillName,
+  sweep,
+  sweepEnabledPlugins,
+  type Sighting,
+} from "./assert-skill-absent.ts";
 
 let failures = 0;
 const check = (ok: boolean, label: string, detail = ""): void => {
@@ -21,6 +30,8 @@ const check = (ok: boolean, label: string, detail = ""): void => {
 };
 
 const scratch = `${Bun.env.TMPDIR?.replace(/\/+$/, "") ?? "/tmp"}/auq-guard-${Bun.randomUUIDv7().slice(0, 8)}`;
+/** Separate from `scratch`, which the content-sweep cases deliberately leave malformed. */
+const scratch2 = `${Bun.env.TMPDIR?.replace(/\/+$/, "") ?? "/tmp"}/auq-market-${Bun.randomUUIDv7().slice(0, 8)}`;
 
 /** Write a SKILL.md at `dir`, with frontmatter naming `name` when one is given. */
 async function plant(dir: string, name?: string): Promise<void> {
@@ -100,6 +111,84 @@ check(roots[0] === "/h/.claude/skills", "user skills root first", roots[0]);
 check(roots[3] === "/p/.claude/skills", "project root last", roots[3]);
 check(searchRoots("", "/p").length === 1, "an unset HOME leaves only the project root");
 
+// --- merging the two routes ------------------------------------------------------------
+// Neither route may vouch for the other's gap: a clean sweep beside a blind one is not an
+// absence, which is the same rule the single-route guard already applied to its own roots.
+const none: Sighting = { state: "absent", sightings: [], blindRoots: [] };
+const seen: Sighting = { state: "installed", sightings: ["/x/SKILL.md"], blindRoots: [] };
+const dark: Sighting = { state: "undetermined", sightings: [], blindRoots: ["a route"] };
+check(mergeSightings(none, none).state === "absent", "two clean sweeps are absent");
+check(mergeSightings(none, seen).state === "installed", "a config sighting alone is installed");
+check(mergeSightings(seen, none).state === "installed", "a content sighting alone is installed");
+check(mergeSightings(none, dark).state === "undetermined", "a clean sweep does not cover a blind route");
+check(mergeSightings(seen, dark).state === "installed", "a sighting outranks a blind route");
+check(mergeSightings(dark, dark).blindRoots.length === 2, "both routes' blind spots are reported");
+
+// --- resolving where an enabled plugin's skills live -----------------------------------
+// The defect this closes: `installPath` pointed at a cache holding one 0-byte .gitkeep while
+// the loader served the real skill from the marketplace source. Both must be returned, so a
+// partially populated cache cannot hide a skill sitting in the source.
+const market = `${scratch2}/market`;
+await Bun.write(
+  `${market}/.claude-plugin/marketplace.json`,
+  JSON.stringify({ plugins: [{ name: "demo", source: "./demo-plugin" }] }),
+);
+const marketplaces = { fake: { installLocation: market } };
+const resolved = await pluginSkillRoots(
+  { id: "demo@fake", installPath: `${scratch2}/stub-cache` },
+  marketplaces,
+);
+check(resolved.length === 2, "installPath and the marketplace source are both returned", String(resolved.length));
+check(resolved[1] === `${market}/demo-plugin`, "a relative source resolves against the marketplace", resolved[1]);
+
+const absoluteSource = await pluginSkillRoots({ id: "demo@fake", installPath: "" }, {
+  fake: { installLocation: market },
+});
+check(absoluteSource.length === 1, "an empty installPath is not offered as a root", String(absoluteSource.length));
+check(
+  (await pluginSkillRoots({ id: "demo@nosuch", installPath: "/p" }, marketplaces)).length === 1,
+  "an unknown marketplace leaves only installPath",
+);
+
+// --- the enabled set cannot be read ----------------------------------------------------
+// Undefined rather than empty. "No plugins are enabled" and "I could not ask" are opposite
+// claims, and the guard turns only the first of them into a pass.
+check((await enabledPlugins(1)) === undefined, "a timed-out plugin list reads as unknown, not empty");
+
+// --- the live machine ------------------------------------------------------------------
+// The reproduction that motivated the config route, asserted against real state rather than
+// a fixture. CONDITIONAL on the plugin still being enabled, deliberately: the guard's own
+// remedy is to disable it, so an unconditional assertion here would fail the suite the
+// moment someone followed the advice. Skipped-with-reason keeps the suite portable.
+const live = await enabledPlugins();
+if (live === undefined) {
+  console.log("  --   live check skipped: `claude plugin list --json` did not answer");
+} else {
+  const target = live.find((p) => p.id === "ask-user-question@ACMElabs");
+  if (target === undefined) {
+    console.log("  --   live check skipped: ask-user-question@ACMElabs is not enabled");
+  } else {
+    const sighted = await sweepEnabledPlugins({ name: "ask-user-question", home: Bun.env.HOME ?? "" });
+    check(
+      sighted.state === "installed",
+      "the live enabled plugin is sighted, where the content sweep returned a false pass",
+      sighted.state,
+    );
+    check(
+      sighted.sightings.some((s) => s.includes("ask-user-question@ACMElabs")),
+      "the sighting names the plugin, so the remedy is disable rather than delete",
+    );
+  }
+  // The inverse, and the more important half: a guard that refuses every run is useless.
+  const unmatched = await sweepEnabledPlugins({ name: "zzz-no-skill-answers-to-this", home: Bun.env.HOME ?? "" });
+  check(
+    unmatched.state !== "installed",
+    `${live.length} plugins enabled, and a name none of them carries is not sighted`,
+    unmatched.state,
+  );
+}
+
 rmSync(scratch, { recursive: true, force: true });
+rmSync(scratch2, { recursive: true, force: true });
 console.log(failures === 0 ? "\nPASS" : `\n${failures} failure(s)`);
 process.exit(failures === 0 ? 0 : 1);
