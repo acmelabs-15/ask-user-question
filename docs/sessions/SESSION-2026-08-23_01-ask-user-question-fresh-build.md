@@ -36,23 +36,23 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 |:--|:--|:--|:--|:--|:--|:--|
 | T-06 | Wave 5 | Wire `measure-outcomes` into the Makefile and reshape the eval set to `evals.json` shape | — | `Makefile`, `evals/` | M | Event 31 |
 | T-07 | Wave 5 | Supply the 27 lint rules to `measure-outcomes` as an injected grader, so the run keeps a deterministic floor | — | `evals/composition/checks.ts` | M | Event 31 |
-| T-09 | Wave 6 | Uninstall plugin-kit and hand-remove its marketplace entry | — | user config | S | Event 22 |
+| T-11 | Wave 4 | Spend the held 18 characters on the review-a-draft hook | — | `SKILL.md` frontmatter + description sha rebind + trigger re-measure | XS | Event 29 |
+| T-13 | — | Fix plugin-kit's install detection so it distinguishes "no competing copy" from "not reachable" | — | plugin-kit `shared/envelope.ts` | M | Event 30 |
 
 #### Blocked
 
 | T-ID | Group | Subject | Agent | Files | Effort | Blocked by | Created |
 |:--|:--|:--|:--|:--|:--|:--|:--|
-| T-10 | Wave 4 | Close the coverage gaps the user selects | — | `skills/ask-user-question/**` | M | D-8 undecided | Event 34 |
-| T-11 | Wave 4 | Spend the held 18 characters on the review-a-draft hook | — | `SKILL.md` frontmatter | XS | sequenced after T-10, which may need description coverage | Event 29 |
-| T-13 | — | Fix plugin-kit's install detection so it distinguishes "no competing copy" from "not reachable" | — | plugin-kit `shared/envelope.ts` | M | out of repo; needs its own task | Event 30 |
+| T-09 | Wave 6 | Uninstall plugin-kit and hand-remove its marketplace entry | — | user config | S | GATED by owner ruling Event 119: executes only once plugin-kit is no longer needed for ask-user-question work — not before | Event 22 |
 
 ### Archive (completed + deleted)
 
 <details>
-<summary>7 archived tasks</summary>
+<summary>8 archived tasks</summary>
 
 | T-ID | Status | Group | Subject | Agent | Files | Effort | Created | Resolved |
 |:--|:--|:--|:--|:--|:--|:--|:--|:--|
+| T-10 | completed | Wave 4 | Close the coverage gaps the user selects | — | `skills/ask-user-question/**` | M | Event 34 | Event 110 |
 | T-12 | completed | Wave 5 | Run the outcome measurement | — | `evals/` | L | Event 31 | Event 93 |
 | T-08 | completed | Wave 6 | Retire `asking-users-questions` and sweep its stray copies | — | external | M | Event 03 | Event 70 |
 | T-01 | completed | Wave 1 | Create the `ACMElabs/ask-user-question` repo | W1a-repo | `<repo root>/**` | S | Event 10 | Event 15 |
@@ -1128,6 +1128,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Owner correction on framing: the session is NOT closing — the retrospective is the queue's last item, not the next one. The open board stands: this sweep, then the plugin-kit engineering (T-13 plus the improvement candidates, held while runs go through the tooling), the genre experiments, and the two pending rulings
 - Launched the sonnet trigger sweep, the Event 92 coverage companion: make measure-trigger, MODEL=sonnet, the 52-row candidate eval set to mirror the sweep of record (49/52 on the default model), 3 runs per query, results to a stamped measure-trigger directory. Detached; the skill tree and plugin-kit are both edit-frozen until it lands
 - Sequencing note: the sweep runs through plugin-kit's measure-triggering, so T-13 and the improvement-candidate work queue behind it per the tool-edits-versus-runs rule
+
+## Event 119 — T-09 ruled GATED, not obsolete, and the task board reconciled
+
+- Timestamp: 2026-08-24 10:43 PDT, measured
+- Owner ruled on the uninstall item, verbatim: "we should keep this - we only installed it temporarily so that we could use it with ask-user-question plugin - once we're done using it with the ask-user-question plugin we still need to do this to-do item." T-09 is neither executed nor retired: it is GATED on the end of this project's use of plugin-kit, and the gate is now written on its row so no future session re-litigates it
+- The handoff brief's "obsolete on its face" framing is corrected by this ruling: the install was always scoped-temporary by owner intent, and current dependence is evidence of active use, not of permanence. The Recommended option in the ask had the same wrong premise
+- Board reconciled in the same pass: T-10 archived as completed (the D-8 closure at Event 110 was its resolution; archive count 7 to 8), T-11 moved to Unblocked with its real scope noted (description is sha-frozen, so spending the 18 characters means a rebind plus trigger re-measure), T-13 moved to Unblocked (its blocker was never a dependency, just out-of-repo scoping)
+- [reflect-capture] MED, preference: a to-do that looks overtaken by events may instead be gated on an end condition only the owner knows — recommendation premises come from owner intent, not from current-state inference, and the fix is writing the gate on the task row. Capture dispatched in the background to the reflect sidecar SKILL-001: Orchestrator Process Learnings
 
 ## Observations
 
