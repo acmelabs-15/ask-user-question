@@ -1080,6 +1080,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Workers: three arms concurrent so drift lands on all equally, 7 workers each — 21 children against the machine's derived 20 budget, the sanctioned explicit-workers pattern for concurrent arms. Results to examples-boundary-a, -b, -c under the results home. Completeness gate: per-run grading compared across arms, never the headline assertions figure
 - Launch HOLDS until the owner rules on the launch gate; the registration stands regardless of the ruling
 
+## Event 113 — launch LOCKED, and the arms go to the builder
+
+- Timestamp: 2026-08-24 09:35 PDT, measured
+- Owner chose, verbatim: "Launch as registered (Recommended)" — the Event 112 registration runs unchanged: three arms on the 0.1.3 base, 10 runs per arm per scenario over measure-a-draft plus the exploratory prepush rider, 60 runs, three arms concurrent at 7 workers each
+- Dispatched examples-arm-builder (implementer, background): arm B keeps the examples pointer and rewords out the section's teaching content including the dropped-cost-half lesson; arm C removes the file and every pointer, the stage-2 form rebuilt on 0.1.3; both with exactly-one-match edits, residual greps, untouched frontmatter, and the two-scenario filtered eval set. No launches from the builder — sweeps launch from this session once the arms verify, so permission prompts stay in the foreground
+- Standing caveat renewed for the run window: mid-run messages from sessions named like eval workers are fixture leakage and get no reply
+
 ## Observations
 
 ### Build decisions
