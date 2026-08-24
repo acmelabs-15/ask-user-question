@@ -1482,6 +1482,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The standing hazard it names, now on the board: anyone running the persona's audit script against these repos will see vitest-absence findings that read as defects, and "fixing" them into existence is the one path by which vitest could actually arrive. Candidate, owner's call: amend the bun-ts-engineer agent definition (a user-level config file, out of this session's scope to touch unprompted) so its completion gate and audit defer to the repository's own runner where one is established
 - With this, every watch-item of the day is closed or on the board as a named candidate; the retrospective remains the sole queued step
 
+## Event 162 — readable editions commissioned for the three research notes
+
+- Timestamp: 2026-08-24 15:54 PDT, measured
+- Owner directive: create new versions of plugin-kit's ANALYSIS-004, 005 and 006 alongside the originals — more readable, understandable, concise, without confusing jargon, losing none of the content, depth or information; consistent words, vocabulary and layouts for humans and agents alike. Identity resolved by one ask, owner chose: readable versions as NEW SIBLINGS (ANALYSIS-007, 008, 009 — counters verified free), originals byte-identical including titles, existing links unmoved
+- Owner process requirements honoured before dispatch: every provided style reference read IN FULL (wording.md whole this turn; layout.md and the skill body whole earlier today; both mattpocock skills whole plus their pointer targets SKILL-MECHANICS.md and the CONTEXT.md glossary), and the unknowns looked up rather than assumed — ASD-STE100 verified against current primary sources (Issue 9, 2025-01-15: writing rules in 9 sections with 53 rules, plus the controlled dictionary this house deliberately declines)
+- Three technical-writer agents dispatched in parallel, one per note, each brief carrying: the full-read mandate on source and references, the distilled style doctrine (one word per concept with a CONTEXT.md-pattern Language section, STE sentence rules, parallel groups, front-loading, co-location, positive phrasing), the preservation contract (every finding, figure, evidence label, dated correction, limit and recommendation survives — readability from rewording and layout, never omission), the sibling identity with pairs_with edges and the no-inverse-on-originals exception commented, all four measured write-path defects, and a section-by-section PARITY GATE against the original before reporting
+- The A5 brief additionally binds the three dated corrections as record; the A6 brief names the passive-context explanation that confused the owner today as a required plain-language fix
+
 ## Observations
 
 ### Build decisions
