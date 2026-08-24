@@ -100,3 +100,44 @@ The glyphs are the set in `references/layout.md`: `➞` for what a name becomes,
 on the two items that need work beyond a rename, `✔` on the one that costs nothing.
 The lists are markdown rather than authored markers, because a preview renders
 markdown and the renderer owns the layout.
+
+## What the reader actually sees
+
+The JSON above is the author's side, and the escaped string hides the shape. This is
+the recommended option's preview as it arrives in the pane:
+
+```text
+Four changes reach us. This defers all of them.
+
+  • Session.get() ➞ Session.load(): 12 call sites
+  • Cookie default flips to SameSite=Strict: 1 config
+  • refresh() drops its callback argument: 3 call sites
+  • Node 18 support dropped: we are on 20 ✔
+
+Nothing changes this week. The work moves to the next cycle.
+```
+
+Three things the escaped string does not show. The `**` is gone and the first line
+arrives with weight on it. The four `-` items are drawn as a list, indented, with a
+marker the renderer picks — the bullet above stands in for it, and the exact glyph is
+not yours to choose, which is why rule 5 sends you to markdown here instead of the
+glyph set. And the backticks around `Session.get()` become code styling rather than
+literal characters.
+
+The fourth thing is the point of the layout, and it only becomes obvious rendered:
+the four rows line up. A reader arrowing between the three options sees the same four
+items in the same order with their verdicts changing, which is the comparison the
+preview exists for. In JSON that is a claim; on screen it is just true.
+
+Only the recommended option is rendered here. The other two have the same shape with
+different verdicts, and showing them would repeat the mechanism rather than add to it.
+
+**Check the geometry before you commit to this layout.** The pane is the terminal's
+width less 34 columns, and the box inside it takes four more, so the text has
+`columns − 38` to work with. The widest line above is 60 display cells, which renders
+unwrapped from about 98 columns and wraps below that. The pane is also the terminal's
+height less 26 rows, so on a short terminal the preview truncates and the rest goes
+behind a `lines hidden` rule. That is what `references/layout.md` means by calling
+previews a large-terminal feature, and it is worth knowing before the descriptions
+are gone rather than after.
+
