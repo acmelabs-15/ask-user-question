@@ -1531,6 +1531,14 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - Cross-note alignments beyond sections: one label-token grammar (spaces not hyphens, middle-dot separators, vocabulary defined once), fenced specimens keeping quoted headings out of the note's namespace, one tag policy, identical orientation and footer wording, titles and permalinks held stable from round two so edges survive
 - All three writers dispatched with briefs sharing the standard block verbatim plus per-note deltas (007: five renames, the Evidence-line split, the tag swap; 008: the corrections slot move, the nav dissolution, the fence-namespace fix; 009: mostly renames since its round-2 conventions became the law, plus the gallery dissolution into first-point-of-need). Rewrites land on the same titles via overwrite so identity and edges hold
 
+## Event 168 — round three closes: one section architecture across all three notes
+
+- Timestamp: 2026-08-24 17:04 PDT, measured
+- All three round-3 rewrites landed in place on unchanged permalinks (plugin-kit 46ca466, ab09a4b plus 3ee561e, 9503995, its ledger event at 9f62da4) — the three notes now share the twelve-slot architecture, one label-token grammar, glossed numbered ToCs, uniform marker shapes with the conditional-marker rule working (Limits absent informatively), and measured sentence statistics inside the 15-20 band on every note
+- Each pass earned beyond structure: 007 discovered the fence-blind link parsing and its ruling (fidelity over tidiness, artifact documented, Relations authoritative); 008 found the fragment-anchor SELF-edge variant, fixed the predicted specimen heading collision, and caught a dropped figure by its own token diff; 009 restored a round-2 compression loss its dissolution exposed and disclosed the single reconstructed character in its routing-map fence. The receipt-unreliability rule is now total: every edit-receipt counter was wrong at least once across the batch, both directions, both counters — read-back is the only truth
+- The three originals byte-identical through all three rounds. The standardization thread closes; the twelve-slot standard, its templates and the two artifact variants are all recorded here and in the notes themselves for whatever future standard-writing the owner wants
+- The board: mechanism items, validator candidates, upstream asks, and the retrospective over Events 1-168 with the thirty sidecar findings — on the owner's call
+
 ## Observations
 
 ### Build decisions
