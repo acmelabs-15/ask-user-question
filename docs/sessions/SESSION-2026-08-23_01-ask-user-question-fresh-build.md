@@ -1539,6 +1539,13 @@ _Empty. All dispatched work is landed or explicitly stopped; the session is at a
 - The three originals byte-identical through all three rounds. The standardization thread closes; the twelve-slot standard, its templates and the two artifact variants are all recorded here and in the notes themselves for whatever future standard-writing the owner wants
 - The board: mechanism items, validator candidates, upstream asks, and the retrospective over Events 1-168 with the thirty sidecar findings — on the owner's call
 
+## Event 169 — 009 verifies clean, and the counter dossier gains its final two entries
+
+- Timestamp: 2026-08-24 17:06 PDT, measured
+- The 009 phantom-edge check came back clean with zero changes needed: no link syntax anywhere including fences, authored edges 2, and the third resolved edge correctly diagnosed as the INBOUND session-note edge this session added at the round-1 cleanup — which build_context renders indistinguishably from a self-edge, a near-false-positive the writer caught by checking direction before hunting for minting text. No artifact sentence was added, because documenting a phantom that does not exist would itself be a false claim
+- Two further counter behaviours join the Brain bug dossier: build_context's total_relations counts BOTH directions (an inbound edge naming the note reads like a self-edge), and its total_observations aggregates across the returned context rather than the primary note (119 reported for a note holding 49). The three-round verdict across every server-side counter exercised: edit-receipt observation tallies (correct, doubled, tripled, absent), edit-receipt relation tallies (1 and 3 alternately), build_context both counters — only a read-back of the file is truth
+- The standardization thread is confirmed fully closed with no residue; nothing changed on disk this round
+
 ## Observations
 
 ### Build decisions
