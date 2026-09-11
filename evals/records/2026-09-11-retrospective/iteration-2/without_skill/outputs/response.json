@@ -1,0 +1,74 @@
+{
+  "results": [
+    {
+      "id": "partial-and-later",
+      "action": "ask_question",
+      "message": "",
+      "settled": ["Members can read all workspace notes.", "Guests have no workspace access."],
+      "pending": ["Whether members can edit workspace notes."],
+      "deferred": ["Weekly email digest, requested for later."],
+      "tool_call": {
+        "name": "request_user_input_async",
+        "arguments": {
+          "questions": [{
+            "title": "Members can read all workspace notes, and guests have no workspace access. I have set the weekly digest aside for later. Should members also edit notes? I recommend administrator-only editing until you want members to change shared content.",
+            "options": ["Only administrators can edit", "Administrators and members can edit"]
+          }]
+        }
+      }
+    },
+    {
+      "id": "investigate-not-delegate",
+      "action": "update_guide_and_verify",
+      "message": "The guide shows the API v1 format. API v2 requires an array of strings, and the client already sends that format and passes its v2 contract test. I will update the guide for API v2 and check its examples against the schema.",
+      "settled": ["The guide must describe API v2.", "The columns value must be an array of strings.", "The current client matches the v2 contract."],
+      "pending": [],
+      "deferred": [],
+      "tool_call": null
+    },
+    {
+      "id": "wait-for-answer",
+      "action": "wait_for_existing_question_reply",
+      "message": "",
+      "settled": ["The draft is checked.", "The publishing permission question has been emitted."],
+      "pending": ["The user's permission to publish."],
+      "deferred": [],
+      "tool_call": null
+    },
+    {
+      "id": "qualified-approval",
+      "action": "implement_locally_and_verify",
+      "message": "I will add arrow-key navigation and visible focus, then verify both in the local prototype. I will keep the prototype local.",
+      "settled": ["The user approved the keyboard navigation and visible focus plan.", "The prototype must remain local and must not be published."],
+      "pending": [],
+      "deferred": [],
+      "tool_call": null
+    },
+    {
+      "id": "reversible-choice",
+      "action": "apply_inline_label_change_and_verify",
+      "message": "I will format the label inline because it has one call site, then run the focused behavior check.",
+      "settled": ["The local display-label change is authorized.", "Inline formatting is sufficient for this single call site and is easy to reverse."],
+      "pending": [],
+      "deferred": [],
+      "tool_call": null
+    },
+    {
+      "id": "repair-the-scope",
+      "action": "ask_one_separate_question",
+      "message": "",
+      "settled": [],
+      "pending": ["Whether local notes save automatically or through an explicit save action.", "Whether saved notes are private or team-visible."],
+      "deferred": [],
+      "tool_call": {
+        "name": "request_user_input_async",
+        "arguments": {
+          "questions": [{
+            "title": "You are right. I combined two separate decisions. First, how should a local note be saved? I recommend automatic saving so you do not need an extra action to keep your changes. Sharing is still undecided; I will ask about that separately.",
+            "options": ["Save automatically", "Save only when I choose Save"]
+          }]
+        }
+      }
+    }
+  ]
+}

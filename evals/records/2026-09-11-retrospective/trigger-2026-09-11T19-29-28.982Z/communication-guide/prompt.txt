@@ -1,0 +1,1 @@
+Write a short internal engineering-wiki section about how clear clarification questions help a development team. Explain scope, context, and good option descriptions, with two examples. The deliverable is documentation about communication, not a question to me. Do not ask me for input.

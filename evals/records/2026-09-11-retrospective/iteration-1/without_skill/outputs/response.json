@@ -1,0 +1,74 @@
+{
+  "results": [
+    {
+      "id": "partial-and-later",
+      "action": "ask_question",
+      "message": "",
+      "settled": ["Members can read all workspace notes.", "Guests have no workspace access."],
+      "pending": ["Whether members can edit workspace notes."],
+      "deferred": ["A weekly email digest is a possible later addition."],
+      "tool_call": {
+        "name": "request_user_input_async",
+        "arguments": {
+          "questions": [{
+            "title": "Members need to read all workspace notes. Guests have no workspace access, and the weekly email digest can wait until later. Should members also edit notes, or should only administrators edit them?",
+            "options": ["Members and administrators can edit", "Only administrators can edit"]
+          }]
+        }
+      }
+    },
+    {
+      "id": "investigate-not-delegate",
+      "action": "update_guide_and_verify",
+      "message": "The guide describes API v1. API v2 requires an array of strings, and the client already sends that format and passes its v2 contract test. I’ll update the guide for API v2 and verify its examples against the schema.",
+      "settled": ["The guide must be updated to API v2.", "API v2 requires columns to be an array of strings.", "The current client matches that requirement and its v2 contract test passes."],
+      "pending": [],
+      "deferred": [],
+      "tool_call": null
+    },
+    {
+      "id": "wait-for-answer",
+      "action": "wait_for_user_reply",
+      "message": "",
+      "settled": ["The draft is checked.", "The publishing permission question was emitted."],
+      "pending": ["The user's permission to publish."],
+      "deferred": ["Publishing remains on hold until the user approves."],
+      "tool_call": null
+    },
+    {
+      "id": "qualified-approval",
+      "action": "implement_locally_and_verify",
+      "message": "I’ll add arrow-key navigation and visible focus to the local prototype, then verify both. The prototype will stay local.",
+      "settled": ["The user approved adding arrow-key navigation and visible focus.", "The prototype must remain local and must not be published."],
+      "pending": [],
+      "deferred": [],
+      "tool_call": null
+    },
+    {
+      "id": "reversible-choice",
+      "action": "apply_inline_label_change_and_verify",
+      "message": "I’ll format the label inline because it is used at one call site, then run the focused behavior check.",
+      "settled": ["The user authorized the local label change.", "Both implementations provide the same behavior.", "Use inline formatting for this single call site."],
+      "pending": [],
+      "deferred": [],
+      "tool_call": null
+    },
+    {
+      "id": "repair-the-scope",
+      "action": "ask_one_separate_question",
+      "message": "",
+      "settled": ["Saving and sharing are separate decisions and must be asked separately."],
+      "pending": ["Whether notes save automatically or only after an explicit save action.", "Whether saved notes are private or team-visible."],
+      "deferred": ["Ask about sharing after the saving decision is answered."],
+      "tool_call": {
+        "name": "request_user_input_async",
+        "arguments": {
+          "questions": [{
+            "title": "I combined two separate decisions. Let’s decide saving first; sharing is still undecided. Should a note save automatically as you edit, or only when you choose Save?",
+            "options": ["Save automatically", "Save only when I choose Save"]
+          }]
+        }
+      }
+    }
+  ]
+}

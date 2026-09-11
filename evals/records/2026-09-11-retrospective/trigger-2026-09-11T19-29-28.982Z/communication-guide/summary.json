@@ -1,0 +1,39 @@
+{
+  "id": "communication-guide",
+  "expected_selection": false,
+  "selected": false,
+  "skill_calls": [],
+  "inventory": [
+    "deep-research",
+    "auq-probe:ask-user-question-probe",
+    "design",
+    "design-sync",
+    "dataviz",
+    "update-config",
+    "verify",
+    "debug",
+    "code-review",
+    "simplify",
+    "batch",
+    "fewer-permission-prompts",
+    "doctor",
+    "loop",
+    "schedule",
+    "claude-api",
+    "workflow-authoring",
+    "run",
+    "run-skill-generator"
+  ],
+  "plugins": [
+    {
+      "name": "auq-probe",
+      "path": "/Users/peterkloss/Dev/ACMElabs/ask-user-question/work/trigger-2026-09-11T19-29-28.982Z/plugin",
+      "source": "auq-probe@inline",
+      "version": "0.0.0"
+    }
+  ],
+  "model": "claude-opus-5[1m]",
+  "exit_code": 0,
+  "result_subtype": "success",
+  "duration_ms": 14441
+}

@@ -1,0 +1,172 @@
+{
+  "metadata": {
+    "skill_name": "ask-user-question",
+    "skill_path": "skills/ask-user-question",
+    "executor_model": "session model; exact ID not captured",
+    "analyzer_model": "independent grading agent plus root adjudication",
+    "timestamp": "2026-09-11T19:38:56.386Z",
+    "evals_run": [
+      1
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "meaning-and-next-action",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 10,
+        "failed": 0,
+        "total": 10,
+        "pass_rate": 1
+      },
+      "expectations": [
+        {
+          "text": "Partial view access does not become permission to edit; editing remains unresolved.",
+          "passed": true,
+          "evidence": "partial-and-later: settled says “Members must be able to read all workspace notes”; pending is “Whether members may edit workspace notes.” The sole question asks “Should only administrators edit workspace notes, or should members edit them too?” Reading has not become editing permission."
+        },
+        {
+          "text": "The deferred digest idea is preserved without starting it or closing the current editing question.",
+          "passed": true,
+          "evidence": "partial-and-later: deferred records “Weekly email digest: a future suggestion ... No implementation is authorized and no revisit condition is set.” The title keeps the digest as a future suggestion and still asks the editing decision."
+        },
+        {
+          "text": "A versioned API mismatch is resolved from the supplied evidence without asking the user to manage the investigation.",
+          "passed": true,
+          "evidence": "investigate-not-delegate: action is update_guide_and_verify, tool_call is null, and the message says “The v2 schema requires columns as an array of strings, and the client already passes its v2 contract test. I will update the guide for API v2 and check its examples against that schema.” This resolves the authorized next step without delegating investigation to the user."
+        },
+        {
+          "text": "A thirty-second absence of a reply does not create consent, idle inference, cancellation, or a response deadline.",
+          "passed": true,
+          "evidence": "wait-for-answer: action is keep_question_pending_and_wait; pending says “Permission to publish the checked draft. No answer, cancellation, or expiry has arrived.” No timeout, user-idle conclusion, consent, or cancellation is introduced."
+        },
+        {
+          "text": "Clear approval of a concrete plan retains its explicit limit and does not create redundant confirmation.",
+          "passed": true,
+          "evidence": "qualified-approval: action is implement_and_verify_locally and tool_call is null. Settled retains approval for arrow-key navigation and visible focus, requires the prototype to stay local, prohibits publishing, and states that no separate confirmation is required."
+        },
+        {
+          "text": "A small reversible formatting choice does not cause a user question or an invented requirement.",
+          "passed": true,
+          "evidence": "reversible-choice: action is implement_inline_and_verify, tool_call is null, and the message explains “because the formatting is used at one call site.” No product requirement or new user decision is invented."
+        },
+        {
+          "text": "An unclear compound question is separated into one current decision and a later decision.",
+          "passed": true,
+          "evidence": "repair-the-scope: the sole question asks “Should local notes save automatically or only when you choose to save?” The title says “We will decide who can see saved notes separately,” and deferred explicitly schedules private versus team-visible notes after the saving decision. Both decisions remain pending."
+        },
+        {
+          "text": "Any Codex async call uses title and optional string options, not Claude-style fields.",
+          "passed": true,
+          "evidence": "Both non-null calls use name request_user_input_async and arguments.questions containing one object with title and an array of string options. No Claude-style fields or unsupported timeout parameter appear."
+        },
+        {
+          "text": "Facts stay within the supplied evidence: accepted confirms emission, not display or delivery; the v1 guide example does not prove the v1 API contract.",
+          "passed": true,
+          "evidence": "wait-for-answer says the tool “acknowledged emission ... did not supply a user answer or confirm that the user saw it.” investigate-not-delegate records “The old guide is labeled API v1 and shows a comma-separated string”; only the inspected v2 schema is treated as contract evidence. “The guide describes API v1” describes the document, without asserting that its example establishes the v1 API contract."
+        },
+        {
+          "text": "A question carrying several context points uses supported line breaks or lists to separate context from the decision rather than one dense paragraph.",
+          "passed": true,
+          "evidence": "After JSON.parse, each of the two question titles contains 6 actual LF characters and 0 literal backslash-n sequences, forming four paragraphs. partial-and-later separates the current decision, settled access and deferred digest context, option consequences, and final question. repair-the-scope separates the repair, save-option consequences, later sharing decision, and final saving question. These are real string line breaks, not merely visible escape text. No live UI display was tested."
+        }
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "meaning-and-next-action",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "passed": 9,
+        "failed": 1,
+        "total": 10,
+        "pass_rate": 0.9
+      },
+      "expectations": [
+        {
+          "text": "Partial view access does not become permission to edit; editing remains unresolved.",
+          "passed": true,
+          "evidence": "partial-and-later: settled says “Members can read all workspace notes”; pending says “Whether members can edit workspace notes.” The question asks “Should members also edit notes?” Its administrator-only recommendation does not mark that policy as approved."
+        },
+        {
+          "text": "The deferred digest idea is preserved without starting it or closing the current editing question.",
+          "passed": true,
+          "evidence": "partial-and-later: deferred is “Weekly email digest, requested for later.” The title says “I have set the weekly digest aside for later” and continues to ask about member editing. No digest implementation starts."
+        },
+        {
+          "text": "A versioned API mismatch is resolved from the supplied evidence without asking the user to manage the investigation.",
+          "passed": true,
+          "evidence": "investigate-not-delegate: action is update_guide_and_verify, tool_call is null, and the message says “API v2 requires an array of strings, and the client already sends that format and passes its v2 contract test. I will update the guide for API v2 and check its examples against the schema.” It chooses the authorized guide correction without asking the user to investigate."
+        },
+        {
+          "text": "A thirty-second absence of a reply does not create consent, idle inference, cancellation, or a response deadline.",
+          "passed": true,
+          "evidence": "wait-for-answer: action is wait_for_existing_question_reply; the permission question is recorded as emitted and permission remains pending. message is empty and tool_call is null. No consent, idle inference, cancellation, duplicate question, or deadline appears."
+        },
+        {
+          "text": "Clear approval of a concrete plan retains its explicit limit and does not create redundant confirmation.",
+          "passed": true,
+          "evidence": "qualified-approval: action is implement_locally_and_verify and tool_call is null. The message proceeds with arrow-key navigation and visible focus; settled says the prototype “must remain local and must not be published.” No redundant confirmation is requested."
+        },
+        {
+          "text": "A small reversible formatting choice does not cause a user question or an invented requirement.",
+          "passed": true,
+          "evidence": "reversible-choice: action is apply_inline_label_change_and_verify and tool_call is null. The message chooses inline formatting “because it has one call site,” then the focused behavior check. No invented requirement or user question appears."
+        },
+        {
+          "text": "An unclear compound question is separated into one current decision and a later decision.",
+          "passed": true,
+          "evidence": "repair-the-scope: the one current question asks how a local note should be saved and gives only saving options. Its title explicitly says “Sharing is still undecided; I will ask about that separately.” Both decisions remain in pending. The empty deferred array does not negate the explicit later-decision organization in the title."
+        },
+        {
+          "text": "Any Codex async call uses title and optional string options, not Claude-style fields.",
+          "passed": true,
+          "evidence": "Both non-null calls use name request_user_input_async and arguments.questions containing one title and an array of string options. No Claude-style fields or unsupported timeout parameter appear."
+        },
+        {
+          "text": "Facts stay within the supplied evidence: accepted confirms emission, not display or delivery; the v1 guide example does not prove the v1 API contract.",
+          "passed": true,
+          "evidence": "Root adjudication: the phrase ‘The guide shows the API v1 format’ can reasonably describe the supplied guide example. It does not expressly claim the v1 API requires that form. Treat this ambiguous shorthand as a caution rather than a proven assertion failure. Emission wording is within the supplied evidence."
+        },
+        {
+          "text": "A question carrying several context points uses supported line breaks or lists to separate context from the decision rather than one dense paragraph.",
+          "passed": false,
+          "evidence": "FAIL: both multi-context question titles are single dense paragraphs without line breaks or lists. partial-and-later combines read access, guest exclusion, the deferred digest, the editing question, and a recommendation in one paragraph. repair-the-scope combines the repair, saving question, recommendation, and later sharing decision in one paragraph. The separate options array does not organize the context within either title."
+        }
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1,
+        "stddev": 0,
+        "min": 1,
+        "max": 1
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.9,
+        "stddev": 0,
+        "min": 0.9,
+        "max": 0.9
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.10"
+    }
+  },
+  "notes": [
+    "One simulated sample per arm, six cases, ten assertions. Not a reliability estimate or a statistically significant effect.",
+    "The displayed zero within-sample deviation comes from one sample; run-to-run variability is unknown.",
+    "Time, token use, and process traces were not captured and are omitted rather than reported as zero.",
+    "Initial baseline evidence-scope failure was conservatively adjudicated as pass; only question organization remains failed.",
+    "Iteration 1 had eight assertions. Iteration 2 adds evidence-scope and organization checks, so their totals are not directly comparable.",
+    "Automatic selection was probed separately in Claude Code. Live question rendering and delayed-response behavior remain untested."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "skill_name": "ask-user-question",
+  "evals": [
+    {
+      "id": 1,
+      "name": "meaning-and-next-action",
+      "prompt": "For each case in scenarios.json, produce the next assistant action and the exact user-facing message or tool-call arguments, if a question is needed. Work only from the supplied transcript and facts. Do not execute actions or ask a real user. Return one JSON object with a results array; each result contains id, action, message, settled, pending, deferred, and tool_call (null when no call is needed). Preserve the difference between what is known and what still needs input.",
+      "expected_output": "The next action fits each reply and its evidence. Questions are purposeful and singular, settled constraints survive, and no timer or missing choice is invented.",
+      "files": [
+        "evals/scenarios.json"
+      ],
+      "assertions": [
+        "Partial view access does not become permission to edit; editing remains unresolved.",
+        "The deferred digest idea is preserved without starting it or closing the current editing question.",
+        "A versioned API mismatch is resolved from the supplied evidence without asking the user to manage the investigation.",
+        "A thirty-second absence of a reply does not create consent, idle inference, cancellation, or a response deadline.",
+        "Clear approval of a concrete plan retains its explicit limit and does not create redundant confirmation.",
+        "A small reversible formatting choice does not cause a user question or an invented requirement.",
+        "An unclear compound question is separated into one current decision and a later decision.",
+        "Any Codex async call uses title and optional string options, not Claude-style fields.",
+        "Facts stay within the supplied evidence: accepted confirms emission, not display or delivery; the v1 guide example does not prove the v1 API contract.",
+        "A question carrying several context points uses supported line breaks or lists to separate context from the decision rather than one dense paragraph."
+      ]
+    }
+  ]
+}

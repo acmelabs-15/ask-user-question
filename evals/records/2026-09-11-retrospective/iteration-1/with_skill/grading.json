@@ -1,0 +1,107 @@
+{
+  "expectations": [
+    {
+      "text": "Partial view access does not become permission to edit; editing remains unresolved.",
+      "passed": true,
+      "evidence": "partial-and-later settles members' reading access and existing guest exclusion, while pending retains 'Whether members may edit workspace notes or editing is limited to administrators.' The single question asks that unresolved choice; it does not treat reading access as edit approval."
+    },
+    {
+      "text": "The deferred digest idea is preserved without starting it or closing the current editing question.",
+      "passed": true,
+      "evidence": "partial-and-later.deferred preserves 'Weekly email digest: a suggestion for later' and explicitly says no implementation is authorized and the revisit condition is unspecified. The action asks about editing; the title says the digest does not settle editing permission."
+    },
+    {
+      "text": "A versioned API mismatch is resolved from the supplied evidence without asking the user to manage the investigation.",
+      "passed": true,
+      "evidence": "investigate-not-delegate selects correct_guide_and_verify_against_v2. The message identifies the v1 guide, the inspected v2 array requirement, and the already-conforming client, then proposes updating and checking the guide. tool_call is null; no investigation is delegated to the user."
+    },
+    {
+      "text": "A thirty-second absence of a reply does not create consent, idle inference, cancellation, or a response deadline.",
+      "passed": true,
+      "evidence": "wait-for-answer selects keep_publishing_question_pending_and_wait. Its pending field says to continue waiting on the existing question 'without adding a deadline or selecting an answer.' No consent, cancellation, or idle state is inferred; tool_call is null. The separate delivery wording caveat is recorded under claims."
+    },
+    {
+      "text": "Clear approval of a concrete plan retains its explicit limit and does not create redundant confirmation.",
+      "passed": true,
+      "evidence": "qualified-approval selects implement_and_verify_locally and retains 'publishing is prohibited.' The message commits to the approved keyboard navigation and focus work and keeping it local. tool_call is null, with no redundant confirmation."
+    },
+    {
+      "text": "A small reversible formatting choice does not cause a user question or an invented requirement.",
+      "passed": true,
+      "evidence": "reversible-choice selects inline formatting because it has one call site, and proposes the specified focused behavior check. tool_call is null. No new product requirement or user decision is introduced."
+    },
+    {
+      "text": "An unclear compound question is separated into one current decision and a later decision.",
+      "passed": true,
+      "evidence": "repair-the-scope asks only whether saving is automatic or explicit. Sharing remains pending, and deferred says to ask about sharing after saving is answered. The output explicitly says the reply selected neither behavior; the one current question does not bundle sharing."
+    },
+    {
+      "text": "Any Codex async call uses title and optional string options, not Claude-style fields.",
+      "passed": true,
+      "evidence": "Both proposed request_user_input_async calls have arguments.questions with one item containing only title and options. Each title is a string and each options value is an array of strings. There are no Claude-style header, question, description, or multiSelect fields and no timeout parameter."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1
+  },
+  "claims": [
+    {
+      "claim": "All six requested cases are present exactly once with all seven requested fields.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Both the supplied case list and this results array contain partial-and-later, investigate-not-delegate, wait-for-answer, qualified-approval, reversible-choice, and repair-the-scope. Every result contains id, action, message, settled, pending, deferred, and tool_call."
+    },
+    {
+      "claim": "The proposed guide correction follows supplied API v2 evidence.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "The scenario states that the inspected v2 schema requires columns as an array of strings, the v1 guide shows a comma-separated string, and the current client sends an array and passes its v2 contract test. The output proposes updating the guide and checking examples."
+    },
+    {
+      "claim": "Proposed actions and questions were not executed; the run did not test live UI behavior.",
+      "type": "process",
+      "verified": false,
+      "evidence": "execution-note.md reports this limit. The inspected artifacts contain only proposed JSON actions and a short note; no execution transcript, tool trace, or live UI record is provided for independent verification. Accordingly, no claim of execution or live UI success is credited."
+    },
+    {
+      "claim": "The publishing question was delivered.",
+      "type": "factual",
+      "verified": false,
+      "evidence": "wait-for-answer.message says 'The question was delivered' and settled says 'acknowledged delivery.' The supplied host contract states that accepted acknowledges emission only. Display or delivery is not established by the available evidence."
+    },
+    {
+      "claim": "API v1 uses a comma-separated columns string.",
+      "type": "factual",
+      "verified": false,
+      "evidence": "The scenario establishes that the guide labeled API v1 shows a comma-separated string. It does not supply an inspected v1 schema proving that broader API contract. The next action is still justified by the inspected v2 schema."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Only one simulated response is available per arm; no full execution transcript, metrics.json, or timing.json was supplied.",
+      "Execution-note process and file-read claims cannot be independently reconstructed from a full tool trace."
+    ],
+    "needs_review": [
+      "Replace delivery wording with emission acknowledgement when only accepted: true is known.",
+      "Keep the v1 statement scoped to the supplied guide rather than an independently verified v1 contract."
+    ],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "reason": "Add an assertion distinguishing accepted emission from verified display or delivery. The with-skill wait message says 'The question was delivered,' while the supplied tool contract guarantees only acknowledgement of emission."
+      },
+      {
+        "reason": "Add an explicit coverage assertion: every supplied case id appears exactly once and includes all seven requested fields. Both outputs satisfy this check, but the eight assertions do not directly enforce complete output coverage."
+      },
+      {
+        "reason": "Clarify whether pending means unresolved user input or all unfinished work. The with-skill arm lists implementation work as pending; the without-skill arm leaves pending empty where no user input is missing. The current prompt permits both, so this difference should not decide the score."
+      }
+    ],
+    "overall": "The assertions discriminate core interpretation errors, but this single simulated pass reaches a ceiling in both arms. The evidence tests proposed next actions and payload shape, not automatic skill selection, durable follow-up, actual changes, or live question UI behavior."
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "available_question_tool": {
+    "name": "request_user_input_async",
+    "input": {"questions": [{"title": "string", "options": "optional array of strings"}]},
+    "result": "accepted acknowledges emission only; the user's reply arrives later",
+    "timeout_parameter": false
+  },
+  "cases": [
+    {
+      "id": "partial-and-later",
+      "facts": ["The available roles are administrator, member, and guest.", "The active task is workspace note permissions.", "Guests have no workspace access under the agreed scope."],
+      "transcript": [
+        {"role":"assistant","text":"Should only administrators edit workspace notes, or should members edit them too?"},
+        {"role":"user","text":"Members need to read all notes. A weekly email digest would be valuable later. I don't see why we would let guests edit anything."}
+      ]
+    },
+    {
+      "id": "investigate-not-delegate",
+      "facts": ["The user authorized correcting the integration guide to match API v2.", "The inspected v2 schema requires columns as an array of strings.", "The old integration guide is explicitly labeled API v1 and shows a comma-separated columns string.", "The current client already sends an array and its v2 contract test passes."],
+      "transcript": [{"role":"user","text":"I noticed the guide and the client don't agree. Please get them aligned."}]
+    },
+    {
+      "id": "wait-for-answer",
+      "facts": ["Publishing requires the user's permission.", "The assistant emitted an async question asking whether to publish.", "The tool returned accepted: true.", "Thirty seconds have elapsed. No user reply has arrived.", "The host has not reported cancellation or expiry."],
+      "transcript": [{"role":"assistant","text":"The draft is checked. May I publish it now?"}]
+    },
+    {
+      "id": "qualified-approval",
+      "facts": ["The concrete plan is to add keyboard navigation to the local prototype.", "The surrounding workflow requires clear user approval but no separate final confirmation.", "No required implementation input remains unresolved."],
+      "transcript": [
+        {"role":"assistant","text":"I will add arrow-key navigation and visible focus to the local prototype, then verify both. Ready to proceed?"},
+        {"role":"user","text":"Sounds good. Keep this local; don't publish the prototype."}
+      ]
+    },
+    {
+      "id": "reversible-choice",
+      "facts": ["The user authorized a local display-label change.", "Two implementations produce the specified label and pass the same focused behavior check.", "One formats inline; the other introduces a helper used at this one call site.", "Either implementation is a one-line reversal and changes no product behavior."],
+      "transcript": [{"role":"user","text":"Update that label and verify it."}]
+    },
+    {
+      "id": "repair-the-scope",
+      "facts": ["The current design has two unresolved decisions: when a local note is saved, and whether saved notes are shared with the team.", "Saving can be automatic or explicit. Sharing can be private or team-visible."],
+      "transcript": [
+        {"role":"assistant","text":"Should notes save automatically and be shared with your team?"},
+        {"role":"user","text":"Wait, what? Those sound like different things. I can't answer that as one choice."}
+      ]
+    }
+  ]
+}

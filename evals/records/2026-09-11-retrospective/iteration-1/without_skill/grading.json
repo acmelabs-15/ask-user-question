@@ -1,0 +1,92 @@
+{
+  "expectations": [
+    {
+      "text": "Partial view access does not become permission to edit; editing remains unresolved.",
+      "passed": true,
+      "evidence": "partial-and-later settles 'Members can read all workspace notes' and existing guest exclusion. pending retains 'Whether members can edit workspace notes.' The single question asks members-and-administrators versus administrators-only editing; read access is not treated as edit approval."
+    },
+    {
+      "text": "The deferred digest idea is preserved without starting it or closing the current editing question.",
+      "passed": true,
+      "evidence": "partial-and-later.deferred preserves 'A weekly email digest is a possible later addition.' The action asks the current editing question, and the title says the digest can wait until later. No digest implementation starts and editing remains unresolved."
+    },
+    {
+      "text": "A versioned API mismatch is resolved from the supplied evidence without asking the user to manage the investigation.",
+      "passed": true,
+      "evidence": "investigate-not-delegate selects update_guide_and_verify. The message distinguishes the v1 guide from the v2 array requirement and already-conforming client, then proposes updating and checking the guide. tool_call is null; no investigation choice is sent to the user."
+    },
+    {
+      "text": "A thirty-second absence of a reply does not create consent, idle inference, cancellation, or a response deadline.",
+      "passed": true,
+      "evidence": "wait-for-answer selects wait_for_user_reply, retains publishing permission as pending, and keeps publishing on hold until approval. message is empty and tool_call is null. The absence of a reply produces no consent, cancellation, idle inference, deadline, or duplicate question."
+    },
+    {
+      "text": "Clear approval of a concrete plan retains its explicit limit and does not create redundant confirmation.",
+      "passed": true,
+      "evidence": "qualified-approval selects implement_locally_and_verify. The message and settled field preserve keeping the prototype local and not publishing it. tool_call is null and no new confirmation is requested."
+    },
+    {
+      "text": "A small reversible formatting choice does not cause a user question or an invented requirement.",
+      "passed": true,
+      "evidence": "reversible-choice selects inline formatting for the single call site and the focused behavior check. tool_call is null. It creates neither a user question nor a new product requirement."
+    },
+    {
+      "text": "An unclear compound question is separated into one current decision and a later decision.",
+      "passed": true,
+      "evidence": "repair-the-scope explicitly acknowledges combining two separate decisions, asks only about saving, retains sharing as pending, and defers the sharing question until saving is answered. Neither behavior is treated as selected."
+    },
+    {
+      "text": "Any Codex async call uses title and optional string options, not Claude-style fields.",
+      "passed": true,
+      "evidence": "Both proposed request_user_input_async calls have arguments.questions with one item containing only title and options. Each title is a string and each options value is an array of strings. There are no Claude-style header, question, description, or multiSelect fields and no timeout parameter."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1
+  },
+  "claims": [
+    {
+      "claim": "All six requested cases are present exactly once with all seven requested fields.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Both the supplied case list and this results array contain partial-and-later, investigate-not-delegate, wait-for-answer, qualified-approval, reversible-choice, and repair-the-scope. Every result contains id, action, message, settled, pending, deferred, and tool_call."
+    },
+    {
+      "claim": "The proposed guide correction follows supplied API v2 evidence.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "The scenario states that the inspected v2 schema requires columns as an array of strings, the v1 guide shows a comma-separated string, and the current client sends an array and passes its v2 contract test. The output proposes updating the guide and checking examples."
+    },
+    {
+      "claim": "Proposed actions and questions were not executed; the run did not test live UI behavior.",
+      "type": "process",
+      "verified": false,
+      "evidence": "execution-note.md reports this limit. The inspected artifacts contain only proposed JSON actions and a short note; no execution transcript, tool trace, or live UI record is provided for independent verification. Accordingly, no claim of execution or live UI success is credited."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Only one simulated response is available per arm; no full execution transcript, metrics.json, or timing.json was supplied.",
+      "Execution-note process and file-read claims cannot be independently reconstructed from a full tool trace."
+    ],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "reason": "Add an assertion distinguishing accepted emission from verified display or delivery. The with-skill wait message says 'The question was delivered,' while the supplied tool contract guarantees only acknowledgement of emission."
+      },
+      {
+        "reason": "Add an explicit coverage assertion: every supplied case id appears exactly once and includes all seven requested fields. Both outputs satisfy this check, but the eight assertions do not directly enforce complete output coverage."
+      },
+      {
+        "reason": "Clarify whether pending means unresolved user input or all unfinished work. The with-skill arm lists implementation work as pending; the without-skill arm leaves pending empty where no user input is missing. The current prompt permits both, so this difference should not decide the score."
+      }
+    ],
+    "overall": "The assertions discriminate core interpretation errors, but this single simulated pass reaches a ceiling in both arms. The evidence tests proposed next actions and payload shape, not automatic skill selection, durable follow-up, actual changes, or live question UI behavior."
+  }
+}

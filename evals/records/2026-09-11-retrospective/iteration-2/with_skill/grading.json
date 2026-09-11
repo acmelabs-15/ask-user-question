@@ -1,0 +1,97 @@
+{
+  "expectations": [
+    {
+      "text": "Partial view access does not become permission to edit; editing remains unresolved.",
+      "passed": true,
+      "evidence": "partial-and-later: settled says “Members must be able to read all workspace notes”; pending is “Whether members may edit workspace notes.” The sole question asks “Should only administrators edit workspace notes, or should members edit them too?” Reading has not become editing permission."
+    },
+    {
+      "text": "The deferred digest idea is preserved without starting it or closing the current editing question.",
+      "passed": true,
+      "evidence": "partial-and-later: deferred records “Weekly email digest: a future suggestion ... No implementation is authorized and no revisit condition is set.” The title keeps the digest as a future suggestion and still asks the editing decision."
+    },
+    {
+      "text": "A versioned API mismatch is resolved from the supplied evidence without asking the user to manage the investigation.",
+      "passed": true,
+      "evidence": "investigate-not-delegate: action is update_guide_and_verify, tool_call is null, and the message says “The v2 schema requires columns as an array of strings, and the client already passes its v2 contract test. I will update the guide for API v2 and check its examples against that schema.” This resolves the authorized next step without delegating investigation to the user."
+    },
+    {
+      "text": "A thirty-second absence of a reply does not create consent, idle inference, cancellation, or a response deadline.",
+      "passed": true,
+      "evidence": "wait-for-answer: action is keep_question_pending_and_wait; pending says “Permission to publish the checked draft. No answer, cancellation, or expiry has arrived.” No timeout, user-idle conclusion, consent, or cancellation is introduced."
+    },
+    {
+      "text": "Clear approval of a concrete plan retains its explicit limit and does not create redundant confirmation.",
+      "passed": true,
+      "evidence": "qualified-approval: action is implement_and_verify_locally and tool_call is null. Settled retains approval for arrow-key navigation and visible focus, requires the prototype to stay local, prohibits publishing, and states that no separate confirmation is required."
+    },
+    {
+      "text": "A small reversible formatting choice does not cause a user question or an invented requirement.",
+      "passed": true,
+      "evidence": "reversible-choice: action is implement_inline_and_verify, tool_call is null, and the message explains “because the formatting is used at one call site.” No product requirement or new user decision is invented."
+    },
+    {
+      "text": "An unclear compound question is separated into one current decision and a later decision.",
+      "passed": true,
+      "evidence": "repair-the-scope: the sole question asks “Should local notes save automatically or only when you choose to save?” The title says “We will decide who can see saved notes separately,” and deferred explicitly schedules private versus team-visible notes after the saving decision. Both decisions remain pending."
+    },
+    {
+      "text": "Any Codex async call uses title and optional string options, not Claude-style fields.",
+      "passed": true,
+      "evidence": "Both non-null calls use name request_user_input_async and arguments.questions containing one object with title and an array of string options. No Claude-style fields or unsupported timeout parameter appear."
+    },
+    {
+      "text": "Facts stay within the supplied evidence: accepted confirms emission, not display or delivery; the v1 guide example does not prove the v1 API contract.",
+      "passed": true,
+      "evidence": "wait-for-answer says the tool “acknowledged emission ... did not supply a user answer or confirm that the user saw it.” investigate-not-delegate records “The old guide is labeled API v1 and shows a comma-separated string”; only the inspected v2 schema is treated as contract evidence. “The guide describes API v1” describes the document, without asserting that its example establishes the v1 API contract."
+    },
+    {
+      "text": "A question carrying several context points uses supported line breaks or lists to separate context from the decision rather than one dense paragraph.",
+      "passed": true,
+      "evidence": "After JSON.parse, each of the two question titles contains 6 actual LF characters and 0 literal backslash-n sequences, forming four paragraphs. partial-and-later separates the current decision, settled access and deferred digest context, option consequences, and final question. repair-the-scope separates the repair, save-option consequences, later sharing decision, and final saving question. These are real string line breaks, not merely visible escape text. No live UI display was tested."
+    }
+  ],
+  "summary": {
+    "passed": 10,
+    "failed": 0,
+    "total": 10,
+    "pass_rate": 1
+  },
+  "claims": [
+    {
+      "claim": "The response provides six simulated next actions, with actual calls and actions unexecuted.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "response.json contains one result for each of the six scenario IDs; each execution-note.md explicitly describes a simulated run. Future-tense implementation messages are not evidence of completed implementation."
+    },
+    {
+      "claim": "The executor read only the materials named in its execution note.",
+      "type": "process",
+      "verified": false,
+      "evidence": "execution-note.md reports the read scope, but no tool execution transcript was supplied. The read scope cannot be independently verified; no disallowed-read conclusion is inferred from that missing trace."
+    },
+    {
+      "claim": "The current client sends an array and passes its API v2 contract test.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This is explicitly supplied in investigate-not-delegate facts. This verifies fidelity to the fixture, not an independently rerun client test."
+    },
+    {
+      "claim": "The async publishing question has been emitted.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "wait-for-answer facts explicitly state the assistant emitted the question, and the available tool contract says accepted acknowledges emission only. Neither response claims live display or delivery."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "No independent execution transcript, metrics.json, timing.json, or user_notes.md was supplied. Execution notes are executor reports, not trace verification."
+    ],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "The assertions distinguish unresolved decisions, authorization limits, evidence scope, host schema, and question organization. These are simulated next-action checks; they do not establish live UI behavior, actual task execution, or improvement magnitude."
+  }
+}
