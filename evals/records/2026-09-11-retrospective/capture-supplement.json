@@ -1,0 +1,7 @@
+{
+  "captured_at": "2026-09-11T20:53:24.258Z",
+  "reason": "The first copy omitted a dot-directory. This adds the exact existing probe plugin manifest; the original manifest and results are unchanged.",
+  "path": "trigger-2026-09-11T19-29-28.982Z/plugin/.claude-plugin/plugin.json",
+  "sha256": "0b9cb0ad2552484789222bc4e366464b8c315664256b744db329cf4fda5d08bf",
+  "bytes": 85
+}
