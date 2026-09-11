@@ -1,5 +1,5 @@
 {
   "name": "ask-user-question",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Composes AskUserQuestion calls a human can answer on sight, and reads the replies that come back."
 }

@@ -1,6 +1,6 @@
 {
   "name": "ask-user-question",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": true,
   "description": "Dev-only manifest. Carries the version Changesets bumps and the type packages `make typecheck` needs; the plugin itself ships no dependencies and this file is not part of the artifact.",
   "type": "module",
