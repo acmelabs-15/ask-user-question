@@ -14,6 +14,34 @@ run rather than from any prose, including this file. The prior fork's 32 rules s
 quarantined in `checks.quarantined.ts`, unimported, because they encode the retired skill's
 doctrine — `evals/composition/LINT-RULES-PENDING.md` has that history.
 
+## Installing it
+
+| Host | Command |
+|:--|:--|
+| Claude Code | `/plugin marketplace add acmelabs-15/marketplace` then `/plugin install ask-user-question@acmelabs` |
+| Codex | `codex plugin marketplace add acmelabs-15/marketplace` then `codex plugin install ask-user-question` |
+| Gemini CLI | `gemini extensions install acmelabs-15/ask-user-question` |
+
+All three follow the `latest` tag, which moves on every release that is not a pre-release.
+
+## Releasing
+
+The version lives in `package.json`. Changesets bumps it; `scripts/sync-version.ts` copies it
+into `.claude-plugin/plugin.json`, `gemini-extension.json` and the skill's frontmatter.
+
+A change a user would notice needs a changeset:
+
+```
+bunx changeset
+```
+
+Pick the bump and write the entry. That text becomes the `CHANGELOG.md` entry and the body of
+the GitHub release, so write it for a reader who did not see the diff.
+
+On a push to `main`, the release workflow opens a pull request named `ci: Version Packages`.
+Merging that pull request cuts the release: a `v<version>` tag, a GitHub release, and a move of
+the `latest` tag. A pre-release version does not move `latest`.
+
 ## Running the evals
 
 `make` alone prints the target list. `make doctor` checks the environment first — it wants
