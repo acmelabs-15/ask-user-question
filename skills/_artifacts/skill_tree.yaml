@@ -1,0 +1,59 @@
+# Complete replacement authorized; structure derived from the reviewed requirements.
+# One shared body and three host contracts. No inherited reference or example layout.
+status: implemented
+library:
+  name: ask-user-question
+  version: 0.1.6
+  repository: https://github.com/acmelabs-15/ask-user-question
+  description: Guide an evidence-based question-and-reply exchange within a larger workflow.
+generated_from:
+  domain_map: skills/_artifacts/domain_map.yaml
+  skill_spec: skills/_artifacts/skill_spec.md
+generated_at: 2026-09-11
+skills:
+  - name: ask-user-question
+    slug: ask-user-question
+    type: core
+    domain: communicating-with-the-user
+    path: skills/ask-user-question/SKILL.md
+    description: Prepares a user decision, composes one clear question, interprets
+      the reply, and repairs the exchange. Use before asking a question during
+      coding, planning, investigation, or another workflow, and when a reply is
+      incomplete, confusing, corrective, qualified, or off the current topic.
+      Applies to AskUserQuestion, request_user_input, request_user_input_async,
+      and ask_user. Use for a wait-what request or when the user cannot digest a
+      question. Investigate discoverable facts first; ask about the user's
+      remaining intent or trade-off. The larger workflow keeps its own scope and
+      completion rules. Not for building a questionnaire UI or writing general
+      documentation about communication.
+    sources:
+      - acmelabs-15/ask-user-question:skills/_artifacts/domain_map.yaml
+      - acmelabs-15/ask-user-question:skills/_artifacts/skill_spec.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/discovery-notes.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/research-proposal.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/research-conversation.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/research-language-layout.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/research-evidence-conflicts.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/research-mixed-replies.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/research-initiative.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/research-decision-preparation.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/host-contracts.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/host-claude-code.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/host-codex.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/host-gemini.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/brain-skill-alignment.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/brain-alignment-wording.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/alignment-proposed-wording.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/context-domain-modeling.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/context-idea-refine.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/context-interview-me.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/context-wait-what.md
+      - acmelabs-15/ask-user-question:skills/_artifacts/coverage.md
+    subsystems:
+      - Claude Code
+      - Codex
+      - Gemini CLI
+    references:
+      - references/claude-code.md
+      - references/codex.md
+      - references/gemini-cli.md

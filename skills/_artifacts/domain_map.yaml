@@ -1,0 +1,531 @@
+# Reviewed requirements for a complete replacement. Historical citations do not constrain implementation.
+status: reviewed
+library:
+  name: ask-user-question
+  version: 0.1.6
+  repository: https://github.com/acmelabs-15/ask-user-question
+  description: Guide clear questions, interpret replies using evidence, and repair
+    the exchange within a larger workflow.
+  primary_framework: framework-agnostic
+domains:
+  - name: Communicating with the user
+    slug: communicating-with-the-user
+    description: Establish what the current exchange settles, through clear flow,
+      language, and visual organization.
+skills:
+  - name: ask-user-question
+    slug: ask-user-question
+    domain: communicating-with-the-user
+    description: Compose one understandable question, interpret each part of its
+      reply, and continue or repair according to the evidence.
+    type: core
+    covers:
+      - The larger workflow's current question and the information needed for
+        its next step
+      - Evidence from the user, inspected project material, and research
+      - Investigating discrepancies and preparing concrete resolutions before
+        asking for a user decision
+      - One question at a time with its necessary context
+      - Familiar vocabulary, clear referents, and focused sentences
+      - Visual organization that exposes the question and its choices
+      - Comparable outcomes, consequences, and an honest recommendation
+      - Sufficient answers, partial answers, conditions, corrections, and
+        changed direction
+      - Missing information, expanded gaps, and conflicting evidence
+      - Useful deferred topics within mixed replies
+      - Repairing an unclear question while preserving settled material
+      - Returning resolved and unresolved parts to the larger workflow
+      - Using the available question tool's actual contract
+      - Waiting for the user without an agent-imposed response deadline
+    tasks:
+      - During an ordinary coding task, ask once when an unresolved user-owned
+        choice changes the implementation
+      - Resolve a small reversible implementation choice without interrupting
+        the user
+      - Investigate an inconsistency and present the specific decision that
+        remains after comparing evidence
+      - Ask about a glossary or code discrepancy without silently deciding what
+        the user meant
+      - Ask a focused ideation question and preserve its answer for the next
+        refinement step
+      - Resolve one ready decision in an interview without closing unresolved
+        branches
+      - Repair a question after confusion or a wait-what request
+      - Preserve useful later topics and return to the current unanswered point
+    reference_candidates:
+      - topic: Host-specific question contracts
+        reason: The selected hosts expose different inputs, replies, availability and
+          waiting behavior. Keep one newly written reference for each host; the
+          full shared cycle and its worked failures remain in the core body.
+    subsystems:
+      - name: Claude Code
+        config_surface: AskUserQuestion inputs and replies; user or managed
+          auto-continue settings and environment overrides; SDK host behavior.
+      - name: Codex
+        config_surface: request_user_input and request_user_input_async schemas; mode
+          and client availability; blocking versus non-blocking request
+          behavior.
+      - name: Gemini CLI
+        config_surface: ask_user types, selection modes, indexed answers, interactive
+          availability, and cancellation behavior.
+    failure_modes:
+      - mistake: Asking before identifying the evidence actually missing
+        mechanism: The agent asks for facts it can inspect or for expert analysis it
+          should perform, instead of exposing the unresolved user-owned choice.
+        source: Maintainer interview 2026-09-11; supplied
+          interview-me/references/artifact-mode.md:17-19;
+          https://design-system.service.gov.uk/patterns/question-pages/
+        priority: HIGH
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          Context: The project configuration defines the upload timeout.
+
+          Question: What timeout does this project use for uploads?
+
+          Agent: I will wait for your answer before inspecting the
+          configuration.
+        correct_pattern: >
+          Context: The project configuration defines the upload timeout.
+
+          Agent: Read the configuration and identify the applicable setting.
+
+          Agent: Use that evidence; ask only if a separate user-owned choice
+          remains.
+      - mistake: Asking about a small reversible implementation choice
+        mechanism: The agent treats every defensible alternative as a user decision,
+          even when both preserve the agreed behavior and choosing is an
+          authorized, inexpensive-to-reverse implementation detail.
+        source: Supplied AGENTS.md section 1; Historical 0.1.6 at git
+          d6594010:SKILL.md:140-145; maintainer-endorsed Phase 1 review
+        priority: HIGH
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          Context: Formatting is used once; inline formatting and a local
+          formatter both preserve the agreed label and change one line.
+
+          Question: Should I use inline formatting or a local formatter?
+
+          Agent: I cannot continue until you choose.
+        correct_pattern: >
+          Context: Formatting is used once; both forms preserve the agreed label
+          and are cheap to reverse.
+
+          Agent: I will keep the formatting inline because it is used only here.
+
+          Agent: Continue the authorized edit; keep the choice visible and do
+          not claim it was the user's decision.
+      - mistake: Combining decisions before their prerequisites are settled
+        mechanism: One answer cannot resolve the combined scope, or later options depend
+          on information the agent has not received.
+        source: Historical 0.1.6 at git d6594010:SKILL.md:167-186; supplied
+          interview-me/references/artifact-mode.md:11-15;
+          https://www.gov.uk/service-manual/design/designing-good-questions
+        priority: HIGH
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          Context: Both migration timing and treatment of the old index are
+          unresolved.
+
+          Question: Should we migrate Friday and rebuild the old index?
+
+          Reply: Friday works.
+
+          Agent: Both decisions are settled.
+        correct_pattern: >
+          Context: Friday is settled; treatment of the old index is not.
+
+          Question: For Friday's migration, should we rebuild the old index or
+          retire it?
+
+          Agent: Include the inspected consequences of each choice; wait for
+          this answer before dependent work.
+      - mistake: Hiding the premise behind unfamiliar or dense wording
+        mechanism: The user cannot identify the subject, terms, or consequence needed to
+          answer from the visible question.
+        source: Maintainer interview; Historical 0.1.6 at git d6594010:SKILL.md:188-230
+          and references/wording.md;
+          https://developers.google.com/tech-writing/one/words;
+          https://www.w3.org/TR/coga-usable/#keep-text-succinct-pattern
+        priority: HIGH
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          Context: A refresh can replace an unsaved local draft with the
+          server's saved version.
+
+          Question: Which rehydration reconciliation policy should win?
+
+          Reply: I do not understand what you mean.
+        correct_pattern: >
+          Context: Refreshing can replace the user's unsaved draft with the
+          saved version.
+
+          Question: After refresh, should we keep the unsaved draft or load the
+          saved version?
+
+          Agent: Use the project's familiar words and expose the consequence in
+          the question.
+      - mistake: Recommending options without comparable outcomes and consequences
+        mechanism: Labels, hidden costs, or an unsupported recommendation steer the user
+          without making the trade-off understandable.
+        source: Historical 0.1.6 at git d6594010:SKILL.md:233-319; supplied
+          interview-me/references/intent-mode.md:24-26;
+          https://www.w3.org/TR/coga-usable/#clearly-state-the-results-and-disadvantages-of-actions-options-and-selections-pattern
+        priority: HIGH
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          Context: Browser-only drafts require no account; server drafts require
+          sign-in and work across devices.
+
+          Question: Which draft storage should we use?
+
+          Options: Browser storage, fast and simple (Recommended); server
+          storage, reliable.
+        correct_pattern: >
+          Question: Must users recover a draft on another device?
+
+          Browser-only: No sign-in; the draft stays on this device.
+
+          Server: Requires sign-in; the draft can be recovered on another
+          device.
+
+          Agent: Recommend only from an established requirement and state the
+          recommended option's cost.
+      - mistake: Inferring the user's intent from reply format alone
+        mechanism: The agent treats free text, an exact label, or a note as proof of
+          rejection, agreement, or a particular motive without reading it in
+          context.
+        source: Historical 0.1.6 at git d6594010:references/reading-answers.md:47-85 and
+          94-122; supplied interview-me/references/intent-mode.md:57;
+          https://arxiv.org/html/2311.09144v2
+        priority: CRITICAL
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          Question: Use the existing button or build a custom one?
+
+          Reply: Use the existing button. Keep the Delete label.
+
+          Agent: This is free text, so you rejected the options; I will ask
+          again.
+        correct_pattern: >
+          Reply: Use the existing button. Keep the Delete label.
+
+          Agent: The existing button is selected, with Delete as the required
+          label.
+
+          Agent: Preserve both parts and continue within the larger workflow's
+          authorization.
+      - mistake: Filling an incomplete answer with unsupported assumptions
+        mechanism: A partial answer or enlarged gap is silently completed by the agent
+          and then used as a settled input to dependent work.
+        source: Maintainer interview 2026-09-11;
+          https://semprag.org/article/view/sp.5.6;
+          https://arxiv.org/html/2110.10206v3
+        priority: CRITICAL
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: |
+          Question: Which roles may edit reports?
+          Reply: All members should be able to view reports.
+          Agent: I will let all members edit reports too.
+        correct_pattern: >
+          Agent: All members may view reports; editing permission remains open.
+
+          Question: Should editing be limited to admins, or available to all
+          members?
+
+          Agent: Pause changes to editing permissions until that choice is
+          resolved.
+      - mistake: Treating a skip or silence as user consent
+        mechanism: The agent mistakes the absence of an answer for selection of its
+          recommendation and performs an action the user did not approve.
+        source: Historical 0.1.6 at git d6594010:SKILL.md:106-108;
+          references/reading-answers.md:125-168; maintainer-endorsed Phase 1
+          review
+        priority: CRITICAL
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          Question: May I publish this draft?
+
+          Tool result: No answer or selection; the question was skipped or timed
+          out.
+
+          Agent: I recommended publishing, so I will publish it.
+        correct_pattern: >
+          Tool result: No answer or selection.
+
+          Agent: Publishing remains unapproved; do not publish or choose a
+          default.
+
+          Agent: Keep the question open and interpret any later reply from its
+          actual content.
+      - mistake: Silently replacing the user's claim with another belief
+        mechanism: The agent conceals a perceived contradiction rather than checking the
+          evidence, distinguishing current from intended behavior, and exposing
+          the disagreement.
+        source: Maintainer interview; supplied domain-modeling/SKILL.md:44-58;
+          https://www.microsoft.com/en-us/research/publication/guidelines-for-human-ai-interaction/
+        priority: CRITICAL
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          User: The editor saves every change automatically.
+
+          Inspected evidence: The save handler runs only after the Save button
+          is clicked.
+
+          Agent: Treat the user's statement as manual saving without mentioning
+          the discrepancy.
+        correct_pattern: >
+          Agent: The current handler saves only when Save is clicked.
+
+          Question: Are you describing the automatic saving you want us to add?
+
+          Agent: Preserve the implementation evidence and clarify intended
+          behavior instead of silently rewriting either.
+      - mistake: Losing useful topics while accepting an incomplete answer
+        mechanism: A mixed reply is reduced to one category, so future material is lost,
+          current scope expands silently, or an unanswered question is closed.
+        source: Maintainer interview; https://semprag.org/article/view/sp.5.6; supplied
+          interview-me/SKILL.md:31-34
+        priority: HIGH
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          Question: Should users be able to dismiss an in-app reminder?
+
+          Reply: We should offer email reminders in a later version.
+
+          Agent: I will start email reminders and make the in-app reminder
+          dismissible.
+        correct_pattern: >
+          Agent: Record email reminders as a future suggestion; its review
+          timing remains open.
+
+          Agent: Tell the user it is preserved and check that it does not alter
+          the current dependency.
+
+          Question: For the in-app reminder now, should users be able to dismiss
+          it?
+      - mistake: Rephrasing a question without repairing its actual defect
+        mechanism: The agent shortens the text while leaving combined scope, missing
+          context, unclear terms, or hidden consequences intact.
+        source: Historical 0.1.6 at git d6594010:references/failed-question.md; supplied
+          wait-what/SKILL.md:7;
+          https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0136100
+        priority: HIGH
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          Question: Should drafts save automatically and be shared with the
+          team?
+
+          Reply: Wait, what are you asking me to decide?
+
+          Question: Autosave and share drafts?
+        correct_pattern: >
+          Agent: Those are two decisions: saving a draft and sharing it.
+
+          Question: First, should drafts save automatically or only when the
+          user clicks Save?
+
+          Agent: Ask about sharing separately after the saving decision is
+          settled.
+      - mistake: Treating one resolved exchange as completion of the workflow
+        mechanism: The agent bypasses the larger workflow's remaining branches,
+          confirmation, or record rules after answering one question.
+        source: Supplied interview-me/references/artifact-mode.md:21-30;
+          idea-refine/SKILL.md:180-194; domain-modeling/SKILL.md:60-74;
+          maintainer-confirmed hierarchy
+        priority: CRITICAL
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          Context: The larger workflow requires several decisions and a final
+          review before implementation.
+
+          Question: Should the report be weekly?
+
+          Reply: Yes.
+
+          Agent: The entire plan is approved; start implementation.
+        correct_pattern: >
+          Reply: Yes to the weekly report.
+
+          Agent: Return that settled decision to the larger workflow; retain its
+          other open decisions.
+
+          Agent: Follow the larger workflow's remaining review gate before
+          implementation.
+      - mistake: Assuming every host preserves the same question content
+        mechanism: Guidance based on an older host hides necessary descriptions or
+          misreads selections when applied to a different question tool.
+        source: Historical 0.1.6 at git d6594010:SKILL.md:22-125;
+          docs/analysis/ANALYSIS-004-askuserquestion-tool-capability-audit-at-build-2-1-241.md;
+          docs/analysis/ANALYSIS-006-surface-portability-of-the-ask-user-question-skill-s-claims.md
+        priority: HIGH
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          Context: This host's chosen layout displays question text and option
+          labels, but hides descriptions.
+
+          Question: Ship the change now?
+
+          Hidden description: This interrupts service for ten minutes.
+        correct_pattern: >
+          Context: The layout hides option descriptions.
+
+          Question: Shipping now interrupts service for ten minutes. Ship now or
+          use the maintenance window?
+
+          Agent: Put required consequences in supported visible fields and
+          verify the rendered result.
+      - mistake: Closing an unanswered question after an invented deadline
+        mechanism: The agent imposes a response timer, treats elapsed time as proof the
+          user is idle, and removes the question before the user answers.
+        source: Maintainer waiting requirement; host-claude-code.md; host-codex.md;
+          host-gemini.md
+        priority: CRITICAL
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: |
+          Agent: Display a question and start a 30-second timer.
+          User: Has not replied yet.
+          Agent: Treat the user as idle, close the question, and move on.
+        correct_pattern: >
+          Agent: Use a supported untimed question path and wait for the actual
+          reply.
+
+          User: Has not replied yet.
+
+          Agent: Keep the question pending; elapsed time is not a response or
+          cancellation.
+
+          Agent: If the host expires it independently, explain that limitation
+          and preserve an answerable unresolved question.
+      - mistake: Reporting a discrepancy without advancing its resolution
+        mechanism: The agent identifies an inconsistency but asks the user how to
+          investigate or align it, transferring analysis and preparation that
+          the agent should perform.
+        source: Maintainer correction of the live Brain-skills alignment question;
+          research-initiative.md; research-decision-preparation.md; supplied
+          interview-me/references/artifact-mode.md:17-19
+        priority: HIGH
+        status: active
+        version_context: Fresh replacement implements the reviewed requirement;
+          prior-artifact citations are historical evidence, not compatibility or
+          structure constraints.
+        wrong_pattern: >
+          Agent: These instructions disagree, and I have not checked the API
+          they describe.
+
+          Question: How would you like the conflicts handled?
+
+          Agent: Wait for the user to design the investigation.
+        correct_pattern: >
+          Agent: Read the relevant API and compare its version and behavior with
+          both instructions.
+
+          Agent: Apply any resolution already dictated by the evidence and
+          agreed requirements; state the reason.
+
+          Agent: If a user-owned trade-off remains, explain it, propose a
+          concrete resolution, and ask one focused question.
+
+          Agent: Record the result and continue; do not invent the user's answer
+          or ask the user to manage the investigation.
+    compositions:
+      - library: Brain
+        skill: idea-refine
+      - library: Brain
+        skill: interview-me
+      - library: Brain
+        skill: domain-modeling
+      - library: Brain
+        skill: wait-what
+tensions:
+  - name: Brevity and necessary context
+    skills:
+      - ask-user-question
+    description: Shorter text must still expose the premise and consequences needed
+      to decide.
+    implication: The agent removes meaningful qualifications to meet a length target.
+  - name: Progress and unresolved evidence
+    skills:
+      - ask-user-question
+    description: Efficient progress requires keeping unsupported inputs open and
+      avoiding redundant questions about settled inputs.
+    implication: The agent either invents an answer or asks again without
+      identifying a real remaining gap.
+  - name: Current focus and useful new information
+    skills:
+      - ask-user-question
+    description: The agent must preserve valuable additions without silently
+      replacing the current question or deferring a current dependency.
+    implication: The agent loses a future topic, expands scope, or proceeds before a
+      newly revealed prerequisite is settled.
+  - name: Shared communication and larger workflows
+    skills:
+      - ask-user-question
+    description: The skill supports questions inside larger workflows while their
+      analysis, branches, records, and completion remain with the larger
+      workflow.
+    implication: An exclusion suppresses the helper or the helper takes over
+      responsibilities it was not given.
+cross_references: []
+gaps:
+  - skill: ask-user-question
+    question: Does the skill get selected for relevant exchanges without an explicit
+      invocation?
+    context: Test embedded workflow questions and nearby exclusions separately from
+      performance after the skill loads; current live selection has not been
+      measured.
+    status: open
+  - skill: ask-user-question
+    question: Do the selected host surfaces preserve the question and return a
+      delayed answer correctly in live use?
+    context: Peter selected Claude Code, Codex, and Gemini; current docs and pinned
+      source establish contract differences, but rendered and delayed-response
+      checks remain to be run.
+    status: open
+  - skill: ask-user-question
+    question: Does a revision improve next-action selection and repair in the
+      supplied Brain workflow scenarios?
+    context: Research supports design candidates; no revised skill or model
+      evaluation exists yet.
+    status: open

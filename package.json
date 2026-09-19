@@ -2,19 +2,26 @@
   "name": "ask-user-question",
   "version": "0.1.6",
   "private": true,
-  "description": "Dev-only manifest. Carries the version Changesets bumps and the type packages `make typecheck` needs; the plugin itself ships no dependencies and this file is not part of the artifact.",
+  "description": "Question-and-reply skill with verified host references and independent behavior evaluations.",
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
     "changeset": "changeset",
     "version": "changeset version && bun run sync-version",
-    "sync-version": "bun run scripts/sync-version.ts"
+    "sync-version": "bun run scripts/sync-version.ts",
+    "check": "bun run scripts/validate-skill.ts && bun run typecheck && bun run sync-version --check && intent validate"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.2",
+    "@tanstack/intent": "0.4.0",
     "@types/bun": "^1.3.14",
-    "tiktoken": "^1.0.22",
-    "typescript": "^5.6.0"
-  }
+    "typescript": "^5.6.0",
+    "yaml": "2.9.0"
+  },
+  "keywords": [
+    "agent-skill",
+    "user-questions",
+    "tanstack-intent"
+  ]
 }
