@@ -6,7 +6,7 @@ metadata:
   type: core
   library: ask-user-question
   library_version: "0.1.6"
-  version: "0.1.6"
+  version: "0.2.0"
 ---
 
 # Ask user question
