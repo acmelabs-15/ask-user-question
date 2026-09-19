@@ -1,5 +1,11 @@
 # ask-user-question
 
+## 0.2.0
+
+### Minor Changes
+
+- [`6e9d8a7`](https://github.com/acmelabs-15/ask-user-question/commit/6e9d8a7994d5fb717bb0c294e908f442ff52484b) - Replace the question skill with an evidence-based preparation, reply, and repair cycle. Add distinct Claude Code, Codex, and Gemini CLI tool guidance, explicit waiting rules, and new evaluation cases. Remove the old references, examples, and evaluation scaffolding.
+
 ## 0.1.6
 
 ### Patch Changes
