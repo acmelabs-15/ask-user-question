@@ -1,5 +1,11 @@
 # ask-user-question
 
+## 0.2.1
+
+### Patch Changes
+
+- [#4](https://github.com/acmelabs-15/ask-user-question/pull/4) [`79b9173`](https://github.com/acmelabs-15/ask-user-question/commit/79b9173e0fb13ac27317b44ba4e9141063d0b821) - Deprecates the plugin. Its skill ships in brain from v0.7.0, under the same name. The README says how to move to brain and how to remove this plugin, and both manifest descriptions start with "Deprecated:". The acmelabs marketplace drops the plugin, and the repository is archived after this release.
+
 ## 0.2.0
 
 ### Minor Changes

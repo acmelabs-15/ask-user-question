@@ -1,6 +1,6 @@
 {
   "name": "ask-user-question",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "Question-and-reply skill with verified host references and independent behavior evaluations.",
   "type": "module",
