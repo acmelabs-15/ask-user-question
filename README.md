@@ -1,5 +1,20 @@
 # ask-user-question
 
+> **Deprecated on 2026-10-28.** This plugin is retired. Its skill ships in
+> [brain](https://github.com/acmelabs-15/brain) from v0.7.0, under the same name.
+> The acmelabs marketplace no longer lists this plugin, and this repository is
+> archived.
+>
+> To move, install brain with the
+> [install page for your host](https://github.com/acmelabs-15/brain/tree/main/docs/install).
+> Then remove this plugin, so the agent loads one copy of the skill:
+>
+> | Host | Remove this plugin |
+> |:--|:--|
+> | Claude Code | `claude plugin uninstall ask-user-question@acmelabs` |
+> | Codex | `codex plugin remove ask-user-question@acmelabs` |
+> | Gemini CLI | `gemini extensions uninstall ask-user-question` |
+
 A skill for preparing one useful question, interpreting its reply from evidence,
 and repairing the exchange when understanding is incomplete.
 

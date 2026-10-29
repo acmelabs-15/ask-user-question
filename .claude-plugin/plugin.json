@@ -1,6 +1,6 @@
 {
   "name": "ask-user-question",
-  "description": "Composes AskUserQuestion calls a human can answer on sight, and reads the replies that come back.",
+  "description": "Deprecated: install brain (github.com/acmelabs-15/brain), which ships this skill. Composes AskUserQuestion calls a human can answer on sight, and reads the replies that come back.",
   "version": "0.2.0",
   "author": {
     "name": "Peter Kloss",
